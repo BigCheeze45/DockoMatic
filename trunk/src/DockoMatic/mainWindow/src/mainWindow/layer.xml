@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="mainWindow-ModInAction.instance">
+                <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_ModInAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+            <file name="mainWindow-openerAction.instance">
+                <attr name="component" methodvalue="mainWindow.openerTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_openerAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+            <file name="mainWindow-outputGridAction.instance">
+                <attr name="component" methodvalue="mainWindow.outputGridTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_outputGridAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="ModInAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/mainWindow-ModInAction.instance"/>
+            </file>
+            <file name="openerAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/mainWindow-openerAction.instance"/>
+            </file>
+            <file name="outputGridAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/mainWindow-outputGridAction.instance"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="ModInTopComponent.settings" url="ModInTopComponentSettings.xml"/>
+            <file name="openerTopComponent.settings" url="openerTopComponentSettings.xml"/>
+            <file name="outputGridTopComponent.settings" url="outputGridTopComponentSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="editor">
+                <file name="openerTopComponent.wstcref" url="openerTopComponentWstcref.xml"/>
+            </folder>
+            <folder name="output">
+                <file name="outputGridTopComponent.wstcref" url="outputGridTopComponentWstcref.xml"/>
+            </folder>
+            <folder name="properties">
+                <file name="ModInTopComponent.wstcref" url="ModInTopComponentWstcref.xml"/>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

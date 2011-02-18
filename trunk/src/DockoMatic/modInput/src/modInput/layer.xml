@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="modInput-modInputAction.instance">
+                <attr name="component" methodvalue="modInput.modInputTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="modInput.Bundle#CTL_modInputAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+            <file name="modInput-modOutAction.instance">
+                <attr name="component" methodvalue="modInput.modOutTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="modInput.Bundle#CTL_modOutAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="modInputAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/modInput-modInputAction.instance"/>
+            </file>
+            <file name="modOutAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/modInput-modOutAction.instance"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="modInputTopComponent.settings" url="modInputTopComponentSettings.xml"/>
+            <file name="modOutTopComponent.settings" url="modOutTopComponentSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="output">
+                <file name="modOutTopComponent.wstcref" url="modOutTopComponentWstcref.xml"/>
+            </folder>
+            <folder name="properties">
+                <file name="modInputTopComponent.wstcref" url="modInputTopComponentWstcref.xml"/>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>
