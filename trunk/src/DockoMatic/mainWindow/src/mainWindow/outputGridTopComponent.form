@@ -61,9 +61,9 @@
                     <Column editable="true" title="Box Coordinate" type="java.lang.String"/>
                     <Column editable="true" title="Secondary" type="java.lang.String"/>
                     <Column editable="true" title="Use Swarm" type="java.lang.Boolean"/>
-                    <Column editable="false" title="Status" type="java.lang.String"/>
+                    <Column editable="true" title="Status" type="java.lang.String"/>
                     <Column editable="true" title="Sequence" type="java.lang.String"/>
-                    <Column editable="false" title="Template" type="java.lang.String"/>
+                    <Column editable="true" title="Template" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
