@@ -33,16 +33,16 @@ public class Job {
 
     // Constructor
     public Job(int me, String lig, String rec, String box,
-                   String out, boolean swarm, String app) {
-                   //String out, boolean swarm, String app, String seq, String tplt) {
+                   //String out, boolean swarm, String app) {
+                   String out, boolean swarm, String app, String seq, String tplt) {
         this.jobNum = me;
         this.ligand = lig;
         this.receptor = rec;
         this.boxCoord = box;
         this.outDir = out;
         this.append = app;
-        //this.sequence = seq;
-        //this.template = tplt;
+        this.sequence = seq;
+        this.template = tplt;
 
         this.setSwarm(swarm);
         this.isRunning = false;
@@ -68,8 +68,8 @@ public class Job {
     // Creates String for command to be used by system.  This may or may not be used in
     // conjunction with swarm.
     private void setCmd(){
-           this.cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
-           this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("DockoMatic.jar"));
+           //this.cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
+           //this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("DockoMatic.jar"));
            this.cmd += "dockOmatic.pl";
            //this.cmd = ClassLoader.getSystemClassLoader().getResource("MainFrame.class").getPath();
            //this.cmd = this.cmd.substring(0, this.cmd.lastIndexOf(File.separator));
