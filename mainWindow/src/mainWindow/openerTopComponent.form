@@ -74,7 +74,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel6" min="0" pref="85" max="32767" attributes="1"/>
+                      <Component id="jPanel6" min="0" pref="83" max="32767" attributes="1"/>
                       <Component id="jPanel3" alignment="1" min="-2" max="-2" attributes="1"/>
                   </Group>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
@@ -210,7 +210,7 @@
                           <Component id="receptorField" alignment="0" pref="135" max="32767" attributes="1"/>
                           <Component id="receptorButton" alignment="0" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace pref="60" max="32767" attributes="0"/>
+                      <EmptySpace pref="65" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -269,7 +269,7 @@
                           <Component id="boxCoordField" alignment="0" pref="148" max="32767" attributes="1"/>
                           <Component id="boxCoordButton" alignment="0" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace pref="53" max="32767" attributes="0"/>
+                      <EmptySpace pref="57" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -328,7 +328,7 @@
                           <Component id="appCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="appendField" alignment="0" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace pref="51" max="32767" attributes="0"/>
+                      <EmptySpace pref="56" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -472,7 +472,7 @@
                   <Component id="swarmCheckBox" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="swarmToggleButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
