@@ -7,7 +7,7 @@ package modInput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
-import modinfo.ModInfo;
+//import modinfo.ModInfo;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
