@@ -85,8 +85,12 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 		int row = e.getFirstRow();
 		if(((String)tmpTable.getValueAt(row, 7)).equals("Started"))// &&
 			   //((String)tmpTable.getValueAt(row, 5)).length() > 0)
-			System.out.println("START SECONDARY");
+			System.out.println("LISTENER SHOULD START SECONDARY NOW IF DONE");
 		//openerTopComponent.doSecondary(row);
+	}
+
+	protected static JTable getTabTable(int i){
+		return (JTable)((JScrollPane)outGridTPane.getComponentAt(i)).getViewport().getView();
 	}
 
 	protected static JTable getSelectedTable(){

@@ -17,8 +17,6 @@ import java.util.Hashtable;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
@@ -35,7 +33,7 @@ public final class openerTopComponent extends TopComponent{// implements TableMo
     //implements LookupListener{
 
 private Vector <Job> jobVector = new Vector<Job>();
-private Hashtable <Integer, Timer> extraLigStatHash = new Hashtable<Integer, Timer>();
+//private Hashtable <Integer, Timer> extraLigStatHash = new Hashtable<Integer, Timer>();
 private Vector <String> ligVector = new Vector<String>();
 private Vector <String> recVector = new Vector<String>();
 private Vector <String> boxVector = new Vector<String>();
@@ -164,6 +162,8 @@ private class ModInLookListener implements LookupListener {
                 swarmToggleButton = new javax.swing.JToggleButton();
                 jButton1 = new javax.swing.JButton();
                 newTabChBox = new javax.swing.JCheckBox();
+                swmJobNum = new javax.swing.JTextField();
+                jLabel2 = new javax.swing.JLabel();
                 jPanel8 = new javax.swing.JPanel();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 messageArea = new javax.swing.JTextArea();
@@ -187,7 +187,7 @@ private class ModInLookListener implements LookupListener {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(outDirField, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(outDirButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
-                                .addContainerGap(55, Short.MAX_VALUE))
+                                .addContainerGap(71, Short.MAX_VALUE))
                 );
                 jPanel3Layout.setVerticalGroup(
                         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +195,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(outDirButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(outDirField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(27, Short.MAX_VALUE))
+                                .addContainerGap(50, Short.MAX_VALUE))
                 );
 
                 org.openide.awt.Mnemonics.setLocalizedText(LigandButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.LigandButton.text")); // NOI18N
@@ -224,7 +224,7 @@ private class ModInLookListener implements LookupListener {
                                         .addComponent(ligandCheckBox)
                                         .addComponent(ligandField)
                                         .addComponent(LigandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(68, Short.MAX_VALUE))
+                                .addContainerGap(74, Short.MAX_VALUE))
                 );
                 jPanel4Layout.setVerticalGroup(
                         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,7 +263,7 @@ private class ModInLookListener implements LookupListener {
                                         .addComponent(receptorCheckBox)
                                         .addComponent(receptorField, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                                         .addComponent(receptorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(60, Short.MAX_VALUE))
+                                .addContainerGap(65, Short.MAX_VALUE))
                 );
                 jPanel5Layout.setVerticalGroup(
                         jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,7 +302,7 @@ private class ModInLookListener implements LookupListener {
                                         .addComponent(boxCoordCheckBox)
                                         .addComponent(boxCoordField, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                                         .addComponent(boxCoordButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(53, Short.MAX_VALUE))
+                                .addContainerGap(58, Short.MAX_VALUE))
                 );
                 jPanel6Layout.setVerticalGroup(
                         jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,7 +341,7 @@ private class ModInLookListener implements LookupListener {
                                         .addComponent(appendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(appCheckBox)
                                         .addComponent(appendField))
-                                .addContainerGap(51, Short.MAX_VALUE))
+                                .addContainerGap(56, Short.MAX_VALUE))
                 );
                 jPanel7Layout.setVerticalGroup(
                         jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,8 +371,8 @@ private class ModInLookListener implements LookupListener {
                                 .addContainerGap()
                                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(resChkGpfField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(resChkGpfButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
-                                .addContainerGap(56, Short.MAX_VALUE))
+                                        .addComponent(resChkGpfButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+                                .addContainerGap(54, Short.MAX_VALUE))
                 );
                 jPanel9Layout.setVerticalGroup(
                         jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,10 +392,11 @@ private class ModInLookListener implements LookupListener {
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addContainerGap()
                                                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                                 .addContainerGap()
-                                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -405,11 +406,14 @@ private class ModInLookListener implements LookupListener {
                 jPanel1Layout.setVerticalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel6, 0, 85, Short.MAX_VALUE)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(35, 35, 35)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jPanel6, 0, 89, Short.MAX_VALUE)
+                                                .addGap(35, 35, 35))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -492,6 +496,10 @@ private class ModInLookListener implements LookupListener {
                         }
                 });
 
+                swmJobNum.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swmJobNum.text")); // NOI18N
+
+                org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel2.text")); // NOI18N
+
                 javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
                 jPanel2.setLayout(jPanel2Layout);
                 jPanel2Layout.setHorizontalGroup(
@@ -499,17 +507,19 @@ private class ModInLookListener implements LookupListener {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(newTabChBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(swarmCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(avgButton, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(newJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(startAllJobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(StartSelectedJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(removeAllJobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(removeSelectedJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(pymolButton, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                                        .addComponent(swarmToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                                        .addComponent(newTabChBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(swarmCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(avgButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(newJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(startAllJobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(StartSelectedJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(removeAllJobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(removeSelectedJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(pymolButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(swarmToggleButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(swmJobNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel2Layout.setVerticalGroup(
@@ -535,9 +545,13 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(swarmCheckBox)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(swarmToggleButton)
-                                .addContainerGap(21, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(swmJobNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(56, Short.MAX_VALUE))
                 );
 
                 messageArea.setColumns(20);
@@ -554,12 +568,12 @@ private class ModInLookListener implements LookupListener {
                         .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel8Layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
-                                        .addGroup(jPanel8Layout.createSequentialGroup()
                                                 .addGap(302, 302, 302)
-                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap())
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel8Layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(20, Short.MAX_VALUE))
                 );
                 jPanel8Layout.setVerticalGroup(
                         jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -588,7 +602,7 @@ private class ModInLookListener implements LookupListener {
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jPanel1, 0, 390, Short.MAX_VALUE)
+                                        .addComponent(jPanel1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -726,7 +740,8 @@ private class ModInLookListener implements LookupListener {
         String box = boxCoordField.getText().trim();
         String odir = outDirField.getText().trim();
 
-        String cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
+        //String cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
+        String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
         cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("DockoMatic.jar"));
         //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockOmatic.pl"));
         cmd += "scripts/resultCheck.pl";
@@ -776,7 +791,7 @@ private class ModInLookListener implements LookupListener {
                     job = (Integer)table.getValueAt(i, 0);
                     updateJob(i);
                     jobVector.get(job).runJob();
-                    if(((String)table.getValueAt(i, 5)).length() > 0) startExtraLigTimer(i);
+                    //if(((String)table.getValueAt(i, 5)).length() > 0) startExtraLigTimer(i);
                     table.setValueAt("Started", i, 7);
                 }else{
                     messageArea.append("Previous Job Activity detected... Re-starting job not allowed!\n");
@@ -813,13 +828,13 @@ private class ModInLookListener implements LookupListener {
                 if(table.getValueAt(rowNums[rowNum], 7).equals("Started")){
                     jobVector.get(jobNum).killJob();
                     messageArea.append("Restarting Job "+jobNum+"\n");
-                    (extraLigStatHash.get(jobNum)).stop();
+                    ////(extraLigStatHash.get(jobNum)).stop();
                 }
                 //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
                 table.setValueAt("Started", rowNums[rowNum], 7);
                 jobVector.get(jobNum).runJob();
                 //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
-                if(((String)table.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
+                //if(((String)table.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
             }
             //}else{
             //      messageArea.append("Previous Job Activity detected... Re-starting job not allowed!\n");
@@ -847,7 +862,7 @@ private class ModInLookListener implements LookupListener {
                     messageArea.append("Killing Job "+jobNum+"\n");
                     jobVector.get(jobNum).killJob();
                     messageArea.append("Removing Job "+jobNum+"\n");
-                    (extraLigStatHash.get(jobNum)).stop();
+                    ////(extraLigStatHash.get(jobNum)).stop();
                     model.removeRow(rowNums[rowNum]);
             }
     }//GEN-LAST:event_removeSelectedJobButtonActionPerformed
@@ -882,10 +897,11 @@ private class ModInLookListener implements LookupListener {
     // Checks the status of jobs and sets them to Done if they are.
     private void checkStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkStatusButtonActionPerformed
 	    //@@@FIXME This needs to go trhough all tabs
-	JTabbedPane jtp = outputGridTopComponent.outGridTPane;
-	int max = jtp.getTabCount();
+	int max = outputGridTopComponent.outGridTPane.getTabCount();
+	int jobNum;
+
 	for(int j=0; j<max;j++){
-	   table = (JTable)((JScrollPane)jtp.getTabComponentAt(j)).getViewport().getView();
+	   table = outputGridTopComponent.getTabTable(j);
 	   model = (DefaultTableModel)table.getModel();
            int row = 0;
            try{
@@ -894,23 +910,46 @@ private class ModInLookListener implements LookupListener {
 
               String rec = (String) table.getValueAt(row, 3);
               String dir = (String) table.getValueAt(row, 2);
-              dir += File.separator;
-              File dlg = new File(dir);
+              //dir += File.separator;
+              //dir += "_Reference";
+              File dlg = new File(dir+"_Reference");
 
-              String files[] = dlg.list();
-
-              for(int i=0; i<files.length; i++){
-                    if(rec.length() > 0){
-                        if(files[i].contains("_Reference"))
+                    if(dlg.exists()){
                             table.setValueAt("Done", row, 7);
+                            if(((String)table.getValueAt(row, 5)).length() > 0){
+                                messageArea.append("Starting Secondary Ligand Job\n");
+                                jobNum = (Integer)table.getValueAt(row, 0);
+                                doSecondaryJob(jobNum);
+		            }
                     }else{
                         // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
                         //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
                         // This line only IF running obconformer, or there will never be Orig_ file.
-                        if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
+                        dlg = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, 1)+".pdb");
+                        if(dlg.exists())
+                        //if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
                             table.setValueAt("Done", row, 7);
                     }
-              }
+
+//              String files[] = dlg.list();
+//
+//              for(int i=0; i<files.length; i++){
+//                    if(rec.length() > 0){
+//                        if(files[i].contains("_Reference")){
+//                            table.setValueAt("Done", row, 7);
+//                            if(((String)table.getValueAt(row, 5)).length() > 0){
+//                                messageArea.append("Starting Secondary Ligand Job\n");
+//                                jobNum = (Integer)table.getValueAt(row, 0);
+//                                doSecondaryJob(jobNum);
+//		            }
+//                    }else{
+//                        // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
+//                        //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
+//                        // This line only IF running obconformer, or there will never be Orig_ file.
+//                        if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
+//                            table.setValueAt("Done", row, 7);
+//                    }
+//              }
             }
 
             }catch (java.lang.ArrayIndexOutOfBoundsException e){
@@ -1193,26 +1232,26 @@ private class ModInLookListener implements LookupListener {
     }
 
 
-    // Add Timer for when to start jobs with Secondary Ligands.
-    private void createExtraLigTimer(final int row){
-        //final int job = (Integer)outputGridTopComponent.jTable1.getValueAt(row, 0);
-        final int job = (Integer)model.getValueAt(row, 0);
-        int delay = 30000; // 30 seconds
-        java.awt.event.ActionListener extraLigChecker = new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        checkExtraLigand(evt, job);
-                }
-        };
-
-        extraLigStatHash.put(job, new Timer(delay, extraLigChecker));
-    }
-
-    // Start Timer for when to start jobs with Secondary Ligands.
-    private void startExtraLigTimer(final int job){
-        (extraLigStatHash.get(job)).start();
-
-
-    }
+//    // Add Timer for when to start jobs with Secondary Ligands.
+//    private void createExtraLigTimer(final int row){
+//        //final int job = (Integer)outputGridTopComponent.jTable1.getValueAt(row, 0);
+//        final int job = (Integer)model.getValueAt(row, 0);
+//        int delay = 30000; // 30 seconds
+//        java.awt.event.ActionListener extraLigChecker = new java.awt.event.ActionListener() {
+//                public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                        checkExtraLigand(evt, job);
+//                }
+//        };
+//
+//        extraLigStatHash.put(job, new Timer(delay, extraLigChecker));
+//    }
+//
+//    // Start Timer for when to start jobs with Secondary Ligands.
+//    private void startExtraLigTimer(final int job){
+//        (extraLigStatHash.get(job)).start();
+//
+//
+//    }
 
     // Timer to check the status of each job.
     private void startJobTimer(){
@@ -1266,7 +1305,7 @@ private class ModInLookListener implements LookupListener {
                 model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started", seq, tmplt});
             }
 
-            createExtraLigTimer(model.getRowCount() -1);
+            //createExtraLigTimer(model.getRowCount() -1);
 
             boxCoordField.setText("");
             receptorField.setText("");
@@ -1290,28 +1329,28 @@ private class ModInLookListener implements LookupListener {
                 model.removeRow(i);
             }
         //jobTimer.stop();
-        if(!extraLigStatHash.isEmpty()) extraLigStatHash.clear();
+        ////if(!extraLigStatHash.isEmpty()) extraLigStatHash.clear();
         //jobVector.removeAllElements();
         //currJobNumber = 0;
         //totalJobs = 0;
 
     }
 
-    // The secondary ligand timer calls this method to check the status of the first job
-    // to determine if the secondary ligand job can be started.
-    private void checkExtraLigand(java.awt.event.ActionEvent evt, int row) {
-        String status = (String)table.getValueAt(row, 7);
-        int job = (Integer)table.getValueAt(row, 0);
-
-        if(status.equals("Done")){
-            // create and start new job
-            doSecondaryJob(row);
-            messageArea.append("Starting Secondary Ligand Job\n");
-            // kill timer
-            (extraLigStatHash.get(job)).stop();
-
-        }
-    }
+//    // The secondary ligand timer calls this method to check the status of the first job
+//    // to determine if the secondary ligand job can be started.
+//    private void checkExtraLigand(java.awt.event.ActionEvent evt, int row) {
+//        String status = (String)table.getValueAt(row, 7);
+//        int job = (Integer)table.getValueAt(row, 0);
+//
+//        if(status.equals("Done")){
+//            // create and start new job
+//            doSecondaryJob(row);
+//            messageArea.append("Starting Secondary Ligand Job\n");
+//            // kill timer
+//            (extraLigStatHash.get(job)).stop();
+//
+//        }
+//    }
 
     // Creates and starts the AutoDock job for the secondary ligand.
     private void doSecondaryJob(int row){
@@ -1370,6 +1409,7 @@ private class ModInLookListener implements LookupListener {
         private javax.swing.JTextField boxCoordField;
         private javax.swing.JButton jButton1;
         private javax.swing.JLabel jLabel1;
+        private javax.swing.JLabel jLabel2;
         private javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel2;
         private javax.swing.JPanel jPanel3;
@@ -1398,6 +1438,7 @@ private class ModInLookListener implements LookupListener {
         private javax.swing.JButton startAllJobsButton;
         private javax.swing.JCheckBox swarmCheckBox;
         private javax.swing.JToggleButton swarmToggleButton;
+        private javax.swing.JTextField swmJobNum;
         // End of variables declaration//GEN-END:variables
 	/**
 	 * Gets default instance. Do not use directly: reserved for *.settings files only,
