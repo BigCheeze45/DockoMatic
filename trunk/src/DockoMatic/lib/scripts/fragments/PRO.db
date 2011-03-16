@@ -1,0 +1,63 @@
+<node>PRO
+	<node>Names
+ 		<node>Proline</node>
+		<node>Prolin</node>
+		<node>Pro</node>
+		<node>P</node>
+	</node>
+	<node>Atoms
+		<node>N<value>N 0.03190848 1.374047 -0.2465853</value></node>
+		<node>CA<value>C 0.4437964 0.4522487 -1.313841</value></node>
+		<node>C<value>C 1.153984 -0.7795747 -0.7384319</value></node>
+		<node>O<value>O 2.396496 -0.7261156 -0.5988901</value></node>
+		<node>CB<value>C 1.34565 1.283736 -2.23033</value></node>
+		<node>CG<value>C 2.02933 2.275858 -1.278275</value></node>
+		<node>CD<value>C 1.21179 2.210818 0.01815094</value></node>
+		<node>OXT<value>O 0.4228693 -1.712297 -0.3395816</value></node>
+	</node>
+  <node>Bonds
+    <node>5<value>CA N s</value></node>
+    <node>10<value>C CA s</value></node>
+    <node>13<value>O C a</value></node>
+    <node>14<value>CB CA s</value></node>
+    <node>20<value>CG CB s</value></node>
+    <node>26<value>CD N s</value></node>
+    <node>27<value>CD CG s</value></node>
+    <node>32<value>OXT C a</value></node>
+  </node>
+	<node>Connections
+		<node>N-term<value>N C-term s 1.33 0.5</value></node>
+		<node>C-term<value>C N-term s 1.33 0.5</value></node>
+	</node>
+	<node>Properties
+ 		<node>AMINO_ACID</node>
+	</node>
+	<node>Variants
+		<node>Default
+			<node>Delete
+				<node>OXT</node>
+			</node>
+		</node>
+		<node>PRO-M
+			<node>Properties
+				<node>C_TERMINAL</node>
+				<node>N_TERMINAL</node>
+ 			</node>
+		</node>
+		<node>PRO-C
+			<node>Delete
+			</node>
+			<node>Properties
+				<node>C_TERMINAL</node>
+ 			</node>
+		</node>
+ 		<node>PRO-N
+ 			<node>Delete
+	 			<node>OXT</node>
+ 			</node>
+ 			<node>Properties
+ 				<node>N_TERMINAL</node>
+			</node>
+		</node>
+	</node>
+</node>

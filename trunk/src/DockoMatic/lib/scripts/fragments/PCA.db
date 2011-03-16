@@ -1,0 +1,47 @@
+<node>PCA
+  <node>Names
+		<node>Pyroglutamate</node>
+		<node>Pyroglutamat</node>
+		<node>PCA</node>
+  </node>
+  <node>Atoms
+    <node>N<value>N 0.633233 -0.738520 0.753950</value></node>
+    <node>CA<value>C -0.480480 0.254947 0.696080</value></node>
+    <node>C<value>C -1.757691 -0.270758 -0.060790</value></node>
+    <node>O<value>O -1.739275 -1.432777 -0.530185</value></node>
+    <node>CB<value>C 0.102054 1.514384 0.035819</value></node>
+    <node>CG<value>C 1.511340 1.164025 -0.440294</value></node>
+    <node>CD<value>C 1.725147 -0.277577 -0.025832</value></node>
+    <node>OE<value>O 2.716615 -0.966582 -0.238284</value></node>
+    <node>OXT<value>O -2.740502 0.498543 -0.143251</value></node>
+  </node>
+  <node>Bonds
+    <node>5<value>C CA s</value></node>
+    <node>8<value>O C d</value></node>
+    <node>11<value>CB CA s</value></node>
+    <node>13<value>CG CB s</value></node>
+    <node>17<value>CD CG s</value></node>
+    <node>19<value>CD N s</value></node>
+    <node>20<value>OE CD d</value></node>
+    <node>26<value>OXT C s</value></node>
+		<node>27<value>N CA s</value></node>
+  </node>
+	<node>Connections
+    <node>C-term<value>C N-term s 1.33 0.5</value></node>
+	</node>
+	<node>Properties
+		<node>AMINO_ACID</node>
+	</node>
+	<node>Variants
+		<node>Default
+		</node>
+		<node>PCA-N
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Properties
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+	</node>
+</node>

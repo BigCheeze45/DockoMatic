@@ -1,0 +1,68 @@
+<node>LEU
+	<node>Names
+		<node>Leucine</node>
+		<node>Leucin</node>
+		<node>Leu</node>
+		<node>L</node>
+	</node>
+	<node>Atoms
+		<node>N<value>N -0.003476313 1.235853 0.02699674</value></node>
+		<node>CA<value>C -0.6514053 1.883178 -1.129898</value></node>
+		<node>C<value>C -0.5708863 3.410168 -0.9936234</value></node>
+		<node>O<value>O 0.1419036 3.827524 -0.05211589</value></node>
+		<node>CB<value>C -2.091007 1.359104 -1.274005</value></node>
+		<node>CG<value>C -2.872831 1.847369 -2.507179</value></node>
+		<node>CD1<value>C -2.162796 1.498542 -3.821336</value></node>
+		<node>CD2<value>C -4.261661 1.198464 -2.502073</value></node>
+		<node>OXT<value>O -0.8228753 4.072413 -2.02374</value></node>
+	</node>
+  <node>Bonds
+    <node>6<value>CA N s</value></node>
+    <node>11<value>C CA s</value></node>
+    <node>14<value>O C a</value></node>
+    <node>15<value>CB CA s</value></node>
+    <node>21<value>CG CB s</value></node>
+    <node>26<value>CD1 CG s</value></node>
+    <node>33<value>CD2 CG s</value></node>
+    <node>40<value>OXT C a</value></node>
+  </node>
+	<node>Connections
+		<node>N-term<value>N C-term s 1.33 0.5</value></node>
+		<node>C-term<value>C N-term s 1.33 0.5</value></node>
+	</node>
+	<node>Properties
+		<node>AMINO_ACID</node>
+	</node>
+	<node>Variants
+		<node>Default
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Rename
+			</node>
+		</node>
+		<node>LEU-M
+			<node>Properties
+				<node>C_TERMINAL</node>
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+		<node>LEU-C
+			<node>Delete
+			</node>
+			<node>Rename
+			</node>
+			<node>Properties
+				<node>C_TERMINAL</node>
+			</node>
+		</node>
+		<node>LEU-N
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Properties
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+	</node>
+</node>
