@@ -1,0 +1,70 @@
+<node>LYS
+	<node>Names
+		<node>Lysine</node>
+		<node>Lysin</node>
+		<node>Lys</node>
+		<node>K</node>
+	</node>
+	<node>Atoms
+		<node>N<value>N 0.03796386 1.172592 -0.009692425</value></node>
+		<node>CA<value>C -0.6562778 1.887361 -1.097957</value></node>
+		<node>C<value>C -0.5601511 3.406333 -0.9147748</value></node>
+		<node>O<value>O -0.5440148 4.087965 -1.963232</value></node>
+		<node>CB<value>C -2.114089 1.411355 -1.200695</value></node>
+		<node>CG<value>C -2.816849 1.934443 -2.461919</value></node>
+		<node>CD<value>C -4.230651 1.346997 -2.563318</value></node>
+		<node>CE<value>C -4.93697 1.869824 -3.82334</value></node>
+		<node>NZ<value>N -6.304516 1.325968 -3.962642</value></node>
+		<node>OXT<value>O -0.7869474 3.85405 0.2308864</value></node>
+	</node>
+  <node>Bonds
+    <node>6<value>CA N s</value></node>
+    <node>11<value>C CA s</value></node>
+    <node>14<value>O C a</value></node>
+    <node>15<value>CB CA s</value></node>
+    <node>21<value>CG CB s</value></node>
+    <node>27<value>CD CG s</value></node>
+    <node>33<value>CE CD s</value></node>
+    <node>39<value>NZ CE s</value></node>
+    <node>48<value>OXT C a</value></node>
+  </node>
+	<node>Connections
+		<node>N-term<value>N C-term s 1.33 0.5</value></node> 
+		<node>C-term<value>C N-term s 1.33 0.5</value></node>
+	</node>
+	<node>Properties
+		<node>AMINO_ACID</node>
+	</node>
+	<node>Variants
+		<node>Default
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Rename
+			</node>
+		</node>
+		<node>LYS-M
+			<node>Properties
+				<node>C_TERMINAL</node>
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+		<node>LYS-C
+			<node>Delete
+			</node>
+			<node>Rename
+			</node>
+			<node>Properties
+				<node>C_TERMINAL</node>
+			</node>
+		</node>
+		<node>LYS-N
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Properties
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+	</node>
+</node>

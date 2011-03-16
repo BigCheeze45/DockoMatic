@@ -1,0 +1,35 @@
+<node>NME
+	<node>Names
+		<node>Methylamine</node>
+	</node>
+	<node>Atoms
+		<node>N<value>N  0.724  0.000 -0.079</value></node>
+		<node>CH3<value>C -0.742  0.000  0.011</value></node>
+	</node>
+	<node>Bonds
+		<node>1<value>N CH3 s</value></node>
+	</node>
+	<node>Connections
+		<node>N-term<value>N C-term s 1.33 0.5</value></node>
+	</node>
+	<node>Properties
+		<node>AMINO_ACID</node>
+	</node>
+	<node>Variants
+		<node>NME-C
+			<node>Delete
+			</node>
+			<node>Rename	
+			</node>
+			<node>Properties
+				<node>C_TERMINAL</node>
+			</node>
+		</node>
+		<node>NME-M
+			<node>Properties
+				<node>C_TERMINAL</node>
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+	</node>
+</node>

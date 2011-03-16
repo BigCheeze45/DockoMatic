@@ -1,0 +1,70 @@
+<node>GLN
+	<node>Names
+		<node>Glutamine</node> 
+		<node>Glutamin</node>
+		<node>Gln</node>
+		<node>Q</node>
+	</node>
+	<node>Atoms
+		<node>N<value>N -1.694353 -0.2940789 3.487573</value></node>
+		<node>CA<value>C -1.339968 1.106833 3.061471</value></node>
+		<node>C<value>C -1.613526 1.110178 1.459362</value></node>
+		<node>O<value>O -1.452083 2.138383 0.8146671</value></node>
+		<node>CB<value>C 0.1053884 1.466314 3.38408</value></node>
+		<node>CG<value>C 0.2953307 2.976142 3.377398</value></node>
+		<node>CD<value>C 1.757013 3.318817 3.588054</value></node>
+		<node>OE1<value>O 2.263759 3.493683 4.689262</value></node>
+		<node>NE2<value>N 2.607646 3.349533 2.459146</value></node>
+		<node>OXT<value>O -2.00241 -0.02523248 1.056456</value></node>
+	</node>
+	<node>Bonds
+		<node>2<value>CA N s</value></node>
+		<node>4<value>C CA s</value></node>
+		<node>5<value>O C a</value></node>
+		<node>6<value>CB CA s</value></node>
+		<node>9<value>CG CB s</value></node>
+		<node>12<value>CD CG s</value></node>
+		<node>13<value>OE1 CD d</value></node>
+		<node>14<value>NE2 CD s</value></node>
+		<node>17<value>OXT C a</value></node>
+	</node>
+	<node>Connections
+		<node>N-term<value>N C-term s 1.33 0.5</value></node>
+		<node>C-term<value>C N-term s 1.33 0.5</value></node>
+	</node>
+	<node>Properties
+		<node>AMINO_ACID</node>
+	</node>
+	<node>Variants
+		<node>Default
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Rename
+			</node>
+		</node>
+		<node>GLN-M
+			<node>Properties
+				<node>C_TERMINAL</node>
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+		<node>GLN-C
+			<node>Delete
+			</node>
+			<node>Rename
+			</node>
+			<node>Properties
+				<node>C_TERMINAL</node>
+			</node>
+		</node>
+		<node>GLN-N
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Properties
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+	</node>
+</node>

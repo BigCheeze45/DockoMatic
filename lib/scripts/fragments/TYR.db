@@ -1,0 +1,77 @@
+<node>TYR
+	<node>Names
+		<node>Tyrosine</node>
+		<node>Tyrosin</node>
+		<node>Tyr</node>
+		<node>Y</node>
+	</node>
+	<node>Atoms
+		<node>N<value>N 0.0892698 1.397582 0.01951128</value></node>
+		<node>CA<value>C -0.7022205 2.069859 -1.026261</value></node>
+		<node>C<value>C -1.325588 3.357111 -0.4775957</value></node>
+		<node>O<value>O -0.5109698 4.260831 -0.1874116</value></node>
+		<node>CB<value>C -1.734457 1.10693 -1.63201</value></node>
+		<node>CG<value>C -2.557806 1.696825 -2.76258</value></node>
+		<node>CD1<value>C -3.932589 1.947373 -2.588092</value></node>
+		<node>CD2<value>C -1.942974 2.007092 -3.98996</value></node>
+		<node>CE1<value>C -4.68326 2.520281 -3.629397</value></node>
+		<node>CE2<value>C -2.6951 2.579179 -5.030118</value></node>
+		<node>CZ<value>C -4.063968 2.83503 -4.851168</value></node>
+		<node>OH<value>O -4.785331 3.388967 -5.865766</value></node>
+		<node>OXT<value>O -2.492483 3.282188 -0.03387626</value></node>
+	</node>
+  <node>Bonds
+    <node>6<value>CA N s</value></node>
+    <node>11<value>C CA s</value></node>
+    <node>14<value>O C a</value></node>
+    <node>15<value>CB CA s</value></node>
+    <node>21<value>CG CB s</value></node>
+    <node>24<value>CD1 CG a</value></node>
+    <node>28<value>CD2 CG a</value></node>
+    <node>32<value>CE1 CD1 a</value></node>
+    <node>36<value>CE2 CD2 a</value></node>
+    <node>40<value>CZ CE1 a</value></node>
+    <node>41<value>CZ CE2 a</value></node>
+    <node>43<value>OH CZ s</value></node>
+    <node>46<value>OXT C a</value></node>
+  </node>
+	<node>Connections
+		<node>N-term<value>N C-term s 1.33 0.5</value></node>
+		<node>C-term<value>C N-term s 1.33 0.5</value></node>
+	</node>
+	<node>Properties
+		<node>AMINO_ACID</node>
+	</node>
+	<node>Variants
+		<node>Default
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Rename
+			</node>
+		</node>
+		<node>TYR-M
+			<node>Properties
+				<node>C_TERMINAL</node>
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+		<node>TYR-C
+			<node>Delete
+			</node>
+			<node>Rename
+			</node>
+			<node>Properties
+				<node>C_TERMINAL</node>
+			</node>
+		</node>
+		<node>TYR-N
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Properties
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+	</node>
+</node>

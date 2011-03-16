@@ -1,0 +1,68 @@
+<node>ILE
+	<node>Names
+		<node>Isoleucine</node>
+		<node>Isoleucin</node>
+		<node>Ile</node>
+		<node>I</node>
+	</node>
+	<node>Atoms
+		<node>N<value>N 0.1219419 1.159209 -0.1919851</value></node>
+		<node>CA<value>C -0.7030041 1.935257 -1.138673</value></node>
+		<node>C<value>C -0.5392811 3.43721 -0.8683466</value></node>
+		<node>O<value>O 0.4636989 3.750649 -0.1867381</value></node>
+		<node>CB<value>C -2.165631 1.439687 -1.121375</value></node>
+		<node>CG1<value>C -2.945574 1.890833 -2.370761</value></node>
+		<node>CG2<value>C -2.890608 1.852801 0.1693949</value></node>
+		<node>CD1<value>C -4.249351 1.108805 -2.558935</value></node>
+		<node>OXT<value>O -1.135264 4.21782 -1.641576</value></node>
+	</node>
+	<node>Bonds
+		<node>6<value>CA N s</value></node>
+		<node>11<value>C CA s</value></node>
+		<node>14<value>O C a</value></node>
+		<node>15<value>CB CA s</value></node>
+		<node>20<value>CG1 CB s</value></node>
+		<node>26<value>CG2 CB s</value></node>
+		<node>33<value>CD1 CG1 s</value></node>
+		<node>42<value>OXT C a</value></node>
+	</node>
+	<node>Connections
+		<node>N-term<value>N C-term s 1.33 0.5</value></node>
+		<node>C-term<value>C N-term s 1.33 0.5</value></node>
+	</node>
+	<node>Properties
+		<node>AMINO_ACID</node>
+	</node>
+	<node>Variants
+		<node>Default
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Rename
+			</node>
+		</node>
+		<node>ILE-M
+			<node>Properties
+				<node>C_TERMINAL</node>
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+		<node>ILE-C
+			<node>Delete
+			</node>
+			<node>Rename
+			</node>
+			<node>Properties
+				<node>C_TERMINAL</node>
+			</node>
+		</node>
+		<node>ILE-N
+			<node>Delete
+				<node>OXT</node>
+			</node>
+			<node>Properties
+				<node>N_TERMINAL</node>
+			</node>
+		</node>
+	</node>
+</node>
