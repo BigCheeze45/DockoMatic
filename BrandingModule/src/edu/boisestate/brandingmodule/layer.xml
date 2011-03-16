@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <attr name="Windows2\Modes\output\AnalyzerTopComponent.wstcref\position" intvalue="1700"/>
+    <attr name="Windows2\Modes\output\CallHierarchyTopComponent.wstcref\position" intvalue="1600"/>
+    <attr name="Windows2\Modes\output\DeclarationTopComponent.wstcref\position" intvalue="1800"/>
+    <attr name="Windows2\Modes\output\JavadocTopComponent.wstcref\position" intvalue="1900"/>
+    <attr name="Windows2\Modes\output\StyleBuilderTC.wstcref\position" intvalue="2000"/>
+    <attr name="Windows2\Modes\output\TaskListTopComponent.wstcref\position" intvalue="2600"/>
+    <attr name="Windows2\Modes\output\TerminalContainerTopComponent.wstcref\position" intvalue="2100"/>
+    <attr name="Windows2\Modes\output\breakpointsView.wstcref\position" intvalue="700"/>
+    <attr name="Windows2\Modes\output\callstackView.wstcref\position" intvalue="600"/>
+    <attr name="Windows2\Modes\output\find-usages.wstcref\position" intvalue="1500"/>
+    <attr name="Windows2\Modes\output\gsf-testrunner-results.wstcref\position" intvalue="1300"/>
+    <attr name="Windows2\Modes\output\hgversioning.wstcref\position" intvalue="2300"/>
+    <attr name="Windows2\Modes\output\localsView.wstcref\position" intvalue="400"/>
+    <attr name="Windows2\Modes\output\modOutTopComponent.wstcref\position" intvalue="200"/>
+    <attr name="Windows2\Modes\output\output.wstcref\position" intvalue="2200"/>
+    <attr name="Windows2\Modes\output\outputGridTopComponent.wstcref\position" intvalue="100"/>
+    <attr name="Windows2\Modes\output\refactoring-preview.wstcref\position" intvalue="1400"/>
+    <attr name="Windows2\Modes\output\resultsView.wstcref\position" intvalue="500"/>
+    <attr name="Windows2\Modes\output\search-results.wstcref\position" intvalue="1200"/>
+    <attr name="Windows2\Modes\output\sessionsView.wstcref\position" intvalue="900"/>
+    <attr name="Windows2\Modes\output\sources.wstcref\position" intvalue="800"/>
+    <attr name="Windows2\Modes\output\svnversioning.wstcref\position" intvalue="2500"/>
+    <attr name="Windows2\Modes\output\synchronize.wstcref\position" intvalue="2400"/>
+    <attr name="Windows2\Modes\output\threadsView.wstcref\position" intvalue="1000"/>
+    <attr name="Windows2\Modes\output\versioning_output.wstcref\position" intvalue="1100"/>
+    <attr name="Windows2\Modes\output\watchesView.wstcref\position" intvalue="300"/>
+    <file name="BugtrackingOptionsDialog_hidden"/>
+    <file name="Databases_hidden"/>
+    <file name="Debugger_hidden"/>
+    <folder name="Editors">
+        <file name="ActionPresenters_hidden"/></folder>
+    <folder name="Menu">
+        <folder name="File">
+            <file name="org-netbeans-modules-project-ui-NewProject.shadow_hidden"/>
+            <file name="org-netbeans-modules-project-ui-OpenProject.shadow_hidden"/>
+        </folder>
+            <file name="Refactoring_hidden"/>
+            <file name="RunProject_hidden"/>
+        <file name="Source_hidden"/>
+        <folder name="Tools">
+            <file name="JavaPlatformsCustomizerAction.shadow_hidden"/>
+            <file name="LibrariesCustomizerAction.shadow_hidden"/>
+            <file name="PaletteManager_hidden"/>
+            <file name="ServerManagerAction3.shadow_hidden"/>
+            <file name="VariablesCustomizerAction.shadow_hidden"/>
+            <file name="org-netbeans-modules-favorites-templates-TemplatesAction.shadow_hidden"/>
+            <file name="org-netbeans-modules-xml-catalog-CatalogAction.shadow_hidden"/>
+        </folder>
+        <file name="Versioning_hidden"/>
+        <folder name="Window">
+            <file name="CloneDocumentAction.shadow_hidden"/>
+            <file name="CloseAllButThisAction.shadow_hidden"/>
+            <file name="CloseAllDocumentsAction.shadow_hidden"/>
+            <file name="Debug_hidden"/>
+            <file name="DocumentsAction.shadow_hidden"/>
+            <file name="KenaiAction.shadow_hidden"/>
+            <file name="ModInAction.shadow_hidden"/>
+            <file name="Navigator_hidden"/>
+            <file name="Other_hidden"/>
+            <file name="Output_hidden"/>
+            <file name="ProgressListAction.shadow_hidden"/>
+            <file name="ShowPaletteAction.shadow_hidden"/>
+            <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
+            <file name="Versioning_hidden"/>
+            <file name="ViewFavoritesTabAction.shadow_hidden"/>
+            <file name="org-netbeans-core-ide-ServicesTabAction.shadow_hidden"/>
+            <file name="org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow_hidden"/>
+            <file name="org-netbeans-modules-project-ui-logical-tab-action.shadow_hidden"/>
+            <file name="org-netbeans-modules-project-ui-physical-tab-action.shadow_hidden"/>
+            <file name="org-netbeans-modules-tasklist-ui-TaskListAction.shadow_hidden"/>
+        </folder>
+    </folder>
+    <folder name="Toolbars">
+        <folder name="Build">
+            <file name="org-netbeans-modules-debugger-ui-actions-DebugMainProjectAction.shadow_hidden"/>
+            <file name="org-netbeans-modules-project-ui-BuildMainProject.shadow_hidden"/>
+            <file name="org-netbeans-modules-project-ui-RebuildMainProject.shadow_hidden"/>
+        </folder>
+        <file name="Debug_hidden"/>
+        <file name="Debugging.xml_hidden"/>
+        <folder name="File">
+            <file name="org-netbeans-modules-project-ui-NewProject.shadow_hidden"/>
+            <file name="org-netbeans-modules-project-ui-OpenProject.shadow_hidden"/>
+        </folder>
+            <file name="Memory_hidden"/>
+        <file name="QuickSearch_hidden"/>
+        <file name="Standard.xml_hidden"/>
+        <file name="UndoRedo_hidden"/>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Groups">
+            <file name="OpenedProjects_hidden"/>
+                <file name="debugger_hidden"/>
+        </folder>
+        <folder name="Modes">
+            <file name="explorer_hidden"/>
+        </folder>
+    </folder>
+</filesystem>
