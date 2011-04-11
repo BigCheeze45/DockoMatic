@@ -151,16 +151,8 @@ private class ModInLookListener implements LookupListener {
                 resChkGpfButton = new javax.swing.JButton();
                 resChkGpfField = new javax.swing.JTextField();
                 jPanel2 = new javax.swing.JPanel();
-                avgButton = new javax.swing.JButton();
                 newJobButton = new javax.swing.JButton();
-                startAllJobsButton = new javax.swing.JButton();
-                StartSelectedJobButton = new javax.swing.JButton();
-                removeAllJobsButton = new javax.swing.JButton();
-                removeSelectedJobButton = new javax.swing.JButton();
-                pymolButton = new javax.swing.JButton();
                 swarmCheckBox = new javax.swing.JCheckBox();
-                swarmToggleButton = new javax.swing.JToggleButton();
-                jButton1 = new javax.swing.JButton();
                 newTabChBox = new javax.swing.JCheckBox();
                 swmJobNum = new javax.swing.JTextField();
                 jLabel2 = new javax.swing.JLabel();
@@ -388,15 +380,11 @@ private class ModInLookListener implements LookupListener {
                 jPanel1Layout.setHorizontalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -424,13 +412,6 @@ private class ModInLookListener implements LookupListener {
                                 .addGap(112, 112, 112))
                 );
 
-                org.openide.awt.Mnemonics.setLocalizedText(avgButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.avgButton.text")); // NOI18N
-                avgButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                avgButtonActionPerformed(evt);
-                        }
-                });
-
                 org.openide.awt.Mnemonics.setLocalizedText(newJobButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newJobButton.text")); // NOI18N
                 newJobButton.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,56 +419,7 @@ private class ModInLookListener implements LookupListener {
                         }
                 });
 
-                org.openide.awt.Mnemonics.setLocalizedText(startAllJobsButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.startAllJobsButton.text")); // NOI18N
-                startAllJobsButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                startAllJobsButtonActionPerformed(evt);
-                        }
-                });
-
-                org.openide.awt.Mnemonics.setLocalizedText(StartSelectedJobButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.StartSelectedJobButton.text")); // NOI18N
-                StartSelectedJobButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                StartSelectedJobButtonActionPerformed(evt);
-                        }
-                });
-
-                org.openide.awt.Mnemonics.setLocalizedText(removeAllJobsButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.removeAllJobsButton.text")); // NOI18N
-                removeAllJobsButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                removeAllJobsButtonActionPerformed(evt);
-                        }
-                });
-
-                org.openide.awt.Mnemonics.setLocalizedText(removeSelectedJobButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.removeSelectedJobButton.text")); // NOI18N
-                removeSelectedJobButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                removeSelectedJobButtonActionPerformed(evt);
-                        }
-                });
-
-                org.openide.awt.Mnemonics.setLocalizedText(pymolButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.pymolButton.text")); // NOI18N
-                pymolButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                pymolButtonActionPerformed(evt);
-                        }
-                });
-
                 org.openide.awt.Mnemonics.setLocalizedText(swarmCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swarmCheckBox.text")); // NOI18N
-
-                org.openide.awt.Mnemonics.setLocalizedText(swarmToggleButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swarmToggleButton.text")); // NOI18N
-                swarmToggleButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                swarmToggleButtonActionPerformed(evt);
-                        }
-                });
-
-                org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jButton1.text")); // NOI18N
-                jButton1.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                jButton1ActionPerformed(evt);
-                        }
-                });
 
                 org.openide.awt.Mnemonics.setLocalizedText(newTabChBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newTabChBox.text")); // NOI18N
                 newTabChBox.addActionListener(new java.awt.event.ActionListener() {
@@ -508,46 +440,22 @@ private class ModInLookListener implements LookupListener {
                                 .addGap(23, 23, 23)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(newTabChBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(swarmCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(avgButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                                         .addComponent(newJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(startAllJobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(StartSelectedJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(removeAllJobsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(removeSelectedJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(pymolButton, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(swarmToggleButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                                        .addComponent(swmJobNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                                        .addComponent(swmJobNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                        .addComponent(swarmCheckBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel2Layout.setVerticalGroup(
                         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(avgButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(47, 47, 47)
                                 .addComponent(newJobButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(newTabChBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(startAllJobsButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(StartSelectedJobButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(removeAllJobsButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(removeSelectedJobButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pymolButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(swarmCheckBox)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(swarmToggleButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(245, 245, 245)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(swmJobNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -731,35 +639,6 @@ private class ModInLookListener implements LookupListener {
             }
     }//GEN-LAST:event_appCheckBoxActionPerformed
 
-    private void avgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avgButtonActionPerformed
-        Process proc;
-        if(boxCoordField.getText().trim().length() < 1){
-            messageArea.append("No GPF Supplied... Can't check results.\n");
-            return;
-        }
-        String box = boxCoordField.getText().trim();
-        String odir = outDirField.getText().trim();
-
-        //String cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
-        String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
-        cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("DockoMatic.jar"));
-        //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockOmatic.pl"));
-        cmd += "scripts/resultCheck.pl";
-        String dir = getDirChoose(lastOutDir);
-        if(odir.length() < 1){ odir = dir; }
-        if(dir != null){
-            cmd += " -d "+dir+" -b "+box+" -o "+odir;
-            messageArea.append("Res Check CMD ["+cmd+"]\n");
-            messageArea.append("Results written to ["+odir+"/CheckResultsLog_*"+"]\n");
-            try{
-
-               proc = Runtime.getRuntime().exec(cmd, null);
-            }catch(java.io.IOException e){
-                    System.out.println("Caught eX "+e);
-            }
-        }
-    }//GEN-LAST:event_avgButtonActionPerformed
-
     private void newJobButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newJobButtonActionPerformed
             if(outDirField.getText().trim().length() < 1){
                     messageArea.append("No Output Directory Supplied\nUsing Current Directory '.'\n");
@@ -778,121 +657,22 @@ private class ModInLookListener implements LookupListener {
             }
     }//GEN-LAST:event_newJobButtonActionPerformed
 
-    private void startAllJobsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAllJobsButtonActionPerformed
+    protected static void startSelected(java.awt.event.ActionEvent e){
+	    instance.StartSelectedJobActionPerformed(e);
 
-	table = outputGridTopComponent.getSelectedTable();
-	model = (DefaultTableModel)table.getModel();
-	//model = (DefaultTableModel)outputGridTopComponent.getSelectedTab();
+    }
+    protected static void removeSelected(java.awt.event.ActionEvent e){
+	    instance.removeSelectedJobActionPerformed(e);
+    }
 
-        messageArea.append("Starting All Jobs\n");
-        int job;
-            for(int i = 0; i< model.getRowCount(); i++){
-                if(((String)table.getValueAt(i, 7)).compareTo("Not Started") == 0){
-                    job = (Integer)table.getValueAt(i, 0);
-                    updateJob(i);
-                    jobVector.get(job).runJob();
-                    //if(((String)table.getValueAt(i, 5)).length() > 0) startExtraLigTimer(i);
-                    table.setValueAt("Started", i, 7);
-                }else{
-                    messageArea.append("Previous Job Activity detected... Re-starting job not allowed!\n");
-                }
-            }
-    }//GEN-LAST:event_startAllJobsButtonActionPerformed
+    protected static void pymolView(java.awt.event.ActionEvent e){
+	    instance.pymolActionPerformed(e);
+    }
 
-    private void StartSelectedJobButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartSelectedJobButtonActionPerformed
-	table = outputGridTopComponent.getSelectedTable();
-	model = (DefaultTableModel)table.getModel();
+    protected static void checkRes(java.awt.event.ActionEvent e) {
+	    instance.avgActionPerformed(e);
+    }
 
-            int[] rowNums = table.getSelectedRows();
-            int rowCount = table.getSelectedRowCount();
-            int jobNum;
-            if(rowCount == 0){
-                    messageArea.append("NO ROWS SELECTED\n");
-                    return;
-            }
-
-            messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
-            for(int rowNum=0; rowNum < rowCount; rowNum++){
-                jobNum = (Integer)table.getValueAt(rowNums[rowNum], 0);
-                messageArea.append("Starting Job "+jobNum+"\n");
-
-
-            //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNum, 7)).compareTo("Not Started") == 0){
-                //File dir = new File((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 2));
-                File dir = new File((String)table.getValueAt(rowNums[rowNum], 2));
-                dir.delete();
-                dir.mkdir();
-
-                updateJob(rowNums[rowNum]);
-                //if(outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 7).equals("Started")){
-                if(table.getValueAt(rowNums[rowNum], 7).equals("Started")){
-                    jobVector.get(jobNum).killJob();
-                    messageArea.append("Restarting Job "+jobNum+"\n");
-                    ////(extraLigStatHash.get(jobNum)).stop();
-                }
-                //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
-                table.setValueAt("Started", rowNums[rowNum], 7);
-                jobVector.get(jobNum).runJob();
-                //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
-                //if(((String)table.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
-            }
-            //}else{
-            //      messageArea.append("Previous Job Activity detected... Re-starting job not allowed!\n");
-            //}
-    }//GEN-LAST:event_StartSelectedJobButtonActionPerformed
-
-    private void removeAllJobsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllJobsButtonActionPerformed
-            removeAllJobs();
-    }//GEN-LAST:event_removeAllJobsButtonActionPerformed
-
-    private void removeSelectedJobButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSelectedJobButtonActionPerformed
-	table = outputGridTopComponent.getSelectedTable();
-	model = (DefaultTableModel)table.getModel();
-            int[] rowNums = table.getSelectedRows();
-            int rowCount = table.getSelectedRowCount();
-            int jobNum;
-
-            if(rowCount == 0){
-                    messageArea.append("NO ROW SELECTED\n");
-                    return;
-            }
-            messageArea.append("Selected " + rowCount + " Jobs For Removal\n");
-            for(int rowNum=rowCount-1; rowNum >= 0; rowNum--){
-                    jobNum = (Integer)table.getValueAt(rowNums[rowNum], 0);
-                    messageArea.append("Killing Job "+jobNum+"\n");
-                    jobVector.get(jobNum).killJob();
-                    messageArea.append("Removing Job "+jobNum+"\n");
-                    ////(extraLigStatHash.get(jobNum)).stop();
-                    model.removeRow(rowNums[rowNum]);
-            }
-    }//GEN-LAST:event_removeSelectedJobButtonActionPerformed
-
-    private void pymolButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pymolButtonActionPerformed
-	table = outputGridTopComponent.getSelectedTable();
-	model = (DefaultTableModel)table.getModel();
-            String file;
-            String dir;
-            javax.swing.JFileChooser checker;
-
-          try{
-            dir = (String) table.getValueAt(table.getSelectedRow(), 2);
-            checker = new javax.swing.JFileChooser(dir);
-          }catch (java.lang.ArrayIndexOutOfBoundsException e){
-                checker = new javax.swing.JFileChooser();
-          }
-
-          try{
-
-            int retval = checker.showOpenDialog(openerTopComponent.this);
-            if (retval == checker.APPROVE_OPTION) {
-                file = checker.getSelectedFile().getPath();
-                Process k = Runtime.getRuntime().exec("pymol "+file);
-            }
-
-          }catch (java.io.IOException e){
-                    messageArea.append(e + "\n");
-          }
-    }//GEN-LAST:event_pymolButtonActionPerformed
 
     // Checks the status of jobs and sets them to Done if they are.
     private void checkStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkStatusButtonActionPerformed
@@ -958,67 +738,6 @@ private class ModInLookListener implements LookupListener {
         }
     }//GEN-LAST:event_checkStatusButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-	table = outputGridTopComponent.getSelectedTable();
-	model = (DefaultTableModel)table.getModel();
-        File pdbDir = null;
-        String files;
-        String dir = null;
-        javax.swing.JFileChooser checker;
-
-          try{
-            dir = (String) table.getValueAt(table.getSelectedRow(), 2);
-            pdbDir = new File(dir);
-          }catch (java.lang.ArrayIndexOutOfBoundsException e){
-          }
-
-          if(dir == null){
-              checker = new javax.swing.JFileChooser();
-              checker.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-              int retval = checker.showOpenDialog(openerTopComponent.this);
-              if (retval == checker.APPROVE_OPTION) {
-                pdbDir = new File(checker.getSelectedFile().getPath());
-              }else{
-                      return;
-              }
-          }
-
-          files = getPDBNames(pdbDir);
-          String cmd = "pymol " + files;
-          try{
-
-              Process k = Runtime.getRuntime().exec(cmd);
-
-          }catch (java.io.IOException e){
-              messageArea.append(e + "\n");
-          }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void swarmToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swarmToggleButtonActionPerformed
-	table = outputGridTopComponent.getSelectedTable();
-	model = (DefaultTableModel)table.getModel();
-            int job;
-            if(this.swarmToggleButton.isSelected()){
-                    messageArea.append("Setting All Jobs To NOT Use Swarm\n");
-            }else{
-                    messageArea.append("Setting All Jobs To Use Swarm\n");
-            }
-
-            for(int i = 0; i< model.getRowCount(); i++){
-                job = (Integer)table.getValueAt(i, 0);
-                if(this.swarmToggleButton.isSelected()){
-                    swarmToggleButton.setText("All Swarm OFF");
-                    jobVector.get(job).setSwarm(false);
-
-                    table.setValueAt(false, i, 6);
-                }else{
-                    swarmToggleButton.setText("All Swarm ON");
-                    jobVector.get(job).setSwarm(true);
-                    table.setValueAt(true, i, 6);
-                }
-            }
-    }//GEN-LAST:event_swarmToggleButtonActionPerformed
-
     private void resChkGpfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resChkGpfButtonActionPerformed
         String file = getFileChoose(lastBoxDir);
         if(file != null){
@@ -1030,6 +749,144 @@ private class ModInLookListener implements LookupListener {
     private void newTabChBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newTabChBoxActionPerformed
        tabFlag = newTabChBox.isSelected();
     }//GEN-LAST:event_newTabChBoxActionPerformed
+
+    private void pymolActionPerformed(java.awt.event.ActionEvent evt) {
+	    table = outputGridTopComponent.getSelectedTable();
+	    model = (DefaultTableModel)table.getModel();
+	    String file;
+	    String dir;
+	    javax.swing.JFileChooser checker;
+
+	    try{
+		    dir = (String) table.getValueAt(table.getSelectedRow(), 2);
+		    checker = new javax.swing.JFileChooser(dir);
+	    }catch (java.lang.ArrayIndexOutOfBoundsException e){
+		    checker = new javax.swing.JFileChooser();
+	    }
+
+	    try{
+
+		    int retval = checker.showOpenDialog(openerTopComponent.this);
+		    if (retval == checker.APPROVE_OPTION) {
+			    file = checker.getSelectedFile().getPath();
+			    Process k = Runtime.getRuntime().exec("pymol "+file);
+		    }
+
+	    }catch (java.io.IOException e){
+		    messageArea.append(e + "\n");
+	    }
+}
+
+    private void removeSelectedJobActionPerformed(java.awt.event.ActionEvent evt) {
+	    table = outputGridTopComponent.getSelectedTable();
+	    model = (DefaultTableModel)table.getModel();
+	    int[] rowNums = table.getSelectedRows();
+	    int rowCount = table.getSelectedRowCount();
+	    int jobNum;
+
+	    if(rowCount == 0){
+		    messageArea.append("NO ROW SELECTED\n");
+		    return;
+	    }
+	    messageArea.append("Selected " + rowCount + " Jobs For Removal\n");
+	    for(int rowNum=rowCount-1; rowNum >= 0; rowNum--){
+		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], 0);
+		    messageArea.append("Killing Job "+jobNum+"\n");
+		    jobVector.get(jobNum).killJob();
+		    messageArea.append("Removing Job "+jobNum+"\n");
+		    ////(extraLigStatHash.get(jobNum)).stop();
+		    model.removeRow(rowNums[rowNum]);
+	    }
+}
+
+    private Object[] getRowsToRun(int rows){
+	    ArrayList<Integer> rowNums = new ArrayList();
+	    int rowNum;
+
+	    for(rowNum=0; rowNum<rows; rowNum++){
+		if((Boolean)table.getValueAt(rowNum, 10))
+	            rowNums.add(rowNum);
+	    }
+
+	    Object ret[] = rowNums.toArray();
+
+            return ret;
+
+
+    }
+
+    private void StartSelectedJobActionPerformed(java.awt.event.ActionEvent evt) {
+	    table = outputGridTopComponent.getSelectedTable();
+	    model = (DefaultTableModel)table.getModel();
+
+	    //int[] rowNums = table.getSelectedRows();
+	    //int rowCount = table.getSelectedRowCount();
+	    Object[] rowNums = getRowsToRun(model.getRowCount());
+	    int rowCount = rowNums.length;
+	    int jobNum;
+	    if(rowCount == 0){
+		    messageArea.append("NO ROWS SELECTED\n");
+		    return;
+	    }
+
+	    messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
+	    for(int rowNum=0; rowNum < rowCount; rowNum++){
+		    jobNum = (Integer)table.getValueAt((Integer)rowNums[rowNum], 0);
+		    messageArea.append("Starting Job "+jobNum+"\n");
+
+
+		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNum, 7)).compareTo("Not Started") == 0){
+		    //File dir = new File((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 2));
+		    File dir = new File((String)table.getValueAt((Integer)rowNums[rowNum], 2));
+		    dir.delete();
+		    dir.mkdir();
+
+		    updateJob((Integer)rowNums[rowNum]);
+		    //if(outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 7).equals("Started")){
+		    if(table.getValueAt((Integer)rowNums[rowNum], 7).equals("Started")){
+			    jobVector.get(jobNum).killJob();
+			    messageArea.append("Restarting Job "+jobNum+"\n");
+			    ////(extraLigStatHash.get(jobNum)).stop();
+		    }
+		    //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
+		    table.setValueAt("Started", (Integer)rowNums[rowNum], 7);
+		    jobVector.get(jobNum).runJob();
+		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
+		    //if(((String)table.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
+	    }
+	    //}else{
+	    //      messageArea.append("Previous Job Activity detected... Re-starting job not allowed!\n");
+	    //}
+}
+
+    private void avgActionPerformed(java.awt.event.ActionEvent evt) {
+	    Process proc;
+	    if(boxCoordField.getText().trim().length() < 1){
+		    messageArea.append("No GPF Supplied... Can't check results.\n");
+		    return;
+	    }
+	    String box = boxCoordField.getText().trim();
+	    String odir = outDirField.getText().trim();
+
+	    //String cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
+	    String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
+	    cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("DockoMatic.jar"));
+	    //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockOmatic.pl"));
+	    cmd += "scripts/resultCheck.pl";
+	    String dir = getDirChoose(lastOutDir);
+	    if(odir.length() < 1){ odir = dir; }
+	    if(dir != null){
+		    cmd += " -d "+dir+" -b "+box+" -o "+odir;
+		    messageArea.append("Res Check CMD ["+cmd+"]\n");
+		    messageArea.append("Results written to ["+odir+"/CheckResultsLog_*"+"]\n");
+		    try{
+
+			    proc = Runtime.getRuntime().exec(cmd, null);
+		    }catch(java.io.IOException e){
+			    System.out.println("Caught eX "+e);
+		    }
+	    }
+}
 
     /*
      * adjusts job numbers to reflect any subdirectories that may already exist in the
@@ -1296,13 +1153,13 @@ private class ModInLookListener implements LookupListener {
                 //model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", swarm, "Not Started"});
                 //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app));
                 jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app, seq, tmplt));
-                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", swarm, "Not Started", seq, tmplt});
+                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", swarm, "Not Started", seq, tmplt, true});
             }else{
                 //jobVector.addElement(new Job(currJobNumber, lig, rec, box, dir, swarmCheckBox.isSelected(), ""));
                 //model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started"});
                 jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "", seq, tmplt));
                 //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "" ));
-                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started", seq, tmplt});
+                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started", seq, tmplt, true});
             }
 
             //createExtraLigTimer(model.getRowCount() -1);
@@ -1399,15 +1256,12 @@ private class ModInLookListener implements LookupListener {
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton LigandButton;
-        private javax.swing.JButton StartSelectedJobButton;
         private javax.swing.JCheckBox appCheckBox;
         private javax.swing.JButton appendButton;
         private javax.swing.JTextField appendField;
-        private javax.swing.JButton avgButton;
         private javax.swing.JButton boxCoordButton;
         private javax.swing.JCheckBox boxCoordCheckBox;
         private javax.swing.JTextField boxCoordField;
-        private javax.swing.JButton jButton1;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JLabel jLabel2;
         private javax.swing.JPanel jPanel1;
@@ -1427,17 +1281,12 @@ private class ModInLookListener implements LookupListener {
         private javax.swing.JCheckBox newTabChBox;
         private javax.swing.JButton outDirButton;
         private javax.swing.JTextField outDirField;
-        private javax.swing.JButton pymolButton;
         private javax.swing.JButton receptorButton;
         private javax.swing.JCheckBox receptorCheckBox;
         private javax.swing.JTextField receptorField;
-        private javax.swing.JButton removeAllJobsButton;
-        private javax.swing.JButton removeSelectedJobButton;
         private javax.swing.JButton resChkGpfButton;
         private javax.swing.JTextField resChkGpfField;
-        private javax.swing.JButton startAllJobsButton;
         private javax.swing.JCheckBox swarmCheckBox;
-        private javax.swing.JToggleButton swarmToggleButton;
         private javax.swing.JTextField swmJobNum;
         // End of variables declaration//GEN-END:variables
 	/**
