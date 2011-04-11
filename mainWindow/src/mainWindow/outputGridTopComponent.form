@@ -64,7 +64,7 @@
                     <Column editable="true" title="Status" type="java.lang.String"/>
                     <Column editable="true" title="Sequence" type="java.lang.String"/>
                     <Column editable="true" title="Template" type="java.lang.String"/>
-                    <Column editable="true" title="RUN" type="java.lang.Boolean"/>
+                    <Column editable="true" title="ACTION" type="java.lang.Boolean"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

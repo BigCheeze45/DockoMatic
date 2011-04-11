@@ -780,8 +780,10 @@ private class ModInLookListener implements LookupListener {
     private void removeSelectedJobActionPerformed(java.awt.event.ActionEvent evt) {
 	    table = outputGridTopComponent.getSelectedTable();
 	    model = (DefaultTableModel)table.getModel();
-	    int[] rowNums = table.getSelectedRows();
-	    int rowCount = table.getSelectedRowCount();
+	    //int[] rowNums = table.getSelectedRows();
+	    //int rowCount = table.getSelectedRowCount();
+	    Object[] rowNums = getSelected(model.getRowCount());
+	    int rowCount = rowNums.length;
 	    int jobNum;
 
 	    if(rowCount == 0){
@@ -790,16 +792,16 @@ private class ModInLookListener implements LookupListener {
 	    }
 	    messageArea.append("Selected " + rowCount + " Jobs For Removal\n");
 	    for(int rowNum=rowCount-1; rowNum >= 0; rowNum--){
-		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], 0);
+		    jobNum = (Integer)table.getValueAt((Integer)rowNums[rowNum], 0);
 		    messageArea.append("Killing Job "+jobNum+"\n");
 		    jobVector.get(jobNum).killJob();
 		    messageArea.append("Removing Job "+jobNum+"\n");
 		    ////(extraLigStatHash.get(jobNum)).stop();
-		    model.removeRow(rowNums[rowNum]);
+		    model.removeRow((Integer)rowNums[rowNum]);
 	    }
 }
 
-    private Object[] getRowsToRun(int rows){
+    private Object[] getSelected(int rows){
 	    ArrayList<Integer> rowNums = new ArrayList();
 	    int rowNum;
 
@@ -821,7 +823,7 @@ private class ModInLookListener implements LookupListener {
 
 	    //int[] rowNums = table.getSelectedRows();
 	    //int rowCount = table.getSelectedRowCount();
-	    Object[] rowNums = getRowsToRun(model.getRowCount());
+	    Object[] rowNums = getSelected(model.getRowCount());
 	    int rowCount = rowNums.length;
 	    int jobNum;
 	    if(rowCount == 0){

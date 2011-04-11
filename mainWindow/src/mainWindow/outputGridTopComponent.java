@@ -65,7 +65,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
                         },
                         new String [] {
-                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "RUN"
+                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "ACTION"
                         }
                 ) {
                         Class[] types = new Class [] {
@@ -179,49 +179,36 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
 	private static void selectAllInclude()
 	{
-		//System.out.println("SELECT ALL JOBS SHOULD BE "+includeToggle);
 	    JTable table = getSelectedTable();
 
 	    DefaultTableModel model = (DefaultTableModel)table.getModel();
             int job;
 
             for(int i = 0; i< model.getRowCount(); i++){
-                //job = (Integer)table.getValueAt(i, 1);
 
                 if(includeToggle){
-//			table.selectAll();
-                    //jobVector.get(job).setSwarm(false);
-                    //table.removeRowSelectionInterval(i, i);
                     table.setValueAt(false, i, 10);
                 }else{
-//			table.clearSelection();
-                    //jobVector.get(job).setSwarm(true);
-                    //table.addRowSelectionInterval(i, i);
                     table.setValueAt(true, i, 10);
-                    //table.setRowSelectionInterval(i, i);
                 }
             }
-                if(includeToggle)
+            if(includeToggle)
 		    includeToggle=false;
-		else
+	    else
 		    includeToggle=true;
 
 	}
 
 	private static void selectAllSwarm()
 	{
-		//System.out.println("SELECT ALL SWARM SHOULD BE "+swarmToggle);
 	    JTable table = getSelectedTable();
 	    DefaultTableModel model = (DefaultTableModel)table.getModel();
             int job;
 
             for(int i = 0; i< model.getRowCount(); i++){
-                //job = (Integer)table.getValueAt(i, 1);
                 if(swarmToggle){
-                    //jobVector.get(job).setSwarm(false);
                     table.setValueAt(false, i, 6);
                 }else{
-                    //jobVector.get(job).setSwarm(true);
                     table.setValueAt(true, i, 6);
                 }
             }
@@ -234,20 +221,14 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
 	private static void headerMousePressed(java.awt.event.MouseEvent e) {
 
-		JTable table = getSelectedTable();
-		JTableHeader header = table.getTableHeader();
-		//TableColumnModel columns = header.getColumnModel();
+       	    JTable table = getSelectedTable();
+	    JTableHeader header = table.getTableHeader();
+            int column = header.columnAtPoint(e.getPoint());
 
-//		 if (!columns.getColumnSelectionAllowed())
-//        return;
-
-    int column = header.columnAtPoint(e.getPoint());
-		//System.out.println("HEADER MOUSE: COL "+column);
-
-    if(column == 10)
-	    selectAllInclude();
-    else if(column == 6)
-            selectAllSwarm();
+            if(column == 10)
+	        selectAllInclude();
+            else if(column == 6)
+                selectAllSwarm();
 	}
 
 	private static void TabbMousePressed(java.awt.event.MouseEvent e) {
@@ -256,72 +237,6 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 			jpop.show(e.getComponent(), e.getX(), e.getY());
 			return;
 		}
-
-//		JTable table = getSelectedTable();
-//		JTableHeader header = table.getTableHeader();
-//		//TableColumnModel columns = header.getColumnModel();
-//
-////		 if (!columns.getColumnSelectionAllowed())
-////        return;
-//
-//    int column = header.columnAtPoint(e.getPoint());
-//
-//    if(column == 10)
-//	    selectAllInclude();
-//    else if(column == 6)
-//            selectAllSwarm();
-
-//    int count = table.getRowCount();
-//
-//    if (count != 0)
-//        table.setRowSelectionInterval(0, count - 1);
-//
-//    ListSelectionModel selection = columns.getSelectionModel();
-//
-//    if (e.isShiftDown())
-//    {
-//        int anchor = selection.getAnchorSelectionIndex();
-//        int lead = selection.getLeadSelectionIndex();
-//
-//        if (anchor != -1)
-//        {
-//            boolean old = selection.getValueIsAdjusting();
-//            selection.setValueIsAdjusting(true);
-//
-//            boolean anchorSelected = selection.isSelectedIndex(anchor);
-//
-//            if (lead != -1)
-//            {
-//                if (anchorSelected)
-//                    selection.removeSelectionInterval(anchor, lead);
-//                else
-//                    selection.addSelectionInterval(anchor, lead);
-//                // The latter is quite unintuitive.
-//            }
-//
-//            if (anchorSelected)
-//                selection.addSelectionInterval(anchor, column);
-//            else
-//                selection.removeSelectionInterval(anchor, column);
-//
-//            selection.setValueIsAdjusting(old);
-//        }
-//        else
-//            selection.setSelectionInterval(column, column);
-//    }
-//    else if (e.isControlDown())
-//    {
-//        if (selection.isSelectedIndex(column))
-//            selection.removeSelectionInterval(column, column);
-//        else
-//            selection.addSelectionInterval(column, column);
-//    }
-//    else
-//    {
-//        selection.setSelectionInterval(column, column);
-//    }
-
-
 
 	}
 
@@ -342,7 +257,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
                         },
                         new String [] {
-                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "RUN"
+                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "ACTION"
                         }
                 ) {
                         Class[] types = new Class [] {
