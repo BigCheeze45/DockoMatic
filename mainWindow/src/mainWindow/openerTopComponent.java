@@ -13,7 +13,6 @@ import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import java.io.*;
 import java.util.Vector;
-import java.util.Hashtable;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,6 +75,8 @@ private Lookup.Result res = null;
 		initComponents();
 		setName(NbBundle.getMessage(openerTopComponent.class, "CTL_openerTopComponent"));
 		setToolTipText(NbBundle.getMessage(openerTopComponent.class, "HINT_openerTopComponent"));
+		jPanel7.setVisible(false);
+		jPanel9.setVisible(false);
 		modListen = new ModInLookListener();
 		//res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(String.class);
 		res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(ArrayList.class);
@@ -302,7 +303,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(boxCoordButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(boxCoordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                                 .addComponent(boxCoordCheckBox)
                                 .addContainerGap())
                 );
@@ -386,22 +387,20 @@ private class ModInLookListener implements LookupListener {
                                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 );
                 jPanel1Layout.setVerticalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jPanel6, 0, 89, Short.MAX_VALUE)
-                                                .addGap(35, 35, 35))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -510,7 +509,7 @@ private class ModInLookListener implements LookupListener {
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jPanel1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel1, 0, 488, Short.MAX_VALUE)
                                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -541,9 +540,10 @@ private class ModInLookListener implements LookupListener {
     }
 */
     // Prompt window to select a directory from the filesystem.
-    private String getDirChoose(String lastDir){
+    private String getDirChoose(String lastDir, String title){
         String dir = null;
         javax.swing.JFileChooser fc = new javax.swing.JFileChooser(lastDir);
+	fc.setDialogTitle(title);
         fc.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         int retval = fc.showOpenDialog(this);
         if (retval == fc.APPROVE_OPTION) {
@@ -555,9 +555,10 @@ private class ModInLookListener implements LookupListener {
     }
 
     // Prompt window to select a file from the filesystem.
-    private String getFileChoose(String lastDir){
+    private String getFileChoose(String lastDir, String title){
         String file = null;
         javax.swing.JFileChooser fc = new javax.swing.JFileChooser(lastDir);
+	fc.setDialogTitle(title);
         int retval = fc.showOpenDialog(this);
         if (retval == fc.APPROVE_OPTION) {
            file = fc.getSelectedFile().getPath();
@@ -568,7 +569,7 @@ private class ModInLookListener implements LookupListener {
     }
 
     private void outDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outDirButtonActionPerformed
-        String dir = getDirChoose(lastOutDir);
+        String dir = getDirChoose(lastOutDir, "Select Output Directory");
         if(dir != null){
             lastOutDir = dir;
             outDirField.setText(lastOutDir);
@@ -576,7 +577,7 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_outDirButtonActionPerformed
 
     private void LigandButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LigandButtonActionPerformed
-        String file = getFileChoose(lastLigDir);
+        String file = getFileChoose(lastLigDir, "Select Ligand File");
         if(file != null){
             lastLigDir = file.substring(0, file.lastIndexOf(File.separator));
             ligandField.setText(file);
@@ -584,7 +585,7 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_LigandButtonActionPerformed
 
     private void receptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receptorButtonActionPerformed
-        String file = getFileChoose(lastRecDir);
+        String file = getFileChoose(lastRecDir, "Select Receptor File");
         if(file != null){
             lastRecDir = file.substring(0, file.lastIndexOf(File.separator));
             receptorField.setText(file);
@@ -592,7 +593,7 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_receptorButtonActionPerformed
 
     private void boxCoordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCoordButtonActionPerformed
-        String file = getFileChoose(lastBoxDir);
+        String file = getFileChoose(lastBoxDir, "Select Box Coordinate File");
         if(file != null){
             lastBoxDir = file.substring(0, file.lastIndexOf(File.separator));
             boxCoordField.setText(file);
@@ -600,7 +601,7 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_boxCoordButtonActionPerformed
 
     private void appendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appendButtonActionPerformed
-        String file = getFileChoose(lastAppendDir);
+        String file = getFileChoose(lastAppendDir, "Select Secondary Ligand File");
         if(file != null){
             lastAppendDir = file.substring(0, file.lastIndexOf(File.separator));
             appendField.setText(file);
@@ -657,22 +658,32 @@ private class ModInLookListener implements LookupListener {
             }
     }//GEN-LAST:event_newJobButtonActionPerformed
 
-    protected static void startSelected(java.awt.event.ActionEvent e){
+    protected static void startSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
 	    instance.StartSelectedJobActionPerformed(e);
 
     }
-    protected static void removeSelected(java.awt.event.ActionEvent e){
+    protected static void removeSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
 	    instance.removeSelectedJobActionPerformed(e);
     }
 
-    protected static void pymolView(java.awt.event.ActionEvent e){
-	    instance.pymolActionPerformed(e);
+    protected static void pymolView(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
+	    instance.pymolActionPerformed(evtOrig);
     }
 
-    protected static void checkRes(java.awt.event.ActionEvent e) {
-	    instance.avgActionPerformed(e);
+    protected static void checkRes(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
+	    instance.getResCheckInfo();
+	    instance.avgActionPerformed(evtOrig);
     }
 
+    private void getResCheckInfo(){
+	//instance.jPanel9.setVisible(true);
+        String file = getFileChoose(lastBoxDir, "Select GPF File for Result Checking");
+        if(file != null){
+            lastBoxDir = file.substring(0, file.lastIndexOf(File.separator));
+            resChkGpfField.setText(file);
+        }
+
+    }
 
     // Checks the status of jobs and sets them to Done if they are.
     private void checkStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkStatusButtonActionPerformed
@@ -688,27 +699,27 @@ private class ModInLookListener implements LookupListener {
             for(row = 0; row < model.getRowCount(); row++){
               //if((Integer)jTable1.getValueAt(row, 0) > 1) continue;      // This should allow us to skip to next directory so we avoid redundant checks.
 
-              String rec = (String) table.getValueAt(row, 3);
-              String dir = (String) table.getValueAt(row, 2);
+              String rec = (String) table.getValueAt(row, getCol("Receptor"));
+              String dir = (String) table.getValueAt(row, getCol("Output Directory"));
               //dir += File.separator;
               //dir += "_Reference";
               File dlg = new File(dir+"_Reference");
 
                     if(dlg.exists()){
-                            table.setValueAt("Done", row, 7);
-                            if(((String)table.getValueAt(row, 5)).length() > 0){
+                            table.setValueAt("Done", row, getCol("Status"));
+                            if(((String)table.getValueAt(row, getCol("Secondary"))).length() > 0){
                                 messageArea.append("Starting Secondary Ligand Job\n");
-                                jobNum = (Integer)table.getValueAt(row, 0);
+                                jobNum = (Integer)table.getValueAt(row, getCol("Job #"));
                                 doSecondaryJob(jobNum);
 		            }
                     }else{
                         // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
                         //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
                         // This line only IF running obconformer, or there will never be Orig_ file.
-                        dlg = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, 1)+".pdb");
+                        dlg = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol("Ligand"))+".pdb");
                         if(dlg.exists())
                         //if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
-                            table.setValueAt("Done", row, 7);
+                            table.setValueAt("Done", row, getCol("Status"));
                     }
 
 //              String files[] = dlg.list();
@@ -739,7 +750,7 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_checkStatusButtonActionPerformed
 
     private void resChkGpfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resChkGpfButtonActionPerformed
-        String file = getFileChoose(lastBoxDir);
+        String file = getFileChoose(lastBoxDir, "Select GPF File for Result Checking");
         if(file != null){
             lastBoxDir = file.substring(0, file.lastIndexOf(File.separator));
             resChkGpfField.setText(file);
@@ -750,7 +761,7 @@ private class ModInLookListener implements LookupListener {
        tabFlag = newTabChBox.isSelected();
     }//GEN-LAST:event_newTabChBoxActionPerformed
 
-    private void pymolActionPerformed(java.awt.event.ActionEvent evt) {
+    private void pymolActionPerformed(java.awt.event.MouseEvent evt) {
 	    table = outputGridTopComponent.getSelectedTable();
 	    model = (DefaultTableModel)table.getModel();
 	    String file;
@@ -758,10 +769,12 @@ private class ModInLookListener implements LookupListener {
 	    javax.swing.JFileChooser checker;
 
 	    try{
-		    dir = (String) table.getValueAt(table.getSelectedRow(), 2);
+		    dir = (String) table.getValueAt(table.getSelectedRow(), getCol("Output Directory"));
 		    checker = new javax.swing.JFileChooser(dir);
+	            checker.setDialogTitle("Select PDB File to View");
 	    }catch (java.lang.ArrayIndexOutOfBoundsException e){
 		    checker = new javax.swing.JFileChooser();
+	            checker.setDialogTitle("Select PDB File to View");
 	    }
 
 	    try{
@@ -777,13 +790,13 @@ private class ModInLookListener implements LookupListener {
 	    }
 }
 
-    private void removeSelectedJobActionPerformed(java.awt.event.ActionEvent evt) {
+    private void removeSelectedJobActionPerformed(java.awt.event.MouseEvent evt) {
 	    table = outputGridTopComponent.getSelectedTable();
 	    model = (DefaultTableModel)table.getModel();
-	    //int[] rowNums = table.getSelectedRows();
-	    //int rowCount = table.getSelectedRowCount();
-	    Object[] rowNums = getSelected(model.getRowCount());
-	    int rowCount = rowNums.length;
+	    int[] rowNums = table.getSelectedRows();
+	    int rowCount = table.getSelectedRowCount();
+	    //Object[] rowNums = getSelected(model.getRowCount());
+	    //int rowCount = rowNums.length;
 	    int jobNum;
 
 	    if(rowCount == 0){
@@ -792,39 +805,51 @@ private class ModInLookListener implements LookupListener {
 	    }
 	    messageArea.append("Selected " + rowCount + " Jobs For Removal\n");
 	    for(int rowNum=rowCount-1; rowNum >= 0; rowNum--){
-		    jobNum = (Integer)table.getValueAt((Integer)rowNums[rowNum], 0);
+		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol("Job #"));
 		    messageArea.append("Killing Job "+jobNum+"\n");
 		    jobVector.get(jobNum).killJob();
 		    messageArea.append("Removing Job "+jobNum+"\n");
 		    ////(extraLigStatHash.get(jobNum)).stop();
-		    model.removeRow((Integer)rowNums[rowNum]);
+		    model.removeRow(rowNums[rowNum]);
 	    }
 }
 
-    private Object[] getSelected(int rows){
-	    ArrayList<Integer> rowNums = new ArrayList();
-	    int rowNum;
-
-	    for(rowNum=0; rowNum<rows; rowNum++){
-		if((Boolean)table.getValueAt(rowNum, 10))
-	            rowNums.add(rowNum);
+//    private Object[] getSelected(int rows){
+//	    ArrayList<Integer> rowNums = new ArrayList<Integer>();
+//	    int rowNum;
+//
+//	    for(rowNum=0; rowNum<rows; rowNum++){
+//		if((Boolean)table.getValueAt(rowNum, getCol("ACTION")))
+//	            rowNums.add(rowNum);
+//	    }
+//
+//	    Object ret[] = rowNums.toArray();
+//
+//            return ret;
+//
+//
+//    }
+	private int getCol(String column){
+	    int i=0;
+	    table = outputGridTopComponent.getSelectedTable();
+	    int colCount = table.getColumnCount();
+	    String name = new String("");
+	    for(i=0; i<colCount; i++){
+		    name = table.getColumnName(i);
+		    if(column.equals(name)) return i;
 	    }
-
-	    Object ret[] = rowNums.toArray();
-
-            return ret;
+            return i;
+	}
 
 
-    }
-
-    private void StartSelectedJobActionPerformed(java.awt.event.ActionEvent evt) {
+    private void StartSelectedJobActionPerformed(java.awt.event.MouseEvent evt) {
 	    table = outputGridTopComponent.getSelectedTable();
 	    model = (DefaultTableModel)table.getModel();
 
-	    //int[] rowNums = table.getSelectedRows();
-	    //int rowCount = table.getSelectedRowCount();
-	    Object[] rowNums = getSelected(model.getRowCount());
-	    int rowCount = rowNums.length;
+	    int[] rowNums = table.getSelectedRows();
+	    int rowCount = table.getSelectedRowCount();
+	    //Object[] rowNums = getSelected(model.getRowCount());
+	    //int rowCount = rowNums.length;
 	    int jobNum;
 	    if(rowCount == 0){
 		    messageArea.append("NO ROWS SELECTED\n");
@@ -833,25 +858,25 @@ private class ModInLookListener implements LookupListener {
 
 	    messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
 	    for(int rowNum=0; rowNum < rowCount; rowNum++){
-		    jobNum = (Integer)table.getValueAt((Integer)rowNums[rowNum], 0);
+		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol("Job #"));
 		    messageArea.append("Starting Job "+jobNum+"\n");
 
 
 		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNum, 7)).compareTo("Not Started") == 0){
 		    //File dir = new File((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 2));
-		    File dir = new File((String)table.getValueAt((Integer)rowNums[rowNum], 2));
+		    File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol("Output Directory")));
 		    dir.delete();
 		    dir.mkdir();
 
-		    updateJob((Integer)rowNums[rowNum]);
+		    updateJob(rowNums[rowNum]);
 		    //if(outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 7).equals("Started")){
-		    if(table.getValueAt((Integer)rowNums[rowNum], 7).equals("Started")){
+		    if(table.getValueAt(rowNums[rowNum], getCol("Status")).equals("Started")){
 			    jobVector.get(jobNum).killJob();
 			    messageArea.append("Restarting Job "+jobNum+"\n");
 			    ////(extraLigStatHash.get(jobNum)).stop();
 		    }
 		    //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
-		    table.setValueAt("Started", (Integer)rowNums[rowNum], 7);
+		    table.setValueAt("Started", rowNums[rowNum], getCol("Status"));
 		    jobVector.get(jobNum).runJob();
 		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
 		    //if(((String)table.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
@@ -861,21 +886,30 @@ private class ModInLookListener implements LookupListener {
 	    //}
 }
 
-    private void avgActionPerformed(java.awt.event.ActionEvent evt) {
+    private void avgActionPerformed(java.awt.event.MouseEvent evt) {
 	    Process proc;
-	    if(boxCoordField.getText().trim().length() < 1){
+	    table = outputGridTopComponent.getSelectedTable();
+            int row = table.rowAtPoint(evt.getPoint());
+	    //table.setRowSelectionInterval(row, row);
+	    String out = (String)table.getValueAt(row, getCol("Output Directory"));
+	    outDirField.setText(out);
+
+	    //if(boxCoordField.getText().trim().length() < 1){
+	    if(resChkGpfField.getText().trim().length() < 1){
 		    messageArea.append("No GPF Supplied... Can't check results.\n");
 		    return;
 	    }
-	    String box = boxCoordField.getText().trim();
+	    //String box = boxCoordField.getText().trim();
+	    String box = resChkGpfField.getText().trim();
 	    String odir = outDirField.getText().trim();
 
 	    //String cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
-	    String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
-	    cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("DockoMatic.jar"));
+	    //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("DockoMatic.jar"));
 	    //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockOmatic.pl"));
-	    cmd += "scripts/resultCheck.pl";
-	    String dir = getDirChoose(lastOutDir);
+	    String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
+            cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
+	    cmd += "lib/scripts/resultCheck.pl";
+	    String dir = getDirChoose(lastOutDir, "Select Directory to Analyze");
 	    if(odir.length() < 1){ odir = dir; }
 	    if(dir != null){
 		    cmd += " -d "+dir+" -b "+box+" -o "+odir;
@@ -937,7 +971,7 @@ private class ModInLookListener implements LookupListener {
         mkSubdirs(1);
 
 	messageArea.append("Making Model Job\n");
-        newJob("", "", "", base + "dock_"+Integer.toString(currJobNumber+1), "", false, false, seq, tmplt);
+        newJob("", "", "", base + "dock_"+Integer.toString(currJobNumber), "", false, false, seq, tmplt);
 
     }
 
@@ -971,7 +1005,7 @@ private class ModInLookListener implements LookupListener {
                    for(int r=0; r<recVector.size(); r++){
                            for(int b=0; b<boxVector.size(); b++){
                                    for(int a=0; a<appVector.size(); a++){
-                                           newJob(ligVector.get(l), recVector.get(r), boxVector.get(b), base + "dock_"+Integer.toString(currJobNumber+1), appVector.get(a), false, false, "", "");
+                                           newJob(ligVector.get(l), recVector.get(r), boxVector.get(b), base + "dock_"+Integer.toString(currJobNumber), appVector.get(a), false, false, "", "");
                                    }
                            }
                    }
@@ -1129,16 +1163,16 @@ private class ModInLookListener implements LookupListener {
     private void updateJob(int row){
 	    table = outputGridTopComponent.getSelectedTable();
 
-            int job = (Integer)table.getValueAt(row, 0);
+            int job = (Integer)table.getValueAt(row, getCol("Job #"));
 
             Job tmp = jobVector.get(job);
-            tmp.update((String)table.getValueAt(row, 1),
-                       (String)table.getValueAt(row, 2),
-                       (String)table.getValueAt(row, 3),
-                       (String)table.getValueAt(row, 4),
-                       (Boolean)table.getValueAt(row, 6),
-                       (String)table.getValueAt(row, 8),
-                       (String)table.getValueAt(row, 9));
+            tmp.update((String)table.getValueAt(row, getCol("Ligand")),
+                       (String)table.getValueAt(row, getCol("Output Directory")),
+                       (String)table.getValueAt(row, getCol("Receptor")),
+                       (String)table.getValueAt(row, getCol("Box Coordinate")),
+                       (Boolean)table.getValueAt(row, getCol("Use Swarm")),
+                       (String)table.getValueAt(row, getCol("Sequence")),
+                       (String)table.getValueAt(row, getCol("Template")));
 
     }
 
@@ -1183,7 +1217,7 @@ private class ModInLookListener implements LookupListener {
         int jobNum;
         int numRows = model.getRowCount();
             for(int i = numRows-1; i>= 0; i--){
-                jobNum = (Integer)table.getValueAt(i, 0);
+                jobNum = (Integer)table.getValueAt(i, getCol("Job #"));
                 jobVector.get(jobNum).killJob();
                 model.removeRow(i);
             }
@@ -1213,13 +1247,13 @@ private class ModInLookListener implements LookupListener {
 
     // Creates and starts the AutoDock job for the secondary ligand.
     private void doSecondaryJob(int row){
-        String lig = (String)table.getValueAt(row, 5);
-        String rec = (String)table.getValueAt(row, 3);
-        String box = (String)table.getValueAt(row, 4);
-        String dir = (String)table.getValueAt(row, 2);
-        String oldLig = ((String)table.getValueAt(row, 1)).toUpperCase();
+        String lig = (String)table.getValueAt(row, getCol("Secondary"));
+        String rec = (String)table.getValueAt(row, getCol("Receptor"));
+        String box = (String)table.getValueAt(row, getCol("Box Coordinate"));
+        String dir = (String)table.getValueAt(row, getCol("Output Directory"));
+        String oldLig = ((String)table.getValueAt(row, getCol("Ligand"))).toUpperCase();
         Boolean swarm = false;
-        if((Boolean)table.getValueAt(row, 6)){ swarm = true; }
+        if((Boolean)table.getValueAt(row, getCol("Use Swarm"))){ swarm = true; }
         String app;
         String base = "";
 
@@ -1234,9 +1268,9 @@ private class ModInLookListener implements LookupListener {
 
         alignJobNums();
         mkSubdirs(1);
-        newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber+1), app, true, swarm, "", "");
+        newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
         jobVector.lastElement().runJob();
-        table.setValueAt("Started", model.getRowCount()-1, 7);
+        table.setValueAt("Started", model.getRowCount()-1, getCol("Status"));
 
     }
 
@@ -1272,7 +1306,7 @@ private class ModInLookListener implements LookupListener {
         private javax.swing.JPanel jPanel4;
         private javax.swing.JPanel jPanel5;
         private javax.swing.JPanel jPanel6;
-        private javax.swing.JPanel jPanel7;
+        protected static javax.swing.JPanel jPanel7;
         private javax.swing.JPanel jPanel8;
         private javax.swing.JPanel jPanel9;
         private javax.swing.JScrollPane jScrollPane1;
