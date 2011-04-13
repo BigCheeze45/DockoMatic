@@ -4,19 +4,18 @@
  */
 package mainWindow;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
@@ -43,12 +42,35 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
 	public outputGridTopComponent() {
 		initComponents();
-		makePopMenu();
 		setName(NbBundle.getMessage(outputGridTopComponent.class, "CTL_outputGridTopComponent"));
 		setToolTipText(NbBundle.getMessage(outputGridTopComponent.class, "HINT_outputGridTopComponent"));
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 		putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
 		putClientProperty(TopComponent.PROP_KEEP_PREFERRED_SIZE_WHEN_SLIDED_IN, Boolean.TRUE);
+                jTable1.setColumnSelectionAllowed(true);
+		JTableHeader head = jTable1.getTableHeader();
+                head.addMouseListener(new java.awt.event.MouseAdapter() {
+                      public void mousePressed(java.awt.event.MouseEvent evt) {
+                                headerMousePressed(evt);
+                        }
+                });
+
+	}
+
+	protected static void closeTabb(){
+	     
+		System.out.println("CLOSE TABB");
+		JMenuItem optionMenuClose = new JMenuItem( "Close Tab" );
+
+
+		jpop = new JPopupMenu( "Tab Options" );
+		jpop.add( optionMenuClose );
+
+		optionMenuClose.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+	                        outGridTPane.remove(outGridTPane.getSelectedIndex());
+			}
+		});
 
 	}
 
@@ -65,14 +87,17 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
                         },
                         new String [] {
-                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "ACTION"
+                                //"Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "ACTION"
+                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template"
                         }
                 ) {
                         Class[] types = new Class [] {
-                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                                //java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                         };
                         boolean[] canEdit = new boolean [] {
-                                false, true, true, true, true, true, true, false, true, false, true
+                                //false, true, true, true, true, true, false, false, true, true, true
+                                false, true, true, true, true, true, false, false, true, true
                         };
 
                         public Class getColumnClass(int columnIndex) {
@@ -86,13 +111,19 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                 tmpTable.setColumnSelectionAllowed(true);
 		JTableHeader header = tmpTable.getTableHeader();
                 header.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mousePressed(java.awt.event.MouseEvent evt) {
+                      public void mousePressed(java.awt.event.MouseEvent evt) {
                                 headerMousePressed(evt);
                         }
                 });
                 tmpTable.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mousePressed(java.awt.event.MouseEvent evt) {
+                      public void mousePressed(java.awt.event.MouseEvent evt) {
                                 TabbMousePressed(evt);
+                        }
+                });
+                outGridTPane.addMouseListener(new java.awt.event.MouseAdapter() {
+                      public void mouseClicked(java.awt.event.MouseEvent evt) {
+		            if(evt.isPopupTrigger())
+                                closeTabb();
                         }
                 });
 		//tmpTable.getModel().addTableModelListener(instance);
@@ -132,11 +163,11 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 	}
 
 	// Create a popup menu
-	private static void makePopMenu(){
+	private static void makePopMenu(final java.awt.event.MouseEvent evtOrig){
 		JMenuItem optionMenuStart = new JMenuItem( "Start" );
-		JMenuItem optionMenuStop = new JMenuItem( "Stop" );
+		//JMenuItem optionMenuStop = new JMenuItem( "Stop" );
 		JMenuItem optionMenuDelete = new JMenuItem( "Delete" );
-		JMenuItem optionMenuRC = new JMenuItem( "Check Result" );
+		JMenuItem optionMenuRC = new JMenuItem( "Analyze" );
 		JMenuItem optionMenuPymol = new JMenuItem( "View in Pymol" );
 
 
@@ -148,9 +179,9 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 		jpop.add( optionMenuPymol );
 
 
-		optionMenuStart.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-			    openerTopComponent.startSelected(e);
+		optionMenuStart.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+			    openerTopComponent.startSelected(e, evtOrig);
 			}
 		});
 //		optionMenuStop.addActionListener(new ActionListener(){
@@ -158,22 +189,23 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 //			    openerTopComponent.startSelected(e);
 //			}
 //		});
-		optionMenuDelete.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-			    openerTopComponent.removeSelected(e);
+		optionMenuDelete.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+			    openerTopComponent.removeSelected(e, evtOrig);
 			}
 		});
-		optionMenuRC.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-			    openerTopComponent.checkRes(e);
+		optionMenuRC.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+			    openerTopComponent.checkRes(e, evtOrig);
 			}
 		});
-		optionMenuPymol.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-			    openerTopComponent.pymolView(e);
+		optionMenuPymol.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+			    openerTopComponent.pymolView(e, evtOrig);
 			}
 		});
 
+		jpop.show(evtOrig.getComponent(), evtOrig.getX(), evtOrig.getY());
 
 	}
 
@@ -184,19 +216,36 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 	    DefaultTableModel model = (DefaultTableModel)table.getModel();
             int job;
 
-            for(int i = 0; i< model.getRowCount(); i++){
+            //for(int i = 0; i< model.getRowCount(); i++){
 
                 if(includeToggle){
-                    table.setValueAt(false, i, 10);
+                    //table.setValueAt(false, i, getCol("ACTION"));
+		    //table.removeRowSelectionInterval(i, i);
+		    table.clearSelection();
                 }else{
-                    table.setValueAt(true, i, 10);
+                    //table.setValueAt(true, i, getCol("ACTION"));
+		    //table.addRowSelectionInterval(i, i);
+		    table.selectAll();
                 }
-            }
+            //}
             if(includeToggle)
 		    includeToggle=false;
 	    else
 		    includeToggle=true;
 
+	}
+
+	private static int getCol(String column){
+	    JTable table = getSelectedTable();
+	    int i =0;
+	    int colCount = table.getColumnCount();
+	    String name = new String("");
+	    for(i=0; i<colCount; i++){
+		    name = table.getColumnName(i);
+		    if(column.equals(name)) return i;
+	    }
+
+            return i;
 	}
 
 	private static void selectAllSwarm()
@@ -207,15 +256,15 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
             for(int i = 0; i< model.getRowCount(); i++){
                 if(swarmToggle){
-                    table.setValueAt(false, i, 6);
+                    table.setValueAt(false, i, getCol("Use Swarm"));
                 }else{
-                    table.setValueAt(true, i, 6);
+                    table.setValueAt(true, i, getCol("Use Swarm"));
                 }
             }
-                if(swarmToggle)
-		    swarmToggle=false;
-		else
-		    swarmToggle=true;
+            if(swarmToggle)
+	        swarmToggle=false;
+	    else
+	        swarmToggle=true;
 
 	}
 
@@ -224,17 +273,42 @@ public final class outputGridTopComponent extends TopComponent implements TableM
        	    JTable table = getSelectedTable();
 	    JTableHeader header = table.getTableHeader();
             int column = header.columnAtPoint(e.getPoint());
+	    String colName = table.getColumnName(column);
+	    JPanel panel;
 
-            if(column == 10)
+            //if(column == 10)
+            //if(colName.equals("ACTION"))
+            if(colName.equals("Job #"))
 	        selectAllInclude();
-            else if(column == 6)
+            //else if(column == 5){
+            else if(colName.equals("Secondary")){
+                panel = openerTopComponent.jPanel7;
+                if(panel.isVisible()) panel.setVisible(false);
+		else panel.setVisible(true);
+	    //} else if (column == 6)
+	    } else if (colName.equals("Use Swarm"))
                 selectAllSwarm();
 	}
 
 	private static void TabbMousePressed(java.awt.event.MouseEvent e) {
-		//System.out.println("TAB MOUSE");
+		int button = e.getButton();
+       	        JTable table = getSelectedTable();
+		table.setCellSelectionEnabled(false);
+		table.setRowSelectionAllowed(true);
+		int row = table.rowAtPoint(e.getPoint());
+		if(table.isRowSelected(row)) 
+		{
+			table.addRowSelectionInterval(row, row);
+                        //table.setValueAt(true, row, getCol("ACTION"));
+		}
+		else 
+		{
+			table.removeRowSelectionInterval(row, row);
+                        //table.setValueAt(false, row, getCol("ACTION"));
+		}
 		if(e.isPopupTrigger()){
-			jpop.show(e.getComponent(), e.getX(), e.getY());
+			//jpop.show(e.getComponent(), e.getX(), e.getY());
+			makePopMenu(e);
 			return;
 		}
 
@@ -257,14 +331,14 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
                         },
                         new String [] {
-                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "ACTION"
+                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template"
                         }
                 ) {
                         Class[] types = new Class [] {
-                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                         };
                         boolean[] canEdit = new boolean [] {
-                                false, true, true, true, true, true, true, true, true, true, true
+                                false, true, true, true, true, true, false, true, true, true
                         };
 
                         public Class getColumnClass(int columnIndex) {
@@ -275,14 +349,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                                 return canEdit [columnIndex];
                         }
                 });
-                jTable1.setColumnSelectionAllowed(true);
-                jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mousePressed(java.awt.event.MouseEvent evt) {
-                                jTable1MousePressed(evt);
-                        }
-                });
                 jScrollPane1.setViewportView(jTable1);
-                jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
                 jTable1.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title0_1")); // NOI18N
                 jTable1.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title1_1")); // NOI18N
                 jTable1.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title2_1")); // NOI18N
@@ -293,7 +360,6 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                 jTable1.getColumnModel().getColumn(7).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title7")); // NOI18N
                 jTable1.getColumnModel().getColumn(8).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title8")); // NOI18N
                 jTable1.getColumnModel().getColumn(9).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title9")); // NOI18N
-                jTable1.getColumnModel().getColumn(10).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title10")); // NOI18N
 
                 outGridTPane.addTab(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
 
@@ -308,14 +374,6 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                         .addComponent(outGridTPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
                 );
         }// </editor-fold>//GEN-END:initComponents
-
-	private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-				if(evt.isPopupTrigger())
-					System.out.println("POPUP\n");
-				else
-		System.out.println("MOUSE CLICKED\n");
-		//showPopup(evt);
-	}//GEN-LAST:event_jTable1MousePressed
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         protected static javax.swing.JScrollPane jScrollPane1;
