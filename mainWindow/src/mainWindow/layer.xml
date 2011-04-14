@@ -34,7 +34,6 @@
     </folder>
     <folder name="Windows2">
         <folder name="Components">
-            <file name="ModInTopComponent.settings" url="ModInTopComponentSettings.xml"/>
             <file name="openerTopComponent.settings" url="openerTopComponentSettings.xml"/>
             <file name="outputGridTopComponent.settings" url="outputGridTopComponentSettings.xml"/>
         </folder>
@@ -46,7 +45,6 @@
                 <file name="outputGridTopComponent.wstcref" url="outputGridTopComponentWstcref.xml"/>
             </folder>
             <folder name="properties">
-                <file name="ModInTopComponent.wstcref" url="ModInTopComponentWstcref.xml"/>
             </folder>
         </folder>
     </folder>
