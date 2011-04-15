@@ -41,7 +41,8 @@ public final class modWizWizardAction extends CallableSystemAction {
 		if (panels == null) {
 			panels = new WizardDescriptor.Panel[]{
 					new modWizWizardPanel1(),
-					new modWizWizardPanel2()
+					new modWizWizardPanel2(),
+					new modWizWizardPanel3()
 				};
 			String[] steps = new String[panels.length];
 			for (int i = 0; i < panels.length; i++) {
