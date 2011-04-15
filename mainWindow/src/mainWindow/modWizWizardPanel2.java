@@ -20,7 +20,6 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 	 * component from this class, just use getComponent().
 	 */
 	private Component component;
-	private String oDir;
 
 	// Get the visual component for the panel. In this template, the component
 	// is kept separate. This can be more efficient: if the wizard is created
@@ -78,43 +77,6 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 	}
 	}
 	 */
-//    private void selectAlignment(){
-//	    String pdb;
-//	    table = modOutTopComponent.getSelectedTable();
-//	    int row = table.getSelectedRow();
-//
-//	    if(row < 0)
-//		row = 0;
-//
-//            pdb = (String)table.getValueAt(row, 0);
-//
-//	    tmpltField.setText(pdb);
-//
-//    }
-
-//    private void getPdbTmpltFile(String odir){
-//
-////	    String pdb = tmpltField.getText();
-////	    String file = pdb.substring(0, pdb.indexOf(":"));
-////	    String outFilePath=odir+File.separator+file+".pdb";
-//
-//	    try{
-//	        URL url = new URL("http://www.pdb.org/pdb/files/"+file+".pdb");
-//	        URLConnection urlc = url.openConnection();
-//	        BufferedInputStream in = new BufferedInputStream(urlc.getInputStream());
-//	        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outFilePath));
-//
-//	        int i;
-//	        while((i=in.read()) != -1)
-//	        {
-//		    out.write(i);
-//	        }
-//	        in.close();
-//	        out.close();
-//
-//	    }catch(IOException e){e.printStackTrace();}
-//	    //tmpltField.setText(outFilePath);
-//    }
 
     private void parseResults(String fname)
     {
@@ -145,14 +107,14 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 	// by the user.
 	public void readSettings(Object settings) {
 		System.out.println(((WizardDescriptor) settings).getProperty("seq"));
-		oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
-			parseResults(oDir+"/MyBlastResults.html");
+		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
+		parseResults(oDir+"/MyBlastResults.html");
 		//System.out.println((NbPreferences.forModule(modWizWizardPanel1.class).get("seq", "")));
 
 	}
 
 	public void storeSettings(Object settings) {
-		//newJob();
+		((WizardDescriptor) settings).putProperty("Template", ((modWizVisualPanel2)getComponent()).getTemplt());
 	}
 
 //	private void newJob(){
