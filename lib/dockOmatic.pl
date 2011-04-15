@@ -168,14 +168,17 @@ $opt_o = ".";
 
     # Modeller 
     if($opt_m =~ /(\w+)/){
+        # Just in case no extensions, we add them.
         $opt_m =~ s/\.ali//; 
         $opt_t =~ s/\.pdb//; 
-        copy($opt_m.'.ali', $opt_o);
-        copy($opt_t.'.pdb', $opt_o);
+        #copy($opt_m.'.ali', $opt_o);
+        #copy($opt_t.'.pdb', $opt_o);
         chdir($opt_o);
+        my ($mVolume, $mDirs, $mName) = File::Spec->splitpath($opt_m);
+        my ($tVolume, $tDirs, $tName) = File::Spec->splitpath($opt_t);
 
-        runAlign($opt_m, $opt_t); 
-        runModel($opt_m, $opt_t); 
+        runAlign($mName, $tName); 
+        runModel($mName, $tName); 
         die"Ran Modeller... DONE\n"; 
     }
     if($opt_p =~ /\.pdb/){
