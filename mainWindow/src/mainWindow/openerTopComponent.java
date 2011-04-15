@@ -68,6 +68,7 @@ private ModInLookListener modListen;
 private Lookup.Result res = null;
 //private TableModelListener listen;
 
+        private static modWizWizardAction act;// = new modWizWizardAction();
 	private static openerTopComponent instance;
 	/** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
@@ -80,6 +81,7 @@ private Lookup.Result res = null;
 		jPanel7.setVisible(false);
 		jPanel9.setVisible(false);
 		modListen = new ModInLookListener();
+                act = new modWizWizardAction();
 		//res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(String.class);
 		////res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(ArrayList.class);
 		//res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(ModInfo.class);
@@ -607,9 +609,11 @@ private class ModInLookListener implements LookupListener {
 
     private void LigandButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LigandButtonActionPerformed
 	    //Create Ligand with Modeller
+	    String ret;
 	if(ligFromModeller){
-            modWizWizardAction act = new modWizWizardAction();
-	    act.performAction();
+	    ret = act.doWizard("ligand");
+	    //act.clearContents();
+	    System.out.println(ret);
 	    return;
 	}
         String file = getFileChoose(lastLigDir, "Select Ligand File");
@@ -620,8 +624,11 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_LigandButtonActionPerformed
 
     private void receptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receptorButtonActionPerformed
+	    String ret;
 	if(recFromModeller){
-
+            //modWizWizardAction act = new modWizWizardAction();
+	    ret = act.doWizard("receptor");
+	    //act.clearContents();
 	    return;
 	}
         String file = getFileChoose(lastRecDir, "Select Receptor File");

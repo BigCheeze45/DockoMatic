@@ -11,6 +11,10 @@
 
 package mainWindow;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author wbullock
@@ -27,6 +31,32 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 		return "Tim #3";
 	}
 
+	public void clearAllData(){
+	    DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            model.setRowCount(0);
+	}
+
+	public int getCol(String column){
+	    int i =0;
+	    int colCount = jTable1.getColumnCount();
+	    String name = new String("");
+	    for(i=0; i<colCount; i++){
+		    name = jTable1.getColumnName(i);
+		    if(column.equals(name)) return i;
+	    }
+
+            return i;
+	}
+
+    public JTable getTable(){
+	    return jTable1;
+	}
+
+    public TableModel getTableModel(){
+	    return jTable1.getModel();
+    }
+
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -39,6 +69,7 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
                 jPanel1 = new javax.swing.JPanel();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 jTable1 = new javax.swing.JTable();
+                killJobButton = new javax.swing.JButton();
 
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
                         new Object [][] {
@@ -68,17 +99,29 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
                 jTable1.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.jTable1.columnModel.title1")); // NOI18N
                 jTable1.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.jTable1.columnModel.title2")); // NOI18N
 
+                killJobButton.setText(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.killJobButton.text")); // NOI18N
+                killJobButton.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                killJobButtonActionPerformed(evt);
+                        }
+                });
+
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
                 jPanel1Layout.setHorizontalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(167, 167, 167)
+                                .addComponent(killJobButton)
+                                .addContainerGap(129, Short.MAX_VALUE))
                 );
                 jPanel1Layout.setVerticalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(31, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(killJobButton))
                 );
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -93,11 +136,16 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
                 );
         }// </editor-fold>//GEN-END:initComponents
 
+    private void killJobButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_killJobButtonActionPerformed
+	    modWizWizardPanel3.killJob();
+    }//GEN-LAST:event_killJobButtonActionPerformed
+
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JPanel jPanel1;
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JTable jTable1;
+        private javax.swing.JButton killJobButton;
         // End of variables declaration//GEN-END:variables
 
 }

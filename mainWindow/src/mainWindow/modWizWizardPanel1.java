@@ -94,7 +94,6 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel {
 	public void storeSettings(Object settings) {
 		//Get Sequence
 		String seq = getSeq();
-		System.out.println("GOT SEQ:"+seq);
 		lookupAlgnmnts(seq);
 		((WizardDescriptor) settings).putProperty("seq", seq);
 		((WizardDescriptor) settings).putProperty("outDir", ((modWizVisualPanel1)getComponent()).getOutDirField());

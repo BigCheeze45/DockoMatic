@@ -5,6 +5,7 @@
 
 package mainWindow;
 
+import Job.Job;
 import java.awt.Component;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -13,7 +14,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import javax.swing.JTable;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
 
@@ -27,6 +30,13 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 	 * component from this class, just use getComponent().
 	 */
 	private Component component;
+	private static Job modJob;
+	private String fromWhere;
+	private String pathToModel;
+
+	public modWizWizardPanel3(String from){
+		this.fromWhere = from;
+	}
 
 	// Get the visual component for the panel. In this template, the component
 	// is kept separate. This can be more efficient: if the wizard is created
@@ -37,6 +47,10 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 			component = new modWizVisualPanel3();
 		}
 		return component;
+	}
+
+	public String getModelPath(){
+		return this.pathToModel;
 	}
 
 	public HelpCtx getHelp() {
@@ -90,22 +104,45 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
+                String seq = (String)((WizardDescriptor) settings).getProperty("seq");
 		String templt = (String)((WizardDescriptor) settings).getProperty("Template");
+		boolean swarm = (Boolean)((WizardDescriptor) settings).getProperty("swarm");
+
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
-		getPdbTmpltFile(oDir, templt);
+		String pdbName = getPdbTmpltFile(oDir, templt);
+		runModellerJob(oDir, "mySeq", pdbName, swarm);
+		parseResults(oDir, "mySeq");
 
 
 	}
 
 	public void storeSettings(Object settings) {
+            JTable table = ((modWizVisualPanel3)getComponent()).getTable();
+	    int row = table.getSelectedRow();
+	    if(row < 0) row = 0;
+	    int locCol = ((modWizVisualPanel3)getComponent()).getCol("Location");
+	    int modCol = ((modWizVisualPanel3)getComponent()).getCol("Model");
+
+	    this.pathToModel = (String)table.getValueAt(row, locCol)+(String)table.getValueAt(row, modCol);
 	}
 
 
-    private void getPdbTmpltFile(String odir, String pdb){
+	private void runModellerJob(String oDir, String seq, String tmplt, boolean swarm){
+		modJob = new Job(1, "", "", "", oDir, swarm, "", seq, tmplt);
+		modJob.runJob();
+	}
+
+    public static void killJob(){
+        modJob.killJob();
+
+    }
+
+        private String getPdbTmpltFile(String odir, String pdb){
 
 //	    String pdb = tmpltField.getText();
 	    String file = pdb.substring(0, pdb.indexOf(":"));
-	    String outFilePath=odir+File.separator+file+".pdb";
+	    String fWoPdb = odir+File.separator+file;
+	    String outFilePath=fWoPdb+".pdb";
 
 	    try{
 	        URL url = new URL("http://www.pdb.org/pdb/files/"+file+".pdb");
@@ -123,6 +160,24 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 
 	    }catch(IOException e){e.printStackTrace();}
 	    //tmpltField.setText(outFilePath);
+	    return file;
+        }
+
+    private void parseResults(String dir, String seq)
+    {
+	    String str;
+	    String pdbid;
+	    String evalue;
+	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel3)getComponent()).getTableModel();
+
+	        File fDir  = new File(dir);
+                String flist[] = fDir.list();
+
+		for(int i=0; i<flist.length; i++){
+	            if(flist[i].contains(".pdb") && flist[i].contains(seq))
+		        model.addRow(new Object[]{flist[i], dir});
+		} 
+
     }
 
 }

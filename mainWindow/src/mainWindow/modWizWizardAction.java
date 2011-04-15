@@ -18,12 +18,24 @@ import org.openide.util.actions.CallableSystemAction;
 public final class modWizWizardAction extends CallableSystemAction {
 
 	private WizardDescriptor.Panel[] panels;
+	private String from;
+
+	public void clearContents(){
+
+	}
+
+	public String doWizard(String fromWhere){
+		this.from=fromWhere;
+		performAction();
+		return "pathtofile";
+	}
 
 	public void performAction() {
+		panels = null;
 		WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
 		// {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
 		wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
-		wizardDescriptor.setTitle("TIM");
+		wizardDescriptor.setTitle("TIM from: "+from);
 		Dialog dialog = DialogDisplayer.getDefault().createDialog(wizardDescriptor);
 		dialog.setVisible(true);
 		dialog.toFront();
@@ -42,7 +54,7 @@ public final class modWizWizardAction extends CallableSystemAction {
 			panels = new WizardDescriptor.Panel[]{
 					new modWizWizardPanel1(),
 					new modWizWizardPanel2(),
-					new modWizWizardPanel3()
+					new modWizWizardPanel3(from)
 				};
 			String[] steps = new String[panels.length];
 			for (int i = 0; i < panels.length; i++) {
