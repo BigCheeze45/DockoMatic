@@ -7,6 +7,14 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
+                    <code-name-base>org.apache.xml.resolver</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>1.11.1.12</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.netbeans.modules.settings</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -21,6 +29,14 @@
                     <compile-dependency/>
                     <run-dependency>
                         <specification-version>7.23.1</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
+                    <code-name-base>org.openide.dialogs</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>7.15.1</specification-version>
                     </run-dependency>
                 </dependency>
                 <dependency>
@@ -50,8 +66,44 @@
             </module-dependencies>
             <public-packages/>
             <class-path-extension>
+                <runtime-relative-path>ext/wsdl4j-1.5.1.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/wsdl4j-1.5.1.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/commons-logging-1.0.4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-logging-1.0.4.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/jaxrpc.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jaxrpc.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/saaj.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/saaj.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/axis.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/axis.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/webservice.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/webservice.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/commons-discovery-0.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-discovery-0.2.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
                 <runtime-relative-path>ext/Job.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/Job.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/log4j-1.2.8.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/log4j-1.2.8.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/axis-ant.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/axis-ant.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>
