@@ -5,9 +5,12 @@
 package mainWindow;
 
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 public final class modWizVisualPanel2 extends JPanel {
+
+	private boolean useSwarm = false;
 
 	/** Creates new form modWizVisualPanel2 */
 	public modWizVisualPanel2() {
@@ -32,6 +35,8 @@ public final class modWizVisualPanel2 extends JPanel {
                 numModelsField = new javax.swing.JTextField();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 jTable1 = new javax.swing.JTable();
+                jPanel2 = new javax.swing.JPanel();
+                swarmChkBox = new javax.swing.JCheckBox();
 
                 org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jLabel1.text")); // NOI18N
 
@@ -85,6 +90,30 @@ public final class modWizVisualPanel2 extends JPanel {
                 jTable1.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title0")); // NOI18N
                 jTable1.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title1")); // NOI18N
 
+                org.openide.awt.Mnemonics.setLocalizedText(swarmChkBox, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.swarmChkBox.text")); // NOI18N
+                swarmChkBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                swarmChkBoxActionPerformed(evt);
+                        }
+                });
+
+                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+                jPanel2.setLayout(jPanel2Layout);
+                jPanel2Layout.setHorizontalGroup(
+                        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(swarmChkBox, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(77, Short.MAX_VALUE))
+                );
+                jPanel2Layout.setVerticalGroup(
+                        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addContainerGap(66, Short.MAX_VALUE)
+                                .addComponent(swarmChkBox)
+                                .addContainerGap())
+                );
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
@@ -94,7 +123,9 @@ public final class modWizVisualPanel2 extends JPanel {
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(6, 6, 6)
-                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap())
                 );
                 layout.setVerticalGroup(
@@ -102,10 +133,28 @@ public final class modWizVisualPanel2 extends JPanel {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(104, 104, 104))
                 );
         }// </editor-fold>//GEN-END:initComponents
+
+	private void swarmChkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swarmChkBoxActionPerformed
+		if(swarmChkBox.isSelected())  useSwarm = true;
+		else  useSwarm = false;
+	}//GEN-LAST:event_swarmChkBoxActionPerformed
+
+	public boolean isSwarm(){
+		return useSwarm;
+	}
+
+	public void clearAllData(){
+	    DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            model.setRowCount(0);
+	    numModelsField.setText("5");
+	}
+
 
 	private int getCol(String column){
 	    int i =0;
@@ -160,8 +209,10 @@ public final class modWizVisualPanel2 extends JPanel {
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JLabel jLabel1;
         private javax.swing.JPanel jPanel1;
+        private javax.swing.JPanel jPanel2;
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JTable jTable1;
         private javax.swing.JTextField numModelsField;
+        private javax.swing.JCheckBox swarmChkBox;
         // End of variables declaration//GEN-END:variables
 }

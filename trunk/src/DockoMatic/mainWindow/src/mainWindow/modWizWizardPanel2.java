@@ -115,42 +115,8 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 
 	public void storeSettings(Object settings) {
 		((WizardDescriptor) settings).putProperty("Template", ((modWizVisualPanel2)getComponent()).getTemplt());
+		((WizardDescriptor) settings).putProperty("swarm", ((modWizVisualPanel2)getComponent()).isSwarm());
 	}
 
-//	private void newJob(){
-//	if(outDirField.getText().isEmpty()) return;
-//
-//	String[] items = new String[3];
-//    //System.out.println("*****************NewJobButtonPressed\n");
-////	    ModInfo mofo = new ModInfo(outDirField.getText(), seqArea.getText(), tmpltField.getText());
-//    TopComponent tc = WindowManager.getDefault().findTopComponent("openerTopComponent");
-//    ArrayList<String> alist = new ArrayList<String>();
-//	    alist.add( outDirField.getText());
-//	    alist.add( seqArea.getText());
-//	    alist.add( tmpltField.getText());
-//	    //items[0] = outDirField.getText();
-//	    //items[1] = seqArea.getText();
-//	    //items[2] = tmpltField.getText();
-//    dynamicContent.add(alist);
-//    //dynamicContent.set(Collections.singleton(alist), null);
-//    /*if(tc != null){
-//	    tc.open();
-//	    tc.requestActive();
-//    }*/
-//    this.dynamicContent.remove(alist);
-//	    //outDirField.setText("");
-//	    //seqArea.setText("");
-//	    //tmpltField.setText("");
-//
-//	//TopComponent opener = WindowManager.getDefault().findTopComponent("openerTopComponent");
-//	//dynamicContent.add(outDirField.getText(), seqArea.getText(), tmpltField.getText());
-//	//jobInfo = myLookup.lookup(new Lookup.Template(String.class));
-//	//jobInfo.allItems();
-//	//jobInfo.addLookupListener((LookupListener) opener);
-//
-//	//dynamicContent.add(tmp);
-//        //jobInfo.allItems();
-//    //System.out.println("*********************dynCont added\n");
-//    }
 }
 
