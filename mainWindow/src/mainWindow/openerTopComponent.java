@@ -45,6 +45,8 @@ private DefaultTableModel model;
 private JTable table;
 private int currJobNumber = 0;
 private int totalJobs = 0;
+private boolean ligFromModeller = false;
+private boolean recFromModeller = false;
 private boolean ligList = false;
 private boolean recList = false;
 private boolean boxList = false;
@@ -79,9 +81,9 @@ private Lookup.Result res = null;
 		jPanel9.setVisible(false);
 		modListen = new ModInLookListener();
 		//res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(String.class);
-		res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(ArrayList.class);
+		////res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(ArrayList.class);
 		//res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(ModInfo.class);
-		res.addLookupListener(modListen);
+		////res.addLookupListener(modListen);
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 
 	}
@@ -136,10 +138,12 @@ private class ModInLookListener implements LookupListener {
                 LigandButton = new javax.swing.JButton();
                 ligandField = new javax.swing.JTextField();
                 ligandCheckBox = new javax.swing.JCheckBox();
+                ligModCheckBox = new javax.swing.JCheckBox();
                 jPanel5 = new javax.swing.JPanel();
                 receptorButton = new javax.swing.JButton();
                 receptorField = new javax.swing.JTextField();
                 receptorCheckBox = new javax.swing.JCheckBox();
+                recModCheckBox = new javax.swing.JCheckBox();
                 jPanel6 = new javax.swing.JPanel();
                 boxCoordButton = new javax.swing.JButton();
                 boxCoordField = new javax.swing.JTextField();
@@ -207,16 +211,24 @@ private class ModInLookListener implements LookupListener {
                         }
                 });
 
+                org.openide.awt.Mnemonics.setLocalizedText(ligModCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.ligModCheckBox.text")); // NOI18N
+                ligModCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                ligModCheckBoxActionPerformed(evt);
+                        }
+                });
+
                 javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
                 jPanel4.setLayout(jPanel4Layout);
                 jPanel4Layout.setHorizontalGroup(
                         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(ligandCheckBox)
-                                        .addComponent(ligandField)
-                                        .addComponent(LigandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(ligModCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ligandCheckBox, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ligandField, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(LigandButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
                                 .addContainerGap(74, Short.MAX_VALUE))
                 );
                 jPanel4Layout.setVerticalGroup(
@@ -225,7 +237,9 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(LigandButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ligandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                                .addComponent(ligModCheckBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ligandCheckBox)
                                 .addContainerGap())
                 );
@@ -246,16 +260,24 @@ private class ModInLookListener implements LookupListener {
                         }
                 });
 
+                org.openide.awt.Mnemonics.setLocalizedText(recModCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.recModCheckBox.text")); // NOI18N
+                recModCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                recModCheckBoxActionPerformed(evt);
+                        }
+                });
+
                 javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
                 jPanel5.setLayout(jPanel5Layout);
                 jPanel5Layout.setHorizontalGroup(
                         jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(receptorCheckBox)
-                                        .addComponent(receptorField, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                                        .addComponent(receptorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(recModCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(receptorCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(receptorField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                                        .addComponent(receptorButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(65, Short.MAX_VALUE))
                 );
                 jPanel5Layout.setVerticalGroup(
@@ -265,6 +287,8 @@ private class ModInLookListener implements LookupListener {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(receptorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(recModCheckBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(receptorCheckBox)
                                 .addContainerGap())
                 );
@@ -295,7 +319,7 @@ private class ModInLookListener implements LookupListener {
                                         .addComponent(boxCoordCheckBox)
                                         .addComponent(boxCoordField, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                                         .addComponent(boxCoordButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(58, Short.MAX_VALUE))
+                                .addContainerGap(70, Short.MAX_VALUE))
                 );
                 jPanel6Layout.setVerticalGroup(
                         jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +358,7 @@ private class ModInLookListener implements LookupListener {
                                         .addComponent(appendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(appCheckBox)
                                         .addComponent(appendField))
-                                .addContainerGap(56, Short.MAX_VALUE))
+                                .addContainerGap(68, Short.MAX_VALUE))
                 );
                 jPanel7Layout.setVerticalGroup(
                         jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,7 +366,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(appendButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(appendField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                                 .addComponent(appCheckBox)
                                 .addContainerGap())
                 );
@@ -373,7 +397,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(resChkGpfButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(resChkGpfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(39, Short.MAX_VALUE))
+                                .addContainerGap(67, Short.MAX_VALUE))
                 );
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -384,14 +408,16 @@ private class ModInLookListener implements LookupListener {
                                 .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap())
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 );
                 jPanel1Layout.setVerticalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,14 +427,17 @@ private class ModInLookListener implements LookupListener {
                                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(112, 112, 112))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(7, 7, 7)
+                                                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(84, 84, 84))
                 );
 
                 org.openide.awt.Mnemonics.setLocalizedText(newJobButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newJobButton.text")); // NOI18N
@@ -480,7 +509,7 @@ private class ModInLookListener implements LookupListener {
                                         .addGroup(jPanel8Layout.createSequentialGroup()
                                                 .addContainerGap()
                                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(20, Short.MAX_VALUE))
+                                .addContainerGap(32, Short.MAX_VALUE))
                 );
                 jPanel8Layout.setVerticalGroup(
                         jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,6 +606,12 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_outDirButtonActionPerformed
 
     private void LigandButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LigandButtonActionPerformed
+	    //Create Ligand with Modeller
+	if(ligFromModeller){
+            modWizWizardAction act = new modWizWizardAction();
+	    act.performAction();
+	    return;
+	}
         String file = getFileChoose(lastLigDir, "Select Ligand File");
         if(file != null){
             lastLigDir = file.substring(0, file.lastIndexOf(File.separator));
@@ -585,6 +620,10 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_LigandButtonActionPerformed
 
     private void receptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receptorButtonActionPerformed
+	if(recFromModeller){
+
+	    return;
+	}
         String file = getFileChoose(lastRecDir, "Select Receptor File");
         if(file != null){
             lastRecDir = file.substring(0, file.lastIndexOf(File.separator));
@@ -760,6 +799,23 @@ private class ModInLookListener implements LookupListener {
     private void newTabChBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newTabChBoxActionPerformed
        tabFlag = newTabChBox.isSelected();
     }//GEN-LAST:event_newTabChBoxActionPerformed
+
+    private void ligModCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ligModCheckBoxActionPerformed
+            if(ligModCheckBox.isSelected()){
+                    ligFromModeller= true;
+            }else{
+                    ligFromModeller = false;
+            }
+
+    }//GEN-LAST:event_ligModCheckBoxActionPerformed
+
+    private void recModCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recModCheckBoxActionPerformed
+            if(recModCheckBox.isSelected()){
+                    recFromModeller= true;
+            }else{
+                    recFromModeller = false;
+            }
+    }//GEN-LAST:event_recModCheckBoxActionPerformed
 
     private void pymolActionPerformed(java.awt.event.MouseEvent evt) {
 	    table = outputGridTopComponent.getSelectedTable();
@@ -1310,6 +1366,7 @@ private class ModInLookListener implements LookupListener {
         private javax.swing.JPanel jPanel8;
         private javax.swing.JPanel jPanel9;
         private javax.swing.JScrollPane jScrollPane1;
+        private javax.swing.JCheckBox ligModCheckBox;
         private javax.swing.JCheckBox ligandCheckBox;
         private javax.swing.JTextField ligandField;
         protected static javax.swing.JTextArea messageArea;
@@ -1317,6 +1374,7 @@ private class ModInLookListener implements LookupListener {
         private javax.swing.JCheckBox newTabChBox;
         private javax.swing.JButton outDirButton;
         private javax.swing.JTextField outDirField;
+        private javax.swing.JCheckBox recModCheckBox;
         private javax.swing.JButton receptorButton;
         private javax.swing.JCheckBox receptorCheckBox;
         private javax.swing.JTextField receptorField;
