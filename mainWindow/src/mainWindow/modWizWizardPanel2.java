@@ -32,6 +32,10 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 		return component;
 	}
 
+	public String getModelPath(){
+		return "";
+	}
+
 	public HelpCtx getHelp() {
 		// Show no Help button for this panel:
 		return HelpCtx.DEFAULT_HELP;

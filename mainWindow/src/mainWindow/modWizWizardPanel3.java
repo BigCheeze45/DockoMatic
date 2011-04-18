@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
@@ -32,7 +33,6 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 	private Component component;
 	private static Job modJob;
 	private String fromWhere;
-	private String pathToModel;
 
 	public modWizWizardPanel3(String from){
 		this.fromWhere = from;
@@ -47,10 +47,6 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 			component = new modWizVisualPanel3();
 		}
 		return component;
-	}
-
-	public String getModelPath(){
-		return this.pathToModel;
 	}
 
 	public HelpCtx getHelp() {
@@ -109,21 +105,25 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 		boolean swarm = (Boolean)((WizardDescriptor) settings).getProperty("swarm");
 
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
-		String pdbName = getPdbTmpltFile(oDir, templt);
-		runModellerJob(oDir, "mySeq", pdbName, swarm);
+		//String pdbName = getPdbTmpltFile(oDir, templt);
+		//runModellerJob(oDir, "mySeq", pdbName, swarm);
+		runModellerJob(oDir, "mySeq", getPdbTmpltFile(oDir, templt), swarm);
 		parseResults(oDir, "mySeq");
-
 
 	}
 
-	public void storeSettings(Object settings) {
+	public String getModelPath() {
             JTable table = ((modWizVisualPanel3)getComponent()).getTable();
 	    int row = table.getSelectedRow();
 	    if(row < 0) row = 0;
 	    int locCol = ((modWizVisualPanel3)getComponent()).getCol("Location");
 	    int modCol = ((modWizVisualPanel3)getComponent()).getCol("Model");
+	    return (String)table.getValueAt(row, locCol)+File.separator+(String)table.getValueAt(row, modCol);
+	}
 
-	    this.pathToModel = (String)table.getValueAt(row, locCol)+(String)table.getValueAt(row, modCol);
+	public void storeSettings(Object settings) {
+	    JComponent jc = (JComponent) this.component;
+	    jc.putClientProperty("MODPATH", getModelPath());
 	}
 
 

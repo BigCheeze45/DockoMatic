@@ -56,6 +56,16 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 	    return jTable1.getModel();
     }
 
+    public String getModelPath(){
+	    int row = jTable1.getSelectedRow();
+	    if(row < 0) row = 0;
+	    int locCol = getCol("Location");
+	    int modCol = getCol("Model");
+
+	    return (String)jTable1.getValueAt(row, locCol)+(String)jTable1.getValueAt(row, modCol);
+	    //return modWizWizardPanel3.getModelPath();
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -76,7 +86,7 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 
                         },
                         new String [] {
-                                "Model #", "Location", "Score"
+                                "Model", "Location", "Score"
                         }
                 ) {
                         Class[] types = new Class [] {
@@ -114,7 +124,7 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(167, 167, 167)
                                 .addComponent(killJobButton)
-                                .addContainerGap(129, Short.MAX_VALUE))
+                                .addContainerGap(132, Short.MAX_VALUE))
                 );
                 jPanel1Layout.setVerticalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
