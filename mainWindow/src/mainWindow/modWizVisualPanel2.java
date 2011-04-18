@@ -19,7 +19,7 @@ public final class modWizVisualPanel2 extends JPanel {
 
 	@Override
 	public String getName() {
-		return "Tim #2";
+		return "Select Template";
 	}
 
 	/** This method is called from within the constructor to

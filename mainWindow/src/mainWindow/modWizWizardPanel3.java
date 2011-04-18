@@ -165,6 +165,7 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 
     private void parseResults(String dir, String seq)
     {
+	    int count = 0;
 	    String str;
 	    String pdbid;
 	    String evalue;
@@ -174,9 +175,13 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
                 String flist[] = fDir.list();
 
 		for(int i=0; i<flist.length; i++){
-	            if(flist[i].contains(".pdb") && flist[i].contains(seq))
+	            if(flist[i].contains(".pdb") && flist[i].contains(seq)){
 		        model.addRow(new Object[]{flist[i], dir});
-		} 
+			++count;
+		    }
+		}
+		if(count==0)
+	            model.addRow(new Object[]{"fakeFile", "FakeDir"});
 
     }
 
