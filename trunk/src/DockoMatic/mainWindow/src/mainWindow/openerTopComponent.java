@@ -611,7 +611,6 @@ private class ModInLookListener implements LookupListener {
 	//Create Ligand with Modeller
 	if(ligFromModeller){
 	    String ret = act.doWizard("ligand");
-	    //act.clearContents();
 	    ligandField.setText(ret);
 	    return;
 	}
@@ -627,7 +626,6 @@ private class ModInLookListener implements LookupListener {
 	if(recFromModeller){
             //modWizWizardAction act = new modWizWizardAction();
 	    String ret = act.doWizard("receptor");
-	    //act.clearContents();
 	    receptorField.setText(ret);
 	    return;
 	}

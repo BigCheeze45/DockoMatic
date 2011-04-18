@@ -28,7 +28,7 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 
 	@Override
 	public String getName() {
-		return "Tim #3";
+		return "Select Model";
 	}
 
 	public void clearAllData(){
@@ -63,7 +63,6 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 	    int modCol = getCol("Model");
 
 	    return (String)jTable1.getValueAt(row, locCol)+(String)jTable1.getValueAt(row, modCol);
-	    //return modWizWizardPanel3.getModelPath();
     }
 
 

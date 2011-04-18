@@ -20,10 +20,6 @@ public final class modWizWizardAction extends CallableSystemAction {
 	private WizardDescriptor.Panel[] panels;
 	private String from;
 
-	public void clearContents(){
-
-	}
-
 	public String doWizard(String fromWhere){
 		this.from=fromWhere;
 		performAction();
@@ -34,7 +30,7 @@ public final class modWizWizardAction extends CallableSystemAction {
 		WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
 		// {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
 		wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
-		wizardDescriptor.setTitle("TIM getting: "+from);
+		wizardDescriptor.setTitle("T.I.M. getting: "+from);
 		Dialog dialog = DialogDisplayer.getDefault().createDialog(wizardDescriptor);
 		dialog.setVisible(true);
 		dialog.toFront();
@@ -49,6 +45,7 @@ public final class modWizWizardAction extends CallableSystemAction {
 	 * various properties for them influencing wizard appearance.
 	 */
 	private WizardDescriptor.Panel[] getPanels() {
+		panels = null;
 		if (panels == null) {
 			panels = new WizardDescriptor.Panel[]{
 					new modWizWizardPanel1(),
