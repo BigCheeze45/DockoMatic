@@ -27,15 +27,14 @@ public final class modWizWizardAction extends CallableSystemAction {
 	public String doWizard(String fromWhere){
 		this.from=fromWhere;
 		performAction();
-		return "pathtofile";
+		return getModelPath();
 	}
 
 	public void performAction() {
-		panels = null;
 		WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
 		// {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
 		wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
-		wizardDescriptor.setTitle("TIM from: "+from);
+		wizardDescriptor.setTitle("TIM getting: "+from);
 		Dialog dialog = DialogDisplayer.getDefault().createDialog(wizardDescriptor);
 		dialog.setVisible(true);
 		dialog.toFront();
@@ -80,6 +79,13 @@ public final class modWizWizardAction extends CallableSystemAction {
 			}
 		}
 		return panels;
+	}
+
+	public String getModelPath(){
+		Component c = panels[2].getComponent();
+		JComponent jc = (JComponent) c;
+		String path = (String) jc.getClientProperty("MODPATH");
+		return path;
 	}
 
 	public String getName() {

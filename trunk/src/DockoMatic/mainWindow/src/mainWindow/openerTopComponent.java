@@ -608,12 +608,11 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_outDirButtonActionPerformed
 
     private void LigandButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LigandButtonActionPerformed
-	    //Create Ligand with Modeller
-	    String ret;
+	//Create Ligand with Modeller
 	if(ligFromModeller){
-	    ret = act.doWizard("ligand");
+	    String ret = act.doWizard("ligand");
 	    //act.clearContents();
-	    System.out.println(ret);
+	    ligandField.setText(ret);
 	    return;
 	}
         String file = getFileChoose(lastLigDir, "Select Ligand File");
@@ -624,11 +623,12 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_LigandButtonActionPerformed
 
     private void receptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receptorButtonActionPerformed
-	    String ret;
+	//Create Receptor with Modeller
 	if(recFromModeller){
             //modWizWizardAction act = new modWizWizardAction();
-	    ret = act.doWizard("receptor");
+	    String ret = act.doWizard("receptor");
 	    //act.clearContents();
+	    receptorField.setText(ret);
 	    return;
 	}
         String file = getFileChoose(lastRecDir, "Select Receptor File");
