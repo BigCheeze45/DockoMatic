@@ -14,9 +14,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
@@ -25,7 +31,7 @@ import org.openide.util.HelpCtx;
  *
  * @author wbullock
  */
-public class modWizWizardPanel3  implements WizardDescriptor.Panel {
+public class modWizWizardPanel3  implements WizardDescriptor.Panel, ListSelectionListener {
 	/**
 	 * The visual component that displays this panel. If you need to access the
 	 * component from this class, just use getComponent().
@@ -33,6 +39,7 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 	private Component component;
 	private static Job modJob;
 	private String fromWhere;
+	private boolean isValid;
 
 	public modWizWizardPanel3(String from){
 		this.fromWhere = from;
@@ -45,6 +52,7 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 	public Component getComponent() {
 		if (component == null) {
 			component = new modWizVisualPanel3();
+		        modWizVisualPanel3.getTable().getSelectionModel().addListSelectionListener(this);
 		}
 		return component;
 	}
@@ -58,7 +66,8 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 
 	public boolean isValid() {
 		// If it is always OK to press Next or Finish, then:
-		return true;
+		//return true;
+		return isValid;
 		// If it depends on some condition (form filled out...), then:
 		// return someCondition();
 		// and when this condition changes (last form field filled in...) then:
@@ -66,12 +75,34 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 		// and uncomment the complicated stuff below.
 	}
 
-	public final void addChangeListener(ChangeListener l) {
+	public void valueChanged(ListSelectionEvent e){
+		change();
 	}
 
-	public final void removeChangeListener(ChangeListener l) {
-	}
-	/*
+private void change(){
+       int row = modWizVisualPanel3.getTable().getSelectedRow();
+        boolean isValidInput = row >= 0 ;
+        if (isValidInput) {
+            setValid(true);
+        } else {
+            setValid(false);
+        }
+}
+
+private void setValid(boolean val) {
+        if (isValid != val) {
+            isValid = val;
+            fireChangeEvent();
+        }
+    }
+
+
+//	public final void addChangeListener(ChangeListener l) {
+//	}
+//
+//	public final void removeChangeListener(ChangeListener l) {
+//	}
+	
 	private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
 	public final void addChangeListener(ChangeListener l) {
 	synchronized (listeners) {
@@ -93,7 +124,7 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 	it.next().stateChanged(ev);
 	}
 	}
-	 */
+	 
 
 	// You can use a settings object to keep track of state. Normally the
 	// settings object will be the WizardDescriptor, so you can use
@@ -129,7 +160,7 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel {
 
 	private void runModellerJob(String oDir, String seq, String tmplt, boolean swarm){
 		modJob = new Job(1, "", "", "", oDir, swarm, "", seq, tmplt);
-		modJob.runJob();
+		modJob.runJob(true);
 	}
 
     public static void killJob(){
