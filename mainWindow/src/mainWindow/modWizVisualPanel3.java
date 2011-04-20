@@ -48,7 +48,7 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
             return i;
 	}
 
-    public JTable getTable(){
+    public static JTable getTable(){
 	    return jTable1;
 	}
 
@@ -119,17 +119,17 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
                 jPanel1.setLayout(jPanel1Layout);
                 jPanel1Layout.setHorizontalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(167, 167, 167)
+                                .addGap(148, 148, 148)
                                 .addComponent(killJobButton)
-                                .addContainerGap(132, Short.MAX_VALUE))
+                                .addContainerGap(151, Short.MAX_VALUE))
                 );
                 jPanel1Layout.setVerticalGroup(
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                                 .addComponent(killJobButton))
                 );
 
@@ -141,7 +141,9 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
         }// </editor-fold>//GEN-END:initComponents
 
@@ -153,7 +155,7 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JPanel jPanel1;
         private javax.swing.JScrollPane jScrollPane1;
-        private javax.swing.JTable jTable1;
+        protected static javax.swing.JTable jTable1;
         private javax.swing.JButton killJobButton;
         // End of variables declaration//GEN-END:variables
 

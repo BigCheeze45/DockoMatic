@@ -8,18 +8,25 @@ import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
 
-public class modWizWizardPanel2 implements WizardDescriptor.Panel {
+public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelectionListener {
 
 	/**
 	 * The visual component that displays this panel. If you need to access the
 	 * component from this class, just use getComponent().
 	 */
 	private Component component;
+	private boolean isValid = false;
 
 	// Get the visual component for the panel. In this template, the component
 	// is kept separate. This can be more efficient: if the wizard is created
@@ -28,6 +35,8 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 	public Component getComponent() {
 		if (component == null) {
 			component = new modWizVisualPanel2();
+		        modWizVisualPanel2.getTable().getSelectionModel().addListSelectionListener(this);
+		        modWizVisualPanel2.genModelMessage.setVisible(false);
 		}
 		return component;
 	}
@@ -45,7 +54,8 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 
 	public boolean isValid() {
 		// If it is always OK to press Next or Finish, then:
-		return true;
+		//return true;
+		return isValid;
 		// If it depends on some condition (form filled out...), then:
 		// return someCondition();
 		// and when this condition changes (last form field filled in...) then:
@@ -53,12 +63,36 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 		// and uncomment the complicated stuff below.
 	}
 
-	public final void addChangeListener(ChangeListener l) {
+
+	public void valueChanged(ListSelectionEvent e){
+		change();
 	}
 
-	public final void removeChangeListener(ChangeListener l) {
-	}
-	/*
+private void change(){
+       int row = modWizVisualPanel2.getTable().getSelectedRow();
+        boolean isValidInput = row >= 0 ;
+        if (isValidInput) {
+            setValid(true);
+	    //modWizVisualPanel2.genModelMessage.setVisible(true);
+        } else {
+            setValid(false);
+        }
+}
+
+private void setValid(boolean val) {
+        if (isValid != val) {
+            isValid = val;
+            fireChangeEvent();
+        }
+    }
+
+
+//	public final void addChangeListener(ChangeListener l) {
+//	}
+//
+//	public final void removeChangeListener(ChangeListener l) {
+//	}
+	
 	private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
 	public final void addChangeListener(ChangeListener l) {
 	synchronized (listeners) {
@@ -80,7 +114,7 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 	it.next().stateChanged(ev);
 	}
 	}
-	 */
+	 
 
     private void parseResults(String fname)
     {
@@ -110,7 +144,7 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
-		System.out.println(((WizardDescriptor) settings).getProperty("seq"));
+		//System.out.println(((WizardDescriptor) settings).getProperty("seq"));
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
 		parseResults(oDir+"/MyBlastResults.html");
 		//System.out.println((NbPreferences.forModule(modWizWizardPanel1.class).get("seq", "")));

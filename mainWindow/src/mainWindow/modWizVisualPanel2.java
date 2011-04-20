@@ -5,6 +5,7 @@
 package mainWindow;
 
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -37,6 +38,8 @@ public final class modWizVisualPanel2 extends JPanel {
                 jTable1 = new javax.swing.JTable();
                 jPanel2 = new javax.swing.JPanel();
                 swarmChkBox = new javax.swing.JCheckBox();
+                jPanel7 = new javax.swing.JPanel();
+                genModelMessage = new javax.swing.JLabel();
 
                 org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jLabel1.text")); // NOI18N
 
@@ -114,6 +117,25 @@ public final class modWizVisualPanel2 extends JPanel {
                                 .addContainerGap())
                 );
 
+                org.openide.awt.Mnemonics.setLocalizedText(genModelMessage, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.genModelMessage.text")); // NOI18N
+
+                javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+                jPanel7.setLayout(jPanel7Layout);
+                jPanel7Layout.setHorizontalGroup(
+                        jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(genModelMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                                .addContainerGap())
+                );
+                jPanel7Layout.setVerticalGroup(
+                        jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(genModelMessage)
+                                .addContainerGap(41, Short.MAX_VALUE))
+                );
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
@@ -127,6 +149,7 @@ public final class modWizVisualPanel2 extends JPanel {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap())
+                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,7 +159,8 @@ public final class modWizVisualPanel2 extends JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(104, 104, 104))
+                                .addGap(4, 4, 4)
+                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 );
         }// </editor-fold>//GEN-END:initComponents
 
@@ -144,6 +168,10 @@ public final class modWizVisualPanel2 extends JPanel {
 		if(swarmChkBox.isSelected())  useSwarm = true;
 		else  useSwarm = false;
 	}//GEN-LAST:event_swarmChkBoxActionPerformed
+
+	public static JTable getTable(){
+		return jTable1;
+	}
 
 	public boolean isSwarm(){
 		return useSwarm;
@@ -207,11 +235,21 @@ public final class modWizVisualPanel2 extends JPanel {
 
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
+        protected static javax.swing.JLabel genModelMessage;
         private javax.swing.JLabel jLabel1;
+        private javax.swing.JLabel jLabel2;
+        private javax.swing.JLabel jLabel3;
+        private javax.swing.JLabel jLabel4;
+        private javax.swing.JLabel jLabel5;
         private javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel2;
+        private javax.swing.JPanel jPanel3;
+        private javax.swing.JPanel jPanel4;
+        private javax.swing.JPanel jPanel5;
+        private javax.swing.JPanel jPanel6;
+        private javax.swing.JPanel jPanel7;
         private javax.swing.JScrollPane jScrollPane1;
-        private javax.swing.JTable jTable1;
+        protected static javax.swing.JTable jTable1;
         private javax.swing.JTextField numModelsField;
         private javax.swing.JCheckBox swarmChkBox;
         // End of variables declaration//GEN-END:variables

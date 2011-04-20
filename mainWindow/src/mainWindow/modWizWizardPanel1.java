@@ -13,19 +13,27 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import org.openide.WizardDescriptor;
+import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.pdb.webservices.PdbWebService;
 import org.pdb.webservices.PdbWebServiceServiceLocator;
 
-public class modWizWizardPanel1 implements WizardDescriptor.Panel {
+public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListener {
 
 	/**
 	 * The visual component that displays this panel. If you need to access the
 	 * component from this class, just use getComponent().
 	 */
 	private Component component;
+	private boolean isValid=false;
 
 	// Get the visual component for the panel. In this template, the component
 	// is kept separate. This can be more efficient: if the wizard is created
@@ -34,6 +42,8 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel {
 	public Component getComponent() {
 		if (component == null) {
 			component = new modWizVisualPanel1();
+			modWizVisualPanel1.getTextField().getDocument().addDocumentListener(this);
+			modWizVisualPanel1.getOutField().getDocument().addDocumentListener(this);
 		}
 		return component;
 	}
@@ -45,9 +55,40 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel {
 		// return new HelpCtx(SampleWizardPanel1.class);
 	}
 
+    public void insertUpdate(DocumentEvent e) {
+        change();
+    }
+
+    public void removeUpdate(DocumentEvent e) {
+        change();
+    }
+
+    public void changedUpdate(DocumentEvent e) {
+        change();
+    }
+
+private void change(){
+       String seqArea = modWizVisualPanel1.getSeqField();
+       String outDir = modWizVisualPanel1.getOutField().getText();
+        boolean isValidInput = seqArea != null && seqArea.length() > 0 && outDir != null && outDir.length() > 0 ;
+        if (isValidInput) {
+            setValid(true);
+        } else {
+            setValid(false);
+        }
+}
+
+private void setValid(boolean val) {
+        if (isValid != val) {
+            isValid = val;
+            fireChangeEvent();
+        }
+    }
+
 	public boolean isValid() {
 		// If it is always OK to press Next or Finish, then:
-		return true;
+		return isValid;
+	//	return true;
 		// If it depends on some condition (form filled out...), then:
 		// return someCondition();
 		// and when this condition changes (last form field filled in...) then:
@@ -55,13 +96,14 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel {
 		// and uncomment the complicated stuff below.
 	}
 
-	public final void addChangeListener(ChangeListener l) {
-	}
-
-	public final void removeChangeListener(ChangeListener l) {
-	}
-	/*
+//	public final void addChangeListener(ChangeListener l) {
+//	}
+//
+//	public final void removeChangeListener(ChangeListener l) {
+//	}
+	
 	private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
+
 	public final void addChangeListener(ChangeListener l) {
 	synchronized (listeners) {
 	listeners.add(l);
@@ -82,16 +124,18 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel {
 	it.next().stateChanged(ev);
 	}
 	}
-	 */
+	 
 
 	// You can use a settings object to keep track of state. Normally the
 	// settings object will be the WizardDescriptor, so you can use
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
+		        modWizVisualPanel1.getTempltMessage.setVisible(false);
 	}
 
 	public void storeSettings(Object settings) {
+	        //modWizVisualPanel1.getTempltMessage.setVisible(true);
 		//Get Sequence
 		String seq = getSeq();
 		lookupAlgnmnts(seq);
@@ -163,28 +207,4 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel {
                 }
     }
 
-//    private void parseResults(String fname)
-//    {
-//	    String str;
-//	    String pdbid;
-//	    String evalue;
-//	    model = (DefaultTableModel)modOutTopComponent.newTmpTabb("Available Alignments");
-//
-//	    try{
-//	        BufferedReader in = new BufferedReader(new FileReader(fname));
-//	        while(!((str = in.readLine()).contains("|pdbid"))){}
-//
-//		do{
-//	            pdbid = str.substring(0, str.indexOf("|"));
-//	            evalue = str.substring(str.indexOf("/a>")+3, str.length());
-//		    model.addRow(new Object[]{pdbid, evalue});
-//		} while (!((str = in.readLine()).contains("/PRE")));
-//		in.close();
-//	    } catch (IOException e) {
-//		    e.printStackTrace();
-//	    }
-//
-//
-//
-//    }
 }

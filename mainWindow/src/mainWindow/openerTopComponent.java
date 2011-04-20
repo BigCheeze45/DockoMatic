@@ -938,7 +938,7 @@ private class ModInLookListener implements LookupListener {
 		    }
 		    //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
 		    table.setValueAt("Started", rowNums[rowNum], getCol("Status"));
-		    jobVector.get(jobNum).runJob();
+		    jobVector.get(jobNum).runJob(false);
 		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
 		    //if(((String)table.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
 	    }
@@ -1330,7 +1330,7 @@ private class ModInLookListener implements LookupListener {
         alignJobNums();
         mkSubdirs(1);
         newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
-        jobVector.lastElement().runJob();
+        jobVector.lastElement().runJob(false);
         table.setValueAt("Started", model.getRowCount()-1, getCol("Status"));
 
     }
