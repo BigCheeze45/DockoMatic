@@ -30,7 +30,7 @@ public final class modWizWizardAction extends CallableSystemAction {
 		WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
 		// {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
 		wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
-		wizardDescriptor.setTitle("T.I.M. getting: "+from);
+		wizardDescriptor.setTitle("The Wizard T.I.M. creating : "+from);
 		Dialog dialog = DialogDisplayer.getDefault().createDialog(wizardDescriptor);
 		dialog.setVisible(true);
 		dialog.toFront();

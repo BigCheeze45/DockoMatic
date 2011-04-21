@@ -16,12 +16,12 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.openide.WizardDescriptor;
-import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.pdb.webservices.PdbWebService;
 import org.pdb.webservices.PdbWebServiceServiceLocator;
@@ -131,14 +131,11 @@ private void setValid(boolean val) {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
-		        modWizVisualPanel1.getTempltMessage.setVisible(false);
 	}
 
 	public void storeSettings(Object settings) {
-	        //modWizVisualPanel1.getTempltMessage.setVisible(true);
 		//Get Sequence
 		String seq = getSeq();
-		lookupAlgnmnts(seq);
 		((WizardDescriptor) settings).putProperty("seq", seq);
 		((WizardDescriptor) settings).putProperty("outDir", ((modWizVisualPanel1)getComponent()).getOutDirField());
 	}
@@ -185,7 +182,12 @@ private void setValid(boolean val) {
 	//return seq;
     }
 
-    private void lookupAlgnmnts(String seq){
+    private void lookupAlgnmnts(final String seq){
+
+        SwingWorker getAlWorker = new SwingWorker<String, Void>(){
+
+	  @Override
+	  protected String doInBackground(){
 	    String outDir = ((modWizVisualPanel1)getComponent()).getOutDirField();
 	    PdbWebServiceServiceLocator locator = new PdbWebServiceServiceLocator();
             try{
@@ -205,6 +207,10 @@ private void setValid(boolean val) {
                 } catch (Exception _e) {
                         _e.printStackTrace();
                 }
+	  return "DONE";
+	  }
+        };
+	getAlWorker.execute();
     }
 
 }

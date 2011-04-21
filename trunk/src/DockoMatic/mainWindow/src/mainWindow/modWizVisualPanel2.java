@@ -39,7 +39,7 @@ public final class modWizVisualPanel2 extends JPanel {
                 jPanel2 = new javax.swing.JPanel();
                 swarmChkBox = new javax.swing.JCheckBox();
                 jPanel7 = new javax.swing.JPanel();
-                genModelMessage = new javax.swing.JLabel();
+                getTempltMessage = new javax.swing.JLabel();
 
                 org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jLabel1.text")); // NOI18N
 
@@ -117,7 +117,8 @@ public final class modWizVisualPanel2 extends JPanel {
                                 .addContainerGap())
                 );
 
-                org.openide.awt.Mnemonics.setLocalizedText(genModelMessage, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.genModelMessage.text")); // NOI18N
+                getTempltMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                org.openide.awt.Mnemonics.setLocalizedText(getTempltMessage, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.getTempltMessage.text")); // NOI18N
 
                 javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
                 jPanel7.setLayout(jPanel7Layout);
@@ -125,14 +126,14 @@ public final class modWizVisualPanel2 extends JPanel {
                         jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(genModelMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                                .addComponent(getTempltMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                                 .addContainerGap())
                 );
                 jPanel7Layout.setVerticalGroup(
                         jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
-                                .addComponent(genModelMessage)
+                                .addComponent(getTempltMessage)
                                 .addContainerGap(41, Short.MAX_VALUE))
                 );
 
@@ -235,18 +236,10 @@ public final class modWizVisualPanel2 extends JPanel {
 
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
-        protected static javax.swing.JLabel genModelMessage;
+        protected static javax.swing.JLabel getTempltMessage;
         private javax.swing.JLabel jLabel1;
-        private javax.swing.JLabel jLabel2;
-        private javax.swing.JLabel jLabel3;
-        private javax.swing.JLabel jLabel4;
-        private javax.swing.JLabel jLabel5;
         private javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel2;
-        private javax.swing.JPanel jPanel3;
-        private javax.swing.JPanel jPanel4;
-        private javax.swing.JPanel jPanel5;
-        private javax.swing.JPanel jPanel6;
         private javax.swing.JPanel jPanel7;
         private javax.swing.JScrollPane jScrollPane1;
         protected static javax.swing.JTable jTable1;
