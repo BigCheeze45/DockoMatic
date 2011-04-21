@@ -45,8 +45,6 @@ public final class modWizVisualPanel1 extends JPanel {
                 jPanel4 = new javax.swing.JPanel();
                 outDirButton1 = new javax.swing.JButton();
                 outDirField1 = new javax.swing.JTextField();
-                jPanel1 = new javax.swing.JPanel();
-                getTempltMessage = new javax.swing.JLabel();
 
                 org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(modWizVisualPanel1.class, "modWizVisualPanel1.jLabel1.text")); // NOI18N
 
@@ -113,32 +111,12 @@ public final class modWizVisualPanel1 extends JPanel {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
-                org.openide.awt.Mnemonics.setLocalizedText(getTempltMessage, org.openide.util.NbBundle.getMessage(modWizVisualPanel1.class, "modWizVisualPanel1.getTempltMessage.text")); // NOI18N
-
-                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-                jPanel1.setLayout(jPanel1Layout);
-                jPanel1Layout.setHorizontalGroup(
-                        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(getTempltMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                                .addContainerGap())
-                );
-                jPanel1Layout.setVerticalGroup(
-                        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(getTempltMessage)
-                                .addContainerGap(34, Short.MAX_VALUE))
-                );
-
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,9 +125,7 @@ public final class modWizVisualPanel1 extends JPanel {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
+                                .addGap(118, 118, 118))
                 );
         }// </editor-fold>//GEN-END:initComponents
     private String getDirChoose(String lastDir){
@@ -208,9 +184,7 @@ public final class modWizVisualPanel1 extends JPanel {
 }//GEN-LAST:event_outDirButton1ActionPerformed
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
-        protected static javax.swing.JLabel getTempltMessage;
         private javax.swing.JLabel jLabel1;
-        public javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel2;
         private javax.swing.JPanel jPanel4;
         private javax.swing.JScrollPane jScrollPane1;

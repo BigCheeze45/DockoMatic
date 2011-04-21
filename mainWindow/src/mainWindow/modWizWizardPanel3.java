@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.Set;
 import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -53,6 +54,7 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel, ListSelectio
 		if (component == null) {
 			component = new modWizVisualPanel3();
 		        modWizVisualPanel3.getTable().getSelectionModel().addListSelectionListener(this);
+		        modWizVisualPanel3.genModelMessage.setVisible(false);
 		}
 		return component;
 	}
@@ -131,15 +133,14 @@ private void setValid(boolean val) {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
-                String seq = (String)((WizardDescriptor) settings).getProperty("seq");
+                //String seq = (String)((WizardDescriptor) settings).getProperty("seq");
 		String templt = (String)((WizardDescriptor) settings).getProperty("Template");
 		boolean swarm = (Boolean)((WizardDescriptor) settings).getProperty("swarm");
 
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
 		//String pdbName = getPdbTmpltFile(oDir, templt);
 		//runModellerJob(oDir, "mySeq", pdbName, swarm);
-		runModellerJob(oDir, "mySeq", getPdbTmpltFile(oDir, templt), swarm);
-		parseResults(oDir, "mySeq");
+		doModellerStuff(oDir, templt, swarm);
 
 	}
 
@@ -158,9 +159,25 @@ private void setValid(boolean val) {
 	}
 
 
+	private void doModellerStuff(final String oDir, final String templt, final boolean swarm){
+	    modWizVisualPanel3.genModelMessage.setVisible(true);
+
+        SwingWorker getAlWorker = new SwingWorker<String, Void>(){
+
+	  @Override
+	  protected String doInBackground(){
+		runModellerJob(oDir, "mySeq", getPdbTmpltFile(oDir, templt), swarm);
+		parseResults(oDir, "mySeq");
+	        modWizVisualPanel3.genModelMessage.setVisible(false);
+	  return "DONE";
+	  }
+        };
+	getAlWorker.execute();
+	}
+
 	private void runModellerJob(String oDir, String seq, String tmplt, boolean swarm){
 		modJob = new Job(1, "", "", "", oDir, swarm, "", seq, tmplt);
-		modJob.runJob(true);
+		//modJob.runJob(true);
 	}
 
     public static void killJob(){

@@ -6,11 +6,15 @@ package mainWindow;
 
 import java.awt.Component;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -18,6 +22,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
+import org.pdb.webservices.PdbWebService;
+import org.pdb.webservices.PdbWebServiceServiceLocator;
 
 public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelectionListener {
 
@@ -36,7 +42,7 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelection
 		if (component == null) {
 			component = new modWizVisualPanel2();
 		        modWizVisualPanel2.getTable().getSelectionModel().addListSelectionListener(this);
-		        modWizVisualPanel2.genModelMessage.setVisible(false);
+	                modWizVisualPanel2.getTempltMessage.setVisible(false);
 		}
 		return component;
 	}
@@ -73,7 +79,6 @@ private void change(){
         boolean isValidInput = row >= 0 ;
         if (isValidInput) {
             setValid(true);
-	    //modWizVisualPanel2.genModelMessage.setVisible(true);
         } else {
             setValid(false);
         }
@@ -144,9 +149,9 @@ private void setValid(boolean val) {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
-		//System.out.println(((WizardDescriptor) settings).getProperty("seq"));
+		String seq = (String)((WizardDescriptor) settings).getProperty("seq");
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
-		parseResults(oDir+"/MyBlastResults.html");
+		getAndParse(seq, oDir);
 		//System.out.println((NbPreferences.forModule(modWizWizardPanel1.class).get("seq", "")));
 
 	}
@@ -155,6 +160,43 @@ private void setValid(boolean val) {
 		((WizardDescriptor) settings).putProperty("Template", ((modWizVisualPanel2)getComponent()).getTemplt());
 		((WizardDescriptor) settings).putProperty("swarm", ((modWizVisualPanel2)getComponent()).isSwarm());
 	}
+
+	private void getAndParse(final String seq, final String oDir){
+	        modWizVisualPanel2.getTempltMessage.setVisible(true);
+        SwingWorker getAlWorker = new SwingWorker<String, Void>(){
+
+	  @Override
+	  protected String doInBackground(){
+		lookupAlgnmnts(seq, oDir);
+		parseResults(oDir+"/MyBlastResults.html");
+	        modWizVisualPanel2.getTempltMessage.setVisible(false);
+	  return "DONE";
+	  }
+        };
+	getAlWorker.execute();
+	}
+
+    private void lookupAlgnmnts(final String seq, final String outDir){
+
+	    PdbWebServiceServiceLocator locator = new PdbWebServiceServiceLocator();
+            try{
+                        String _url = "http://www.pdb.org/pdb/services/pdbws";
+                        URL url = new URL(_url);
+                        PdbWebService p = locator.getpdbws(url);
+                        String output = p.blastPDB(seq, 10, "BLOSUM62" , "HTML");
+			String outName = outDir+File.separator+"MyBlastResults.html";
+                        File outputFile = new File (outName);
+                        PrintStream printer = new PrintStream ( outputFile );
+
+                        printer.print(output);
+                        printer.flush();
+                        printer.close();
+
+			//parseResults(outName);
+                } catch (Exception _e) {
+                        _e.printStackTrace();
+                }
+    }
 
 }
 

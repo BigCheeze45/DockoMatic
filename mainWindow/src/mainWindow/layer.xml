@@ -7,6 +7,11 @@
                 <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_ModInAction"/>
                 <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
             </file>
+            <file name="mainWindow-messagesAction.instance">
+                <attr name="component" methodvalue="mainWindow.messagesTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_messagesAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
             <file name="mainWindow-openerAction.instance">
                 <attr name="component" methodvalue="mainWindow.openerTopComponent.findInstance"/>
                 <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_openerAction"/>
@@ -24,6 +29,9 @@
             <file name="ModInAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/mainWindow-ModInAction.instance"/>
             </file>
+            <file name="messagesAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/mainWindow-messagesAction.instance"/>
+            </file>
             <file name="openerAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/mainWindow-openerAction.instance"/>
             </file>
@@ -34,6 +42,7 @@
     </folder>
     <folder name="Windows2">
         <folder name="Components">
+            <file name="messagesTopComponent.settings" url="messagesTopComponentSettings.xml"/>
             <file name="openerTopComponent.settings" url="openerTopComponentSettings.xml"/>
             <file name="outputGridTopComponent.settings" url="outputGridTopComponentSettings.xml"/>
         </folder>
@@ -42,6 +51,7 @@
                 <file name="openerTopComponent.wstcref" url="openerTopComponentWstcref.xml"/>
             </folder>
             <folder name="output">
+                <file name="messagesTopComponent.wstcref" url="messagesTopComponentWstcref.xml"/>
                 <file name="outputGridTopComponent.wstcref" url="outputGridTopComponentWstcref.xml"/>
             </folder>
             <folder name="properties">
