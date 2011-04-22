@@ -7,8 +7,8 @@ package mainWindow;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -274,7 +274,8 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 	    JTableHeader header = table.getTableHeader();
             int column = header.columnAtPoint(e.getPoint());
 	    String colName = table.getColumnName(column);
-	    JPanel panel;
+	    //JPanel panel;
+	    JButton button;
 
             //if(column == 10)
             //if(colName.equals("ACTION"))
@@ -282,9 +283,14 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 	        selectAllInclude();
             //else if(column == 5){
             else if(colName.equals("Secondary")){
-                panel = openerTopComponent.jPanel7;
-                if(panel.isVisible()) panel.setVisible(false);
-		else panel.setVisible(true);
+                //panel = openerTopComponent.jPanel7;
+                button = openerTopComponent.appendButton;
+                if(button.isEnabled()){// panel.setVisible(false);
+		    openerTopComponent.setAppVis(false);
+		} else{
+		//	    panel.setVisible(true);
+		    openerTopComponent.setAppVis(true);
+		    }
 	    //} else if (column == 6)
 	    } else if (colName.equals("Use Swarm"))
                 selectAllSwarm();
@@ -331,14 +337,14 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
                         },
                         new String [] {
-                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template"
+                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status"
                         }
                 ) {
                         Class[] types = new Class [] {
-                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class
                         };
                         boolean[] canEdit = new boolean [] {
-                                false, true, true, true, true, true, false, true, true, true
+                                false, true, true, true, true, true, false, true
                         };
 
                         public Class getColumnClass(int columnIndex) {
@@ -358,8 +364,6 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                 jTable1.getColumnModel().getColumn(5).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title5")); // NOI18N
                 jTable1.getColumnModel().getColumn(6).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title6")); // NOI18N
                 jTable1.getColumnModel().getColumn(7).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title7")); // NOI18N
-                jTable1.getColumnModel().getColumn(8).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title8")); // NOI18N
-                jTable1.getColumnModel().getColumn(9).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title9")); // NOI18N
 
                 outGridTPane.addTab(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
 
