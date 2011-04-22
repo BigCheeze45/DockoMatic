@@ -14,19 +14,19 @@ import org.netbeans.api.settings.ConvertAsProperties;
 /**
  * Top component which displays something.
  */
-@ConvertAsProperties(dtd = "-//mainWindow//messages//EN",
+@ConvertAsProperties(dtd = "-//mainWindow//messageWindow//EN",
 autostore = false)
-public final class messagesTopComponent extends TopComponent {
+public final class messageWindowTopComponent extends TopComponent {
 
-	private static messagesTopComponent instance;
+	private static messageWindowTopComponent instance;
 	/** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-	private static final String PREFERRED_ID = "messagesTopComponent";
+	private static final String PREFERRED_ID = "messageWindowTopComponent";
 
-	public messagesTopComponent() {
+	public messageWindowTopComponent() {
 		initComponents();
-		setName(NbBundle.getMessage(messagesTopComponent.class, "CTL_messagesTopComponent"));
-		setToolTipText(NbBundle.getMessage(messagesTopComponent.class, "HINT_messagesTopComponent"));
+		setName(NbBundle.getMessage(messageWindowTopComponent.class, "CTL_messageWindowTopComponent"));
+		setToolTipText(NbBundle.getMessage(messageWindowTopComponent.class, "HINT_messageWindowTopComponent"));
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 
 	}
@@ -49,21 +49,19 @@ public final class messagesTopComponent extends TopComponent {
                 messageArea.setRows(5);
                 jScrollPane1.setViewportView(messageArea);
 
-                org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(messagesTopComponent.class, "messagesTopComponent.jLabel1.text")); // NOI18N
+                jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(messageWindowTopComponent.class, "messageWindowTopComponent.jLabel1.text")); // NOI18N
 
                 javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
                 jPanel8.setLayout(jPanel8Layout);
                 jPanel8Layout.setHorizontalGroup(
                         jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel8Layout.createSequentialGroup()
-                                                .addGap(302, 302, 302)
-                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel8Layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+                                .addContainerGap())
                 );
                 jPanel8Layout.setVerticalGroup(
                         jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,7 +69,7 @@ public final class messagesTopComponent extends TopComponent {
                                 .addContainerGap()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
                                 .addContainerGap())
                 );
 
@@ -79,16 +77,15 @@ public final class messagesTopComponent extends TopComponent {
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 773, Short.MAX_VALUE)
+                        .addGap(0, 538, Short.MAX_VALUE)
+                        .addGap(0, 538, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addContainerGap()))
+                                .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 300, Short.MAX_VALUE)
+                        .addGap(0, 389, Short.MAX_VALUE)
+                        .addGap(0, 389, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
@@ -105,27 +102,27 @@ public final class messagesTopComponent extends TopComponent {
 	 * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
 	 * To obtain the singleton instance, use {@link #findInstance}.
 	 */
-	public static synchronized messagesTopComponent getDefault() {
+	public static synchronized messageWindowTopComponent getDefault() {
 		if (instance == null) {
-			instance = new messagesTopComponent();
+			instance = new messageWindowTopComponent();
 		}
 		return instance;
 	}
 
 	/**
-	 * Obtain the messagesTopComponent instance. Never call {@link #getDefault} directly!
+	 * Obtain the messageWindowTopComponent instance. Never call {@link #getDefault} directly!
 	 */
-	public static synchronized messagesTopComponent findInstance() {
+	public static synchronized messageWindowTopComponent findInstance() {
 		TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
 		if (win == null) {
-			Logger.getLogger(messagesTopComponent.class.getName()).warning(
+			Logger.getLogger(messageWindowTopComponent.class.getName()).warning(
 				"Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
 			return getDefault();
 		}
-		if (win instanceof messagesTopComponent) {
-			return (messagesTopComponent) win;
+		if (win instanceof messageWindowTopComponent) {
+			return (messageWindowTopComponent) win;
 		}
-		Logger.getLogger(messagesTopComponent.class.getName()).warning(
+		Logger.getLogger(messageWindowTopComponent.class.getName()).warning(
 			"There seem to be multiple components with the '" + PREFERRED_ID
 			+ "' ID. That is a potential source of errors and unexpected behavior.");
 		return getDefault();

@@ -157,7 +157,8 @@ private void setValid(boolean val) {
 	}
 
 	public void storeSettings(Object settings) {
-		((WizardDescriptor) settings).putProperty("Template", ((modWizVisualPanel2)getComponent()).getTemplt());
+		//((WizardDescriptor) settings).putProperty("Template", ((modWizVisualPanel2)getComponent()).getTemplt());
+		((WizardDescriptor) settings).putProperty("Templates", ((modWizVisualPanel2)getComponent()).getTempltList());
 		((WizardDescriptor) settings).putProperty("swarm", ((modWizVisualPanel2)getComponent()).isSwarm());
 	}
 

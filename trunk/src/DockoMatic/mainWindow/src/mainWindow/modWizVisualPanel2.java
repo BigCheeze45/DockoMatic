@@ -4,14 +4,22 @@
  */
 package mainWindow;
 
+import java.awt.Desktop;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.lang.String;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.openide.awt.HtmlBrowser;
 
 public final class modWizVisualPanel2 extends JPanel {
 
 	private boolean useSwarm = false;
+    private static JPopupMenu jpop;// = new JPopupMenu();
 
 	/** Creates new form modWizVisualPanel2 */
 	public modWizVisualPanel2() {
@@ -71,7 +79,7 @@ public final class modWizVisualPanel2 extends JPanel {
 
                         },
                         new String [] {
-                                "Model", "E Value"
+                                "Template", "E Value"
                         }
                 ) {
                         Class[] types = new Class [] {
@@ -87,6 +95,11 @@ public final class modWizVisualPanel2 extends JPanel {
 
                         public boolean isCellEditable(int rowIndex, int columnIndex) {
                                 return canEdit [columnIndex];
+                        }
+                });
+                jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mousePressed(java.awt.event.MouseEvent evt) {
+                                jTable1MousePressed(evt);
                         }
                 });
                 jScrollPane1.setViewportView(jTable1);
@@ -170,6 +183,43 @@ public final class modWizVisualPanel2 extends JPanel {
 		else  useSwarm = false;
 	}//GEN-LAST:event_swarmChkBoxActionPerformed
 
+	// Create a popup menu
+	private static void makePopMenu(final java.awt.event.MouseEvent evtOrig, final String[] tmplts){
+		JMenuItem optionMenuInfo = new JMenuItem( "More Info" );
+
+		jpop = new JPopupMenu( "Options" );
+		jpop.add( optionMenuInfo );
+
+		optionMenuInfo.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+			    goToInfo(tmplts);
+			}
+		});
+
+		jpop.show(evtOrig.getComponent(), evtOrig.getX(), evtOrig.getY());
+
+	}
+
+	private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+
+		if(evt.isPopupTrigger()){
+		    int[] rows = jTable1.getSelectedRows();
+		    makePopMenu(evt, getTempltList());
+		}
+
+	}//GEN-LAST:event_jTable1MousePressed
+
+	private static void goToInfo(String[] tmplts){
+	  Desktop dt = Desktop.getDesktop();
+
+	  for(int i=0; i<tmplts.length; i++){
+	    try{
+		dt.browse(new java.net.URI("http://www.pdb.org/pdb/explore/explore.do?structureId="+tmplts[i]));
+	    }catch(Exception e){System.out.println("CAUGHT EXCEPTION: "+e);}
+
+	  }
+	}
+
 	public static JTable getTable(){
 		return jTable1;
 	}
@@ -185,7 +235,7 @@ public final class modWizVisualPanel2 extends JPanel {
 	}
 
 
-	private int getCol(String column){
+	private static int getCol(String column){
 	    int i =0;
 	    int colCount = jTable1.getColumnCount();
 	    String name = new String("");
@@ -197,10 +247,24 @@ public final class modWizVisualPanel2 extends JPanel {
             return i;
 	}
 
+    protected static String[] getTempltList(){
+	int[] rows = jTable1.getSelectedRows();
+	String tmplt, subTmplt;
+	String[] list = new String[rows.length];
+
+	for(int i=0; i<rows.length; i++){
+            tmplt = (String) jTable1.getValueAt(rows[i], getCol("Template"));
+	    subTmplt = tmplt.substring(0, tmplt.indexOf(":"));
+	    list[i] = subTmplt;
+	}
+
+        return list;
+    }
+
     public String getTemplt(){
 	int row = jTable1.getSelectedRow();
 	if(row < 0) row = 0;
-        return (String) jTable1.getValueAt(row, getCol("Model"));
+        return (String) jTable1.getValueAt(row, getCol("Template"));
     }
 
     public TableModel getTableModel(){

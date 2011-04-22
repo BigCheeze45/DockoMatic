@@ -38,6 +38,7 @@ public class modWizWizardPanel3  implements WizardDescriptor.Panel, ListSelectio
 	 * component from this class, just use getComponent().
 	 */
 	private Component component;
+	//private static Job[] modJobList;
 	private static Job modJob;
 	private String fromWhere;
 	private boolean isValid;
@@ -134,13 +135,14 @@ private void setValid(boolean val) {
 	// by the user.
 	public void readSettings(Object settings) {
                 //String seq = (String)((WizardDescriptor) settings).getProperty("seq");
-		String templt = (String)((WizardDescriptor) settings).getProperty("Template");
+		//String templt = (String)((WizardDescriptor) settings).getProperty("Template");
+		String[] templtList = (String[])((WizardDescriptor) settings).getProperty("Templates");
 		boolean swarm = (Boolean)((WizardDescriptor) settings).getProperty("swarm");
 
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
 		//String pdbName = getPdbTmpltFile(oDir, templt);
 		//runModellerJob(oDir, "mySeq", pdbName, swarm);
-		doModellerStuff(oDir, templt, swarm);
+		doModellerStuff(oDir, templtList, swarm);
 
 	}
 
@@ -159,14 +161,16 @@ private void setValid(boolean val) {
 	}
 
 
-	private void doModellerStuff(final String oDir, final String templt, final boolean swarm){
+	private void doModellerStuff(final String oDir, final String[] templtList, final boolean swarm){
 	    modWizVisualPanel3.genModelMessage.setVisible(true);
 
         SwingWorker getAlWorker = new SwingWorker<String, Void>(){
 
 	  @Override
 	  protected String doInBackground(){
-		runModellerJob(oDir, "mySeq", getPdbTmpltFile(oDir, templt), swarm);
+		//runModellerJobs(oDir, "mySeq", getPdbTmpltFile(oDir, templts), swarm);
+		//Job[] list = createModellerJobs(oDir, "mySeq", templtList, swarm);
+		runModellerJobs(createModellerJobs(oDir, "mySeq", templtList, swarm));
 		parseResults(oDir, "mySeq");
 	        modWizVisualPanel3.genModelMessage.setVisible(false);
 	  return "DONE";
@@ -175,9 +179,26 @@ private void setValid(boolean val) {
 	getAlWorker.execute();
 	}
 
+	private void runModellerJobs(Job[] jobList){
+
+		for(int i=0; i< jobList.length; i++){
+		    jobList[i].runJob(true);
+		}
+
+	}
+
+	private Job[] createModellerJobs(String oDir, String seq, String[] tmpltList, boolean swarm){
+		Job[] modJobList = new Job[tmpltList.length];
+		String tmp;
+		for(int i=0; i< tmpltList.length; i++){
+		    modJobList[i] = new Job(1, "", "", "", oDir, swarm, "", seq, getPdbTmpltFile(oDir, tmpltList[i]));
+		}
+		return modJobList;
+	}
+
 	private void runModellerJob(String oDir, String seq, String tmplt, boolean swarm){
 		modJob = new Job(1, "", "", "", oDir, swarm, "", seq, tmplt);
-		//modJob.runJob(true);
+		modJob.runJob(true);
 	}
 
     public static void killJob(){
@@ -188,12 +209,14 @@ private void setValid(boolean val) {
         private String getPdbTmpltFile(String odir, String pdb){
 
 //	    String pdb = tmpltField.getText();
-	    String file = pdb.substring(0, pdb.indexOf(":"));
-	    String fWoPdb = odir+File.separator+file;
+	    //String file = pdb.substring(0, pdb.indexOf(":"));
+	    //String fWoPdb = odir+File.separator+file;
+	    String fWoPdb = odir+File.separator+pdb;
 	    String outFilePath=fWoPdb+".pdb";
 
 	    try{
-	        URL url = new URL("http://www.pdb.org/pdb/files/"+file+".pdb");
+	        //URL url = new URL("http://www.pdb.org/pdb/files/"+file+".pdb");
+	        URL url = new URL("http://www.pdb.org/pdb/files/"+pdb+".pdb");
 	        URLConnection urlc = url.openConnection();
 	        BufferedInputStream in = new BufferedInputStream(urlc.getInputStream());
 	        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outFilePath));
@@ -208,7 +231,8 @@ private void setValid(boolean val) {
 
 	    }catch(IOException e){e.printStackTrace();}
 	    //tmpltField.setText(outFilePath);
-	    return file;
+	    //return file;
+	    return pdb;
         }
 
     private void parseResults(String dir, String seq)

@@ -7,8 +7,12 @@
                 <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_ModInAction"/>
                 <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
             </file>
+            <file name="mainWindow-messageWindowAction.instance">
+                <attr name="component" methodvalue="mainWindow.messageWindowTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_messageWindowAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
             <file name="mainWindow-messagesAction.instance">
-                <attr name="component" methodvalue="mainWindow.messagesTopComponent.findInstance"/>
                 <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_messagesAction"/>
                 <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
             </file>
@@ -29,6 +33,9 @@
             <file name="ModInAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/mainWindow-ModInAction.instance"/>
             </file>
+            <file name="messageWindowAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/mainWindow-messageWindowAction.instance"/>
+            </file>
             <file name="messagesAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/mainWindow-messagesAction.instance"/>
             </file>
@@ -42,6 +49,7 @@
     </folder>
     <folder name="Windows2">
         <folder name="Components">
+            <file name="messageWindowTopComponent.settings" url="messageWindowTopComponentSettings.xml"/>
             <file name="messagesTopComponent.settings" url="messagesTopComponentSettings.xml"/>
             <file name="openerTopComponent.settings" url="openerTopComponentSettings.xml"/>
             <file name="outputGridTopComponent.settings" url="outputGridTopComponentSettings.xml"/>
@@ -55,6 +63,7 @@
                 <file name="outputGridTopComponent.wstcref" url="outputGridTopComponentWstcref.xml"/>
             </folder>
             <folder name="properties">
+                <file name="messageWindowTopComponent.wstcref" url="messageWindowTopComponentWstcref.xml"/>
             </folder>
         </folder>
     </folder>
