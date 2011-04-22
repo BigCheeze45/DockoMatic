@@ -87,7 +87,7 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 
                         },
                         new String [] {
-                                "Model", "Location", "Score"
+                                "Model", "Location", "RMSD"
                         }
                 ) {
                         Class[] types = new Class [] {
