@@ -13,6 +13,7 @@ import java.io.*;
  */
 public class Job {
     public Process procID = null;
+    public ProcessBuilder pb = null;
     public String swarmID = null;
     public boolean isRunning;
     public boolean usingSwarm;
@@ -68,9 +69,15 @@ public class Job {
     // Creates String for command to be used by system.  This may or may not be used in
     // conjunction with swarm.
     private void setCmd(){
+	   this.cmd = Job.class.getResource("Job.class").getPath();
+           //this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("build/"));
+           this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("dockomatic/modules/"));
+           ////this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("build/"));
+           //this.cmd = ClassLoader.getSystemClassLoader().getResource("openerTopComponent.class").getPath();
+           //this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("DockoMatic.jar"));
            //this.cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
            //this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("DockoMatic.jar"));
-           this.cmd += "dockOmatic.pl";
+           this.cmd += "lib/dockOmatic.pl";
            //this.cmd = ClassLoader.getSystemClassLoader().getResource("MainFrame.class").getPath();
            //this.cmd = this.cmd.substring(0, this.cmd.lastIndexOf(File.separator));
            //this.cmd += "dockOmatic.pl";
@@ -121,7 +128,8 @@ public class Job {
     }
 
     // Runs job on system exec'ing an instance.
-    public void runJob(){
+    public void runJob(boolean wait){
+	    int ret=0;
         setCmd();
 
         if(usingSwarm){
@@ -148,8 +156,26 @@ public class Job {
             try{
 
                 this.procID = Runtime.getRuntime().exec(this.cmd);
+            InputStream stdin = procID.getInputStream();
+            InputStreamReader isr = new InputStreamReader(stdin);
+            BufferedReader br = new BufferedReader(isr);
+	    while(br.readLine()!=null){}
 
-            }catch(java.io.IOException e){
+//                this.pb = new ProcessBuilder(this.cmd);
+//		this.pb.redirectErrorStream(true);
+//                this.procID = this.pb.start();
+
+
+		if(wait){
+                    try{
+		        ret = this.procID.waitFor();
+			System.out.println("GOT "+ret+"AFTER WAITING");
+                    }catch(InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+		}
+            //}catch(java.io.IOException e){
+            }catch(Exception e){
                     System.out.println("Caught eX "+e);
                     //System.exit(0);
             //}catch(java.lang.InterruptedException e){
