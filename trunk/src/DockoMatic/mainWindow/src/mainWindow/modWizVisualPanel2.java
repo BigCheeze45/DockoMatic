@@ -24,6 +24,7 @@ public final class modWizVisualPanel2 extends JPanel {
 	/** Creates new form modWizVisualPanel2 */
 	public modWizVisualPanel2() {
 		initComponents();
+                swarmChkBox.setVisible(false);
 	}
 
 	@Override
@@ -108,6 +109,7 @@ public final class modWizVisualPanel2 extends JPanel {
                 jTable1.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title3_1")); // NOI18N
                 jTable1.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title1")); // NOI18N
 
+                swarmChkBox.setSelected(true);
                 org.openide.awt.Mnemonics.setLocalizedText(swarmChkBox, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.swarmChkBox.text")); // NOI18N
                 swarmChkBox.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {

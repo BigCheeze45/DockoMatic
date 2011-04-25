@@ -80,6 +80,7 @@ private String resChkGpf;
 		setName(NbBundle.getMessage(openerTopComponent.class, "CTL_openerTopComponent"));
 		setToolTipText(NbBundle.getMessage(openerTopComponent.class, "HINT_openerTopComponent"));
 		//jPanel7.setVisible(false);
+		swarmCheckBox.setVisible(false);
 		setAppVis(false);
 		modListen = new ModInLookListener();
                 act = new modWizWizardAction();
@@ -197,7 +198,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(outDirButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(outDirField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(71, Short.MAX_VALUE))
+                                .addContainerGap(77, Short.MAX_VALUE))
                 );
 
                 org.openide.awt.Mnemonics.setLocalizedText(LigandButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.LigandButton.text")); // NOI18N
@@ -293,7 +294,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(receptorButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(receptorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                                 .addComponent(recModCheckBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(receptorCheckBox)
@@ -338,7 +339,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(boxCoordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(boxCoordCheckBox)
-                                .addContainerGap(31, Short.MAX_VALUE))
+                                .addContainerGap(38, Short.MAX_VALUE))
                 );
 
                 org.openide.awt.Mnemonics.setLocalizedText(appendButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appendButton.text")); // NOI18N
@@ -389,6 +390,7 @@ private class ModInLookListener implements LookupListener {
                         }
                 });
 
+                swarmCheckBox.setSelected(true);
                 org.openide.awt.Mnemonics.setLocalizedText(swarmCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swarmCheckBox.text")); // NOI18N
 
                 org.openide.awt.Mnemonics.setLocalizedText(newJobButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newJobButton.text")); // NOI18N
@@ -418,7 +420,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(newTabChBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(swarmCheckBox)
-                                .addContainerGap(25, Short.MAX_VALUE))
+                                .addContainerGap(29, Short.MAX_VALUE))
                 );
 
                 jPanel9.setPreferredSize(new java.awt.Dimension(393, 133));
@@ -448,7 +450,7 @@ private class ModInLookListener implements LookupListener {
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
                                 .addComponent(swmJobNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(59, Short.MAX_VALUE))
+                                .addContainerGap(65, Short.MAX_VALUE))
                 );
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -465,15 +467,11 @@ private class ModInLookListener implements LookupListener {
                                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap())
                 );
@@ -1207,13 +1205,15 @@ private class ModInLookListener implements LookupListener {
                 //model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", swarm, "Not Started"});
                 //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app));
                 jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app, seq, tmplt));
-                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", swarm, "Not Started", seq, tmplt, true});
+                //model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", swarm, "Not Started", seq, tmplt, true});
+                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", "Not Started", seq, tmplt, true});
             }else{
                 //jobVector.addElement(new Job(currJobNumber, lig, rec, box, dir, swarmCheckBox.isSelected(), ""));
                 //model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started"});
                 jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "", seq, tmplt));
                 //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "" ));
-                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started", seq, tmplt, true});
+                //model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started", seq, tmplt, true});
+                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, "Not Started", seq, tmplt, true});
             }
 
             //createExtraLigTimer(model.getRowCount() -1);
