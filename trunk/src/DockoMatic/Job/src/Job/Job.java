@@ -202,6 +202,7 @@ public class Job {
 
     // Public getter method to return job string created with setCmd().
     public String getCmd(){
-            return this.cmd;
+        setCmd();
+        return this.cmd;
     }
 }
