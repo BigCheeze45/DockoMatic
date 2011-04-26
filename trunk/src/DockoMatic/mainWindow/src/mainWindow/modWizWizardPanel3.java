@@ -9,8 +9,10 @@ import Job.Job;
 import java.awt.Component;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -134,15 +136,19 @@ private void setValid(boolean val) {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
+		((WizardDescriptor) settings).putProperty("numModJobs", modWizVisualPanel2.getNumModJobs());
+		((WizardDescriptor) settings).putProperty("jobsPerNode", modWizVisualPanel2.getNumJobsPerNode());
                 //String seq = (String)((WizardDescriptor) settings).getProperty("seq");
 		//String templt = (String)((WizardDescriptor) settings).getProperty("Template");
+		String numPerNode = (String)((WizardDescriptor) settings).getProperty("jobsPerNode");
+		String modJobs = (String)((WizardDescriptor) settings).getProperty("numModJobs");
 		String[] templtList = (String[])((WizardDescriptor) settings).getProperty("Templates");
 		boolean swarm = (Boolean)((WizardDescriptor) settings).getProperty("swarm");
 
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
 		//String pdbName = getPdbTmpltFile(oDir, templt);
 		//runModellerJob(oDir, "mySeq", pdbName, swarm);
-		doModellerStuff(oDir, templtList, swarm);
+		doModellerStuff(oDir, templtList, swarm, numPerNode);
 
 	}
 
@@ -161,7 +167,7 @@ private void setValid(boolean val) {
 	}
 
 
-	private void doModellerStuff(final String oDir, final String[] templtList, final boolean swarm){
+	private void doModellerStuff(final String oDir, final String[] templtList, final boolean swarm, final String nodeJobs){
 	    modWizVisualPanel3.genModelMessage.setVisible(true);
 
         SwingWorker getAlWorker = new SwingWorker<String, Void>(){
@@ -170,7 +176,7 @@ private void setValid(boolean val) {
 	  protected String doInBackground(){
 		//runModellerJobs(oDir, "mySeq", getPdbTmpltFile(oDir, templts), swarm);
 		//Job[] list = createModellerJobs(oDir, "mySeq", templtList, swarm);
-		runModellerJobs(createModellerJobs(oDir, "mySeq", templtList, swarm));
+		runModellerJobs(oDir, createModellerJobs(oDir, "mySeq", templtList, swarm), nodeJobs);
 		parseResults(oDir, "mySeq");
 	        modWizVisualPanel3.genModelMessage.setVisible(false);
 	  return "DONE";
@@ -179,11 +185,27 @@ private void setValid(boolean val) {
 	getAlWorker.execute();
 	}
 
-	private void runModellerJobs(Job[] jobList){
+	private void runModellerJobs(String oDir, Job[] jobList, String jobsPerNode){
+	    File outDir = new File(oDir);
+	    int job, i;
+            int totalCount = jobList.length;
+	    Process procID;
 
-		for(int i=0; i< jobList.length; i++){
-		    jobList[i].runJob(true);
-		}
+            // *** Bulk submit ***
+            try{
+                String base = outDir.getCanonicalPath();
+                String swarmFile = base + "/swarmCmd.txt";
+              //run swarm Jobs.
+                BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
+                for(i = 0; i< totalCount; i++){
+                    swarmOut.write(jobList[i].getCmd()+"\n");
+                    //messageArea.append("Starting Modeller Job "+i+"\n");
+                }
+                swarmOut.close();
+
+                procID = Runtime.getRuntime().exec("/usr/local/bin/swarm -f " + swarmFile + " -n "+jobsPerNode+" -l walltime=128:00:00", null, outDir);
+
+                }catch(Exception e){System.out.println(e);}
 
 	}
 
@@ -241,11 +263,25 @@ private void setValid(boolean val) {
 	    String str;
 	    String pdbid;
 	    String evalue;
+	    boolean done = false;
 	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel3)getComponent()).getTableModel();
 
 	        File fDir  = new File(dir);
                 String flist[] = fDir.list();
 
+            while(!done){
+		for(int i=0; i<flist.length; i++){
+	            if(flist[i].contains("ModSntnl")){
+		        done = true;
+			break;
+		    }else{
+			try{
+	                    Thread.sleep(5000);
+			}catch(InterruptedException ie){}
+		    }
+                    flist = fDir.list();
+		}
+	    }
 		for(int i=0; i<flist.length; i++){
 	            if(flist[i].contains(".pdb") && flist[i].contains(seq)){
 		        model.addRow(new Object[]{flist[i], dir});

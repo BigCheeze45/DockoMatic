@@ -710,9 +710,9 @@ private class ModInLookListener implements LookupListener {
               String dir = (String) table.getValueAt(row, getCol("Output Directory"));
               //dir += File.separator;
               //dir += "_Reference";
-              File dlg = new File(dir+"_Reference");
+              File done = new File(dir+"_Reference");
 
-                    if(dlg.exists()){
+                    if(done.exists()){
                             table.setValueAt("Done", row, getCol("Status"));
                             if(((String)table.getValueAt(row, getCol("Secondary"))).length() > 0){
                                 messageWindowTopComponent.messageArea.append("Starting Secondary Ligand Job\n");
@@ -723,8 +723,8 @@ private class ModInLookListener implements LookupListener {
                         // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
                         //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
                         // This line only IF running obconformer, or there will never be Orig_ file.
-                        dlg = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol("Ligand"))+".pdb");
-                        if(dlg.exists())
+                        done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol("Ligand"))+".pdb");
+                        if(done.exists())
                         //if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
                             table.setValueAt("Done", row, getCol("Status"));
                     }
@@ -881,8 +881,6 @@ private class ModInLookListener implements LookupListener {
 		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNum, 7)).compareTo("Not Started") == 0){
 		    //File dir = new File((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 2));
 		    File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol("Output Directory")));
-		    dir.delete();
-		    dir.mkdir();
 
 		    updateJob(rowNums[rowNum]);
 		    //if(outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 7).equals("Started")){
@@ -891,6 +889,8 @@ private class ModInLookListener implements LookupListener {
 			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
 			    ////(extraLigStatHash.get(jobNum)).stop();
 		    }
+		    dir.delete();
+		    dir.mkdir();
 		    //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
 		    table.setValueAt("Started", rowNums[rowNum], getCol("Status"));
 		    jobVector.get(jobNum).runJob(false);
@@ -1186,7 +1186,7 @@ private class ModInLookListener implements LookupListener {
                        (String)table.getValueAt(row, getCol("Output Directory")),
                        (String)table.getValueAt(row, getCol("Receptor")),
                        (String)table.getValueAt(row, getCol("Box Coordinate")),
-                       (Boolean)table.getValueAt(row, getCol("Use Swarm")),
+                       true,
                        (String)table.getValueAt(row, getCol("Sequence")),
                        (String)table.getValueAt(row, getCol("Template")));
 
@@ -1195,8 +1195,8 @@ private class ModInLookListener implements LookupListener {
    
     // Create new job from supplied arguments.
     private void newJob(String lig, String rec, String box, String dir, String app, Boolean secondary, Boolean swarm, String seq, String tmplt){
-
             ++currJobNumber;
+
             messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
             //messageArea.append("Creating New Job ["+totalJobs+"]\n");
 
@@ -1271,7 +1271,8 @@ private class ModInLookListener implements LookupListener {
         String dir = (String)table.getValueAt(row, getCol("Output Directory"));
         String oldLig = ((String)table.getValueAt(row, getCol("Ligand"))).toUpperCase();
         Boolean swarm = false;
-        if((Boolean)table.getValueAt(row, getCol("Use Swarm"))){ swarm = true; }
+        //if((Boolean)table.getValueAt(row, getCol("Use Swarm"))){ swarm = true; }
+        swarm = true;
         String app;
         String base = "";
 
