@@ -177,8 +177,11 @@ $opt_o = ".";
         my ($mVolume, $mDirs, $mName) = File::Spec->splitpath($opt_m);
         my ($tVolume, $tDirs, $tName) = File::Spec->splitpath($opt_t);
 
-        runAlign($mName, $tName); 
-        runModel($mName, $tName); 
+        my $newAli = makeNewAli($mName, $tName);
+        runAlign($newAli, $tName); 
+        runModel($newAli, $tName); 
+        #runAlign($mName, $tName); 
+        #runModel($mName, $tName); 
         die"Ran Modeller... DONE\n"; 
     }
     if($opt_p =~ /\.pdb/){
@@ -351,6 +354,22 @@ sub createLigand{
 
     return $pdbOut;
 }
+sub makeNewAli{
+    my $seq = shift;
+    my $tmplt = shift;
+
+    my $ali = $seq."_".$tmplt;
+    open $TMP, $seq.".ali" or die "Not able to open seq file [$seq\.ali]!";
+    my @lines = <$TMP>;
+    close $TMP;
+    $lines[0] = ">P1;".$seq."_".$tmplt."\n";
+    $lines[1] = "sequence:".$seq."_".$tmplt.":::::::0.00: 0.00\n";
+    open $TMP, ">$ali\.ali" or die "Not able to open new ali file [$ali\.ali]!";
+    print $TMP @lines;
+    close $TMP;
+
+    return $ali;
+}
 
 # runs Modeller code
 sub runAlign{
@@ -360,6 +379,11 @@ sub runAlign{
   print "Running Align...\n"; 
 
     system("$modDir/align2d.py $seq $tmplt $opt_o");
+
+    my $alnSntnl = catfile($opt_o, "AlnSntnl");
+    open $ALIGNSNTNL, ">$alnSntnl" or die "Unable to open [$alnSntnl] for writing!";
+    print $ALIGNSNTNL ("Align Done\n");
+    close $ALIGNSNTNL;
     
 }
 
@@ -371,6 +395,11 @@ sub runModel{
   print "Running model-single...\n"; 
 
     system("$modDir/model-single.py $seq $tmplt $opt_o");
+
+    my $modSntnl = catfile($opt_o, "ModSntnl");
+    open $MODSNTNL, ">$modSntnl" or die "Unable to open [$modSntnl] for writing!";
+    print $MODSNTNL ("Modeller Done\n");
+    close $MODSNTNL;
     
 }
 
