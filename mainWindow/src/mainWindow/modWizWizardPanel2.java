@@ -125,18 +125,40 @@ private void setValid(boolean val) {
     {
 	    String str;
 	    String pdbid;
-	    String evalue;
+	    String length, gap;
+
 	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel2)getComponent()).getTableModel();
 
 	    try{
-	        BufferedReader in = new BufferedReader(new FileReader(fname));
-	        while(!((str = in.readLine()).contains("|pdbid"))){}
+	      BufferedReader in = new BufferedReader(new FileReader(fname));
+	      while(true){
 
-		do{
-	            pdbid = str.substring(0, str.indexOf("|"));
-	            evalue = str.substring(str.indexOf("/a>")+3, str.length());
-		    model.addRow(new Object[]{pdbid, evalue});
-		} while (!((str = in.readLine()).contains("/PRE")));
+	        while(!((str = in.readLine()).contains("name")) && in.ready()){}
+		if(!in.ready()) break;
+
+	        pdbid = str.substring(str.indexOf("/a>")+3, str.indexOf("|"));
+		str = in.readLine();
+	        length = str.substring(str.indexOf("=")+1, str.length());
+		str = in.readLine();
+		str = in.readLine();
+		String[] vals1 = str.split(",");
+
+		str = in.readLine();
+		String[] vals2 = str.split(",");
+		if(vals2.length > 2)
+	            gap = vals2[2];
+		else
+		    gap = "";
+
+		model.addRow(new Object[]{pdbid, vals1[2].substring(vals1[2].indexOf(":")+1, vals1[2].indexOf(".")),
+		                                 vals1[1].substring(vals1[1].indexOf("=")+2),
+						 length,
+		                                 vals1[0].substring(vals1[0].indexOf("=")+2),
+		                                 vals1[2].substring(vals1[2].indexOf(":")+1, vals1[2].indexOf(".")),
+		                                 vals2[0].substring(vals2[0].indexOf("=")+2),
+		                                 vals2[1].substring(vals2[1].indexOf("=")+2),
+						 gap});
+		}
 		in.close();
 	    } catch (IOException e) {
 		    e.printStackTrace();
@@ -160,6 +182,8 @@ private void setValid(boolean val) {
 		//((WizardDescriptor) settings).putProperty("Template", ((modWizVisualPanel2)getComponent()).getTemplt());
 		((WizardDescriptor) settings).putProperty("Templates", ((modWizVisualPanel2)getComponent()).getTempltList());
 		((WizardDescriptor) settings).putProperty("swarm", ((modWizVisualPanel2)getComponent()).isSwarm());
+		((WizardDescriptor) settings).putProperty("numModJobs", modWizVisualPanel2.getNumModJobs());
+		((WizardDescriptor) settings).putProperty("jobsPerNode", modWizVisualPanel2.getNumJobsPerNode());
 	}
 
 	private void getAndParse(final String seq, final String oDir){
