@@ -123,7 +123,7 @@ private void setValid(boolean val) {
 
     private void parseResults(String fname)
     {
-	    String str;
+	    String str, tmpStr;
 	    String pdbid;
 	    String length, gap;
 
@@ -136,8 +136,10 @@ private void setValid(boolean val) {
 	        while(!((str = in.readLine()).contains("name")) && in.ready()){}
 		if(!in.ready()) break;
 
-	        pdbid = str.substring(str.indexOf("/a>")+3, str.indexOf("|"));
-		str = in.readLine();
+		tmpStr = str;
+	        while(!((str = in.readLine()).contains("Length"))){tmpStr += str;}
+	        pdbid = tmpStr.substring(tmpStr.indexOf("/a>")+3, tmpStr.indexOf("|"));
+
 	        length = str.substring(str.indexOf("=")+1, str.length());
 		str = in.readLine();
 		str = in.readLine();
@@ -158,8 +160,8 @@ private void setValid(boolean val) {
 		                                 vals2[0].substring(vals2[0].indexOf("=")+2),
 		                                 vals2[1].substring(vals2[1].indexOf("=")+2),
 						 gap});
-		}
-		in.close();
+	      }
+	      in.close();
 	    } catch (IOException e) {
 		    e.printStackTrace();
 	    }
