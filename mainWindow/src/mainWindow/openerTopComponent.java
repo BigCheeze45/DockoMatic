@@ -13,31 +13,23 @@ import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import java.io.*;
 import java.util.Vector;
-import java.lang.String;
-import java.util.ArrayList;
-import java.util.Collection;
 import javax.swing.JTable;
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
-import org.openide.util.Lookup;
-import org.openide.util.LookupEvent;
-import org.openide.util.LookupListener;
 
 /**
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//mainWindow//opener//EN",
 autostore = false)
-public final class openerTopComponent extends TopComponent{// implements TableModelListener{
-    //implements LookupListener{
+public final class openerTopComponent extends TopComponent{
 
 private Vector <Job> jobVector = new Vector<Job>();
-//private Hashtable <Integer, Timer> extraLigStatHash = new Hashtable<Integer, Timer>();
 private Vector <String> ligVector = new Vector<String>();
 private Vector <String> recVector = new Vector<String>();
 private Vector <String> boxVector = new Vector<String>();
 private Vector <String> appVector = new Vector<String>();
-private ArrayList <String> modList = new ArrayList<String>();
 private Timer jobTimer;
 private boolean tabFlag = false;
 
@@ -57,17 +49,13 @@ private File ligFile;
 private File recFile;
 private File boxFile;
 private File appFile;
-private File confFile;
 private int exceptionNum = 0;
 private String lastOutDir = ".";
 private String lastLigDir = ".";
 private String lastBoxDir = ".";
 private String lastRecDir = ".";
 private String lastAppendDir = ".";
-private ModInLookListener modListen;
-private Lookup.Result res = null;
 private String resChkGpf;
-//private TableModelListener listen;
 
         private static modWizWizardAction act;// = new modWizWizardAction();
 	private static openerTopComponent instance;
@@ -82,12 +70,7 @@ private String resChkGpf;
 		//jPanel7.setVisible(false);
 		swarmCheckBox.setVisible(false);
 		setAppVis(false);
-		modListen = new ModInLookListener();
                 act = new modWizWizardAction();
-		//res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(String.class);
-		////res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(ArrayList.class);
-		//res = WindowManager.getDefault().findTopComponent("modInputTopComponent").getLookup().lookupResult(ModInfo.class);
-		////res.addLookupListener(modListen);
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 
 	}
@@ -98,40 +81,7 @@ private String resChkGpf;
 		appendButton.setEnabled(bool);
 
 	}
-//	@Override
-//	public void tableChanged(TableModelEvent e){
-//		TableModel tmpTable = (TableModel)e.getSource();
-//		int row = e.getFirstRow();
-//		if(e.getType() == e.UPDATE)
-//		    System.out.println("TABLE UPDATED");
-//		if(((String)tmpTable.getValueAt(row, 7)).equals("Started"))
-//			System.out.println("JOB STARTED");
-//	}
 
-private class ModInLookListener implements LookupListener {
-  @Override
-  @SuppressWarnings("unchecked")
-  public void resultChanged(LookupEvent ev) {
-	String tmp;
-	//ModInfo mofo;
-        Lookup.Result result = (Lookup.Result) ev.getSource();
-        Collection<? extends ArrayList> items = result.allInstances();
-        //Collection<? extends ModInfo> items = result.allInstances();
-	if(!items.isEmpty()){
-	 // ModInfo mofo = items.iterator().next();
-	  ArrayList<String> mofo = items.iterator().next();
-          //Iterator it = mofo.iterator();
-	  makeModelJob(mofo.get(0), mofo.get(1), mofo.get(2));
-	  //while(it.hasNext()){
-	  ////mofo = (ModInfo)it.next();
-	  //  tmp = (String)it.next();
-	  //messageArea.append("GOT LOOKUP "+tmp+"\n");
-	//}
-        }
-	//System.out.println("GOT LOOKUP DIR"+tmp+"\n");
-	//messageArea.append("GOT LOOKUP DIR"+tmp[0]+"\n");
-   }
-}
 	/** This method is called from within the constructor to
 	 * initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is
@@ -511,29 +461,6 @@ private class ModInLookListener implements LookupListener {
                 );
         }// </editor-fold>//GEN-END:initComponents
 
-/*    @Override
-    public void resultChanged(LookupEvent ev){
-	    System.out.println("***********RESULT CHANGED\n");
-        Lookup.Result result = (Lookup.Result) ev.getSource();
-        Collection items = result.allInstances();
-
-	if(!items.isEmpty()){
-	Iterator it = items.iterator();
-	String tmp = (String)it.next();
-        //outDir = new File(((String)it.next()).trim());
-	//String sqTmp = (String)it.next();
-	//String tpTmp = (String)it.next();
-        messageArea.append("GOT LOOKUP DIR"+tmp+"/n");
-	}else
-		          messageArea.append("GOT NO LOOKUP DIR/n");
-
-        //alignJobNums();
-	    //System.out.println("alignedJobs " );
-
-	//makeModelJob(sqTmp, tpTmp);
-
-    }
-*/
     // Prompt window to select a directory from the filesystem.
     private String getDirChoose(String lastDir, String title){
         String dir = null;
@@ -588,7 +515,6 @@ private class ModInLookListener implements LookupListener {
     private void receptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receptorButtonActionPerformed
 	//Create Receptor with Modeller
 	if(recFromModeller){
-            //modWizWizardAction act = new modWizWizardAction();
 	    String ret = act.doWizard("receptor");
 	    receptorField.setText(ret);
 	    return;
@@ -649,21 +575,29 @@ private class ModInLookListener implements LookupListener {
     }//GEN-LAST:event_appCheckBoxActionPerformed
 
     private void newJobButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newJobButtonActionPerformed
-            if(outDirField.getText().trim().length() < 1){
-                    messageWindowTopComponent.messageArea.append("No Output Directory Supplied\nUsing Current Directory '.'\n");
-                    outDirField.setText(".");
-            }
-            String tmp = ligandField.getText();
-            if(tmp.length() > 0){
-                outDir = new File(outDirField.getText().trim());
-                alignJobNums();
-	    //System.out.println("alignedJobs " );
+	    SwingWorker jobMakeWorker = new SwingWorker<String, Void>(){
 
-                makeJobs();
-	    //System.out.println("madeJobs");
-            }else{
-                    messageWindowTopComponent.messageArea.append("Ligand needs to be supplied!\n");
-            }
+                @Override
+		public String doInBackground(){
+
+                    if(outDirField.getText().trim().length() < 1){
+                        messageWindowTopComponent.messageArea.append("No Output Directory Supplied\nUsing Current Directory '.'\n");
+                        outDirField.setText(".");
+                    }
+                    String tmp = ligandField.getText();
+                    if(tmp.length() > 0){
+                        outDir = new File(outDirField.getText().trim());
+                        alignJobNums();
+
+                        makeJobs();
+                    }else{
+                        messageWindowTopComponent.messageArea.append("Ligand needs to be supplied!\n");
+                    }
+		    return "Done";
+		}
+	    };
+
+	    jobMakeWorker.execute();
     }//GEN-LAST:event_newJobButtonActionPerformed
 
     protected static void startSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
@@ -811,8 +745,6 @@ private class ModInLookListener implements LookupListener {
 	    model = (DefaultTableModel)table.getModel();
 	    int[] rowNums = table.getSelectedRows();
 	    int rowCount = table.getSelectedRowCount();
-	    //Object[] rowNums = getSelected(model.getRowCount());
-	    //int rowCount = rowNums.length;
 	    int jobNum;
 
 	    if(rowCount == 0){
@@ -825,26 +757,10 @@ private class ModInLookListener implements LookupListener {
 		    messageWindowTopComponent.messageArea.append("Killing Job "+jobNum+"\n");
 		    jobVector.get(jobNum).killJob();
 		    messageWindowTopComponent.messageArea.append("Removing Job "+jobNum+"\n");
-		    ////(extraLigStatHash.get(jobNum)).stop();
 		    model.removeRow(rowNums[rowNum]);
 	    }
 }
 
-//    private Object[] getSelected(int rows){
-//	    ArrayList<Integer> rowNums = new ArrayList<Integer>();
-//	    int rowNum;
-//
-//	    for(rowNum=0; rowNum<rows; rowNum++){
-//		if((Boolean)table.getValueAt(rowNum, getCol("ACTION")))
-//	            rowNums.add(rowNum);
-//	    }
-//
-//	    Object ret[] = rowNums.toArray();
-//
-//            return ret;
-//
-//
-//    }
 	private int getCol(String column){
 	    int i=0;
 	    table = outputGridTopComponent.getSelectedTable();
@@ -859,24 +775,25 @@ private class ModInLookListener implements LookupListener {
 
 
     private void StartSelectedJobActionPerformed(java.awt.event.MouseEvent evt) {
+	SwingWorker jobStartWorker = new SwingWorker<String, Void>(){
+          @Override
+	  public String doInBackground(){
+
 	    table = outputGridTopComponent.getSelectedTable();
 	    model = (DefaultTableModel)table.getModel();
 
 	    int[] rowNums = table.getSelectedRows();
 	    int rowCount = table.getSelectedRowCount();
-	    //Object[] rowNums = getSelected(model.getRowCount());
-	    //int rowCount = rowNums.length;
 	    int jobNum;
 	    if(rowCount == 0){
 		    messageWindowTopComponent.messageArea.append("NO ROWS SELECTED\n");
-		    return;
+		    return "Done";
 	    }
 
 	    messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
 	    for(int rowNum=0; rowNum < rowCount; rowNum++){
 		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol("Job #"));
 		    messageWindowTopComponent.messageArea.append("Starting Job "+jobNum+"\n");
-
 
 		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNum, 7)).compareTo("Not Started") == 0){
 		    //File dir = new File((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 2));
@@ -887,20 +804,22 @@ private class ModInLookListener implements LookupListener {
 		    if(table.getValueAt(rowNums[rowNum], getCol("Status")).equals("Started")){
 			    jobVector.get(jobNum).killJob();
 			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
-			    ////(extraLigStatHash.get(jobNum)).stop();
 		    }
 		    dir.delete();
 		    dir.mkdir();
 		    //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
 		    table.setValueAt("Started", rowNums[rowNum], getCol("Status"));
 		    jobVector.get(jobNum).runJob(false);
-		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
-		    //if(((String)table.getValueAt(rowNums[rowNum], 5)).length() > 0) startExtraLigTimer(rowNums[rowNum]);
 	    }
 	    //}else{
 	    //      messageArea.append("Previous Job Activity detected... Re-starting job not allowed!\n");
 	    //}
-}
+          return "Done";
+	  }
+	};
+
+	jobStartWorker.execute();
+ }
 
     private void avgActionPerformed(java.awt.event.MouseEvent evt) {
 	    Process proc;
@@ -963,34 +882,6 @@ private class ModInLookListener implements LookupListener {
             currJobNumber = subNum;
     }
 
-    private void makeModelJob(String out, String seq, String tmplt){
-	    if(totalJobs < 1){
-		    outputGridTopComponent.outGridTPane.removeTabAt(0);
-		    model = (DefaultTableModel)outputGridTopComponent.newTabb();
-		    //model.addTableModelListener(listen);
-	    }else if(tabFlag){
-	            model = (DefaultTableModel)outputGridTopComponent.newTabb();
-		    //model.addTableModelListener(listen);
-	    }else
-		    model = (DefaultTableModel)outputGridTopComponent.getSelectedTab();
-
-        outDir = new File(out.trim());
-
-        String base = "";
-        try{
-            base = outDir.getCanonicalPath();//outDirField.getText().trim();
-        }catch(java.io.IOException e){System.out.println(e); System.exit(0);}
-
-        if(base.length() > 0){ base += File.separator;}
-
-	alignJobNums();
-        mkSubdirs(1);
-
-	messageWindowTopComponent.messageArea.append("Making Model Job\n");
-        newJob("", "", "", base + "dock_"+Integer.toString(currJobNumber), "", false, false, seq, tmplt);
-
-    }
-
     /*
      * Walks through arrays of ligands, box Coordinate files, and secondary ligands
      * to creates jobs for all combinations of each.
@@ -999,10 +890,8 @@ private class ModInLookListener implements LookupListener {
 	    if(totalJobs < 1){
 		    outputGridTopComponent.outGridTPane.removeTabAt(0);
 		    model = (DefaultTableModel)outputGridTopComponent.newTabb();
-		    //model.addTableModelListener(outputGridTopComponent.tmListen);
 	    }else if(tabFlag){
 	            model = (DefaultTableModel)outputGridTopComponent.newTabb();
-		    //model.addTableModelListener(outputGridTopComponent.tmListen);
 	    }else
 		    model = (DefaultTableModel)outputGridTopComponent.getSelectedTab();
 
@@ -1131,36 +1020,12 @@ private class ModInLookListener implements LookupListener {
                         appCount++;
                }
 
-               //modList.addElement(.getText().trim());
-               //modCount++;
-
             }catch(java.io.IOException e){++exceptionNum; messageWindowTopComponent.messageArea.append(e+" "+exceptionNum+"\n");}
 
             //removeTmpFiles();
             return (ligCount * recCount * boxCount * appCount);
     }
 
-
-//    // Add Timer for when to start jobs with Secondary Ligands.
-//    private void createExtraLigTimer(final int row){
-//        //final int job = (Integer)outputGridTopComponent.jTable1.getValueAt(row, 0);
-//        final int job = (Integer)model.getValueAt(row, 0);
-//        int delay = 30000; // 30 seconds
-//        java.awt.event.ActionListener extraLigChecker = new java.awt.event.ActionListener() {
-//                public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                        checkExtraLigand(evt, job);
-//                }
-//        };
-//
-//        extraLigStatHash.put(job, new Timer(delay, extraLigChecker));
-//    }
-//
-//    // Start Timer for when to start jobs with Secondary Ligands.
-//    private void startExtraLigTimer(final int job){
-//        (extraLigStatHash.get(job)).start();
-//
-//
-//    }
 
     // Timer to check the status of each job.
     private void startJobTimer(){
@@ -1198,25 +1063,14 @@ private class ModInLookListener implements LookupListener {
             ++currJobNumber;
 
             messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
-            //messageArea.append("Creating New Job ["+totalJobs+"]\n");
 
 	    if(secondary){
-                //jobVector.addElement(new Job(currJobNumber, lig, rec, box, dir, swarm, app));
-                //model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", swarm, "Not Started"});
-                //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app));
                 jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app, seq, tmplt));
-                //model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", swarm, "Not Started", seq, tmplt, true});
                 model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", "Not Started", seq, tmplt, true});
             }else{
-                //jobVector.addElement(new Job(currJobNumber, lig, rec, box, dir, swarmCheckBox.isSelected(), ""));
-                //model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started"});
                 jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "", seq, tmplt));
-                //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "" ));
-                //model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, swarmCheckBox.isSelected(), "Not Started", seq, tmplt, true});
                 model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, "Not Started", seq, tmplt, true});
             }
-
-            //createExtraLigTimer(model.getRowCount() -1);
 
             boxCoordField.setText("");
             receptorField.setText("");
@@ -1240,28 +1094,11 @@ private class ModInLookListener implements LookupListener {
                 model.removeRow(i);
             }
         //jobTimer.stop();
-        ////if(!extraLigStatHash.isEmpty()) extraLigStatHash.clear();
         //jobVector.removeAllElements();
         //currJobNumber = 0;
         //totalJobs = 0;
 
     }
-
-//    // The secondary ligand timer calls this method to check the status of the first job
-//    // to determine if the secondary ligand job can be started.
-//    private void checkExtraLigand(java.awt.event.ActionEvent evt, int row) {
-//        String status = (String)table.getValueAt(row, 7);
-//        int job = (Integer)table.getValueAt(row, 0);
-//
-//        if(status.equals("Done")){
-//            // create and start new job
-//            doSecondaryJob(row);
-//            messageArea.append("Starting Secondary Ligand Job\n");
-//            // kill timer
-//            (extraLigStatHash.get(job)).stop();
-//
-//        }
-//    }
 
     // Creates and starts the AutoDock job for the secondary ligand.
     private void doSecondaryJob(int row){
