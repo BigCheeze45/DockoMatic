@@ -28,20 +28,28 @@
     <attr name="Windows2\Modes\output\versioning_output.wstcref\position" intvalue="1100"/>
     <attr name="Windows2\Modes\output\watchesView.wstcref\position" intvalue="300"/>
     <folder name="Actions">
+        <file name="Build_hidden"/>
+        <file name="Debug_hidden"/>
+        <file name="GlassFish_hidden"/>
         <file name="JUnitTests_hidden"/>
-            <file name="Refactoring_hidden"/>
+            <file name="LocalHistory_hidden"/>
+        <file name="Mercurial_hidden"/>
+        <file name="Project_hidden"/>
+        <file name="Refactoring_hidden"/>
         <file name="Repository_hidden"/>
-        <folder name="Source">
-            <file name="org-netbeans-modules-editor-hints-FixAction.instance_hidden"/>
-            <file name="org-netbeans-modules-editor-hints-NextErrorAction.instance_hidden"/>
-            <file name="org-netbeans-modules-editor-java-JavaKit$JavaFixImports$GlobalAction.instance_hidden"/>
-            <file name="org-netbeans-modules-java-hints-analyzer-AnalyzeFolder.instance_hidden"/>
-            </folder>
+        <file name="Source_hidden"/>
+        <file name="Subversion_hidden"/>
+        <file name="System_hidden"/>
+        <file name="Team_hidden"/>
+        <file name="Tools_hidden"/>
+        <file name="UnitTests_hidden"/>
     </folder>
     <file name="BugtrackingOptionsDialog_hidden"/>
     <file name="Databases_hidden"/>
     <file name="Debugger_hidden"/>
     <file name="Editors_hidden"/>
+    <file name="Favorites_hidden"/>
+    <file name="HTTPServer_DUMMY_hidden"/>
     <folder name="Menu">
         <file name="BuildProject_hidden"/>
         <file name="Edit_hidden"/>
@@ -128,17 +136,20 @@
             <file name="org-netbeans-modules-tasklist-ui-TaskListAction.shadow_hidden"/>
         </folder>
     </folder>
+    <file name="ProjectsTabActions_hidden"/>
+    <file name="Projects_hidden"/>
     <file name="QuickSearch_hidden"/>
+    <file name="SaaSServices_hidden"/>
+    <file name="Servers_hidden"/>
     <file name="Spellcheckers_hidden"/>
     <folder name="Toolbars">
         <folder name="Build">
             <file name="org-netbeans-modules-debugger-ui-actions-DebugMainProjectAction.shadow_hidden"/>
             <file name="org-netbeans-modules-project-ui-BuildMainProject.shadow_hidden"/>
             <file name="org-netbeans-modules-project-ui-RebuildMainProject.shadow_hidden"/>
+            <file name="org-netbeans-modules-project-ui-RunMainProject.shadow" url="org-netbeans-modules-project-ui-RunMainProject.shadow"/>
         </folder>
-        <folder name="Clipboard">
-            <file name="org-openide-actions-CopyAction.shadow_hidden"/><file name="org-openide-actions-PasteAction.shadow_hidden"/>
-        </folder>
+        <file name="Clipboard_hidden"/>
         <file name="Debug_hidden"/>
         <file name="Debugging.xml_hidden"/>
         <file name="File_hidden"/>
