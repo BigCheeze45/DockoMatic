@@ -169,17 +169,22 @@ $opt_o = ".";
     # Modeller 
     if($opt_m =~ /(\w+)/){
         # Just in case no extensions, we add them.
+        my $num = 5;
         $opt_m =~ s/\.ali//; 
         $opt_t =~ s/\.pdb//; 
         #copy($opt_m.'.ali', $opt_o);
         #copy($opt_t.'.pdb', $opt_o);
+        $opt_t =~ /(\w+)_(\d+)$/;
+        my $tplt = $1;
+        if($2 > 0){ $num = $2;}
+
         chdir($opt_o);
         my ($mVolume, $mDirs, $mName) = File::Spec->splitpath($opt_m);
-        my ($tVolume, $tDirs, $tName) = File::Spec->splitpath($opt_t);
+        my ($tVolume, $tDirs, $tName) = File::Spec->splitpath($tplt);
 
         my $newAli = makeNewAli($mName, $tName);
         runAlign($newAli, $tName); 
-        runModel($newAli, $tName); 
+        runModel($newAli, $tName, $num); 
         #runAlign($mName, $tName); 
         #runModel($mName, $tName); 
         die"Ran Modeller... DONE\n"; 
@@ -391,10 +396,12 @@ sub runAlign{
 sub runModel{
     my $seq = shift;
     my $tmplt = shift;
+    my $num = shift;
+    my $logFile = catfile($opt_o, 'modelSingle.log');
     my $modDir = catfile($sourceDir, 'scripts', 'modeller');
   print "Running model-single...\n"; 
 
-    system("$modDir/model-single.py $seq $tmplt $opt_o");
+    system("$modDir/model-single.py $seq $tmplt $num $opt_o > $logFile");
 
     my $modSntnl = catfile($opt_o, "ModSntnl");
     open $MODSNTNL, ">$modSntnl" or die "Unable to open [$modSntnl] for writing!";
