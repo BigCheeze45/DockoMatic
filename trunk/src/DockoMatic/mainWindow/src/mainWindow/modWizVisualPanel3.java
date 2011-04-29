@@ -87,14 +87,14 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 
                         },
                         new String [] {
-                                "Model", "Location", "RMSD"
+                                "Model", "Location", "MolPdf", "DOPE", "GA341"
                         }
                 ) {
                         Class[] types = new Class [] {
-                                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                         };
                         boolean[] canEdit = new boolean [] {
-                                false, false, false
+                                false, false, false, false, false
                         };
 
                         public Class getColumnClass(int columnIndex) {
@@ -109,6 +109,8 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
                 jTable1.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.jTable1.columnModel.title0")); // NOI18N
                 jTable1.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.jTable1.columnModel.title1")); // NOI18N
                 jTable1.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.jTable1.columnModel.title2")); // NOI18N
+                jTable1.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.jTable1.columnModel.title3")); // NOI18N
+                jTable1.getColumnModel().getColumn(4).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.jTable1.columnModel.title4")); // NOI18N
 
                 killJobButton.setText(org.openide.util.NbBundle.getMessage(modWizVisualPanel3.class, "modWizVisualPanel3.killJobButton.text")); // NOI18N
                 killJobButton.addActionListener(new java.awt.event.ActionListener() {

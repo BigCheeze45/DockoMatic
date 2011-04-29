@@ -9,9 +9,11 @@ import Job.Job;
 import java.awt.Component;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -148,7 +150,7 @@ private void setValid(boolean val) {
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
 		//String pdbName = getPdbTmpltFile(oDir, templt);
 		//runModellerJob(oDir, "mySeq", pdbName, swarm);
-		doModellerStuff(oDir, templtList, swarm, numPerNode);
+		doModellerStuff(oDir, templtList, swarm, numPerNode, modJobs);
 
 	}
 
@@ -167,7 +169,7 @@ private void setValid(boolean val) {
 	}
 
 
-	private void doModellerStuff(final String oDir, final String[] templtList, final boolean swarm, final String nodeJobs){
+	private void doModellerStuff(final String oDir, final String[] templtList, final boolean swarm, final String nodeJobs, final String modJobs){
 	    modWizVisualPanel3.genModelMessage.setVisible(true);
 
         SwingWorker getAlWorker = new SwingWorker<String, Void>(){
@@ -176,7 +178,7 @@ private void setValid(boolean val) {
 	  protected String doInBackground(){
 		//runModellerJobs(oDir, "mySeq", getPdbTmpltFile(oDir, templts), swarm);
 		//Job[] list = createModellerJobs(oDir, "mySeq", templtList, swarm);
-		runModellerJobs(oDir, createModellerJobs(oDir, "mySeq", templtList, swarm), nodeJobs);
+		runModellerJobs(oDir, createModellerJobs(oDir, "mySeq", templtList, swarm, modJobs), nodeJobs);
 		parseResults(oDir, "mySeq");
 	        modWizVisualPanel3.genModelMessage.setVisible(false);
 	  return "DONE";
@@ -193,27 +195,35 @@ private void setValid(boolean val) {
 
             // *** Bulk submit ***
             try{
-                String base = outDir.getCanonicalPath();
-                String swarmFile = base + "/swarmCmd.txt";
+	       String base = Job.class.getResource("Job.class").getPath();
+               base = base.substring(base.indexOf(":")+1, base.indexOf("dockomatic/modules/"));
+               base += "swarmOut";
+               //File swarmDir = File.createTempFile("swarm", null, new File(base));
+               File swarmDir = File.createTempFile("swarmOut", null);
+	       swarmDir.delete();
+	       swarmDir.mkdir();
+	       //swarmDir.deleteOnExit();
+	       String swarmFile = swarmDir.getCanonicalPath()+"/swarmCmd";
+
               //run swarm Jobs.
                 BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
                 for(i = 0; i< totalCount; i++){
                     swarmOut.write(jobList[i].getCmd()+"\n");
-                    //messageArea.append("Starting Modeller Job "+i+"\n");
+                    messageWindowTopComponent.messageArea.append("Starting Modeller Job "+i+"\n");
                 }
                 swarmOut.close();
 
-                procID = Runtime.getRuntime().exec("/usr/local/bin/swarm -f " + swarmFile + " -n "+jobsPerNode+" -l walltime=128:00:00", null, outDir);
+                procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+jobsPerNode+" -l walltime=128:00:00", null, outDir);
 
                 }catch(Exception e){System.out.println(e);}
 
 	}
 
-	private Job[] createModellerJobs(String oDir, String seq, String[] tmpltList, boolean swarm){
+	private Job[] createModellerJobs(String oDir, String seq, String[] tmpltList, boolean swarm, String modJobs){
 		Job[] modJobList = new Job[tmpltList.length];
 		String tmp;
 		for(int i=0; i< tmpltList.length; i++){
-		    modJobList[i] = new Job(1, "", "", "", oDir, swarm, "", seq, getPdbTmpltFile(oDir, tmpltList[i]));
+		    modJobList[i] = new Job(1, "", "", "", oDir, swarm, "", seq, getPdbTmpltFile(oDir, tmpltList[i])+"_"+modJobs);
 		}
 		return modJobList;
 	}
@@ -233,6 +243,7 @@ private void setValid(boolean val) {
 //	    String pdb = tmpltField.getText();
 	    //String file = pdb.substring(0, pdb.indexOf(":"));
 	    //String fWoPdb = odir+File.separator+file;
+            messageWindowTopComponent.messageArea.append("Downloading Template file\n");
 	    String fWoPdb = odir+File.separator+pdb;
 	    String outFilePath=fWoPdb+".pdb";
 
@@ -263,6 +274,7 @@ private void setValid(boolean val) {
 	    String str;
 	    String pdbid;
 	    String evalue;
+	    String logFile="";
 	    boolean done = false;
 	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel3)getComponent()).getTableModel();
 
@@ -272,6 +284,7 @@ private void setValid(boolean val) {
             while(!done){
 		for(int i=0; i<flist.length; i++){
 	            if(flist[i].contains("ModSntnl")){
+	                logFile = dir+"/modelSingle.log";
 		        done = true;
 			break;
 		    }else{
@@ -282,12 +295,29 @@ private void setValid(boolean val) {
                     flist = fDir.list();
 		}
 	    }
-		for(int i=0; i<flist.length; i++){
-	            if(flist[i].contains(".pdb") && flist[i].contains(seq)){
-		        model.addRow(new Object[]{flist[i], dir});
-			++count;
-		    }
-		}
+            messageWindowTopComponent.messageArea.append("Parsing Modeller Results\n");
+	    try{
+	        BufferedReader in = new BufferedReader(new FileReader(logFile));
+
+	        while(!((str = in.readLine()).contains("molpdf")) && in.ready()){}
+		if(!in.ready()) return;
+		str = in.readLine();
+
+	        while((str = in.readLine())!=null){
+		    String[] vals = str.split("[ ]+");
+
+		    model.addRow(new Object[]{vals[0], dir, vals[1], vals[2], vals[3]});
+	        }
+	        in.close();
+	    } catch (IOException e) {
+		    e.printStackTrace();
+	    }
+//		for(int i=0; i<flist.length; i++){
+//	            if(flist[i].contains(".pdb") && flist[i].contains(seq)){
+//		        model.addRow(new Object[]{flist[i], dir});
+//			++count;
+//		    }
+//		}
 		if(count==0)
 	            model.addRow(new Object[]{"fakeFile", "FakeDir"});
 

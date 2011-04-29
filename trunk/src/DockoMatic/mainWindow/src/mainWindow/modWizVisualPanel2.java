@@ -49,6 +49,7 @@ public final class modWizVisualPanel2 extends JPanel {
                 swarmChkBox = new javax.swing.JCheckBox();
                 jPanel7 = new javax.swing.JPanel();
                 getTempltMessage = new javax.swing.JLabel();
+                moreInfoLabel = new javax.swing.JLabel();
                 jPanel3 = new javax.swing.JPanel();
                 jobsPerNodeLabel = new javax.swing.JLabel();
                 jobsPerNodeField = new javax.swing.JTextField();
@@ -83,14 +84,14 @@ public final class modWizVisualPanel2 extends JPanel {
 
                         },
                         new String [] {
-                                "Template", "Description", "E Value", "Length", "Score", "Method", "Identities", "Positives", "Gaps"
+                                "Template", "E Value", "Length", "Score", "Identities", "Positives", "Gaps"
                         }
                 ) {
                         Class[] types = new Class [] {
-                                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                         };
                         boolean[] canEdit = new boolean [] {
-                                false, false, false, false, false, false, false, true, false
+                                false, false, false, false, false, false, false
                         };
 
                         public Class getColumnClass(int columnIndex) {
@@ -108,14 +109,12 @@ public final class modWizVisualPanel2 extends JPanel {
                 });
                 jScrollPane1.setViewportView(jTable1);
                 jTable1.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title0")); // NOI18N
-                jTable1.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title2")); // NOI18N
-                jTable1.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title1")); // NOI18N
-                jTable1.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title2_1")); // NOI18N
-                jTable1.getColumnModel().getColumn(4).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title4")); // NOI18N
-                jTable1.getColumnModel().getColumn(5).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title5")); // NOI18N
-                jTable1.getColumnModel().getColumn(6).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title6")); // NOI18N
-                jTable1.getColumnModel().getColumn(7).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title7")); // NOI18N
-                jTable1.getColumnModel().getColumn(8).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title8")); // NOI18N
+                jTable1.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title1")); // NOI18N
+                jTable1.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title2_1")); // NOI18N
+                jTable1.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title4")); // NOI18N
+                jTable1.getColumnModel().getColumn(4).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title6")); // NOI18N
+                jTable1.getColumnModel().getColumn(5).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title7")); // NOI18N
+                jTable1.getColumnModel().getColumn(6).setHeaderValue(org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jTable1.columnModel.title8")); // NOI18N
 
                 swarmChkBox.setSelected(true);
                 org.openide.awt.Mnemonics.setLocalizedText(swarmChkBox, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.swarmChkBox.text")); // NOI18N
@@ -144,21 +143,31 @@ public final class modWizVisualPanel2 extends JPanel {
                 getTempltMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 org.openide.awt.Mnemonics.setLocalizedText(getTempltMessage, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.getTempltMessage.text")); // NOI18N
 
+                moreInfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                org.openide.awt.Mnemonics.setLocalizedText(moreInfoLabel, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.moreInfoLabel.text")); // NOI18N
+
                 javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
                 jPanel7.setLayout(jPanel7Layout);
                 jPanel7Layout.setHorizontalGroup(
                         jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(getTempltMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
-                                .addContainerGap())
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(moreInfoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE))
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addComponent(getTempltMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
+                                                .addContainerGap())))
                 );
                 jPanel7Layout.setVerticalGroup(
                         jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
+                                .addGap(23, 23, 23)
                                 .addComponent(getTempltMessage)
-                                .addContainerGap(41, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(moreInfoLabel)
+                                .addContainerGap(37, Short.MAX_VALUE))
                 );
 
                 jobsPerNodeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -362,6 +371,7 @@ public final class modWizVisualPanel2 extends JPanel {
         protected static javax.swing.JTable jTable1;
         protected static javax.swing.JTextField jobsPerNodeField;
         private javax.swing.JLabel jobsPerNodeLabel;
+        protected static javax.swing.JLabel moreInfoLabel;
         protected static javax.swing.JTextField numModelsField;
         private javax.swing.JCheckBox swarmChkBox;
         // End of variables declaration//GEN-END:variables
