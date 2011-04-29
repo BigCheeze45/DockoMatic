@@ -148,7 +148,7 @@ private String resChkGpf;
                                 .addComponent(outDirButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(outDirField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(77, Short.MAX_VALUE))
+                                .addContainerGap(71, Short.MAX_VALUE))
                 );
 
                 org.openide.awt.Mnemonics.setLocalizedText(LigandButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.LigandButton.text")); // NOI18N
@@ -244,7 +244,7 @@ private String resChkGpf;
                                 .addComponent(receptorButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(receptorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                                 .addComponent(recModCheckBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(receptorCheckBox)
@@ -289,7 +289,7 @@ private String resChkGpf;
                                 .addComponent(boxCoordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(boxCoordCheckBox)
-                                .addContainerGap(38, Short.MAX_VALUE))
+                                .addContainerGap(31, Short.MAX_VALUE))
                 );
 
                 org.openide.awt.Mnemonics.setLocalizedText(appendButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appendButton.text")); // NOI18N
@@ -370,7 +370,7 @@ private String resChkGpf;
                                 .addComponent(newTabChBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(swarmCheckBox)
-                                .addContainerGap(29, Short.MAX_VALUE))
+                                .addContainerGap(25, Short.MAX_VALUE))
                 );
 
                 jPanel9.setPreferredSize(new java.awt.Dimension(393, 133));
@@ -400,7 +400,7 @@ private String resChkGpf;
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
                                 .addComponent(swmJobNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(65, Short.MAX_VALUE))
+                                .addContainerGap(59, Short.MAX_VALUE))
                 );
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -414,9 +414,7 @@ private String resChkGpf;
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
                                                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                         .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -790,6 +788,25 @@ private String resChkGpf;
 		    return "Done";
 	    }
 
+//            // *** Bulk submit ***
+	   //cmd = Job.class.getResource("Job.class").getPath();
+           //cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("dockomatic/modules/"));
+           //cmd += "lib/dockOmatic.pl";
+//            try{
+//                String base = outDir.getCanonicalPath();
+//                String swarmFile = base + "/swarmCmd.txt";
+//              //run swarm Jobs.
+//                BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
+//                for(i = 0; i< totalCount; i++){
+//                    swarmOut.write(jobList[i].getCmd()+"\n");
+//                    //messageArea.append("Starting Modeller Job "+i+"\n");
+//                }
+//                swarmOut.close();
+//
+//                procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null, outDir);
+//
+//                }catch(Exception e){System.out.println(e);}
+
 	    messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
 	    for(int rowNum=0; rowNum < rowCount; rowNum++){
 		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol("Job #"));
@@ -910,7 +927,7 @@ private String resChkGpf;
                    for(int r=0; r<recVector.size(); r++){
                            for(int b=0; b<boxVector.size(); b++){
                                    for(int a=0; a<appVector.size(); a++){
-                                           newJob(ligVector.get(l), recVector.get(r), boxVector.get(b), base + "dock_"+Integer.toString(currJobNumber), appVector.get(a), false, false, "", "");
+                                           newJob(ligVector.get(l), recVector.get(r), boxVector.get(b), base, appVector.get(a), false, false, "", "");
                                    }
                            }
                    }
@@ -1061,6 +1078,7 @@ private String resChkGpf;
     // Create new job from supplied arguments.
     private void newJob(String lig, String rec, String box, String dir, String app, Boolean secondary, Boolean swarm, String seq, String tmplt){
             ++currJobNumber;
+            dir = dir + "dock_"+Integer.toString(currJobNumber);
 
             messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
 
@@ -1124,7 +1142,8 @@ private String resChkGpf;
 
         alignJobNums();
         mkSubdirs(1);
-        newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
+        //newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
+        newJob(lig, rec, box, base, app, true, swarm, "", "");
         jobVector.lastElement().runJob(false);
         table.setValueAt("Started", model.getRowCount()-1, getCol("Status"));
 

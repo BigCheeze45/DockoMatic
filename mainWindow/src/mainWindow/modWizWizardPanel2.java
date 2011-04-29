@@ -43,6 +43,7 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelection
 			component = new modWizVisualPanel2();
 		        modWizVisualPanel2.getTable().getSelectionModel().addListSelectionListener(this);
 	                modWizVisualPanel2.getTempltMessage.setVisible(false);
+	                modWizVisualPanel2.moreInfoLabel.setVisible(false);
 		}
 		return component;
 	}
@@ -152,11 +153,10 @@ private void setValid(boolean val) {
 		else
 		    gap = "";
 
-		model.addRow(new Object[]{pdbid, vals1[2].substring(vals1[2].indexOf(":")+1, vals1[2].indexOf(".")),
+		model.addRow(new Object[]{pdbid,
 		                                 vals1[1].substring(vals1[1].indexOf("=")+2),
 						 length,
 		                                 vals1[0].substring(vals1[0].indexOf("=")+2),
-		                                 vals1[2].substring(vals1[2].indexOf(":")+1, vals1[2].indexOf(".")),
 		                                 vals2[0].substring(vals2[0].indexOf("=")+2),
 		                                 vals2[1].substring(vals2[1].indexOf("=")+2),
 						 gap});
@@ -197,6 +197,7 @@ private void setValid(boolean val) {
 		lookupAlgnmnts(seq, oDir);
 		parseResults(oDir+"/MyBlastResults.html");
 	        modWizVisualPanel2.getTempltMessage.setVisible(false);
+	        modWizVisualPanel2.moreInfoLabel.setVisible(true);
 	  return "DONE";
 	  }
         };
