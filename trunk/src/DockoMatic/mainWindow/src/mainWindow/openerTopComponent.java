@@ -69,7 +69,7 @@ private String resChkGpf;
 		setToolTipText(NbBundle.getMessage(openerTopComponent.class, "HINT_openerTopComponent"));
 		//jPanel7.setVisible(false);
 		swarmCheckBox.setVisible(false);
-		setAppVis(false);
+		//setAppVis(false);
                 act = new modWizWizardAction();
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 
@@ -587,7 +587,9 @@ private String resChkGpf;
                         outDir = new File(outDirField.getText().trim());
                         alignJobNums();
 
+                        messageWindowTopComponent.messageArea.append("Highlight and Right-Click Jobs in Output Grid for options.\n");
                         makeJobs();
+                        messageWindowTopComponent.messageArea.append("Highlight and Right-Click Jobs in Output Grid for options.\n");
                     }else{
                         messageWindowTopComponent.messageArea.append("Ligand needs to be supplied!\n");
                     }

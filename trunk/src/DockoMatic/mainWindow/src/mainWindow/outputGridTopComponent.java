@@ -282,18 +282,18 @@ public final class outputGridTopComponent extends TopComponent implements TableM
             if(colName.equals("Job #"))
 	        selectAllInclude();
             //else if(column == 5){
-            else if(colName.equals("Secondary")){
-                //panel = openerTopComponent.jPanel7;
-                button = openerTopComponent.appendButton;
-                if(button.isEnabled()){// panel.setVisible(false);
-		    openerTopComponent.setAppVis(false);
-		} else{
-		//	    panel.setVisible(true);
-		    openerTopComponent.setAppVis(true);
-		    }
-	    //} else if (column == 6)
-	    } else if (colName.equals("Use Swarm"))
-                selectAllSwarm();
+//            else if(colName.equals("Secondary")){
+//                //panel = openerTopComponent.jPanel7;
+//                button = openerTopComponent.appendButton;
+//                if(button.isEnabled()){// panel.setVisible(false);
+//		    openerTopComponent.setAppVis(false);
+//		} else{
+//		//	    panel.setVisible(true);
+//		    openerTopComponent.setAppVis(true);
+//		    }
+//	    //} else if (column == 6)
+//	    } else if (colName.equals("Use Swarm"))
+//                selectAllSwarm();
 	}
 
 	private static void TabbMousePressed(java.awt.event.MouseEvent e) {
