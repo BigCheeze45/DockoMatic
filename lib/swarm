@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use Getopt::Std;
+
+getopts('f:n:');
+
+#print("OPT F: $opt_f\n");
+#print("OPT N: $opt_n\n");
+open $INFILE, $opt_f or die "$!\nFILE $opt_f";
+my @cmds = <$INFILE>;
+close $INFILE;
+
+foreach $cmd (@cmds){
+    system($cmd);
+}
