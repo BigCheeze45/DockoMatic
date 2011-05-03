@@ -13,10 +13,12 @@ import javax.swing.table.DefaultTableModel;
 public final class modWizVisualPanel1 extends JPanel {
     private DefaultTableModel model;
     private JTable table;
+    private boolean fullAuto = false;
 
 	/** Creates new form modWizVisualPanel1 */
 	public modWizVisualPanel1() {
 		initComponents();
+		jPanel1.setVisible(false);
 	}
 
 	@Override
@@ -45,6 +47,8 @@ public final class modWizVisualPanel1 extends JPanel {
                 jPanel4 = new javax.swing.JPanel();
                 outDirButton1 = new javax.swing.JButton();
                 outDirField1 = new javax.swing.JTextField();
+                jPanel1 = new javax.swing.JPanel();
+                fullAutoChkBox = new javax.swing.JCheckBox();
 
                 org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(modWizVisualPanel1.class, "modWizVisualPanel1.jLabel1.text")); // NOI18N
 
@@ -111,12 +115,40 @@ public final class modWizVisualPanel1 extends JPanel {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
 
+                org.openide.awt.Mnemonics.setLocalizedText(fullAutoChkBox, org.openide.util.NbBundle.getMessage(modWizVisualPanel1.class, "modWizVisualPanel1.fullAutoChkBox.text")); // NOI18N
+                fullAutoChkBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                fullAutoChkBoxActionPerformed(evt);
+                        }
+                });
+
+                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                jPanel1.setLayout(jPanel1Layout);
+                jPanel1Layout.setHorizontalGroup(
+                        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(fullAutoChkBox, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                .addContainerGap())
+                );
+                jPanel1Layout.setVerticalGroup(
+                        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(fullAutoChkBox)
+                                .addContainerGap(43, Short.MAX_VALUE))
+                );
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +157,9 @@ public final class modWizVisualPanel1 extends JPanel {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(118, 118, 118))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6))
                 );
         }// </editor-fold>//GEN-END:initComponents
     private String getDirChoose(String lastDir){
@@ -169,6 +203,12 @@ public final class modWizVisualPanel1 extends JPanel {
         return seqArea.getText();
     }
 
+    public boolean isAuto(){
+	//return fullAuto;
+	return false;
+    }
+
+
 	private void seqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seqButtonActionPerformed
 		String file = getFileChoose("./");
 		if(file != null)
@@ -183,8 +223,15 @@ public final class modWizVisualPanel1 extends JPanel {
 		}    // TODO add your handling code here:
 }//GEN-LAST:event_outDirButton1ActionPerformed
 
+	private void fullAutoChkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullAutoChkBoxActionPerformed
+		if(fullAuto) fullAuto = false;
+		else fullAuto = true;
+	}//GEN-LAST:event_fullAutoChkBoxActionPerformed
+
         // Variables declaration - do not modify//GEN-BEGIN:variables
+        private javax.swing.JCheckBox fullAutoChkBox;
         private javax.swing.JLabel jLabel1;
+        private javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel2;
         private javax.swing.JPanel jPanel4;
         private javax.swing.JScrollPane jScrollPane1;
