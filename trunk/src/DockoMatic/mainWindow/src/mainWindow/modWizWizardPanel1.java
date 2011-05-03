@@ -138,6 +138,7 @@ private void setValid(boolean val) {
 		String seq = getSeq();
 		((WizardDescriptor) settings).putProperty("seq", seq);
 		((WizardDescriptor) settings).putProperty("outDir", ((modWizVisualPanel1)getComponent()).getOutDirField());
+		((WizardDescriptor) settings).putProperty("auto", ((modWizVisualPanel1)getComponent()).isAuto());
 	}
 
     private String getSeqFromFile(String fname){

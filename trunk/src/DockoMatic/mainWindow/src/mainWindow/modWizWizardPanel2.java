@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -33,6 +34,8 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelection
 	 */
 	private Component component;
 	private boolean isValid = false;
+	private boolean auto;
+	private int lowestRow;
 
 	// Get the visual component for the panel. In this template, the component
 	// is kept separate. This can be more efficient: if the wizard is created
@@ -127,6 +130,10 @@ private void setValid(boolean val) {
 	    String str, tmpStr;
 	    String pdbid;
 	    String length, gap;
+	    String tmpLowStr;
+	    int count;
+	    double tmpLow1 = 0;
+	    double tmpLow2 = 0;
 
 	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel2)getComponent()).getTableModel();
 
@@ -153,13 +160,21 @@ private void setValid(boolean val) {
 		else
 		    gap = "";
 
-		model.addRow(new Object[]{pdbid,
-		                                 vals1[1].substring(vals1[1].indexOf("=")+2),
-						 length,
-		                                 vals1[0].substring(vals1[0].indexOf("=")+2),
-		                                 vals2[0].substring(vals2[0].indexOf("=")+2),
-		                                 vals2[1].substring(vals2[1].indexOf("=")+2),
-						 gap});
+		// The lowest E Value should be first in list, but just in case...
+		tmpLowStr = vals1[1].substring(vals1[1].indexOf("=")+2); //E Value
+		tmpLow1 = Double.parseDouble(tmpLowStr);
+		if((count = model.getRowCount()) == 0 || tmpLow1 < tmpLow2){
+			tmpLow2 = tmpLow1;
+			lowestRow = count;
+		}
+
+		model.addRow(new Object[]{pdbid,   // template name
+		                          tmpLow1,  // E value
+					  length,  // length
+		                          vals1[0].substring(vals1[0].indexOf("=")+2), // Score
+		                          vals2[0].substring(vals2[0].indexOf("=")+2), // Identities
+		                          vals2[1].substring(vals2[1].indexOf("=")+2), // Positives
+					  gap});  // Gaps
 	      }
 	      in.close();
 	    } catch (IOException e) {
@@ -175,7 +190,12 @@ private void setValid(boolean val) {
 	public void readSettings(Object settings) {
 		String seq = (String)((WizardDescriptor) settings).getProperty("seq");
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
+		auto = (Boolean)((WizardDescriptor) settings).getProperty("auto");
 		getAndParse(seq, oDir);
+		//if(auto) iter.nextPanel();
+		if(auto){
+			// go to next panel, but how?!!
+		}
 		//System.out.println((NbPreferences.forModule(modWizWizardPanel1.class).get("seq", "")));
 
 	}
@@ -191,6 +211,7 @@ private void setValid(boolean val) {
 	private void getAndParse(final String seq, final String oDir){
 	        modWizVisualPanel2.getTempltMessage.setVisible(true);
         SwingWorker getAlWorker = new SwingWorker<String, Void>(){
+	JTable table = modWizVisualPanel2.getTable();
 
 	  @Override
 	  protected String doInBackground(){
@@ -198,6 +219,7 @@ private void setValid(boolean val) {
 		parseResults(oDir+"/MyBlastResults.html");
 	        modWizVisualPanel2.getTempltMessage.setVisible(false);
 	        modWizVisualPanel2.moreInfoLabel.setVisible(true);
+		if(auto) table.addRowSelectionInterval(lowestRow, lowestRow);
 	  return "DONE";
 	  }
         };

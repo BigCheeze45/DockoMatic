@@ -17,6 +17,7 @@ import org.openide.util.actions.CallableSystemAction;
 // your code. You can copy-paste the code below wherever you need.
 public final class modWizWizardAction extends CallableSystemAction {
 
+	WizardDescriptor wizardDescriptor;
 	private WizardDescriptor.Panel[] panels;
 	private String from;
 
@@ -27,7 +28,8 @@ public final class modWizWizardAction extends CallableSystemAction {
 	}
 
 	public void performAction() {
-		WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
+		//WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
+		wizardDescriptor = new WizardDescriptor(getPanels());
 		// {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
 		wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
 		wizardDescriptor.setTitle("The Wizard T.I.M. creating : "+from);
