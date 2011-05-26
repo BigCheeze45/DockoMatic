@@ -183,35 +183,4 @@ private void setValid(boolean val) {
 	//return seq;
     }
 
-    private void lookupAlgnmnts(final String seq){
-
-        SwingWorker getAlWorker = new SwingWorker<String, Void>(){
-
-	  @Override
-	  protected String doInBackground(){
-	    String outDir = ((modWizVisualPanel1)getComponent()).getOutDirField();
-	    PdbWebServiceServiceLocator locator = new PdbWebServiceServiceLocator();
-            try{
-                        String _url = "http://www.pdb.org/pdb/services/pdbws";
-                        URL url = new URL(_url);
-                        PdbWebService p = locator.getpdbws(url);
-                        String output = p.blastPDB(seq, 10, "BLOSUM62" , "HTML");
-			String outName = outDir+File.separator+"MyBlastResults.html";
-                        File outputFile = new File (outName);
-                        PrintStream printer = new PrintStream ( outputFile );
-
-                        printer.print(output);
-                        printer.flush();
-                        printer.close();
-
-			//parseResults(outName);
-                } catch (Exception _e) {
-                        _e.printStackTrace();
-                }
-	  return "DONE";
-	  }
-        };
-	getAlWorker.execute();
-    }
-
 }
