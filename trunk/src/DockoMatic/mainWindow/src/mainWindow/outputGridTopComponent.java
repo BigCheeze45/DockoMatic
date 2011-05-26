@@ -8,7 +8,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -48,30 +50,17 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 		putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
 		putClientProperty(TopComponent.PROP_KEEP_PREFERRED_SIZE_WHEN_SLIDED_IN, Boolean.TRUE);
                 jTable1.setColumnSelectionAllowed(true);
-		JTableHeader head = jTable1.getTableHeader();
-                head.addMouseListener(new java.awt.event.MouseAdapter() {
-                      public void mousePressed(java.awt.event.MouseEvent evt) {
-                                headerMousePressed(evt);
-                        }
-                });
+		//JTableHeader head = jTable1.getTableHeader();
+                //head.addMouseListener(new java.awt.event.MouseAdapter() {
+                //      public void mousePressed(java.awt.event.MouseEvent evt) {
+                //                headerMousePressed(evt);
+                //        }
+                //});
 
 	}
 
-	protected static void closeTabb(){
-	     
-		System.out.println("CLOSE TABB");
-		JMenuItem optionMenuClose = new JMenuItem( "Close Tab" );
-
-
-		jpop = new JPopupMenu( "Tab Options" );
-		jpop.add( optionMenuClose );
-
-		optionMenuClose.addMouseListener(new MouseAdapter(){
-			public void mousePressed(MouseEvent e){
-	                        outGridTPane.remove(outGridTPane.getSelectedIndex());
-			}
-		});
-
+	protected static void closeTabb(final MouseEvent evtOrig){
+	        outGridTPane.remove(outGridTPane.indexOfTabComponent((evtOrig.getComponent()).getParent()));
 	}
 
 	protected static TableModel newTabb()
@@ -79,6 +68,22 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 		tabCount=outGridTPane.getTabCount();
 
                 outGridTPane.addTab("tab "+tabCount, new JScrollPane(new JTable()));
+		//outGridTPane.setTabComponentAt(tabCount, new JButton("x"));
+		JButton tmpBut = new JButton("x");
+		JPanel pan = new JPanel();
+                //outGridTPane.setDisabledIconAt(tabCount, null);
+		pan.add(new JLabel(outGridTPane.getTitleAt(tabCount), null, JLabel.LEFT));
+		pan.add(tmpBut);
+                outGridTPane.setTabComponentAt(tabCount, pan);
+                //outGridTPane.setTabComponentAt(tabCount, tmpBut);
+		//outGridTPane.getTabComponentAt(tabCount).add(new JButton("x"));
+                //pan.addMouseListener(new java.awt.event.MouseAdapter() {
+                tmpBut.addMouseListener(new java.awt.event.MouseAdapter() {
+                      public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                closeTabb(evt);
+                        }
+                });
+
 		JScrollPane tmpPane = (JScrollPane)outGridTPane.getComponentAt(tabCount);
 		JTable tmpTable = (JTable)tmpPane.getViewport().getView();
 
@@ -118,12 +123,6 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                 tmpTable.addMouseListener(new java.awt.event.MouseAdapter() {
                       public void mousePressed(java.awt.event.MouseEvent evt) {
                                 TabbMousePressed(evt);
-                        }
-                });
-                outGridTPane.addMouseListener(new java.awt.event.MouseAdapter() {
-                      public void mouseClicked(java.awt.event.MouseEvent evt) {
-		            if(evt.isPopupTrigger())
-                                closeTabb();
                         }
                 });
 		//tmpTable.getModel().addTableModelListener(instance);
