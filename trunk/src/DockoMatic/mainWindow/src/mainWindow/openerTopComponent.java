@@ -628,39 +628,38 @@ private String resChkGpf;
 
     // Checks the status of jobs and sets them to Done if they are.
     private void checkStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkStatusButtonActionPerformed
-	    //@@@FIXME This needs to go trhough all tabs
 	int max = outputGridTopComponent.outGridTPane.getTabCount();
 	int jobNum;
+	int row=0;
 
 	for(int j=0; j<max;j++){
 	   table = outputGridTopComponent.getTabTable(j);
 	   model = (DefaultTableModel)table.getModel();
-           int row = 0;
            try{
             for(row = 0; row < model.getRowCount(); row++){
               //if((Integer)jTable1.getValueAt(row, 0) > 1) continue;      // This should allow us to skip to next directory so we avoid redundant checks.
 
-              String rec = (String) table.getValueAt(row, getCol("Receptor"));
-              String dir = (String) table.getValueAt(row, getCol("Output Directory"));
+              String rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
+              String dir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
               //dir += File.separator;
               //dir += "_Reference";
               File done = new File(dir+"_Reference");
 
                     if(done.exists()){
-                            table.setValueAt("Done", row, getCol("Status"));
-                            if(((String)table.getValueAt(row, getCol("Secondary"))).length() > 0){
+                            table.setValueAt("Done", row, getCol(table, "Status"));
+                            if(((String)table.getValueAt(row, getCol(table, "Secondary"))).length() > 0){
                                 messageWindowTopComponent.messageArea.append("Starting Secondary Ligand Job\n");
-                                jobNum = (Integer)table.getValueAt(row, getCol("Job #"));
+                                jobNum = (Integer)table.getValueAt(row, getCol(table, "Job #"));
                                 doSecondaryJob(jobNum);
 		            }
                     }else{
                         // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
                         //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
                         // This line only IF running obconformer, or there will never be Orig_ file.
-                        done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol("Ligand"))+".pdb");
+                        done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol(table, "Ligand"))+".pdb");
                         if(done.exists())
                         //if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
-                            table.setValueAt("Done", row, getCol("Status"));
+                            table.setValueAt("Done", row, getCol(table, "Status"));
                     }
 
 //              String files[] = dlg.list();
@@ -719,7 +718,7 @@ private String resChkGpf;
 	    javax.swing.JFileChooser checker;
 
 	    try{
-		    dir = (String) table.getValueAt(table.getSelectedRow(), getCol("Output Directory"));
+		    dir = (String) table.getValueAt(table.getSelectedRow(), getCol(table, "Output Directory"));
 		    checker = new javax.swing.JFileChooser(dir);
 	            checker.setDialogTitle("Select PDB File to View");
 	    }catch (java.lang.ArrayIndexOutOfBoundsException e){
@@ -753,7 +752,7 @@ private String resChkGpf;
 	    }
 	    messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Removal\n");
 	    for(int rowNum=rowCount-1; rowNum >= 0; rowNum--){
-		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol("Job #"));
+		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol(table, "Job #"));
 		    messageWindowTopComponent.messageArea.append("Killing Job "+jobNum+"\n");
 		    jobVector.get(jobNum).killJob();
 		    messageWindowTopComponent.messageArea.append("Removing Job "+jobNum+"\n");
@@ -761,13 +760,12 @@ private String resChkGpf;
 	    }
 }
 
-	private int getCol(String column){
+	private int getCol(JTable tbl, String column){
 	    int i=0;
-	    table = outputGridTopComponent.getSelectedTable();
-	    int colCount = table.getColumnCount();
+	    int colCount = tbl.getColumnCount();
 	    String name = new String("");
 	    for(i=0; i<colCount; i++){
-		    name = table.getColumnName(i);
+		    name = tbl.getColumnName(i);
 		    if(column.equals(name)) return i;
 	    }
             return i;
@@ -811,23 +809,23 @@ private String resChkGpf;
 
 	    messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
 	    for(int rowNum=0; rowNum < rowCount; rowNum++){
-		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol("Job #"));
+		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol(table, "Job #"));
 		    messageWindowTopComponent.messageArea.append("Starting Job "+jobNum+"\n");
 
 		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNum, 7)).compareTo("Not Started") == 0){
 		    //File dir = new File((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 2));
-		    File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol("Output Directory")));
+		    File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol(table, "Output Directory")));
 
 		    updateJob(rowNums[rowNum]);
 		    //if(outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 7).equals("Started")){
-		    if(table.getValueAt(rowNums[rowNum], getCol("Status")).equals("Started")){
+		    if(table.getValueAt(rowNums[rowNum], getCol(table, "Status")).equals("Started")){
 			    jobVector.get(jobNum).killJob();
 			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
 		    }
 		    dir.delete();
 		    dir.mkdir();
 		    //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
-		    table.setValueAt("Started", rowNums[rowNum], getCol("Status"));
+		    table.setValueAt("Started", rowNums[rowNum], getCol(table, "Status"));
 		    jobVector.get(jobNum).runJob(false);
 	    }
 	    //}else{
@@ -845,7 +843,7 @@ private String resChkGpf;
 	    table = outputGridTopComponent.getSelectedTable();
             int row = table.rowAtPoint(evt.getPoint());
 	    //table.setRowSelectionInterval(row, row);
-	    String out = (String)table.getValueAt(row, getCol("Output Directory"));
+	    String out = (String)table.getValueAt(row, getCol(table, "Output Directory"));
 	    outDirField.setText(out);
 
 	    //if(boxCoordField.getText().trim().length() < 1){
@@ -1063,16 +1061,16 @@ private String resChkGpf;
     private void updateJob(int row){
 	    table = outputGridTopComponent.getSelectedTable();
 
-            int job = (Integer)table.getValueAt(row, getCol("Job #"));
+            int job = (Integer)table.getValueAt(row, getCol(table, "Job #"));
 
             Job tmp = jobVector.get(job);
-            tmp.update((String)table.getValueAt(row, getCol("Ligand")),
-                       (String)table.getValueAt(row, getCol("Output Directory")),
-                       (String)table.getValueAt(row, getCol("Receptor")),
-                       (String)table.getValueAt(row, getCol("Box Coordinate")),
+            tmp.update((String)table.getValueAt(row, getCol(table, "Ligand")),
+                       (String)table.getValueAt(row, getCol(table, "Output Directory")),
+                       (String)table.getValueAt(row, getCol(table, "Receptor")),
+                       (String)table.getValueAt(row, getCol(table, "Box Coordinate")),
                        true,
-                       (String)table.getValueAt(row, getCol("Sequence")),
-                       (String)table.getValueAt(row, getCol("Template")));
+                       (String)table.getValueAt(row, getCol(table, "Sequence")),
+                       (String)table.getValueAt(row, getCol(table, "Template")));
 
     }
 
@@ -1109,7 +1107,7 @@ private String resChkGpf;
         int jobNum;
         int numRows = model.getRowCount();
             for(int i = numRows-1; i>= 0; i--){
-                jobNum = (Integer)table.getValueAt(i, getCol("Job #"));
+                jobNum = (Integer)table.getValueAt(i, getCol(table, "Job #"));
                 jobVector.get(jobNum).killJob();
                 model.removeRow(i);
             }
@@ -1122,11 +1120,11 @@ private String resChkGpf;
 
     // Creates and starts the AutoDock job for the secondary ligand.
     private void doSecondaryJob(int row){
-        String lig = (String)table.getValueAt(row, getCol("Secondary"));
-        String rec = (String)table.getValueAt(row, getCol("Receptor"));
-        String box = (String)table.getValueAt(row, getCol("Box Coordinate"));
-        String dir = (String)table.getValueAt(row, getCol("Output Directory"));
-        String oldLig = ((String)table.getValueAt(row, getCol("Ligand"))).toUpperCase();
+        String lig = (String)table.getValueAt(row, getCol(table, "Secondary"));
+        String rec = (String)table.getValueAt(row, getCol(table, "Receptor"));
+        String box = (String)table.getValueAt(row, getCol(table, "Box Coordinate"));
+        String dir = (String)table.getValueAt(row, getCol(table, "Output Directory"));
+        String oldLig = ((String)table.getValueAt(row, getCol(table, "Ligand"))).toUpperCase();
         Boolean swarm = false;
         //if((Boolean)table.getValueAt(row, getCol("Use Swarm"))){ swarm = true; }
         swarm = true;
@@ -1147,7 +1145,7 @@ private String resChkGpf;
         //newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
         newJob(lig, rec, box, base, app, true, swarm, "", "");
         jobVector.lastElement().runJob(false);
-        table.setValueAt("Started", model.getRowCount()-1, getCol("Status"));
+        table.setValueAt("Started", model.getRowCount()-1, getCol(table, "Status"));
 
     }
 
