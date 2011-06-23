@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
 import sys
+import os
 
 seq = sys.argv[1]
 tmpl = sys.argv[2]
@@ -22,3 +23,6 @@ aln.append(file=seq+'.ali', align_codes=seq)
 aln.align2d()
 aln.write(file=out+'/'+seq+'-'+tmpl+'.ali', alignment_format='PIR')
 aln.write(file=out+'/'+seq+'-'+tmpl+'.pap', alignment_format='PAP')
+
+os.system("ls *.pap > alLog");
+
