@@ -17,8 +17,8 @@ import org.openide.util.actions.CallableSystemAction;
 // your code. You can copy-paste the code below wherever you need.
 public final class modWizWizardAction extends CallableSystemAction {
 
-	WizardDescriptor wizardDescriptor;
-	private WizardDescriptor.Panel[] panels;
+	//WizardDescriptor wizardDescriptor;
+	private WizardDescriptor.Panel<org.openide.WizardDescriptor>[] panels;
 	private String from;
 
 	public String doWizard(String fromWhere){
@@ -28,8 +28,12 @@ public final class modWizWizardAction extends CallableSystemAction {
 	}
 
 	public void performAction() {
-		//WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
-		wizardDescriptor = new WizardDescriptor(getPanels());
+		//WizardDescriptor wizardDescriptor;// = new WizardDescriptor(getPanels());
+		//try{
+		WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
+		//    wizardDescriptor = new WizardDescriptor(getPanels());
+		//}catch( Exception e){e.printStackTrace();}
+		//wizardDescriptor = new WizardDescriptor(getPanels());
 		// {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
 		wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
 		wizardDescriptor.setTitle("The Wizard T.I.M. creating : "+from);
@@ -46,13 +50,15 @@ public final class modWizWizardAction extends CallableSystemAction {
 	 * Initialize panels representing individual wizard's steps and sets
 	 * various properties for them influencing wizard appearance.
 	 */
-	private WizardDescriptor.Panel[] getPanels() {
+	private WizardDescriptor.Panel<org.openide.WizardDescriptor>[] getPanels() {
 		panels = null;
 		if (panels == null) {
 			panels = new WizardDescriptor.Panel[]{
 					new modWizWizardPanel1(),
 					new modWizWizardPanel2(),
-					new modWizWizardPanel3(from)
+					new modWizWizardPanel3(),
+					new modWizWizardPanel4(),
+					new modWizWizardPanel5(from)
 				};
 			String[] steps = new String[panels.length];
 			for (int i = 0; i < panels.length; i++) {
@@ -81,14 +87,14 @@ public final class modWizWizardAction extends CallableSystemAction {
 	}
 
 	public String getModelPath(){
-		Component c = panels[2].getComponent();
+		Component c = panels[4].getComponent();
 		JComponent jc = (JComponent) c;
 		String path = (String) jc.getClientProperty("MODPATH");
 		return path;
 	}
 
 	public String getName() {
-		return "Start Sample Wizard";
+		return "Start TIM";
 	}
 
 	@Override

@@ -157,30 +157,12 @@ private void setValid(boolean val) {
 
     private String getSeq(){
 	    String seq = ((modWizVisualPanel1)getComponent()).getSeqField();
-	    if(!seq.contains(".ali")){
-	        createSeqFile(seq);
-	    }else{
+	    if(seq.contains(".ali"))
                 seq = getSeqFromFile(seq);
-	    }
+
             seq = seq.replace("\n", "");
 
 	    return seq;
-    }
-
-    private void createSeqFile(String seq){
-	String outDir = ((modWizVisualPanel1)getComponent()).getOutDirField();
-	String outFilePath=outDir+File.separator+"mySeq.ali";
-	try{
-	    BufferedWriter out = new BufferedWriter(new FileWriter(outFilePath));
-	    out.write(">P1;mySeq\n");
-	    out.write("sequence:mySeq:::::::0.00: 0.00\n");
-	    out.write(seq+"*\n");
-	    out.close();
-	}catch(IOException e){e.printStackTrace();}
-        //seq = seq.replace("\n", "");
-	//seqArea.setText(outFilePath);
-
-	//return seq;
     }
 
 }

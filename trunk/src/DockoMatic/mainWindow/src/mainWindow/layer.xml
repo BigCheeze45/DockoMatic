@@ -3,6 +3,10 @@
 <filesystem>
     <folder name="Actions">
         <folder name="Window">
+            <file name="mainWindow-AlignEditorAction.instance">
+                <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_AlignEditorAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
             <file name="mainWindow-messageWindowAction.instance">
                 <attr name="component" methodvalue="mainWindow.messageWindowTopComponent.findInstance"/>
                 <attr name="displayName" bundlevalue="mainWindow.Bundle#CTL_messageWindowAction"/>
@@ -22,6 +26,9 @@
     </folder>
     <folder name="Menu">
         <folder name="Window">
+            <file name="AlignEditorAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/mainWindow-AlignEditorAction.instance"/>
+            </file>
             <file name="messageWindowAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/mainWindow-messageWindowAction.instance"/>
             </file>
@@ -35,12 +42,14 @@
     </folder>
     <folder name="Windows2">
         <folder name="Components">
+            <file name="AlignEditorTopComponent.settings" url="AlignEditorTopComponentSettings.xml"/>
             <file name="messageWindowTopComponent.settings" url="messageWindowTopComponentSettings.xml"/>
             <file name="openerTopComponent.settings" url="openerTopComponentSettings.xml"/>
             <file name="outputGridTopComponent.settings" url="outputGridTopComponentSettings.xml"/>
         </folder>
         <folder name="Modes">
             <folder name="editor">
+                <file name="AlignEditorTopComponent.wstcref" url="AlignEditorTopComponentWstcref.xml"/>
                 <file name="openerTopComponent.wstcref" url="openerTopComponentWstcref.xml"/>
             </folder>
             <folder name="output">
