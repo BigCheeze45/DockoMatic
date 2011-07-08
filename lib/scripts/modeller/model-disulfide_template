@@ -1,0 +1,35 @@
+#! /usr/bin/python
+import sys
+
+seq = sys.argv[1]
+tmpl = sys.argv[2]
+num = sys.argv[3]
+out = sys.argv[4]
+
+from modeller import *              # Load standard Modeller classes
+from modeller.automodel import *    # Load the automodel class
+# Redefine the special_patches routine to include the additional disulfides
+# (this routine is empty by default):
+class MyModel(automodel):
+    def special_patches(self, aln):
+        # A disulfide between residues 8 and 45:
+        #self.patch(residue_type='DISU', residues=(self.residues['8'],
+        #                                          self.residues['45']))
+#Insert disLines here:
+
+#End disLines
+
+log.verbose()    # request verbose output
+env = environ()  # create a new MODELLER environment to build this model in
+
+# directories for input atom files
+env.io.atom_files_directory = ['.', '../atom_files']
+
+a = MyModel(env,
+            alnfile  = out+'/'+seq+'-'+tmpl+'.ali', # alignment filename
+            knowns   = tmpl,              # codes of the templates
+            sequence = seq)              # code of the target
+a.starting_model= 1                 # index of the first model
+a.ending_model  = int(num)                 # index of the last model
+                                    # (determines how many models to calculate)
+a.make()                            # do the actual homology modeling
