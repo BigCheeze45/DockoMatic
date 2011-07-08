@@ -196,22 +196,23 @@ private void setValid(boolean val) {
 		if(auto){
 			// go to next panel, but how?!!
 		}
-		//System.out.println((NbPreferences.forModule(modWizWizardPanel1.class).get("seq", "")));
 
 	}
 
 	public void storeSettings(Object settings) {
-		//((WizardDescriptor) settings).putProperty("Template", ((modWizVisualPanel2)getComponent()).getTemplt());
-		((WizardDescriptor) settings).putProperty("Templates", ((modWizVisualPanel2)getComponent()).getTempltList());
+		((WizardDescriptor) settings).putProperty("tmpltDlList", ((modWizVisualPanel2)getComponent()).getTempltList());
 		((WizardDescriptor) settings).putProperty("swarm", ((modWizVisualPanel2)getComponent()).isSwarm());
 		((WizardDescriptor) settings).putProperty("numModJobs", modWizVisualPanel2.getNumModJobs());
 		((WizardDescriptor) settings).putProperty("jobsPerNode", modWizVisualPanel2.getNumJobsPerNode());
 	}
 
 	private void getAndParse(final String seq, final String oDir){
-	        modWizVisualPanel2.getTempltMessage.setVisible(true);
-        SwingWorker getAlWorker = new SwingWorker<String, Void>(){
-	JTable table = modWizVisualPanel2.getTable();
+	  DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel2)getComponent()).getTableModel();
+          model.setRowCount(0);
+
+	  modWizVisualPanel2.getTempltMessage.setVisible(true);
+          SwingWorker getAlWorker = new SwingWorker<String, Void>(){
+	  JTable table = modWizVisualPanel2.getTable();
 
 	  @Override
 	  protected String doInBackground(){
@@ -242,7 +243,6 @@ private void setValid(boolean val) {
                         printer.flush();
                         printer.close();
 
-			//parseResults(outName);
                 } catch (Exception _e) {
                         _e.printStackTrace();
                 }

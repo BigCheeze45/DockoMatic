@@ -37,10 +37,11 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 
 	for(int i=0; i<rows.length; i++){
             tmplt = (String) AlmntTable.getValueAt(rows[i], getCol("Alignment"));
-            loc = (String) AlmntTable.getValueAt(rows[i], getCol("Location"));
+            //loc = (String) AlmntTable.getValueAt(rows[i], getCol("Location"));
 	    //subTmplt = tmplt.substring(0, tmplt.indexOf(":"));
 	    //list[i] = subTmplt;
-	    list[i] = loc+"/"+tmplt;
+	    //list[i] = loc+"/"+tmplt;
+	    list[i] = tmplt;
 	}
 
         return list;
