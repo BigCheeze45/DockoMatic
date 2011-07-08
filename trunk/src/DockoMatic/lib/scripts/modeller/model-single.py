@@ -1,6 +1,5 @@
 #! /usr/bin/python
 import sys
-import os
 
 seq = sys.argv[1]
 tmpl = sys.argv[2]
