@@ -37,8 +37,6 @@ public class modWizWizardPanel5  implements WizardDescriptor.Panel, ListSelectio
 	 * component from this class, just use getComponent().
 	 */
 	private Component component;
-	//private static Job[] modJobList;
-	private static Job modJob;
 	private String fromWhere;
 	private boolean isValid;
 
@@ -133,18 +131,14 @@ private void setValid(boolean val) {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
-		((WizardDescriptor) settings).putProperty("numModJobs", modWizVisualPanel2.getNumModJobs());
-		((WizardDescriptor) settings).putProperty("jobsPerNode", modWizVisualPanel2.getNumJobsPerNode());
-                //String seq = (String)((WizardDescriptor) settings).getProperty("seq");
-		//String templt = (String)((WizardDescriptor) settings).getProperty("Template");
 		String numPerNode = (String)((WizardDescriptor) settings).getProperty("jobsPerNode");
 		String modJobs = (String)((WizardDescriptor) settings).getProperty("numModJobs");
-		String[] templtList = (String[])((WizardDescriptor) settings).getProperty("Templates");
+		String[] templtList = (String[])((WizardDescriptor) settings).getProperty("tmpltAlnList");
 		boolean swarm = (Boolean)((WizardDescriptor) settings).getProperty("swarm");
+		String[] residues = (String[])((WizardDescriptor) settings).getProperty("diBonds");
 
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
-		//runModellerJob(oDir, "mySeq", pdbName, swarm);
-		doModellerStuff(oDir, templtList, swarm, numPerNode, modJobs);
+		doModellerStuff(oDir, templtList, swarm, numPerNode, modJobs, residues);
 
 	}
 
@@ -160,10 +154,12 @@ private void setValid(boolean val) {
 	public void storeSettings(Object settings) {
 	    JComponent jc = (JComponent) this.component;
 	    jc.putClientProperty("MODPATH", getModelPath());
+	    ((WizardDescriptor) settings).putProperty("diBonds", new String[2]);
 	}
 
 
-	private void doModellerStuff(final String oDir, final String[] templtList, final boolean swarm, final String nodeJobs, final String modJobs){
+	private void doModellerStuff(final String oDir, final String[] templtList, 
+		final boolean swarm, final String nodeJobs, final String modJobs, final String[] residues){
 	    modWizVisualPanel5.genModelMessage.setVisible(true);
 
         SwingWorker getAlWorker = new SwingWorker<String, Void>(){
@@ -171,9 +167,11 @@ private void setValid(boolean val) {
 	  @Override
 	  protected String doInBackground(){
 		int maxJobs = Integer.parseInt(modJobs);
-		//Job[] list = createModellerJobs(oDir, "mySeq", templtList, swarm);
-		runModellerJobs(oDir, createModellerJobs(oDir, templtList, swarm, maxJobs), nodeJobs);
-		parseResults(oDir, maxJobs*templtList.length);
+		runModellerJobs(oDir, createModellerJobs(oDir, templtList, swarm, maxJobs, residues), nodeJobs);
+		if(residues[0].equals(""))
+		    parseResults(oDir, (maxJobs*templtList.length)+getResiduals(oDir), false);
+		else
+		    parseResults(oDir, (maxJobs*templtList.length)+getResiduals(oDir), true);
 	        modWizVisualPanel5.genModelMessage.setVisible(false);
 	  return "DONE";
 	  }
@@ -181,7 +179,6 @@ private void setValid(boolean val) {
 	getAlWorker.execute();
 	}
 
-	//private void runModellerJobs(String oDir, Job[] jobList, String jobsPerNode){
 	private void runModellerJobs(String oDir, String[] jobList, String jobsPerNode){
 	    File outDir = new File(oDir);
 	    int job, i;
@@ -190,10 +187,6 @@ private void setValid(boolean val) {
 
             // *** Bulk submit ***
             try{
-	       //String base = Job.class.getResource("Job.class").getPath();
-               //base = base.substring(base.indexOf(":")+1, base.indexOf("dockomatic/modules/"));
-               //base += "swarmOut";
-               //File swarmDir = File.createTempFile("swarm", null, new File(base));
                File swarmDir = File.createTempFile("swarmOut", null);
 	       swarmDir.delete();
 	       swarmDir.mkdir();
@@ -203,7 +196,6 @@ private void setValid(boolean val) {
               //run swarm Jobs.
                 BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
                 for(i = 0; i< totalCount; i++){
-                    //swarmOut.write(jobList[i].getCmd()+"\n");
                     swarmOut.write(jobList[i]+"\n");
                     messageWindowTopComponent.messageArea.append("Starting Modeller Job "+i+"\n");
                 }
@@ -215,36 +207,75 @@ private void setValid(boolean val) {
 
 	}
 
-	//private Job[] createModellerJobs(String oDir, String seq, String[] tmpltList, boolean swarm, int max){
-	private String[] createModellerJobs(String oDir, String[] tmpltList, boolean swarm, int max){
+	private String[] createModellerJobs(String oDir, String[] tmpltList, boolean swarm, int max, String[] residues){
+	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel5)getComponent()).getTableModel();
+            model.setRowCount(0);
+
 		int numJobs = tmpltList.length;
+		int lines = max+1;
 		String log;
 	        String cmd = Job.class.getResource("Job.class").getPath();
-           //this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("build/"));
                 cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
-		cmd += "lib/scripts/modeller/model-single.py";
-		//Job[] modJobList = new Job[tmpltList.length * max];
+		if(residues[0].equals(""))
+		    cmd += "lib/scripts/modeller/model-single.py";
+		else{
+		    cmd += "lib/scripts/modeller/model-disulfide.py";
+		    makeDisScript(residues);
+		}
+
 		String[] modJobList = new String[numJobs];
 		String tmpFile;
 		for(int i=0; i< numJobs; i++){
-	            tmpFile = tmpltList[i];
-		    log = oDir + "/modelSingle_"+tmpFile+".log";
-	        //    for(int j=0; j<max; j++){
-		        //modJobList[(i*max)+j] = new Job(1, "", "", "", oDir, swarm, "", seq, tmpFile +"_"+(j+1));
-		        modJobList[i] = cmd +" "+ tmpFile +" "+ tmpFile +" "+ max + " "+ oDir + " > "+ log;
-		        modJobList[i] += "; grep pdb "+ log + " >> "+oDir+"/resLog" ;
-		    //}
+	            tmpFile = tmpltList[i].substring(0, tmpltList[i].indexOf("-"));
+		    log = oDir + "/model_"+tmpFile+".log";
+		    modJobList[i] = cmd +" "+ tmpFile +" "+ tmpFile +" "+ max + " "+ oDir + " > "+ log;
+		    //modJobList[i] += "; grep pdb model_*.log > "+oDir+"/resLog" ;
+		    modJobList[i] += "; tail -n "+lines+" model_*.log | grep pdb > "+oDir+"/resLog" ;
 		}
 		return modJobList;
 	}
 
-	private void runModellerJob(String oDir, String seq, String tmplt, boolean swarm){
-		modJob = new Job(1, "", "", "", oDir, swarm, "", seq, tmplt);
-		modJob.runJob(true);
-	}
+    private void makeDisScript(String[] res){
+	    String str;
+	    String file = Job.class.getResource("Job.class").getPath();
+            file = file.substring(file.indexOf(":")+1, file.indexOf("dockomatic/modules/"));
+	    String newFile = file + "lib/scripts/modeller/model-disulfide.py";
+	    file += "lib/scripts/modeller/model-disulfide_template";
+	    File nf = new File(newFile);
+
+            try{
+	        BufferedReader in = new BufferedReader(new FileReader(file));
+	        BufferedWriter out = new BufferedWriter(new FileWriter(newFile));
+
+		do{
+		    str = in.readLine();
+                    out.write(str);
+		    out.newLine();
+		} while (!(str.contains("Insert")));
+
+		for(int i=0; i< res.length; i++){
+	            out.write(res[i]);
+		    out.newLine();
+		}
+
+	        while((str = in.readLine())!=null){
+                    out.write(str);
+		    out.newLine();
+	        }
+
+	        in.close();
+		out.close();
+		nf.setExecutable(true);
+
+	    }catch(Exception e){
+		    System.out.println("Tried to create "+newFile+" but ran into problems...");
+		    e.printStackTrace();
+	    }
+
+
+    }
 
     public static void killJob(){
-        modJob.killJob();
 
     }
 
@@ -253,26 +284,43 @@ private void setValid(boolean val) {
 	    File file = new File(fname);
 	    if(!file.exists()) return false;
 
-	    int count = 0;
-	    String str;
-
-	    try{
-	        BufferedReader in = new BufferedReader(new FileReader(file));
-
-	        while((str = in.readLine())!=null){
-                    ++count;
-	        }
-	        in.close();
-	    } catch (IOException e) {
-		    e.printStackTrace();
-	    }
+	    int count = countLines(fname);
 
             if(count == max) return true;
 
 	    return false;
     }
 
-    private void parseResults(String dir, int max)
+    private int countLines(String file){
+	    int ret = 0;
+	    String str;
+            try{
+	        BufferedReader in = new BufferedReader(new FileReader(file));
+
+	        while((str = in.readLine())!=null){
+                    ++ret;
+	        }
+	        in.close();
+	    }catch(Exception e){
+		    //e.printStackTrace();
+		    System.out.println("Tried to count lines in nonexistent file: "+file+" ... returning 0.");
+	    }
+
+	    return ret;
+
+    }
+	private int getResiduals(String oDir){
+	    String file = oDir+"/resLog";
+            int ret = countLines(file);
+
+	    File rLog = new File(file);
+	    rLog.delete();
+
+	    return ret;
+	}
+
+
+    private void parseResults(String dir, int max, boolean disulfide)
     {
 	    int count = 0;
 	    String str;
@@ -283,50 +331,27 @@ private void setValid(boolean val) {
 	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel5)getComponent()).getTableModel();
 	    logFile = dir+"/resLog";
 
-	        //File fDir  = new File(dir);
-                //String flist[] = fDir.list();
-
-            while(!done){
-		//for(int i=0; i<flist.length; i++){
-	            if(isDone(logFile, max)){
-	            //if(flist[i].contains("ModSntnl")){
-	                //logFile = dir+"/modelSingle.log";
-
-		        done = true;
-			break;
-		    }else{
-			try{
-	                    Thread.sleep(1000);
-			}catch(InterruptedException ie){}
-		    }
-                 //   flist = fDir.list();
-		//}
+            while(!isDone(logFile, max)){
+		try{
+	            Thread.sleep(1000);
+		}catch(InterruptedException ie){}
 	    }
             messageWindowTopComponent.messageArea.append("Parsing Modeller Results\n");
 	    try{
 	        BufferedReader in = new BufferedReader(new FileReader(logFile));
 
-	        //while(!((str = in.readLine()).contains("molpdf")) && in.ready()){}
-		//if(!in.ready()) return;
-		//str = in.readLine();
-
 	        while((str = in.readLine())!=null){
 		    String[] vals = str.split("[ ]+");
 
-		    model.addRow(new Object[]{vals[0].substring(vals[0].indexOf(":")+1), dir, vals[1], vals[2], vals[3]});
+		    if(disulfide)
+		        model.addRow(new Object[]{vals[0].substring(vals[0].indexOf(":")+1), dir, vals[1]});
+		    else
+		        model.addRow(new Object[]{vals[0].substring(vals[0].indexOf(":")+1), dir, vals[1], vals[2], vals[3]});
 	        }
 	        in.close();
 	    } catch (IOException e) {
 		    e.printStackTrace();
 	    }
-//		for(int i=0; i<flist.length; i++){
-//	            if(flist[i].contains(".pdb") && flist[i].contains(seq)){
-//		        model.addRow(new Object[]{flist[i], dir});
-//			++count;
-//		    }
-//		}
-		//if(count==0)
-	        //    model.addRow(new Object[]{"fakeFile", "FakeDir"});
 
     }
 

@@ -139,6 +139,7 @@ private void setValid(boolean val) {
 		((WizardDescriptor) settings).putProperty("seq", seq);
 		((WizardDescriptor) settings).putProperty("outDir", ((modWizVisualPanel1)getComponent()).getOutDirField());
 		((WizardDescriptor) settings).putProperty("auto", ((modWizVisualPanel1)getComponent()).isAuto());
+		((WizardDescriptor) settings).putProperty("diBonds", newDisulfide(((modWizVisualPanel1)getComponent()).getDis()));
 	}
 
     private String getSeqFromFile(String fname){
@@ -161,8 +162,28 @@ private void setValid(boolean val) {
                 seq = getSeqFromFile(seq);
 
             seq = seq.replace("\n", "");
+            seq = seq.replace("*", "");
 
 	    return seq;
+    }
+
+    private String[] newDisulfide(String[] args){
+        int count = args.length / 2;
+	if(args[0].isEmpty())
+		return new String[]{""};
+
+	// Store the 2 residue numbers after disLine[0] and disLine[1]
+        String[] disLine = new String[] {"\tself.patch(residue_type='DISU', residues=(self.residues['",
+					 "'],self.residues['",
+					 "']))"
+	                                };
+
+	String[] diBonds = new String[count];
+	for(int i=0; i< count; i++){
+            diBonds[i] = disLine[0]+args[i*2]+disLine[1]+args[i*2+1]+disLine[2];
+	}
+
+        return diBonds;
     }
 
 }

@@ -31,7 +31,7 @@ import org.openide.util.HelpCtx;
 public class modWizWizardPanel4  implements WizardDescriptor.Panel, ListSelectionListener {
 	private Component component;
 	private boolean isValid;
-	private String[] file;
+	private String[] alnList;
 
 	public modWizWizardPanel4(){
 	}
@@ -42,7 +42,7 @@ public class modWizWizardPanel4  implements WizardDescriptor.Panel, ListSelectio
 	// create only those which really need to be visible.
 	public Component getComponent() {
 		if (component == null) {
-			//component = new modWizVisualPanel4(file);
+			//component = new modWizVisualPanel4(alnList);
 			component = new modWizVisualPanel4();
 		        //modWizVisualPanel4.getTable().getSelectionModel().addListSelectionListener(this);
 		        //modWizVisualPanel4.genModelMessage.setVisible(false);
@@ -130,16 +130,18 @@ private void setValid(boolean val) {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
-		file = (String[])((WizardDescriptor) settings).getProperty("tmpltName");
-                addTabbs(file);
+		alnList = (String[])((WizardDescriptor) settings).getProperty("tmpltAlnList");
+		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
+                addTabbs(oDir, alnList);
 	}
 
 	public void storeSettings(Object settings) {
             writeAlnFile();
+	    ((WizardDescriptor) settings).putProperty("tmpltDlList", new String[0]);
 	}
 
     synchronized private void writeAlnFile(){
-        JTabbedPane  alnEditPane = (JTabbedPane)((modWizVisualPanel4)getComponent()).getTabbPane();
+        JTabbedPane  alnEditPane = ((modWizVisualPanel4)getComponent()).getTabbPane();
 	String title;
 	JTextArea editArea;
 	for(int i=0; i<alnEditPane.getTabCount(); i++){
@@ -152,16 +154,13 @@ private void setValid(boolean val) {
 	  }catch(IOException e){e.printStackTrace();}
 
 	}
-        //seq = seq.replace("\n", "");
-	//seqArea.setText(outFilePath);
-
-	//return seq;
     }
 
-	protected void addTabbs(String[] tabs)
+	protected void addTabbs(String oDir, String[] tabs)
 	{
-                JTabbedPane  alnEditPane = (JTabbedPane)((modWizVisualPanel4)getComponent()).getTabbPane();
-		alnEditPane.removeTabAt(0);
+                JTabbedPane  alnEditPane = ((modWizVisualPanel4)getComponent()).getTabbPane();
+		alnEditPane.removeAll();
+
 		JScrollPane jScrollPane1;
 		JTextArea editArea;
 		for(int i=0; i<tabs.length; i++){
@@ -172,8 +171,8 @@ private void setValid(boolean val) {
                     editArea.setRows(5);
                     jScrollPane1.setViewportView(editArea);
 
-                    alnEditPane.addTab(tabs[i], jScrollPane1);
-                    setContent(new File(tabs[i]), editArea);
+                    alnEditPane.addTab(oDir+File.separator+tabs[i], jScrollPane1);
+                    setContent(new File(oDir+File.separator+tabs[i]), editArea);
 
 		}
 
