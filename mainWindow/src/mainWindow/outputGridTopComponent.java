@@ -93,16 +93,16 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                         },
                         new String [] {
                                 //"Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "ACTION"
-                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Status", "Sequence", "Template"
+                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Status", "Sequence", "Template", "AutoDock Cycles"
                         }
                 ) {
                         Class[] types = new Class [] {
                                 //java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                         };
                         boolean[] canEdit = new boolean [] {
                                 //false, true, true, true, true, true, false, false, true, true, true
-                                false, true, true, true, true, true, false, true, true
+                                false, true, true, true, true, true, false, true, true, true
                         };
 
                         public Class getColumnClass(int columnIndex) {
@@ -336,14 +336,14 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
                         },
                         new String [] {
-                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Status"
+                                "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Status", "AutoDock Cycles"
                         }
                 ) {
                         Class[] types = new Class [] {
-                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
                         };
                         boolean[] canEdit = new boolean [] {
-                                false, true, true, true, true, true, true
+                                false, true, true, true, true, true, true, true
                         };
 
                         public Class getColumnClass(int columnIndex) {
@@ -362,6 +362,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                 jTable1.getColumnModel().getColumn(4).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title4")); // NOI18N
                 jTable1.getColumnModel().getColumn(5).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title5")); // NOI18N
                 jTable1.getColumnModel().getColumn(6).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title7")); // NOI18N
+                jTable1.getColumnModel().getColumn(7).setHeaderValue(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jTable1.columnModel.title8")); // NOI18N
 
                 outGridTPane.addTab(org.openide.util.NbBundle.getMessage(outputGridTopComponent.class, "outputGridTopComponent.jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
 

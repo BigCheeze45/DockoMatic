@@ -53,6 +53,8 @@ public final class modWizVisualPanel2 extends JPanel {
                 jPanel3 = new javax.swing.JPanel();
                 jobsPerNodeLabel = new javax.swing.JLabel();
                 jobsPerNodeField = new javax.swing.JTextField();
+                jPanel4 = new javax.swing.JPanel();
+                browseTmpltButton = new javax.swing.JButton();
 
                 org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.jLabel1.text")); // NOI18N
 
@@ -195,6 +197,30 @@ public final class modWizVisualPanel2 extends JPanel {
                                 .addContainerGap())
                 );
 
+                org.openide.awt.Mnemonics.setLocalizedText(browseTmpltButton, org.openide.util.NbBundle.getMessage(modWizVisualPanel2.class, "modWizVisualPanel2.browseTmpltButton.text")); // NOI18N
+                browseTmpltButton.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                browseTmpltButtonActionPerformed(evt);
+                        }
+                });
+
+                javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+                jPanel4.setLayout(jPanel4Layout);
+                jPanel4Layout.setHorizontalGroup(
+                        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(browseTmpltButton, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addContainerGap())
+                );
+                jPanel4Layout.setVerticalGroup(
+                        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addContainerGap(59, Short.MAX_VALUE)
+                                .addComponent(browseTmpltButton)
+                                .addContainerGap())
+                );
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
@@ -209,7 +235,9 @@ public final class modWizVisualPanel2 extends JPanel {
                                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(18, 18, 18)
                                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
@@ -225,7 +253,8 @@ public final class modWizVisualPanel2 extends JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap())
                 );
         }// </editor-fold>//GEN-END:initComponents
@@ -237,7 +266,7 @@ public final class modWizVisualPanel2 extends JPanel {
 
 	// Create a popup menu
 	private static void makePopMenu(final java.awt.event.MouseEvent evtOrig, final String[] tmplts){
-		JMenuItem optionMenuInfo = new JMenuItem( "More Info" );
+		JMenuItem optionMenuInfo = new JMenuItem( "Open in Browser" );
 
 		jpop = new JPopupMenu( "Options" );
 		jpop.add( optionMenuInfo );
@@ -260,6 +289,14 @@ public final class modWizVisualPanel2 extends JPanel {
 		}
 
 	}//GEN-LAST:event_jTable1MousePressed
+
+	private void browseTmpltButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseTmpltButtonActionPerformed
+	    DefaultTableModel tm = (DefaultTableModel)jTable1.getModel();
+
+            String file = getFileChoose("~/");
+	    tm.addRow(new Object[] {file});
+
+	}//GEN-LAST:event_browseTmpltButtonActionPerformed
 
 	private static void goToInfo(String[] tmplts){
 	  Desktop dt = Desktop.getDesktop();
@@ -315,8 +352,11 @@ public final class modWizVisualPanel2 extends JPanel {
 
 	for(int i=0; i<rows.length; i++){
             tmplt = (String) jTable1.getValueAt(rows[i], getCol("Template"));
-	    subTmplt = tmplt.substring(0, tmplt.indexOf(":"));
-	    list[i] = subTmplt;
+	    if(tmplt.contains(":")){
+	        subTmplt = tmplt.substring(0, tmplt.indexOf(":"));
+	        list[i] = subTmplt;
+	    }else
+		list[i] = tmplt;
 	}
 
         return list;
@@ -361,11 +401,13 @@ public final class modWizVisualPanel2 extends JPanel {
 
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
+        private javax.swing.JButton browseTmpltButton;
         protected static javax.swing.JLabel getTempltMessage;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel2;
         private javax.swing.JPanel jPanel3;
+        private javax.swing.JPanel jPanel4;
         private javax.swing.JPanel jPanel7;
         private javax.swing.JScrollPane jScrollPane1;
         protected static javax.swing.JTable jTable1;

@@ -136,7 +136,9 @@ private void setValid(boolean val) {
 	public void storeSettings(Object settings) {
 		//Get Sequence
 		String seq = getSeq();
+		createSeqFile(((modWizVisualPanel1)getComponent()).getOutDirField(), seq);
 		((WizardDescriptor) settings).putProperty("seq", seq);
+		((WizardDescriptor) settings).putProperty("seqName", ((modWizVisualPanel1)getComponent()).getSeqName());
 		((WizardDescriptor) settings).putProperty("outDir", ((modWizVisualPanel1)getComponent()).getOutDirField());
 		((WizardDescriptor) settings).putProperty("auto", ((modWizVisualPanel1)getComponent()).isAuto());
 		((WizardDescriptor) settings).putProperty("diBonds", newDisulfide(((modWizVisualPanel1)getComponent()).getDis()));
@@ -156,6 +158,20 @@ private void setValid(boolean val) {
 	    return seq;
     }
 
+    private void createSeqFile(String outDir, String seq){
+	String seqName = ((modWizVisualPanel1)getComponent()).getSeqName();
+	String outFilePath = outDir+File.separator+seqName;
+	if(!seqName.endsWith("ali"))  outFilePath += ".ali";
+
+	  try{
+	    BufferedWriter out = new BufferedWriter(new FileWriter(outFilePath));
+	    out.write(">P1;"+seqName+"\n");
+	    out.write("sequence:"+seqName+":::::::0.00: 0.00\n");
+	    out.write(seq+"*\n");
+	    out.close();
+	  }catch(IOException e){e.printStackTrace();}
+    }
+
     private String getSeq(){
 	    String seq = ((modWizVisualPanel1)getComponent()).getSeqField();
 	    if(seq.contains(".ali"))
@@ -168,10 +184,11 @@ private void setValid(boolean val) {
     }
 
     private String[] newDisulfide(String[] args){
-        int count = args.length / 2;
+        int count = args.length;
 	if(args[0].isEmpty())
 		return new String[]{""};
 
+	String tmp[];
 	// Store the 2 residue numbers after disLine[0] and disLine[1]
         String[] disLine = new String[] {"\tself.patch(residue_type='DISU', residues=(self.residues['",
 					 "'],self.residues['",
@@ -180,7 +197,8 @@ private void setValid(boolean val) {
 
 	String[] diBonds = new String[count];
 	for(int i=0; i< count; i++){
-            diBonds[i] = disLine[0]+args[i*2]+disLine[1]+args[i*2+1]+disLine[2];
+            tmp = args[i].split("-");
+            diBonds[i] = disLine[0]+tmp[0]+disLine[1]+tmp[1]+disLine[2];
 	}
 
         return diBonds;

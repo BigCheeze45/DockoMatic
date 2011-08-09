@@ -93,6 +93,7 @@ private String resChkGpf;
         // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
         private void initComponents() {
 
+                jScrollPane1 = new javax.swing.JScrollPane();
                 jPanel1 = new javax.swing.JPanel();
                 jPanel3 = new javax.swing.JPanel();
                 outDirButton = new javax.swing.JButton();
@@ -511,19 +512,22 @@ private String resChkGpf;
                                                 .addGap(13, 13, 13))))
                 );
 
+                jScrollPane1.setViewportView(jPanel1);
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1)
+                                .addContainerGap())
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1)
+                                .addGap(12, 12, 12))
                 );
         }// </editor-fold>//GEN-END:initComponents
 
@@ -882,19 +886,25 @@ private String resChkGpf;
 
 		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNum, 7)).compareTo("Not Started") == 0){
 		    //File dir = new File((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 2));
+		    System.out.println("BEFORE DIR");
 		    File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol(table, "Output Directory")));
+		    System.out.println("AFTER DIR");
 
 		    updateJob(rowNums[rowNum]);
+		    System.out.println("AFTER UPDATE");
 		    //if(outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 7).equals("Started")){
 		    if(table.getValueAt(rowNums[rowNum], getCol(table, "Status")).equals("Started")){
 			    jobVector.get(jobNum).killJob();
 			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
 		    }
-		    dir.delete();
-		    dir.mkdir();
+		    //dir.delete();
+		    //dir.mkdir();
 		    //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
+		    System.out.println("BEFORE  STATUS");
 		    table.setValueAt("Started", rowNums[rowNum], getCol(table, "Status"));
+		    System.out.println("AFTER  STATUS");
 		    jobVector.get(jobNum).runJob(false);
+		    System.out.println("AFTER  RUN JOB");
 	    }
 	    //}else{
 	    //      messageArea.append("Previous Job Activity detected... Re-starting job not allowed!\n");
@@ -995,7 +1005,8 @@ private String resChkGpf;
                    for(int r=0; r<recVector.size(); r++){
                            for(int b=0; b<boxVector.size(); b++){
                                    for(int a=0; a<appVector.size(); a++){
-                                           newJob(ligVector.get(l), recVector.get(r), boxVector.get(b), base, appVector.get(a), false, false, "", "");
+                                           newJob(ligVector.get(l), recVector.get(r), boxVector.get(b), base, appVector.get(a), 
+						     false, false, "", "", swmJobNum.getText(), dockCycles.getText());
                                    }
                            }
                    }
@@ -1138,24 +1149,30 @@ private String resChkGpf;
                        (String)table.getValueAt(row, getCol(table, "Box Coordinate")),
                        true,
                        (String)table.getValueAt(row, getCol(table, "Sequence")),
-                       (String)table.getValueAt(row, getCol(table, "Template")));
+                       (String)table.getValueAt(row, getCol(table, "Template")),
+                       (String)table.getValueAt(row, getCol(table, "AutoDock Cycles")));
 
     }
 
    
     // Create new job from supplied arguments.
-    private void newJob(String lig, String rec, String box, String dir, String app, Boolean secondary, Boolean swarm, String seq, String tmplt){
+    private void newJob(String lig, String rec, String box, String dir, String app, 
+	           Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles){
             ++currJobNumber;
             dir = dir + "dock_"+Integer.toString(currJobNumber);
 
             messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
 
 	    if(secondary){
-                jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app, seq, tmplt));
-                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", "Not Started", seq, tmplt, true});
+                //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app, seq, tmplt, cycles));
+                jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, true, app, seq, tmplt, cycles));
+                //model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", "Not Started", seq, tmplt, true, cycles});
+                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
             }else{
-                jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "", seq, tmplt));
-                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, "Not Started", seq, tmplt, true});
+                //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "", seq, tmplt, cycles));
+                jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, true, "", seq, tmplt, cycles));
+                //model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, "Not Started", seq, tmplt, true, cycles});
+                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, "Not Started", seq, tmplt, cycles});
             }
 
             boxCoordField.setText("");
@@ -1192,6 +1209,8 @@ private String resChkGpf;
         String rec = (String)table.getValueAt(row, getCol(table, "Receptor"));
         String box = (String)table.getValueAt(row, getCol(table, "Box Coordinate"));
         String dir = (String)table.getValueAt(row, getCol(table, "Output Directory"));
+        String numJobs = (String)table.getValueAt(row, getCol(table, "Jobs per Node"));
+        String cycles = (String)table.getValueAt(row, getCol(table, "AutoDock Cycles"));
         String oldLig = ((String)table.getValueAt(row, getCol(table, "Ligand"))).toUpperCase();
         Boolean swarm = false;
         //if((Boolean)table.getValueAt(row, getCol("Use Swarm"))){ swarm = true; }
@@ -1211,7 +1230,7 @@ private String resChkGpf;
         alignJobNums();
         mkSubdirs(1);
         //newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
-        newJob(lig, rec, box, base, app, true, swarm, "", "");
+        newJob(lig, rec, box, base, app, true, swarm, "", "", numJobs, cycles);
         jobVector.lastElement().runJob(false);
         table.setValueAt("Started", model.getRowCount()-1, getCol(table, "Status"));
 
@@ -1256,6 +1275,7 @@ private String resChkGpf;
         protected static javax.swing.JPanel jPanel7;
         private javax.swing.JPanel jPanel8;
         private javax.swing.JPanel jPanel9;
+        private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JCheckBox ligModCheckBox;
         private javax.swing.JCheckBox ligandCheckBox;
         private javax.swing.JTextField ligandField;
