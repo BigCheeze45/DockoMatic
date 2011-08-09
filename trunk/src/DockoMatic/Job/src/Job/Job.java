@@ -27,6 +27,7 @@ public class Job {
     private String cmd = "";
     private String sequence = "";
     private String template = "";
+    private String cycles = "";
     /** Creates new form Job */
 
         // Variables declaration - do not modify
@@ -35,7 +36,7 @@ public class Job {
     // Constructor
     public Job(int me, String lig, String rec, String box,
                    //String out, boolean swarm, String app) {
-                   String out, boolean swarm, String app, String seq, String tplt) {
+                   String out, boolean swarm, String app, String seq, String tplt, String dockCycles) {
         this.jobNum = me;
         this.ligand = lig;
         this.receptor = rec;
@@ -44,6 +45,7 @@ public class Job {
         this.append = app;
         this.sequence = seq;
         this.template = tplt;
+	this.cycles = dockCycles;
 
         this.setSwarm(swarm);
         this.isRunning = false;
@@ -53,7 +55,7 @@ public class Job {
 
     // Update info for job.
     public void update(String lig, String out, String rec,
-                        String box, boolean swarm, String seq, String tplt){
+                        String box, boolean swarm, String seq, String tplt, String dockCycles){
         this.ligand = lig;
         this.outDir = out;
         this.receptor = rec;
@@ -62,6 +64,7 @@ public class Job {
         this.setSwarm(swarm);
         this.sequence = seq;
         this.template = tplt;
+	this.cycles = dockCycles;
 
 
     }
@@ -90,6 +93,7 @@ public class Job {
            if(receptor.length() > 0){ cmd += " -r "+ receptor; }
            if(boxCoord.length() > 0){ cmd += " -b "+ boxCoord; }
            if(append.length() > 0){ cmd += " -a "+ append; }
+           if(cycles.length() > 0){ cmd += " -g "+ cycles; }
 
            //cmd += "\n";
     }
@@ -129,6 +133,7 @@ public class Job {
 
     // Runs job on system exec'ing an instance.
     public void runJob(boolean wait){
+	    System.out.println("STARTTING JOB");
 	    int ret=0;
         setCmd();
 
@@ -138,10 +143,13 @@ public class Job {
                 //run swarm Job.
                 try{
                     BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
+	    System.out.println("WRiting cmd");
                     swarmOut.write(this.cmd);
+	    System.out.println("WROTE cmd");
                     swarmOut.close();
 
-                    procID = Runtime.getRuntime().exec("/usr/local/bin/swarm -f " + swarmFile + " -n 1 -l walltime=128:00:00", null, out);
+                    //procID = Runtime.getRuntime().exec("/usr/local/bin/swarm -f " + swarmFile + " -n 1 -l walltime=128:00:00", null, out);
+                    procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n 1 -l walltime=128:00:00", null, out);
                 try{
                  Thread.sleep(500);
                 }catch(InterruptedException e) {
