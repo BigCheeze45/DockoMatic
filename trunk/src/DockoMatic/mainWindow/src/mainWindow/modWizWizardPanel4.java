@@ -160,19 +160,27 @@ private void setValid(boolean val) {
 	{
                 JTabbedPane  alnEditPane = ((modWizVisualPanel4)getComponent()).getTabbPane();
 		alnEditPane.removeAll();
+		String tmpAli;
 
-		JScrollPane jScrollPane1;
-		JTextArea editArea;
+		JScrollPane jScrollPane1, jScrollPane2;
+		JTextArea editArea1, editArea2;
 		for(int i=0; i<tabs.length; i++){
                     jScrollPane1 = new javax.swing.JScrollPane();
-                    editArea = new javax.swing.JTextArea();
-
-                    editArea.setColumns(20);
-                    editArea.setRows(5);
-                    jScrollPane1.setViewportView(editArea);
-
+                    editArea1 = new javax.swing.JTextArea();
+                    editArea1.setColumns(20);
+                    editArea1.setRows(5);
+                    jScrollPane1.setViewportView(editArea1);
                     alnEditPane.addTab(oDir+File.separator+tabs[i], jScrollPane1);
-                    setContent(new File(oDir+File.separator+tabs[i]), editArea);
+                    setContent(new File(oDir+File.separator+tabs[i]), editArea1);
+
+		    tmpAli = tabs[i].replace("pap", "pir");
+                    jScrollPane2 = new javax.swing.JScrollPane();
+                    editArea2 = new javax.swing.JTextArea();
+                    editArea2.setColumns(20);
+                    editArea2.setRows(5);
+                    jScrollPane2.setViewportView(editArea2);
+                    alnEditPane.addTab(oDir+File.separator+tmpAli, jScrollPane2);
+                    setContent(new File(oDir+File.separator+tmpAli), editArea2);
 
 		}
 

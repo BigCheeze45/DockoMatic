@@ -131,6 +131,7 @@ private void setValid(boolean val) {
 	// WizardDescriptor.getProperty & putProperty to store information entered
 	// by the user.
 	public void readSettings(Object settings) {
+		String seqName = (String)((WizardDescriptor) settings).getProperty("seqName");
 		String numPerNode = (String)((WizardDescriptor) settings).getProperty("jobsPerNode");
 		String modJobs = (String)((WizardDescriptor) settings).getProperty("numModJobs");
 		String[] templtList = (String[])((WizardDescriptor) settings).getProperty("tmpltAlnList");
@@ -138,7 +139,7 @@ private void setValid(boolean val) {
 		String[] residues = (String[])((WizardDescriptor) settings).getProperty("diBonds");
 
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
-		doModellerStuff(oDir, templtList, swarm, numPerNode, modJobs, residues);
+		doModellerStuff(seqName, oDir, templtList, swarm, numPerNode, modJobs, residues);
 
 	}
 
@@ -154,20 +155,21 @@ private void setValid(boolean val) {
 	public void storeSettings(Object settings) {
 	    JComponent jc = (JComponent) this.component;
 	    jc.putClientProperty("MODPATH", getModelPath());
-	    ((WizardDescriptor) settings).putProperty("diBonds", new String[2]);
+	    ((WizardDescriptor) settings).putProperty("diBonds", new String[1]);
 	}
 
 
-	private void doModellerStuff(final String oDir, final String[] templtList, 
+	private void doModellerStuff(final String seqName, final String oDir, final String[] templtList,
 		final boolean swarm, final String nodeJobs, final String modJobs, final String[] residues){
 	    modWizVisualPanel5.genModelMessage.setVisible(true);
+
 
         SwingWorker getAlWorker = new SwingWorker<String, Void>(){
 
 	  @Override
 	  protected String doInBackground(){
 		int maxJobs = Integer.parseInt(modJobs);
-		runModellerJobs(oDir, createModellerJobs(oDir, templtList, swarm, maxJobs, residues), nodeJobs);
+		runModellerJobs(oDir, createModellerJobs(seqName, oDir, templtList, swarm, maxJobs, residues), nodeJobs);
 		if(residues[0].equals(""))
 		    parseResults(oDir, (maxJobs*templtList.length)+getResiduals(oDir), false);
 		else
@@ -207,7 +209,7 @@ private void setValid(boolean val) {
 
 	}
 
-	private String[] createModellerJobs(String oDir, String[] tmpltList, boolean swarm, int max, String[] residues){
+	private String[] createModellerJobs(String seqName, String oDir, String[] tmpltList, boolean swarm, int max, String[] residues){
 	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel5)getComponent()).getTableModel();
             model.setRowCount(0);
 
@@ -216,9 +218,9 @@ private void setValid(boolean val) {
 		String log;
 	        String cmd = Job.class.getResource("Job.class").getPath();
                 cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
-		if(residues[0].equals(""))
+		if(residues[0].equals("")){
 		    cmd += "lib/scripts/modeller/model-single.py";
-		else{
+		} else {
 		    cmd += "lib/scripts/modeller/model-disulfide.py";
 		    makeDisScript(residues);
 		}
@@ -226,10 +228,9 @@ private void setValid(boolean val) {
 		String[] modJobList = new String[numJobs];
 		String tmpFile;
 		for(int i=0; i< numJobs; i++){
-	            tmpFile = tmpltList[i].substring(0, tmpltList[i].indexOf("-"));
+	            tmpFile = tmpltList[i].substring(tmpltList[i].indexOf("-")+1, tmpltList[i].indexOf("."));
 		    log = oDir + "/model_"+tmpFile+".log";
-		    modJobList[i] = cmd +" "+ tmpFile +" "+ tmpFile +" "+ max + " "+ oDir + " > "+ log;
-		    //modJobList[i] += "; grep pdb model_*.log > "+oDir+"/resLog" ;
+		    modJobList[i] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ max + " "+ oDir + " > "+ log;
 		    modJobList[i] += "; tail -n "+lines+" model_*.log | grep pdb > "+oDir+"/resLog" ;
 		}
 		return modJobList;

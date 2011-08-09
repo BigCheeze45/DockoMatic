@@ -12,11 +12,13 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.LineNumberReader;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashSet;
@@ -134,13 +136,14 @@ private void setValid(boolean val) {
 	// by the user.
 	public void readSettings(Object settings) {
                 String seq = (String)((WizardDescriptor) settings).getProperty("seq");
+                String seqName = (String)((WizardDescriptor) settings).getProperty("seqName");
 		String numPerNode = (String)((WizardDescriptor) settings).getProperty("jobsPerNode");
 		String modJobs = (String)((WizardDescriptor) settings).getProperty("numModJobs");
 		String[] tmpltDlList = (String[])((WizardDescriptor) settings).getProperty("tmpltDlList");
 		boolean swarm = (Boolean)((WizardDescriptor) settings).getProperty("swarm");
 
 		String oDir = (String)((WizardDescriptor) settings).getProperty("outDir");
-		doAlignStuff(seq, oDir, tmpltDlList, swarm, numPerNode, modJobs);
+		doAlignStuff(seqName, seq, oDir, tmpltDlList, swarm, numPerNode, modJobs);
 
 	}
 
@@ -151,7 +154,7 @@ private void setValid(boolean val) {
 	}
 
 
-	private void doAlignStuff(final String seq, final String oDir, final String[] tmpltDlList, final boolean swarm, final String nodeJobs, final String modJobs){
+	private void doAlignStuff(final String seqName, final String seq, final String oDir, final String[] tmpltDlList, final boolean swarm, final String nodeJobs, final String modJobs){
 	    modWizVisualPanel3.genAlmntMessage.setVisible(true);
 
         SwingWorker getAlWorker = new SwingWorker<String, Void>(){
@@ -159,10 +162,10 @@ private void setValid(boolean val) {
 	  @Override
 	  protected String doInBackground(){
 		int maxJobs = Integer.parseInt(modJobs);
-		createSeqFiles(oDir, seq, tmpltDlList);
-                String[] jList = createAlignJobString(oDir, tmpltDlList, swarm, maxJobs);
+		String[] fList = createSeqFiles(oDir, seqName, seq, tmpltDlList);
+                String[] jList = createAlignJobString(seqName, oDir, tmpltDlList, swarm, maxJobs);
 		runAlignJobString(oDir, jList, nodeJobs);
-		parseResults(oDir, tmpltDlList.length+getResiduals(tmpltDlList, oDir));
+		parseResults(oDir, tmpltDlList.length+getResiduals(fList, oDir));
 	        modWizVisualPanel3.genAlmntMessage.setVisible(false);
 	  return "DONE";
 	  }
@@ -188,9 +191,33 @@ private void setValid(boolean val) {
 
     }
 
+    private boolean checkOldList(String[] list, String fname){
+
+	    String tmp;
+	    for(int i=0; i< list.length; i++){
+		    tmp = list[i]+".pap";
+		    if(tmp.equals(fname)) return false;
+	    }
+
+	    return true;
+    }
+
 	private int getResiduals(String[] jList, String oDir){
+	    int ret = 0;
+	    String str = "";
 	    String file = oDir+"/alLog";
-	    int ret = countLines(file);
+	    if(countLines(file) == 0) return 0;
+
+	    try{
+	        BufferedReader in = new BufferedReader(new FileReader(file));
+
+	        while((str = in.readLine())!=null){
+		    if(checkOldList(jList, str)) ++ret;
+	        }
+	        in.close();
+	    } catch (IOException e) {
+		    e.printStackTrace();
+	    }
 
 	    if(jList.length > 0){
 	        File aLog = new File(file);
@@ -229,36 +256,46 @@ private void setValid(boolean val) {
 
 	}
 
-    private void createSeqFiles(String outDir, String seq, String[] tmpltList){
+    private String[] createSeqFiles(String outDir, String seqName, String seq, String[] tmpltList){
 	String outFilePath;//=outDir+File.separator+"mySeq.ali";
+	    String tmplt;
+	String[] retList = new String[tmpltList.length];
 
 	DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel3)getComponent()).getTableModel();
         model.setRowCount(0);
 
 	for(int i=0; i< tmpltList.length; i++){
-	  outFilePath = outDir+File.separator+tmpltList[i]+".ali";
+	  if(tmpltList[i].endsWith("pdb")){
+              tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(".pdb"));
+	  }else{
+	      tmplt = tmpltList[i];
+	  }
+	  retList[i] = seqName+"-"+tmplt;
+	  outFilePath = outDir+File.separator+seqName+"-"+tmplt+".ali";
 	  try{
 	    BufferedWriter out = new BufferedWriter(new FileWriter(outFilePath));
-	    out.write(">P1;"+tmpltList[i]+"\n");
-	    out.write("sequence:"+tmpltList[i]+":::::::0.00: 0.00\n");
+	    out.write(">P1;"+seqName+"-"+tmplt+"\n");
+	    out.write("sequence:"+seqName+"-"+tmplt+":::::::0.00: 0.00\n");
 	    out.write(seq+"*\n");
 	    out.close();
 	  }catch(IOException e){e.printStackTrace();}
 	}
+	return retList;
     }
 
-	private String[] createAlignJobString(String oDir, String[] tmpltList, boolean swarm, int max){
+	private String[] createAlignJobString(String seqName, String oDir, String[] tmpltList, boolean swarm, int max){
 	        String cmd = Job.class.getResource("Job.class").getPath();
                 cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
 		cmd += "lib/scripts/modeller/align2d.py";
 
-		String[] modJobList = new String[tmpltList.length];
+		String[] alnJobList = new String[tmpltList.length];
 		String tmpFile;
 		for(int i=0; i< tmpltList.length; i++){
 	            tmpFile = getPdbTmpltFile(oDir, tmpltList[i]);
-		    modJobList[i] = cmd +" "+ tmpltList[i] +" "+ tmpFile +" "+ oDir;
+		    alnJobList[i] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ oDir;
+		    //modJobList[i] = cmd +" query "+ tmpFile +" "+ oDir;
 		}
-		return modJobList;
+		return alnJobList;
 	}
 
     public static void killJob(){
@@ -267,7 +304,25 @@ private void setValid(boolean val) {
 
         private String getPdbTmpltFile(String odir, String pdb){
 
+	    // If using local template, don't download... Copy to output directory.
             messageWindowTopComponent.messageArea.append("Downloading Template file\n");
+	    if(pdb.endsWith("pdb")){
+		String tmpPdb = pdb.substring(pdb.lastIndexOf("/")+1);
+		//Copy file to odir
+		try{
+	            InputStream in = new FileInputStream(pdb);
+		    OutputStream out = new FileOutputStream(odir+File.separator+tmpPdb);
+		    byte[] buf = new byte[1024];
+		    int len;
+		    while((len = in.read(buf)) > 0)
+	                out.write(buf, 0, len);
+
+		    in.close();
+		    out.close();
+	        }catch(IOException e){e.printStackTrace();}
+
+                return tmpPdb.substring(0, tmpPdb.indexOf(".pdb"));
+	    }
 	    String fWoPdb = odir+File.separator+pdb;
 	    String outFilePath=fWoPdb+".pdb";
 
@@ -289,7 +344,7 @@ private void setValid(boolean val) {
 	    return pdb;
         }
 
-    private boolean isDone(String fname, int max)
+    private boolean isItDone(String fname, int max)
     {
 	    File file = new File(fname);
 	    if(!file.exists()) return false;
@@ -301,20 +356,16 @@ private void setValid(boolean val) {
 	    return false;
     }
 
-    private void parseResults(String dir, int max)
+    private void parseResults(final String dir, final int max)
     {
-	    int count = 0;
 	    String str;
-	    String pdbid;
-	    String evalue;
-	    String logFile="";
+	    String logFile = dir+"/alLog";
 	    DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel3)getComponent()).getTableModel();
-	    logFile = dir+"/alLog";
 
-            while(!isDone(logFile, max)){
+            while(!isItDone(logFile, max)){
 		try{
-	            Thread.sleep(1000);
-		}catch(InterruptedException ie){}
+	            Thread.sleep(2000); // Sleep 2 seconds then check again.
+		}catch(InterruptedException ie){ie.printStackTrace();}
 	    }
 
             messageWindowTopComponent.messageArea.append("Parsing Align Results\n");
