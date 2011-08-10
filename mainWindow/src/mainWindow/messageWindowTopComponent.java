@@ -4,6 +4,8 @@
  */
 package mainWindow;
 
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.logging.Logger;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
@@ -27,6 +29,11 @@ public final class messageWindowTopComponent extends TopComponent {
 		initComponents();
 		setName(NbBundle.getMessage(messageWindowTopComponent.class, "CTL_messageWindowTopComponent"));
 		setToolTipText(NbBundle.getMessage(messageWindowTopComponent.class, "HINT_messageWindowTopComponent"));
+		jScrollPane1.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener(){
+			public void adjustmentValueChanged(AdjustmentEvent e){
+				messageArea.setCaretPosition(messageArea.getDocument().getLength());
+			}
+		});
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 
 	}
