@@ -150,7 +150,7 @@ $opt_o = ".";
 
 ###  Start Of Code  Get Command Line Arg & call createLigand if applicable  ### 
 
-    getopts ('kho:p:r:b:a:m:t:');
+    getopts ('kho:g:p:r:b:a:m:t:');
 
     if ((!($opt_p or $opt_d) and !($opt_m and $opt_t)) or $opt_h) {die "USAGE: dockOmatic.pl -p <peptide> [-a <filename>] [-k] [-o <directory>] [-r <filename> -b <filename>] [-h] 
       -p name of peptide, either already in .pdb format (must supply .pdb extension), or string of Amino Acids (e.g. AGTHY).
@@ -161,6 +161,7 @@ $opt_o = ".";
          appended, since this step occurs at the end of processing.
       -o option for output directory. Directory to store output files.
       -r receptor file name (.pdb file).  Must be used in conjunction with -b option.
+      -g Number of AutoDock ga_runs.  Defaults to 100.
       -m Use Modeller.
       -b box coordinate file name (.gpf file). Must be used in conjunction with -r option.
       -h displays this message.\n";}
@@ -169,7 +170,7 @@ $opt_o = ".";
     # Modeller 
     if($opt_m =~ /(\w+)/){
         # Just in case no extensions, we add them.
-        my $num = 5;
+        my $num = 1;
         $opt_m =~ s/\.ali//; 
         $opt_t =~ s/\.pdb//; 
         #copy($opt_m.'.ali', $opt_o);
@@ -397,16 +398,20 @@ sub runModel{
     my $seq = shift;
     my $tmplt = shift;
     my $num = shift;
-    my $logFile = catfile($opt_o, 'modelSingle.log');
+
+    my $logFile = catfile($opt_o, 'modelSingle_'.$tmplt.'_'.$num.'.log');
     my $modDir = catfile($sourceDir, 'scripts', 'modeller');
+    my $single = catfile($modDir, 'model-single.py');
+    my $logs = catfile($opt_o, '*.log');
+    my $resLog = catfile($opt_o, 'resLog');
   print "Running model-single...\n"; 
 
-    system("$modDir/model-single.py $seq $tmplt $num $opt_o > $logFile");
+    system("$single $seq $tmplt $num $opt_o > $logFile");
 
-    my $modSntnl = catfile($opt_o, "ModSntnl");
-    open $MODSNTNL, ">$modSntnl" or die "Unable to open [$modSntnl] for writing!";
-    print $MODSNTNL ("Modeller Done\n");
-    close $MODSNTNL;
+    system("grep mySeq $logs | grep pdb > $resLog");
+    #open $MODSNTNL, ">$modSntnl" or die "Unable to open [$modSntnl] for writing!";
+    #print $MODSNTNL ("Modeller Done\n");
+    #close $MODSNTNL;
     
 }
 
@@ -906,12 +911,14 @@ sub prepDPF4 {
     my $ligFileIn = shift;
     my $recFileIn = shift;
 
+    my $ga = 100;
+    if($opt_g){ $ga = $opt_g;}
     $ligFileIn =~ /(\w+)\.pdbqt/;
     my $dpfFile = $1 . "_";
     $recFileIn =~ /(\w+)\.pdbqt/;
     $dpfFile .= $1 . ".dpf";
 
-    system( "prepare_dpf4.py -p ga_run=100  -l $ligFileIn -r $recFileIn -o $dpfFile");
+    system( "prepare_dpf4.py -p ga_run=$ga  -l $ligFileIn -r $recFileIn -o $dpfFile");
     return $dpfFile;
 }
 
