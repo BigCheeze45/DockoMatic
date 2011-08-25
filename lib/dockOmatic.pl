@@ -202,7 +202,8 @@ $opt_o = ".";
                 copy($opt_a, $opt_o);
                 my ($aVolume, $aDirs, $aName) = File::Spec->splitpath($opt_a);
                 $newRecept = ligPlusRecept($aName, $rName); 
-                $newRecept =~ /(\w+).pdb/;
+                #AN$newRecept =~ /(\w+).pdb/;
+                $newRecept =~ /(\.+).pdb/;
                 $tmpBox = $1. ".gpf";
             }
         }
@@ -233,7 +234,8 @@ $opt_o = ".";
                 copy($opt_a, $opt_o);
                 my ($aVolume, $aDirs, $aName) = File::Spec->splitpath($opt_a);
                 $newRecept = ligPlusRecept($aName, $rName); 
-                $newRecept =~ /(\w+).pdb/;
+                #AN$newRecept =~ /(\w+).pdb/;
+                $newRecept =~ /(\.+).pdb/;
                 $tmpBox = $1. ".gpf";
             }
 
@@ -664,7 +666,8 @@ sub ligPlusRecept{
     my $pdb = shift;
     my $receptor = shift;
 
-    $receptor =~ /(\w+)(\.pdb)/;
+    #AN$receptor =~ /(\w+)(\.pdb)/;
+    $receptor =~ /(\.+)(\.pdb)/;
     $LigRecFile = "$1_$pdb";
 
     open(REC, $receptor) or die("Unable to Open File");
@@ -913,9 +916,11 @@ sub prepDPF4 {
 
     my $ga = 100;
     if($opt_g){ $ga = $opt_g;}
-    $ligFileIn =~ /(\w+)\.pdbqt/;
+    #AN$ligFileIn =~ /(\w+)\.pdbqt/;
+    $ligFileIn =~ /(\.+)\.pdbqt/;
     my $dpfFile = $1 . "_";
-    $recFileIn =~ /(\w+)\.pdbqt/;
+    #AN$recFileIn =~ /(\w+)\.pdbqt/;
+    $recFileIn =~ /(\.+)\.pdbqt/;
     $dpfFile .= $1 . ".dpf";
 
     system( "prepare_dpf4.py -p ga_run=$ga  -l $ligFileIn -r $recFileIn -o $dpfFile");
@@ -938,7 +943,8 @@ sub autogridCmd {
     my $gpfIn = shift;
     print "Running autogrid.  This may take awhile...\n";
 
-    $gpfIn =~ /(\w+)\.gpf/;
+    #AN$gpfIn =~ /(\w+)\.gpf/;
+    $gpfIn =~ /(\.+)\.gpf/;
     my $tmpFname = $1;
     my $gridLog = $tmpFname . "_gridLog.glg";
 
@@ -959,7 +965,8 @@ sub autodockCmd {
     my $dpfIn = shift;
     print "Running autodock.  This may take quite awhile...\n";
 
-    $dpfIn =~ /(\w+)\.dpf/;
+    #AN$dpfIn =~ /(\w+)\.dpf/;
+    $dpfIn =~ /(\.+)\.dpf/;
     $dockLog = $1 . "_dockLog.dlg";
 
     #system( "autodock4 -p $dpfIn -l $dockLog" );
