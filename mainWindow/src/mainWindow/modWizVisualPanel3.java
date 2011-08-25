@@ -28,6 +28,8 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
     /** Creates new form modWizVisualPanel3 */
     public modWizVisualPanel3() {
         initComponents();
+	// implement kill job buttonlater
+	killJobButton.setVisible(false);
     }
 
     protected static String[] getTempltList(){
@@ -50,7 +52,7 @@ public class modWizVisualPanel3 extends javax.swing.JPanel {
 	private static int getCol(String column){
 	    int i =0;
 	    int colCount = AlmntTable.getColumnCount();
-	    String name = new String("");
+	    String name = "";
 	    for(i=0; i<colCount; i++){
 		    name = AlmntTable.getColumnName(i);
 		    if(column.equals(name)) return i;

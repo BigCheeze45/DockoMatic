@@ -352,10 +352,10 @@ public final class modWizVisualPanel2 extends JPanel {
 
 	for(int i=0; i<rows.length; i++){
             tmplt = (String) jTable1.getValueAt(rows[i], getCol("Template"));
-	    if(tmplt.contains(":")){
-	        subTmplt = tmplt.substring(0, tmplt.indexOf(":"));
-	        list[i] = subTmplt;
-	    }else
+//	    if(tmplt.contains(":")){
+//	        subTmplt = tmplt.substring(0, tmplt.indexOf(":"));
+//	        list[i] = subTmplt;
+//	    }else
 		list[i] = tmplt;
 	}
 

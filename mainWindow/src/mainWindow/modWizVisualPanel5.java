@@ -24,6 +24,8 @@ public class modWizVisualPanel5 extends javax.swing.JPanel {
     /** Creates new form modWizVisualPanel5 */
     public modWizVisualPanel5() {
         initComponents();
+	// implement kill job buttonlater
+	killJobButton.setVisible(false);
     }
 
 	@Override
