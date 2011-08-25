@@ -258,7 +258,7 @@ private void setValid(boolean val) {
 
     private String[] createSeqFiles(String outDir, String seqName, String seq, String[] tmpltList){
 	String outFilePath;//=outDir+File.separator+"mySeq.ali";
-	    String tmplt;
+	String tmplt;
 	String[] retList = new String[tmpltList.length];
 
 	DefaultTableModel model = (DefaultTableModel)((modWizVisualPanel3)getComponent()).getTableModel();
@@ -266,9 +266,10 @@ private void setValid(boolean val) {
 
 	for(int i=0; i< tmpltList.length; i++){
 	  if(tmpltList[i].endsWith("pdb")){
-              tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(".pdb"));
+              //tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(".pdb"));
+              tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(":"));
 	  }else{
-	      tmplt = tmpltList[i];
+	      tmplt = tmpltList[i].substring(0, tmpltList[i].indexOf(":"));
 	  }
 	  retList[i] = seqName+"-"+tmplt;
 	  outFilePath = outDir+File.separator+seqName+"-"+tmplt+".ali";
@@ -289,10 +290,13 @@ private void setValid(boolean val) {
 		cmd += "lib/scripts/modeller/align2d.py";
 
 		String[] alnJobList = new String[tmpltList.length];
-		String tmpFile;
+		String tmpFile, subunit;
 		for(int i=0; i< tmpltList.length; i++){
+	            //tmpFile = getPdbTmpltFile(oDir, tmpltList[i].substring(0, tmpltList[i].indexOf(":")));
 	            tmpFile = getPdbTmpltFile(oDir, tmpltList[i]);
-		    alnJobList[i] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ oDir;
+		    //subunit = tmpltList[i].substring(tmpltList[i].lastIndexOf(":")+1, tmpltList[i].length());
+		    subunit = getSub(tmpltList[i]);//tmpltList[i].substring(tmpltList[i].lastIndexOf(":")+1, tmpltList[i].length());
+		    alnJobList[i] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ oDir +" "+ subunit;
 		    //modJobList[i] = cmd +" query "+ tmpFile +" "+ oDir;
 		}
 		return alnJobList;
@@ -302,16 +306,31 @@ private void setValid(boolean val) {
 
     }
 
+        private String stripPdb(String pdb){
+	    return pdb.substring(0, pdb.indexOf(":"));
+	}
+
+        private String getSub(String pdb){
+	    String subunit;
+            if(pdb.endsWith(".pdb"))
+		    subunit = pdb.substring(pdb.lastIndexOf(":")+1, pdb.indexOf(".pdb"));
+	    else
+		    subunit = pdb.substring(pdb.lastIndexOf(":")+1, pdb.length());
+
+	    return subunit;
+
+	}
+
         private String getPdbTmpltFile(String odir, String pdb){
 
 	    // If using local template, don't download... Copy to output directory.
             messageWindowTopComponent.messageArea.append("Downloading Template file\n");
 	    if(pdb.endsWith("pdb")){
-		String tmpPdb = pdb.substring(pdb.lastIndexOf("/")+1);
+		String tmpPdb = pdb.substring(pdb.lastIndexOf("/")+1, pdb.indexOf(":"));
 		//Copy file to odir
 		try{
 	            InputStream in = new FileInputStream(pdb);
-		    OutputStream out = new FileOutputStream(odir+File.separator+tmpPdb);
+		    OutputStream out = new FileOutputStream(odir+File.separator+tmpPdb+".pdb");
 		    byte[] buf = new byte[1024];
 		    int len;
 		    while((len = in.read(buf)) > 0)
@@ -321,13 +340,14 @@ private void setValid(boolean val) {
 		    out.close();
 	        }catch(IOException e){e.printStackTrace();}
 
-                return tmpPdb.substring(0, tmpPdb.indexOf(".pdb"));
+                return tmpPdb;
 	    }
-	    String fWoPdb = odir+File.separator+pdb;
+	    String stripped = stripPdb(pdb);
+	    String fWoPdb = odir+File.separator+stripped;
 	    String outFilePath=fWoPdb+".pdb";
 
 	    try{
-	        URL url = new URL("http://www.pdb.org/pdb/files/"+pdb+".pdb");
+	        URL url = new URL("http://www.pdb.org/pdb/files/"+stripped+".pdb");
 	        URLConnection urlc = url.openConnection();
 	        BufferedInputStream in = new BufferedInputStream(urlc.getInputStream());
 	        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outFilePath));
@@ -341,7 +361,7 @@ private void setValid(boolean val) {
 	        out.close();
 
 	    }catch(IOException e){e.printStackTrace();}
-	    return pdb;
+	    return stripped;
         }
 
     private boolean isItDone(String fname, int max)

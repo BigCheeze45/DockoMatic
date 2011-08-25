@@ -715,7 +715,15 @@ private String resChkGpf;
               String dir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
               //dir += File.separator;
               //dir += "_Reference";
-              File done = new File(dir+"_Reference");
+              //File done = new File(dir+"_Reference");
+
+              // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
+              //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
+              // This line only IF running obconformer, or there will never be Orig_ file.
+              File done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol(table, "Ligand"))+".pdb");
+              if(rec.length() > 0){
+	          done = new File(dir+"_Reference");
+	      }
 
                     if(done.exists()){
                             table.setValueAt("Done", row, getCol(table, "Status"));
@@ -724,15 +732,16 @@ private String resChkGpf;
                                 jobNum = (Integer)table.getValueAt(row, getCol(table, "Job #"));
                                 doSecondaryJob(jobNum);
 		            }
-                    }else{
-                        // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
-                        //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
-                        // This line only IF running obconformer, or there will never be Orig_ file.
-                        done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol(table, "Ligand"))+".pdb");
-                        if(done.exists())
-                        //if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
-                            table.setValueAt("Done", row, getCol(table, "Status"));
                     }
+//		    else{
+//                        // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
+//                        //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
+//                        // This line only IF running obconformer, or there will never be Orig_ file.
+//                        done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol(table, "Ligand"))+".pdb");
+//                        if(done.exists())
+//                        //if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
+//                            table.setValueAt("Done", row, getCol(table, "Status"));
+//                    }
 
 //              String files[] = dlg.list();
 //
@@ -859,56 +868,40 @@ private String resChkGpf;
 		    messageWindowTopComponent.messageArea.append("NO ROWS SELECTED\n");
 		    return "Done";
 	    }
+	    messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
 
-//            // *** Bulk submit ***
+            // *** Bulk submit ***
+
 	   //cmd = Job.class.getResource("Job.class").getPath();
            //cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("dockomatic/modules/"));
            //cmd += "lib/dockOmatic.pl";
-//            try{
-//                String base = outDir.getCanonicalPath();
-//                String swarmFile = base + "/swarmCmd.txt";
-//              //run swarm Jobs.
-//                BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
-//                for(i = 0; i< totalCount; i++){
-//                    swarmOut.write(jobList[i].getCmd()+"\n");
-//                    //messageArea.append("Starting Modeller Job "+i+"\n");
-//                }
-//                swarmOut.close();
-//
-//                procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null, outDir);
-//
-//                }catch(Exception e){System.out.println(e);}
-
-	    messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
-	    for(int rowNum=0; rowNum < rowCount; rowNum++){
-		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol(table, "Job #"));
-		    messageWindowTopComponent.messageArea.append("Starting Job "+jobNum+"\n");
-
-		    //if(((String)outputGridTopComponent.jTable1.getValueAt(rowNum, 7)).compareTo("Not Started") == 0){
-		    //File dir = new File((String)outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 2));
-		    System.out.println("BEFORE DIR");
-		    File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol(table, "Output Directory")));
-		    System.out.println("AFTER DIR");
-
-		    updateJob(rowNums[rowNum]);
-		    System.out.println("AFTER UPDATE");
-		    //if(outputGridTopComponent.jTable1.getValueAt(rowNums[rowNum], 7).equals("Started")){
-		    if(table.getValueAt(rowNums[rowNum], getCol(table, "Status")).equals("Started")){
+            try{
+                String base = outDir.getCanonicalPath();
+                String swarmFile = base + "/swarmCmd.txt";
+              //run swarm Jobs.
+                BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
+                for(int i = 0; i< rowNums.length; i++){
+		    jobNum = (Integer)table.getValueAt(rowNums[i], getCol(table, "Job #"));
+		    updateJob(rowNums[i]);
+                    swarmOut.write(jobVector.get(jobNum).getCmd()+"\n");
+		    if(table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")){
 			    jobVector.get(jobNum).killJob();
 			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
+//		        File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol(table, "Output Directory")));
+//		        //dir.delete();
+//		        //dir.mkdir();
+		    }else{
+		        messageWindowTopComponent.messageArea.append("  Starting Job "+jobNum+"\n");
+		        table.setValueAt("Started", rowNums[i], getCol(table, "Status"));
 		    }
-		    //dir.delete();
-		    //dir.mkdir();
-		    //outputGridTopComponent.jTable1.setValueAt("Started", rowNums[rowNum], 7);
-		    System.out.println("BEFORE  STATUS");
-		    table.setValueAt("Started", rowNums[rowNum], getCol(table, "Status"));
-		    System.out.println("AFTER  STATUS");
-		    jobVector.get(jobNum).runJob(false);
-		    System.out.println("AFTER  RUN JOB");
-	    }
-	    //}else{
-	    //      messageArea.append("Previous Job Activity detected... Re-starting job not allowed!\n");
-	    //}
+                }
+                swarmOut.close();
+
+                Process procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null, outDir);
+		System.out.println("USING DOCK CMD: swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00");
+
+            }catch(Exception e){System.out.println(e);}
+
           return "Done";
 	  }
 	};

@@ -167,14 +167,27 @@ private void setValid(boolean val) {
 			tmpLow2 = tmpLow1;
 			lowestRow = count;
 		}
-
-		model.addRow(new Object[]{pdbid,   // template name
+		String[] subunits = pdbid.split(",");
+		//Always at least one subunit... "A"
+		model.addRow(new Object[]{subunits[0],   // template name
 		                          tmpLow1,  // E value
 					  length,  // length
 		                          vals1[0].substring(vals1[0].indexOf("=")+2), // Score
 		                          vals2[0].substring(vals2[0].indexOf("=")+2), // Identities
 		                          vals2[1].substring(vals2[1].indexOf("=")+2), // Positives
 					  gap});  // Gaps
+		//handle subunits.
+	        if(subunits.length > 1){
+	          for(int j = 1; j<subunits.length; j++)
+		    model.addRow(new Object[]{subunits[0].substring(0, subunits[0].length()-1) + subunits[j],   // template name
+		                          tmpLow1,  // E value
+					  length,  // length
+		                          vals1[0].substring(vals1[0].indexOf("=")+2), // Score
+		                          vals2[0].substring(vals2[0].indexOf("=")+2), // Identities
+		                          vals2[1].substring(vals2[1].indexOf("=")+2), // Positives
+					  gap});  // Gaps
+
+		}
 	      }
 	      in.close();
 	    } catch (IOException e) {
