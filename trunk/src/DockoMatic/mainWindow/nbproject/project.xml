@@ -99,10 +99,6 @@
                 <binary-origin>release/modules/ext/webservice.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/Job.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/Job.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
                 <runtime-relative-path>ext/commons-discovery-0.2.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/commons-discovery-0.2.jar</binary-origin>
             </class-path-extension>
