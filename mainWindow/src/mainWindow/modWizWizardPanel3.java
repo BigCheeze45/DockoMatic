@@ -5,7 +5,6 @@
 
 package mainWindow;
 
-import Job.Job;
 import java.awt.Component;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

@@ -4,7 +4,6 @@
  */
 package mainWindow;
 
-import Job.Job;
 import java.awt.image.BufferedImage;
 import java.util.logging.Logger;
 import org.openide.util.NbBundle;
@@ -713,16 +712,16 @@ private String resChkGpf;
 
               String rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
               String dir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
-              //dir += File.separator;
-              //dir += "_Reference";
-              //File done = new File(dir+"_Reference");
+              String lig = (String) table.getValueAt(row, getCol(table, "Ligand"));
 
               // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
               //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
               // This line only IF running obconformer, or there will never be Orig_ file.
               File done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol(table, "Ligand"))+".pdb");
               if(rec.length() > 0){
-	          done = new File(dir+"_Reference");
+		  if(lig.endsWith(".pdb"))
+			  lig = lig.substring(lig.lastIndexOf("/"), lig.indexOf(".pdb"));
+	          done = new File(dir+File.separator+lig+"_Reference");
 	      }
 
                     if(done.exists()){
@@ -733,35 +732,6 @@ private String resChkGpf;
                                 doSecondaryJob(jobNum);
 		            }
                     }
-//		    else{
-//                        // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
-//                        //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
-//                        // This line only IF running obconformer, or there will never be Orig_ file.
-//                        done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol(table, "Ligand"))+".pdb");
-//                        if(done.exists())
-//                        //if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
-//                            table.setValueAt("Done", row, getCol(table, "Status"));
-//                    }
-
-//              String files[] = dlg.list();
-//
-//              for(int i=0; i<files.length; i++){
-//                    if(rec.length() > 0){
-//                        if(files[i].contains("_Reference")){
-//                            table.setValueAt("Done", row, 7);
-//                            if(((String)table.getValueAt(row, 5)).length() > 0){
-//                                messageArea.append("Starting Secondary Ligand Job\n");
-//                                jobNum = (Integer)table.getValueAt(row, 0);
-//                                doSecondaryJob(jobNum);
-//		            }
-//                    }else{
-//                        // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
-//                        //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
-//                        // This line only IF running obconformer, or there will never be Orig_ file.
-//                        if(files[i].equalsIgnoreCase("Orig_"+(String)table.getValueAt(row, 1)+".pdb"))
-//                            table.setValueAt("Done", row, 7);
-//                    }
-//              }
             }
 
             }catch (java.lang.ArrayIndexOutOfBoundsException e){
@@ -898,7 +868,7 @@ private String resChkGpf;
                 swarmOut.close();
 
                 Process procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null, outDir);
-		System.out.println("USING DOCK CMD: swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00");
+		//System.out.println("USING DOCK CMD: swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00");
 
             }catch(Exception e){System.out.println(e);}
 
