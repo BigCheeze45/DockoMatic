@@ -4,18 +4,13 @@
  */
 package mainWindow;
 
-import java.awt.image.BufferedImage;
 import java.util.logging.Logger;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-//import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import java.io.*;
-import java.util.Vector;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
@@ -28,11 +23,11 @@ import javax.swing.table.DefaultTableModel;
 autostore = false)
 public final class openerTopComponent extends TopComponent{
 
-private Vector <Job> jobVector = new Vector<Job>();
-private Vector <String> ligVector = new Vector<String>();
-private Vector <String> recVector = new Vector<String>();
-private Vector <String> boxVector = new Vector<String>();
-private Vector <String> appVector = new Vector<String>();
+private ArrayList <Job> jobList = new ArrayList<Job>();
+private ArrayList <String> ligList = new ArrayList<String>();
+private ArrayList <String> recList = new ArrayList<String>();
+private ArrayList <String> boxList = new ArrayList<String>();
+private ArrayList <String> appList = new ArrayList<String>();
 private Timer jobTimer;
 private boolean tabFlag = false;
 
@@ -42,10 +37,10 @@ private int currJobNumber = 0;
 private int totalJobs = 0;
 private boolean ligFromModeller = false;
 private boolean recFromModeller = false;
-private boolean ligList = false;
-private boolean recList = false;
-private boolean boxList = false;
-private boolean appList = false;
+private boolean ligLstBool = false;
+private boolean recListBool = false;
+private boolean boxListBool = false;
+private boolean appListBool = false;
 
 private File outDir;
 private File ligFile;
@@ -613,33 +608,33 @@ private String resChkGpf;
 
     private void ligandCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ligandCheckBoxActionPerformed
             if(ligandCheckBox.isSelected()){
-                    ligList= true;
+                    ligLstBool= true;
             }else{
-                    ligList = false;
+                    ligLstBool = false;
             }
     }//GEN-LAST:event_ligandCheckBoxActionPerformed
 
     private void receptorCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receptorCheckBoxActionPerformed
             if(receptorCheckBox.isSelected()){
-                    recList= true;
+                    recListBool= true;
             }else{
-                    recList = false;
+                    recListBool = false;
             }
     }//GEN-LAST:event_receptorCheckBoxActionPerformed
 
     private void boxCoordCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCoordCheckBoxActionPerformed
             if(boxCoordCheckBox.isSelected()){
-                    boxList= true;
+                    boxListBool= true;
             }else{
-                    boxList = false;
+                    boxListBool = false;
             }
     }//GEN-LAST:event_boxCoordCheckBoxActionPerformed
 
     private void appCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appCheckBoxActionPerformed
             if(appCheckBox.isSelected()){
-                    appList= true;
+                    appListBool= true;
             }else{
-                    appList = false;
+                    appListBool = false;
             }
     }//GEN-LAST:event_appCheckBoxActionPerformed
 
@@ -805,7 +800,7 @@ private String resChkGpf;
 	    for(int rowNum=rowCount-1; rowNum >= 0; rowNum--){
 		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol(table, "Job #"));
 		    messageWindowTopComponent.messageArea.append("Killing Job "+jobNum+"\n");
-		    jobVector.get(jobNum).killJob();
+		    jobList.get(jobNum).killJob();
 		    messageWindowTopComponent.messageArea.append("Removing Job "+jobNum+"\n");
 		    model.removeRow(rowNums[rowNum]);
 	    }
@@ -853,9 +848,9 @@ private String resChkGpf;
                 for(int i = 0; i< rowNums.length; i++){
 		    jobNum = (Integer)table.getValueAt(rowNums[i], getCol(table, "Job #"));
 		    updateJob(rowNums[i]);
-                    swarmOut.write(jobVector.get(jobNum).getCmd()+"\n");
+                    swarmOut.write(jobList.get(jobNum).getCmd()+"\n");
 		    if(table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")){
-			    jobVector.get(jobNum).killJob();
+			    jobList.get(jobNum).killJob();
 			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
 //		        File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol(table, "Output Directory")));
 //		        //dir.delete();
@@ -964,21 +959,21 @@ private String resChkGpf;
 
            if(base.length() > 0){ base += File.separator;}
 
-           for(int l=0; l<ligVector.size(); l++){
-                   for(int r=0; r<recVector.size(); r++){
-                           for(int b=0; b<boxVector.size(); b++){
-                                   for(int a=0; a<appVector.size(); a++){
-                                           newJob(ligVector.get(l), recVector.get(r), boxVector.get(b), base, appVector.get(a), 
+           for(int l=0; l<ligList.size(); l++){
+                   for(int r=0; r<recList.size(); r++){
+                           for(int b=0; b<boxList.size(); b++){
+                                   for(int a=0; a<appList.size(); a++){
+                                           newJob(ligList.get(l), recList.get(r), boxList.get(b), base, appList.get(a),
 						     false, false, "", "", swmJobNum.getText(), dockCycles.getText());
                                    }
                            }
                    }
            }
 
-           ligVector.removeAllElements();
-           recVector.removeAllElements();
-           boxVector.removeAllElements();
-           appVector.removeAllElements();
+           ligList.subList(0, ligList.size()-1).clear();
+           recList.subList(0, recList.size()-1).clear();
+           boxList.subList(0, boxList.size()-1).clear();
+           appList.subList(0, appList.size()-1).clear();
 
     // start timer to check all job status.
         startJobTimer();
@@ -999,7 +994,8 @@ private String resChkGpf;
             if(base.length() > 0){ base += File.separator;}
 
             for(int i=currJobNumber; i<total+currJobNumber; i++){
-                    subDirName = base + "dock_" + Integer.toString(i+1);
+                    //subDirName = base + "dock_" + Integer.toString(i+1);
+                    subDirName = base + "dock_" + Integer.toString(i);
                     subDir = new File(subDirName);
 
                     subDir.mkdir();
@@ -1019,63 +1015,63 @@ private String resChkGpf;
             int appCount = 0;
 
             try{
-               if(ligList){
+               if(ligLstBool){
                     ligFile = new File(ligandField.getText().trim());
                     in = new BufferedReader(new FileReader(ligFile));
                     line = in.readLine();
                     while(line != null){
-                        ligVector.addElement(line.trim());
+                        ligList.add(line.trim());
                         line = in.readLine();
                         ligCount++;
                     }
                     in.close();
                }else{
-                        ligVector.addElement(ligandField.getText().trim());
+                        ligList.add(ligandField.getText().trim());
                         ligCount++;
                }
 
-               if(recList){
+               if(recListBool){
                     recFile = new File(receptorField.getText().trim());
                     in = new BufferedReader(new FileReader(recFile));
                     line = in.readLine();
                     while(line != null){
-                        recVector.addElement(line.trim());
+                        recList.add(line.trim());
                         line = in.readLine();
                         recCount++;
                     }
                     in.close();
                }else{
-                        recVector.addElement(receptorField.getText().trim());
+                        recList.add(receptorField.getText().trim());
                         recCount++;
                }
 
-               if(boxList){
+               if(boxListBool){
                     boxFile = new File(boxCoordField.getText().trim());
                     in = new BufferedReader(new FileReader(boxFile));
                     line = in.readLine();
                     while(line != null){
-                        boxVector.addElement(line.trim());
+                        boxList.add(line.trim());
                         line = in.readLine();
                         boxCount++;
                     }
                     in.close();
                }else{
-                        boxVector.addElement(boxCoordField.getText().trim());
+                        boxList.add(boxCoordField.getText().trim());
                         boxCount++;
                }
 
-               if(appList){
+               if(appListBool){
                     appFile = new File(appendField.getText().trim());
                     in = new BufferedReader(new FileReader(appFile));
                     line = in.readLine();
                     while(line != null){
-                        appVector.addElement(line.trim());
+                        appList.add(line.trim());
                         line = in.readLine();
                         appCount++;
                     }
                     in.close();
                }else{
-                        appVector.addElement(appendField.getText().trim());
+                        appList.add(appendField.getText().trim());
                         appCount++;
                }
 
@@ -1105,7 +1101,7 @@ private String resChkGpf;
 
             int job = (Integer)table.getValueAt(row, getCol(table, "Job #"));
 
-            Job tmp = jobVector.get(job);
+            Job tmp = jobList.get(job);
             tmp.update((String)table.getValueAt(row, getCol(table, "Ligand")),
                        (String)table.getValueAt(row, getCol(table, "Output Directory")),
                        (String)table.getValueAt(row, getCol(table, "Receptor")),
@@ -1121,21 +1117,16 @@ private String resChkGpf;
     // Create new job from supplied arguments.
     private void newJob(String lig, String rec, String box, String dir, String app, 
 	           Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles){
-            ++currJobNumber;
             dir = dir + "dock_"+Integer.toString(currJobNumber);
 
             messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
 
 	    if(secondary){
-                //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarm, app, seq, tmplt, cycles));
-                jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, true, app, seq, tmplt, cycles));
-                //model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", "Not Started", seq, tmplt, true, cycles});
-                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
+                jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles));
+                model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
             }else{
-                //jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, swarmCheckBox.isSelected(), "", seq, tmplt, cycles));
-                jobVector.addElement(new Job(totalJobs, lig, rec, box, dir, true, "", seq, tmplt, cycles));
-                //model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, "Not Started", seq, tmplt, true, cycles});
-                model.addRow(new Object[]{totalJobs, lig, dir, rec, box, app, "Not Started", seq, tmplt, cycles});
+                jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles));
+                model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, "Not Started", seq, tmplt, cycles});
             }
 
             boxCoordField.setText("");
@@ -1143,6 +1134,7 @@ private String resChkGpf;
             ligandField.setText("");
             outDirField.setText("");
             appendField.setText("");
+            ++currJobNumber;
             ++totalJobs;
     }
 
@@ -1156,11 +1148,10 @@ private String resChkGpf;
         int numRows = model.getRowCount();
             for(int i = numRows-1; i>= 0; i--){
                 jobNum = (Integer)table.getValueAt(i, getCol(table, "Job #"));
-                jobVector.get(jobNum).killJob();
+                jobList.get(jobNum).killJob();
                 model.removeRow(i);
             }
         //jobTimer.stop();
-        //jobVector.removeAllElements();
         //currJobNumber = 0;
         //totalJobs = 0;
 
@@ -1194,7 +1185,7 @@ private String resChkGpf;
         mkSubdirs(1);
         //newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
         newJob(lig, rec, box, base, app, true, swarm, "", "", numJobs, cycles);
-        jobVector.lastElement().runJob(false);
+        jobList.get(jobList.size()-1).runJob(false);
         table.setValueAt("Started", model.getRowCount()-1, getCol(table, "Status"));
 
     }
