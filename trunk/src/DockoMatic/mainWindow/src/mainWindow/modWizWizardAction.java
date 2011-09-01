@@ -50,6 +50,7 @@ public final class modWizWizardAction extends CallableSystemAction {
 	 * Initialize panels representing individual wizard's steps and sets
 	 * various properties for them influencing wizard appearance.
 	 */
+	@SuppressWarnings("unchecked")
 	private WizardDescriptor.Panel<org.openide.WizardDescriptor>[] getPanels() {
 		panels = null;
 		if (panels == null) {
