@@ -476,6 +476,23 @@ sub modLig{
     runTreePack();
     chdir($opt_o);
     replaceAtoms($mainLig, $before, $after, $molNum);
+    addHydrogens($mainLig);
+}
+
+# Adds Hygrogen atoms based on pH.
+sub addHydrogens{
+    my $ligName = shift;
+
+    $treePid = fork;
+    if($treePid){
+        waitpid $treePid, 0;
+        $treePid = 0;
+    }else{
+        exec("babel $ligName -p 7 $ligName");
+    } 
+
+    
+
 }
 
 # Gets the atoms for the old side chain plus the sidechain before and after
