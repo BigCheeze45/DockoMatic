@@ -22,7 +22,7 @@ mdl = model(env, file=tmpl, model_segment=('FIRST:'+sub,'END:'+sub))
 aln.append_model(mdl, align_codes=tmpl, atom_files=tmpl+'.pdb')
 aln.append(file=seq+'.ali', align_codes=seq)
 aln.align2d()
-aln.write(file=out+'/'+seq+'.pir', alignment_format='PIR')
+aln.write(file=out+'/'+seq+'_pir.ali', alignment_format='PIR')
 aln.write(file=out+'/'+seq+'.pap', alignment_format='PAP')
 
 os.system("ls *.pap > alLog");
