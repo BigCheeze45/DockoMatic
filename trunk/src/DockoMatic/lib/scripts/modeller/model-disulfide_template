@@ -20,16 +20,17 @@ class MyModel(automodel):
 #End disLines
 
 log.verbose()    # request verbose output
-env = environ()  # create a new MODELLER environment to build this model in
+env = environ(rand_seed = -2 - int(num))  # create a new MODELLER environment to build this model in
 
 # directories for input atom files
 env.io.atom_files_directory = [out, out]
 
 a = MyModel(env,
-            alnfile  = out+'/'+seq+'.pir', # alignment filename
+            alnfile  = out+'/'+seq+'_pir.ali', # alignment filename
             knowns   = tmpl,              # codes of the templates
             sequence = seq)              # code of the target
-a.starting_model= 1                 # index of the first model
-a.ending_model  = int(num)                 # index of the last model
+a.starting_model= a.ending_model = int(num)  # index of the first model
+#a.starting_model= 1                 # index of the first model
+#a.ending_model  = int(num)                 # index of the last model
                                     # (determines how many models to calculate)
 a.make()                            # do the actual homology modeling
