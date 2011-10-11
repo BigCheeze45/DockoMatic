@@ -168,15 +168,17 @@ private void setValid(boolean val) {
                     jScrollPane1 = new javax.swing.JScrollPane();
                     editArea1 = new javax.swing.JTextArea();
                     editArea1.setColumns(20);
+		    editArea1.setFont(new java.awt.Font("Monospaced", 0, 13));
                     editArea1.setRows(5);
                     jScrollPane1.setViewportView(editArea1);
                     alnEditPane.addTab(oDir+File.separator+tabs[i], jScrollPane1);
                     setContent(new File(oDir+File.separator+tabs[i]), editArea1);
 
-		    tmpAli = tabs[i].replace("pap", "pir");
+		    tmpAli = tabs[i].replace(".pap", "_pir.ali");
                     jScrollPane2 = new javax.swing.JScrollPane();
                     editArea2 = new javax.swing.JTextArea();
                     editArea2.setColumns(20);
+		    editArea2.setFont(new java.awt.Font("Monospaced", 0, 13));
                     editArea2.setRows(5);
                     jScrollPane2.setViewportView(editArea2);
                     alnEditPane.addTab(oDir+File.separator+tmpAli, jScrollPane2);

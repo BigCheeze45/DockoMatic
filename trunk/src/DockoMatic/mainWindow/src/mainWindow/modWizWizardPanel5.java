@@ -213,7 +213,7 @@ private void setValid(boolean val) {
             model.setRowCount(0);
 
 		int numJobs = tmpltList.length;
-		int lines = max+1;
+		//int lines = max+1;
 		String log;
 	        String cmd = Job.class.getResource("Job.class").getPath();
                 cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
@@ -224,13 +224,18 @@ private void setValid(boolean val) {
 		    makeDisScript(residues);
 		}
 
-		String[] modJobList = new String[numJobs];
+		String[] modJobList = new String[numJobs*max];
 		String tmpFile;
 		for(int i=0; i< numJobs; i++){
 	            tmpFile = tmpltList[i].substring(tmpltList[i].indexOf("-")+1, tmpltList[i].indexOf("."));
-		    log = oDir + "/model_"+tmpFile+".log";
-		    modJobList[i] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ max + " "+ oDir + " > "+ log;
-		    modJobList[i] += "; tail -n "+lines+" model_*.log | grep pdb > "+oDir+"/resLog" ;
+		    //modJobList[i] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ max + " "+ oDir + " > "+ log;
+		    // Make a separate command for each model, so we can parallelize.
+		    for(int j=0; j<max; j++){
+		        log = oDir + "/model_"+tmpFile+"_"+j+".log";
+		        modJobList[(i*max)+j] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ j + " "+ oDir + " > "+ log;
+		        modJobList[(i*max)+j] += "; tail model_*.log | grep pdb > "+oDir+"/resLog" ;
+		        //modJobList[(i*max)+j] += "; tail -n "+lines+" model_*.log | grep pdb > "+oDir+"/resLog" ;
+		    }
 		}
 		return modJobList;
 	}
