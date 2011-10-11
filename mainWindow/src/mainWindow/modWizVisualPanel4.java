@@ -58,6 +58,7 @@ public class modWizVisualPanel4 extends javax.swing.JPanel {
                 editArea = new javax.swing.JTextArea();
 
                 editArea.setColumns(20);
+                editArea.setFont(new java.awt.Font("Monospaced", 0, 13)); // NOI18N
                 editArea.setRows(5);
                 jScrollPane1.setViewportView(editArea);
 
