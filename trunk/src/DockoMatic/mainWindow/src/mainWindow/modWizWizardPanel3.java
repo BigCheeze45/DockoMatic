@@ -266,9 +266,17 @@ private void setValid(boolean val) {
 	for(int i=0; i< tmpltList.length; i++){
 	  if(tmpltList[i].endsWith("pdb")){
               //tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(".pdb"));
-              tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(":"));
+              tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].length());
+	      System.out.println("GOT TPLT "+tmplt);
+	      tmplt = tmplt.replaceAll(":", "_");
+	      System.out.println("  Now GOT TPLT "+tmplt);
+              //tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(":"));
 	  }else{
-	      tmplt = tmpltList[i].substring(0, tmpltList[i].indexOf(":"));
+	      //tmplt = tmpltList[i].substring(0, tmpltList[i].indexOf(":"));
+	      tmplt = tmpltList[i];
+	      System.out.println("GOT TPLT "+tmplt);
+	      tmplt = tmplt.replaceAll(":", "_");
+	      System.out.println("  Now GOT TPLT "+tmplt);
 	  }
 	  retList[i] = seqName+"-"+tmplt;
 	  outFilePath = outDir+File.separator+seqName+"-"+tmplt+".ali";
@@ -306,7 +314,8 @@ private void setValid(boolean val) {
     }
 
         private String stripPdb(String pdb){
-	    return pdb.substring(0, pdb.indexOf(":"));
+	    //return pdb.substring(0, pdb.indexOf(":"));
+	    return pdb.substring(0, pdb.indexOf("_"));
 	}
 
         private String getSub(String pdb){
@@ -324,12 +333,14 @@ private void setValid(boolean val) {
 
 	    // If using local template, don't download... Copy to output directory.
             messageWindowTopComponent.messageArea.append("Downloading Template file\n");
+	    pdb = pdb.replaceAll(":", "_");
 	    if(pdb.endsWith("pdb")){
-		String tmpPdb = pdb.substring(pdb.lastIndexOf("/")+1, pdb.indexOf(":"));
+		//String tmpPdb = pdb.substring(pdb.lastIndexOf("/")+1, pdb.indexOf(":"));
+		String tmpPdb = pdb.substring(pdb.lastIndexOf("/")+1, pdb.length());
 		//Copy file to odir
 		try{
 	            InputStream in = new FileInputStream(pdb);
-		    OutputStream out = new FileOutputStream(odir+File.separator+tmpPdb+".pdb");
+		    OutputStream out = new FileOutputStream(odir+File.separator+tmpPdb);
 		    byte[] buf = new byte[1024];
 		    int len;
 		    while((len = in.read(buf)) > 0)
@@ -342,7 +353,7 @@ private void setValid(boolean val) {
                 return tmpPdb;
 	    }
 	    String stripped = stripPdb(pdb);
-	    String fWoPdb = odir+File.separator+stripped;
+	    String fWoPdb = odir+File.separator+pdb;
 	    String outFilePath=fWoPdb+".pdb";
 
 	    try{
@@ -360,7 +371,8 @@ private void setValid(boolean val) {
 	        out.close();
 
 	    }catch(IOException e){e.printStackTrace();}
-	    return stripped;
+	    //return stripped;
+	    return pdb;
         }
 
     private boolean isItDone(String fname, int max)
