@@ -267,16 +267,12 @@ private void setValid(boolean val) {
 	  if(tmpltList[i].endsWith("pdb")){
               //tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(".pdb"));
               tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].length());
-	      System.out.println("GOT TPLT "+tmplt);
 	      tmplt = tmplt.replaceAll(":", "_");
-	      System.out.println("  Now GOT TPLT "+tmplt);
               //tmplt = tmpltList[i].substring(tmpltList[i].lastIndexOf("/")+1,tmpltList[i].indexOf(":"));
 	  }else{
 	      //tmplt = tmpltList[i].substring(0, tmpltList[i].indexOf(":"));
 	      tmplt = tmpltList[i];
-	      System.out.println("GOT TPLT "+tmplt);
 	      tmplt = tmplt.replaceAll(":", "_");
-	      System.out.println("  Now GOT TPLT "+tmplt);
 	  }
 	  retList[i] = seqName+"-"+tmplt;
 	  outFilePath = outDir+File.separator+seqName+"-"+tmplt+".ali";
