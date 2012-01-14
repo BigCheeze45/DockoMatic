@@ -862,7 +862,7 @@ private String resChkGpf;
                 }
                 swarmOut.close();
 
-                Process procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null, outDir);
+                Process procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null);
 		//System.out.println("USING DOCK CMD: swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00");
 
             }catch(Exception e){System.out.println(e);}
@@ -932,7 +932,7 @@ private String resChkGpf;
                     }
             }
 
-            currJobNumber = subNum;
+            currJobNumber = subNum+1;
     }
 
     /*
@@ -970,10 +970,10 @@ private String resChkGpf;
                    }
            }
 
-           ligList.subList(0, ligList.size()-1).clear();
-           recList.subList(0, recList.size()-1).clear();
-           boxList.subList(0, boxList.size()-1).clear();
-           appList.subList(0, appList.size()-1).clear();
+           ligList/*.subList(0, ligList.size()-1)*/.clear();
+           recList/*.subList(0, recList.size()-1)*/.clear();
+           boxList/*.subList(0, boxList.size()-1)*/.clear();
+           appList/*.subList(0, appList.size()-1)*/.clear();
 
     // start timer to check all job status.
         startJobTimer();
