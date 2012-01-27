@@ -862,7 +862,7 @@ private String resChkGpf;
                 }
                 swarmOut.close();
 
-                Process procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null);
+                Process procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null, outDir);
 		//System.out.println("USING DOCK CMD: swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00");
 
             }catch(Exception e){System.out.println(e);}
@@ -932,7 +932,7 @@ private String resChkGpf;
                     }
             }
 
-            currJobNumber = subNum+1;
+            currJobNumber = subNum;
     }
 
     /*
@@ -970,10 +970,10 @@ private String resChkGpf;
                    }
            }
 
-           ligList/*.subList(0, ligList.size()-1)*/.clear();
-           recList/*.subList(0, recList.size()-1)*/.clear();
-           boxList/*.subList(0, boxList.size()-1)*/.clear();
-           appList/*.subList(0, appList.size()-1)*/.clear();
+           ligList/**.subList(0, ligList.size()-1)*/.clear();
+           recList./*subList(0, recList.size()-1).*/clear();
+           boxList./*subList(0, boxList.size()-1).*/clear();
+           appList./*subList(0, appList.size()-1).*/clear();
 
     // start timer to check all job status.
         startJobTimer();
@@ -995,7 +995,7 @@ private String resChkGpf;
 
             for(int i=currJobNumber; i<total+currJobNumber; i++){
                     //subDirName = base + "dock_" + Integer.toString(i+1);
-                    subDirName = base + "dock_" + Integer.toString(i);
+                    subDirName = base + "dock_" + Integer.toString(i+1);
                     subDir = new File(subDirName);
 
                     subDir.mkdir();
@@ -1117,7 +1117,7 @@ private String resChkGpf;
     // Create new job from supplied arguments.
     private void newJob(String lig, String rec, String box, String dir, String app, 
 	           Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles){
-            dir = dir + "dock_"+Integer.toString(currJobNumber);
+            dir = dir + "dock_"+Integer.toString(currJobNumber+1);
 
             messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
 

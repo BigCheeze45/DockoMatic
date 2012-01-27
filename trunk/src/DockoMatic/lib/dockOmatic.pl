@@ -135,7 +135,6 @@ my $dockLog;
 my $dirPath;
 my $fileCount;
 my $aminoName;
-my $vinaOut;
 
 my $sourceDir = abs_path($0);
 $sourceDir =~ s/dockOmatic.pl//;;
@@ -151,9 +150,9 @@ $opt_o = ".";
 
 ###  Start Of Code  Get Command Line Arg & call createLigand if applicable  ### 
 
-    getopts ('kvho:g:p:r:b:a:m:t:');
+    getopts ('kho:g:p:r:b:a:m:t:');
 
-    if ((!($opt_p or $opt_d) and !($opt_m and $opt_t)) or $opt_h) {die "USAGE: dockOmatic.pl -p <peptide> [-a <filename>] [-k] [-o <directory>] [-r <filename> -b <filename>] [-h] [-v]
+    if ((!($opt_p or $opt_d) and !($opt_m and $opt_t)) or $opt_h) {die "USAGE: dockOmatic.pl -p <peptide> [-a <filename>] [-k] [-o <directory>] [-r <filename> -b <filename>] [-h] 
       -p name of peptide, either already in .pdb format (must supply .pdb extension), or string of Amino Acids (e.g. AGTHY).
          Usually a drug would be used in the .pdb format, and would be used along with the -a option.
       -a name of peptide, already in .pdb format. This would be the peptide we will append to the receptor to see how the '-p' peptide (drug) will dock to it.
@@ -165,7 +164,6 @@ $opt_o = ".";
       -g Number of AutoDock ga_runs.  Defaults to 100.
       -m Use Modeller.
       -b box coordinate file name (.gpf file). Must be used in conjunction with -r option.
-      -v option to use AutoDock Vina.
       -h displays this message.\n";}
     
 
@@ -219,11 +217,8 @@ $opt_o = ".";
             chdir($opt_o);
             extractLig($pName, 1);
         }
-        if ($opt_v) {
- 		autoVina($newRecept, $tmpBox, $pdbname);
-	} else {
-		gridAndDock($newRecept, $tmpBox, $pdbname);
-	}
+        gridAndDock($newRecept, $tmpBox, $pdbname);
+
     }else{
         $opt_p =~ tr/[a-z]/[A-Z]/;
         my $pdb = createLigand();
@@ -244,8 +239,7 @@ $opt_o = ".";
                 $tmpBox = $1. ".gpf";
             }
 
-	    if ($opt_v) {autoVina($newRecept, $tmpBox, $pdb);}
-	    else {gridAndDock($newRecept, $tmpBox, $pdb);}
+            gridAndDock($newRecept, $tmpBox, $pdb);
         }
     }
 
@@ -445,7 +439,6 @@ sub sidechainExchange{
         $_ =~ /(\w)(\d+)(\w)/;
         modLig($1, $2, $3, $newPdb);
     }
-    addHydrogens($newPdb);
     return $newPdb;
 }
 
@@ -472,10 +465,10 @@ sub modLig{
     foreach (@ligLines){
         if($_ =~ /^ATOM/){
             $_ !~ /(\w+)(\s+)(\d+)(\s+)(\w+)(\s+)(\w{3})(\s+)(\w)(\s+)(\d+)(.*)/;
-            #if($11 == $molNum or $11 == $preAA or $11 == $postAA){
+            if($11 == $molNum or $11 == $preAA or $11 == $postAA){
                 push(@oldAtoms, $_); 
-            #}
-           # if($11 > $postAA){ last; }
+            }
+            if($11 > $postAA){ last; }
         }
     }
 
@@ -483,7 +476,7 @@ sub modLig{
     runTreePack();
     chdir($opt_o);
     replaceAtoms($mainLig, $before, $after, $molNum);
-    #addHydrogens($mainLig);
+    addHydrogens($mainLig);
 }
 
 # Adds Hygrogen atoms based on pH.
@@ -495,7 +488,7 @@ sub addHydrogens{
         waitpid $treePid, 0;
         $treePid = 0;
     }else{
-        exec("babel -p 7 -ipdb $ligName -opdb  $ligName");
+        exec("babel $ligName -p 7 $ligName");
     } 
 
     
@@ -515,20 +508,9 @@ sub getSChain{
     
 
     foreach $atom (@oldAtoms){
-        if(!$good and $atom =~ /^ATOM\s+\d+\s+N\s+\w(.*)/){$good = 1;}
-	#if(!$good and ($atom !~ /^ATOM(.*)$oldAA(.*)$molNum(.*)/)){ $good = 1; }
-        if($good){ 
-		$atom =~ s/^ATOM(.*)$oldAA(.*)\s$molNum\s(.*)/ATOM$1$newAA$2 $molNum $3/; 
-		print TMP $atom;
-	}
-
-        if($atom =~ /^ATOM(.*)CB\s(.*)/){ $good = 0; }
-        #if($atom =~ /^ATOM(.*)CB\s+$newAA(.*)$molNum(.*)/){ $good = 0; }
-	#if($atom =~ /^ATOM(.*)\sN\s(.*)/) {print TMP $atom;}
-	#if($atom =~ /^ATOM(.*)\sCA\s(.*)/) {print TMP $atom;}
-	#if($atom =~ /^ATOM(.*)\sC\s(.*)/) {print TMP $atom;}
-	#if($atom =~ /^ATOM(.*)\sO\s(.*)/) {print TMP $atom;}
-	#if($atom =~/^ATOM(.*)\sCB\s(.*)/) {print TMP $atom;}
+        if(!$good and ($atom !~ /^ATOM(.*)$oldAA(.*)$molNum(.*)/)){ $good = 1; }
+        if($good){ $atom =~ s/^ATOM(.*)$oldAA(.*)$molNum(.*)/ATOM$1$newAA$2$molNum$3/; print TMP $atom; }
+        if($atom =~ /^ATOM(.*)CB\s+$newAA(.*)$molNum(.*)/){ $good = 0; }
     }
     close TMP;
 
@@ -573,8 +555,8 @@ sub replaceAtoms{
     foreach $atom (@oldAtoms){
         if(!$countFlag and $atom =~ /^ATOM(.*)$oldAA(.*)(\s+)$scNum(\s+)(.*)/){ 
             foreach $newatom (@newAtoms){
-                if($newatom =~ /^ATOM(.*)$newAA(.*)(\s+)$scNum(\s+)(.*)/){
-                    @tmpArr = split(/(\s+)/, $newatom); #Need to change this to not split on spaces
+                if($newatom =~ /^ATOM(.*)$newAA(.*)/){
+                    @tmpArr = split(/(\s+)/, $newatom);
                 if($tmpArr[4] =~ /\d{2}/){
                 printf $OUT (
                        "%-6s%5d %-5s%3s %s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f           %-2s\n", 
@@ -667,21 +649,6 @@ sub extractLig{
     unlink("tmplig");
 }
 
-# Calls AutoDock vina
-sub autoVina{
-    my $receptor = shift;
-    my $box = shift;
-    my $pdb = shift;
-
-print "\n\n -------------- Vina Got   $receptor, $box, $pdb\n\n";
-    prepLig( $pdb);
-    prepRec( $receptor);
-    autovinaCmd($box, $pdb."qt", $receptor."qt");
-    
-    parseVina( $vinaOut);
-   
-}
-    
 
 # Calls the autogrid and autodock methods, if we are running a docking job.
 sub gridAndDock{
@@ -964,7 +931,7 @@ sub prepDPF4 {
     my $ligFileIn = shift;
     my $recFileIn = shift;
 
-    my $ga = 10;
+    my $ga = 100;
     if($opt_g){ $ga = $opt_g;}
     #AN$ligFileIn =~ /(\w+)\.pdbqt/;
     $ligFileIn =~ /(\.+)\.pdbqt/;
@@ -973,7 +940,7 @@ sub prepDPF4 {
     $recFileIn =~ /(\.+)\.pdbqt/;
     $dpfFile .= $1 . ".dpf";
 
-    system( "prepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=950000 -l $ligFileIn -r $recFileIn -o $dpfFile");
+    system( "prepare_dpf4.py -p ga_run=$ga  -l $ligFileIn -r $recFileIn -o $dpfFile");
     return $dpfFile;
 }
 
@@ -1009,25 +976,6 @@ sub autogridCmd {
    print"autogrid log output written to $gridLog\n\n";
 }
 
-# Calls Autodock Vina
-sub autovinaCmd {
-    my $box = shift;
-    my $pdb = shift;
-    my $receptor = shift;
-    print "Running autodock vina.  This may take quite awhile...\n";
-
-    $dockLog = $1."_dockLog.dlg";
-    $vinaOut = "Results_".$pdb;
-    $dockPid = fork;
-    if($dockPid){
-        waitpid $dockPid, 0;
-        $dockPid = 0;
-    }else{
-        exec( "vina --config $box --ligand $pdb --receptor $receptor --log $dockLog --out $vinaOut --exhaustiveness 3" );
-    } 
-    print"autodock vina log output written to $dockLog\n\n";
-}
-
 # Calls autodock with appropriate files.
 sub autodockCmd {
 
@@ -1048,18 +996,6 @@ sub autodockCmd {
     } 
     print"autodock log output written to $dockLog\n\n";
 
-}
-
-# Uses Vina's provided program to parse results
-sub parseVina{
-    my $out = shift;
-
-    exec( "vina_split --input $out");
-    my @files = <*ligand*>;
-    foreach $file (@files) {
-	$file =~ s{\.[^.]+$}{};    
-	exec ( "babel -ipdbqt $file.pdbqt -opdb $file.pdbqt");
-    }
 }
 
 # Parses Autodock's output dlg file for relevant information.
