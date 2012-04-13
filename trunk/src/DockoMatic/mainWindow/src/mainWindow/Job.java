@@ -17,6 +17,7 @@ public class Job {
     public String swarmID = null;
     public boolean isRunning;
     public boolean usingSwarm;
+    public boolean usingVina;
 
     public int jobNum;
     private String ligand = "";
@@ -36,7 +37,7 @@ public class Job {
     // Constructor
     public Job(int me, String lig, String rec, String box,
                    //String out, boolean swarm, String app) {
-                   String out, boolean swarm, String app, String seq, String tplt, String dockCycles) {
+                   String out, boolean swarm, String app, String seq, String tplt, String dockCycles, boolean vina) {
         this.jobNum = me;
         this.ligand = lig;
         this.receptor = rec;
@@ -46,11 +47,52 @@ public class Job {
         this.sequence = seq;
         this.template = tplt;
 	this.cycles = dockCycles;
+	this.usingVina = vina;
 
         this.setSwarm(swarm);
         this.isRunning = false;
 
 
+    }
+
+    public String getLig()
+    {
+	    return ligand;
+    }
+
+    public String getRec()
+    {
+	    return receptor;
+    }
+
+    public String getBox()
+    {
+	    return boxCoord;
+    }
+
+    public String getOut()
+    {
+	    return outDir;
+    }
+
+    public String getAppd()
+    {
+	    return append;
+    }
+
+    public String getSeq()
+    {
+	    return sequence;
+    }
+
+    public String getTplt()
+    {
+	    return template;
+    }
+
+    public String getCycles()
+    {
+	    return cycles;
     }
 
     // Update info for job.
@@ -85,6 +127,7 @@ public class Job {
            //this.cmd = this.cmd.substring(0, this.cmd.lastIndexOf(File.separator));
            //this.cmd += "dockOmatic.pl";
 
+	   if(usingVina){ cmd += " -v ";}
 	   if(sequence.length() > 0){ cmd += " -m "+ sequence; }
            if(template.length() > 0){ cmd += " -t "+ template; }
 
