@@ -452,7 +452,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="newJobButton" alignment="0" pref="368" max="32767" attributes="1"/>
                               <Component id="newTabChBox" alignment="0" pref="368" max="32767" attributes="1"/>
-                              <Component id="swarmCheckBox" alignment="0" pref="368" max="32767" attributes="1"/>
+                              <Component id="vinaCheckBox" alignment="0" pref="368" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -465,7 +465,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="newTabChBox" min="-2" pref="21" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="swarmCheckBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="vinaCheckBox" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="25" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -482,13 +482,15 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newTabChBoxActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="swarmCheckBox">
+                <Component class="javax.swing.JCheckBox" name="vinaCheckBox">
                   <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="mainWindow/Bundle.properties" key="openerTopComponent.swarmCheckBox.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="mainWindow/Bundle.properties" key="openerTopComponent.vinaCheckBox.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vinaCheckBoxActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="newJobButton">
                   <Properties>

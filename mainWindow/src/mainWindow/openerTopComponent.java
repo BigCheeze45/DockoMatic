@@ -35,8 +35,10 @@ private DefaultTableModel model;
 private JTable table;
 private int currJobNumber = 0;
 private int totalJobs = 0;
+//private int leftOff = 0;
 private boolean ligFromModeller = false;
 private boolean recFromModeller = false;
+private boolean useVina = false;
 private boolean ligLstBool = false;
 private boolean recListBool = false;
 private boolean boxListBool = false;
@@ -66,7 +68,6 @@ private String resChkGpf;
 		setName(NbBundle.getMessage(openerTopComponent.class, "CTL_openerTopComponent"));
 		setToolTipText(NbBundle.getMessage(openerTopComponent.class, "HINT_openerTopComponent"));
 		//jPanel7.setVisible(false);
-		swarmCheckBox.setVisible(false);
 		//setAppVis(false);
                 act = new modWizWizardAction();
 //        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
@@ -112,7 +113,7 @@ private String resChkGpf;
                 appCheckBox = new javax.swing.JCheckBox();
                 jPanel8 = new javax.swing.JPanel();
                 newTabChBox = new javax.swing.JCheckBox();
-                swarmCheckBox = new javax.swing.JCheckBox();
+                vinaCheckBox = new javax.swing.JCheckBox();
                 newJobButton = new javax.swing.JButton();
                 jPanel9 = new javax.swing.JPanel();
                 jLabel2 = new javax.swing.JLabel();
@@ -344,8 +345,12 @@ private String resChkGpf;
                         }
                 });
 
-                swarmCheckBox.setSelected(true);
-                org.openide.awt.Mnemonics.setLocalizedText(swarmCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swarmCheckBox.text")); // NOI18N
+                org.openide.awt.Mnemonics.setLocalizedText(vinaCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.vinaCheckBox.text")); // NOI18N
+                vinaCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                vinaCheckBoxActionPerformed(evt);
+                        }
+                });
 
                 org.openide.awt.Mnemonics.setLocalizedText(newJobButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newJobButton.text")); // NOI18N
                 newJobButton.addActionListener(new java.awt.event.ActionListener() {
@@ -363,7 +368,7 @@ private String resChkGpf;
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(newJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
                                         .addComponent(newTabChBox, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                                        .addComponent(swarmCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
+                                        .addComponent(vinaCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel8Layout.setVerticalGroup(
@@ -373,7 +378,7 @@ private String resChkGpf;
                                 .addGap(18, 18, 18)
                                 .addComponent(newTabChBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(swarmCheckBox)
+                                .addComponent(vinaCheckBox)
                                 .addContainerGap(25, Short.MAX_VALUE))
                 );
 
@@ -653,7 +658,6 @@ private String resChkGpf;
                         outDir = new File(outDirField.getText().trim());
                         alignJobNums();
 
-                        messageWindowTopComponent.messageArea.append("Highlight and Right-Click Jobs in Output Grid for options.\n");
                         makeJobs();
                         messageWindowTopComponent.messageArea.append("Highlight and Right-Click Jobs in Output Grid for options.\n");
                     }else{
@@ -677,6 +681,10 @@ private String resChkGpf;
     protected static void pymolView(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
 	    instance.pymolActionPerformed(evtOrig);
     }
+
+    //protected static void displayMore(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
+	    //instance.displayActionPerformed(evtOrig);
+    //}
 
     protected static void checkRes(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
 	    instance.getResCheckInfo();
@@ -755,6 +763,19 @@ private String resChkGpf;
                     recFromModeller = false;
             }
     }//GEN-LAST:event_recModCheckBoxActionPerformed
+
+    private void vinaCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vinaCheckBoxActionPerformed
+            if(vinaCheckBox.isSelected()){
+                    useVina= true;
+            }else{
+                    useVina = false;
+            }
+
+    }//GEN-LAST:event_vinaCheckBoxActionPerformed
+
+    //private void displayActionPerformed(java.awt.event.MouseEvent evt) {
+        //redisplay();
+    //}
 
     private void pymolActionPerformed(java.awt.event.MouseEvent evt) {
 	    table = outputGridTopComponent.getSelectedTable();
@@ -849,6 +870,8 @@ private String resChkGpf;
 		    jobNum = (Integer)table.getValueAt(rowNums[i], getCol(table, "Job #"));
 		    updateJob(rowNums[i]);
                     swarmOut.write(jobList.get(jobNum).getCmd()+"\n");
+		    // Either use the Job class to make commands, or use this one.
+                    //swarmOut.write(getCmd(jobNum)+"\n");
 		    if(table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")){
 			    jobList.get(jobNum).killJob();
 			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
@@ -932,8 +955,44 @@ private String resChkGpf;
                     }
             }
 
+	    //if(subNum > 0)  ++subNum;
             currJobNumber = subNum;
     }
+
+    private String getCmd(int row){
+        String seq, tmplt, lig, odir, rec, bc, appd, cyc;
+	boolean swm;
+
+	String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
+        cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
+        cmd += "lib/dockOmatic.pl";
+
+        lig = (String)table.getValueAt(row, getCol(table, "Ligand"));
+        odir = (String)table.getValueAt(row, getCol(table, "Output Directory"));
+        rec = (String)table.getValueAt(row, getCol(table, "Receptor"));
+        bc = (String)table.getValueAt(row, getCol(table, "Box Coordinate"));
+        swm = true;
+        seq = (String)table.getValueAt(row, getCol(table, "Sequence"));
+        tmplt = (String)table.getValueAt(row, getCol(table, "Template"));
+        cyc = (String)table.getValueAt(row, getCol(table, "AutoDock Cycles"));
+        appd = (String)table.getValueAt(row, getCol(table, "Secondary"));
+
+
+	if(useVina){ cmd += " -v "; }
+	if(seq.length() > 0){ cmd += " -m "+ seq; }
+        if(tmplt.length() > 0){ cmd += " -t "+ tmplt; }
+
+        if(lig.length() > 0){ cmd += " -p "+ lig; }
+        if(odir.length() > 0){ cmd += " -o "+ odir; }
+        if(rec.length() > 0){ cmd += " -r "+ rec; }
+        if(bc.length() > 0){ cmd += " -b "+ bc; }
+        if(appd.length() > 0){ cmd += " -a "+ appd; }
+        if(cyc.length() > 0){ cmd += " -g "+ cyc; }
+
+	return cmd;
+
+    }
+
 
     /*
      * Walks through arrays of ligands, box Coordinate files, and secondary ligands
@@ -970,11 +1029,12 @@ private String resChkGpf;
                    }
            }
 
-           ligList/**.subList(0, ligList.size()-1)*/.clear();
-           recList./*subList(0, recList.size()-1).*/clear();
-           boxList./*subList(0, boxList.size()-1).*/clear();
-           appList./*subList(0, appList.size()-1).*/clear();
+           ligList.clear();
+           recList.clear();
+           boxList.clear();
+           appList.clear();
 
+	   //redisplay();
     // start timer to check all job status.
         startJobTimer();
     }
@@ -1113,7 +1173,32 @@ private String resChkGpf;
 
     }
 
-   
+
+//    private void redisplay()
+//    {
+//	int stop = leftOff+500;
+//	if( stop > totalJobs) stop = totalJobs;
+//	String lig, dir, rec, box, seq, tmplt, cycles;
+//
+//        for(int i=leftOff; i< stop; i++){
+//		lig = jobList.get(i).getLig();
+//		dir = jobList.get(i).getOut();
+//		rec = jobList.get(i).getRec();
+//		box = jobList.get(i).getBox();
+//		seq = jobList.get(i).getSeq();
+//		tmplt = jobList.get(i).getTplt();
+//		cycles = jobList.get(i).getCycles();
+//
+//                model.addRow(new Object[]{i, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
+//                //model.addRow(new Object[]{i, "a"+i, "b"+i, "c"+i, "d"+i, "e"+i, "f"+i, "g"+i, "h"+i, "i"+i });
+//                //model.addRow(new Object[]{i, lig, "b"+i, "c"+i, "d"+i, "e"+i, "f"+i, "g"+i, "h"+i, "i"+i });
+//
+//
+//	}
+//
+//	leftOff = stop;
+//    }
+//
     // Create new job from supplied arguments.
     private void newJob(String lig, String rec, String box, String dir, String app, 
 	           Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles){
@@ -1122,10 +1207,10 @@ private String resChkGpf;
             messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
 
 	    if(secondary){
-                jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles));
+                jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
                 model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
             }else{
-                jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles));
+                jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
                 model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, "Not Started", seq, tmplt, cycles});
             }
 
@@ -1241,8 +1326,8 @@ private String resChkGpf;
         private javax.swing.JButton receptorButton;
         private javax.swing.JCheckBox receptorCheckBox;
         private javax.swing.JTextField receptorField;
-        private javax.swing.JCheckBox swarmCheckBox;
         private javax.swing.JTextField swmJobNum;
+        private javax.swing.JCheckBox vinaCheckBox;
         // End of variables declaration//GEN-END:variables
 	/**
 	 * Gets default instance. Do not use directly: reserved for *.settings files only,

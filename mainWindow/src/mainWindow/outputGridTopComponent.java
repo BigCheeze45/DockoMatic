@@ -168,6 +168,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 		JMenuItem optionMenuDelete = new JMenuItem( "Delete" );
 		JMenuItem optionMenuRC = new JMenuItem( "Analyze" );
 		JMenuItem optionMenuPymol = new JMenuItem( "View in Pymol" );
+		//JMenuItem optionDisplayMore = new JMenuItem( "Display More Jobs" );
 
 
 		jpop = new JPopupMenu( "Options" );
@@ -176,6 +177,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 		jpop.add( optionMenuDelete );
 		jpop.add( optionMenuRC );
 		jpop.add( optionMenuPymol );
+		//jpop.add( optionDisplayMore );
 
 
 		optionMenuStart.addMouseListener(new MouseAdapter(){
@@ -203,6 +205,12 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 			    openerTopComponent.pymolView(e, evtOrig);
 			}
 		});
+
+//		optionDisplayMore.addMouseListener(new MouseAdapter(){
+//			public void mousePressed(MouseEvent e){
+//			    openerTopComponent.displayMore(e, evtOrig);
+//			}
+//		});
 
 		jpop.show(evtOrig.getComponent(), evtOrig.getX(), evtOrig.getY());
 
