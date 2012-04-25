@@ -228,13 +228,11 @@ private void setValid(boolean val) {
 		String tmpFile;
 		for(int i=0; i< numJobs; i++){
 	            tmpFile = tmpltList[i].substring(tmpltList[i].indexOf("-")+1, tmpltList[i].indexOf("."));
-		    //modJobList[i] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ max + " "+ oDir + " > "+ log;
 		    // Make a separate command for each model, so we can parallelize.
 		    for(int j=0; j<max; j++){
 		        log = oDir + "/model_"+tmpFile+"_"+j+".log";
 		        modJobList[(i*max)+j] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ j + " "+ oDir + " > "+ log;
-		        modJobList[(i*max)+j] += "; tail model_*.log | grep pdb > "+oDir+"/resLog" ;
-		        //modJobList[(i*max)+j] += "; tail -n "+lines+" model_*.log | grep pdb > "+oDir+"/resLog" ;
+		        modJobList[(i*max)+j] += "; grep ^"+seqName+" model_*.log > "+oDir+"/resLog" ;
 		    }
 		}
 		return modJobList;
