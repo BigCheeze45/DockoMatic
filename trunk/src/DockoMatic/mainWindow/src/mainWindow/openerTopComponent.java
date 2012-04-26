@@ -143,11 +143,11 @@ private String resChkGpf;
                 jPanel3.setLayout(jPanel3Layout);
                 jPanel3Layout.setHorizontalGroup(
                         jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(outDirField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(outDirButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(outDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                                        .addComponent(outDirField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel3Layout.setVerticalGroup(
@@ -156,7 +156,7 @@ private String resChkGpf;
                                 .addComponent(outDirButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(outDirField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(71, Short.MAX_VALUE))
+                                .addContainerGap(87, Short.MAX_VALUE))
                 );
 
                 org.openide.awt.Mnemonics.setLocalizedText(LigandButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.LigandButton.text")); // NOI18N
@@ -186,13 +186,13 @@ private String resChkGpf;
                 jPanel4.setLayout(jPanel4Layout);
                 jPanel4Layout.setHorizontalGroup(
                         jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(ligandField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(LigandButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(ligModCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(ligandCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ligandField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                                        .addComponent(LigandButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                                        .addComponent(ligModCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                                        .addComponent(ligandCheckBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel4Layout.setVerticalGroup(
@@ -201,11 +201,11 @@ private String resChkGpf;
                                 .addComponent(LigandButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ligandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addComponent(ligModCheckBox)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(ligandCheckBox)
-                                .addContainerGap())
+                                .addContainerGap(38, Short.MAX_VALUE))
                 );
 
                 jPanel5.setPreferredSize(new java.awt.Dimension(393, 133));
@@ -237,26 +237,26 @@ private String resChkGpf;
                 jPanel5.setLayout(jPanel5Layout);
                 jPanel5Layout.setHorizontalGroup(
                         jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(receptorField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(receptorButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(recModCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(receptorCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(receptorButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                                        .addComponent(receptorField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                                        .addComponent(recModCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                                        .addComponent(receptorCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel5Layout.setVerticalGroup(
                         jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(receptorButton)
+                                .addComponent(receptorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(receptorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                                 .addComponent(recModCheckBox)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(receptorCheckBox)
-                                .addContainerGap())
+                                .addGap(6, 6, 6))
                 );
 
                 jPanel6.setPreferredSize(new java.awt.Dimension(393, 133));
@@ -284,9 +284,9 @@ private String resChkGpf;
                         .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(boxCoordButton, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                                        .addComponent(boxCoordField, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                                        .addComponent(boxCoordCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
+                                        .addComponent(boxCoordButton, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                                        .addComponent(boxCoordField, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                                        .addComponent(boxCoordCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel6Layout.setVerticalGroup(
@@ -297,7 +297,7 @@ private String resChkGpf;
                                 .addComponent(boxCoordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(boxCoordCheckBox)
-                                .addContainerGap(31, Short.MAX_VALUE))
+                                .addContainerGap(47, Short.MAX_VALUE))
                 );
 
                 org.openide.awt.Mnemonics.setLocalizedText(appendButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appendButton.text")); // NOI18N
@@ -320,12 +320,12 @@ private String resChkGpf;
                 jPanel7.setLayout(jPanel7Layout);
                 jPanel7Layout.setHorizontalGroup(
                         jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(appCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                                        .addComponent(appendField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                                        .addComponent(appendButton, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(appendField, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                                        .addComponent(appendButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                                        .addComponent(appCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel7Layout.setVerticalGroup(
@@ -336,7 +336,7 @@ private String resChkGpf;
                                 .addComponent(appendField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(appCheckBox)
-                                .addContainerGap(31, Short.MAX_VALUE))
+                                .addContainerGap(78, Short.MAX_VALUE))
                 );
 
                 jPanel8.setPreferredSize(new java.awt.Dimension(393, 133));
@@ -369,20 +369,20 @@ private String resChkGpf;
                         .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(newJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                                        .addComponent(newTabChBox, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                                        .addComponent(vinaCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
+                                        .addComponent(newJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                                        .addComponent(newTabChBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                                        .addComponent(vinaCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
                                 .addContainerGap())
                 );
                 jPanel8Layout.setVerticalGroup(
                         jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(newJobButton)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                                 .addComponent(newTabChBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(vinaCheckBox)
-                                .addContainerGap(25, Short.MAX_VALUE))
+                                .addGap(6, 6, 6))
                 );
 
                 jPanel9.setPreferredSize(new java.awt.Dimension(393, 133));
@@ -423,8 +423,9 @@ private String resChkGpf;
                                 .addComponent(swmJobNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                                .addComponent(dockCycles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(9, 9, 9)
+                                .addComponent(dockCycles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                 );
 
                 jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainWindow/DNA.png"))); // NOI18N
@@ -471,18 +472,17 @@ private String resChkGpf;
                         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
                                         .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                                                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)))
+                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(17, 17, 17)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())
@@ -496,21 +496,21 @@ private String resChkGpf;
                                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addContainerGap())
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(13, 13, 13))))
                 );
 
@@ -528,8 +528,8 @@ private String resChkGpf;
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
-                                .addGap(12, 12, 12))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                                .addContainerGap())
                 );
         }// </editor-fold>//GEN-END:initComponents
 
