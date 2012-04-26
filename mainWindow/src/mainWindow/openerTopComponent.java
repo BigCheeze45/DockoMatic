@@ -10,7 +10,7 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
@@ -23,7 +23,10 @@ import javax.swing.table.DefaultTableModel;
 autostore = false)
 public final class openerTopComponent extends TopComponent{
 
-private ArrayList <Job> jobList = new ArrayList<Job>();
+	//Change the JobList to hash?
+//private ArrayList <Job> jobList = new ArrayList<Job>();
+//private HashMap <int, Job> jobList = new HashMap<int, Job>();
+private HashMap jobList = new HashMap();
 private ArrayList <String> ligList = new ArrayList<String>();
 private ArrayList <String> recList = new ArrayList<String>();
 private ArrayList <String> boxList = new ArrayList<String>();
@@ -821,7 +824,7 @@ private String resChkGpf;
 	    for(int rowNum=rowCount-1; rowNum >= 0; rowNum--){
 		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol(table, "Job #"));
 		    messageWindowTopComponent.messageArea.append("Killing Job "+jobNum+"\n");
-		    jobList.get(jobNum).killJob();
+		    ((Job)jobList.get(jobNum)).killJob();
 		    messageWindowTopComponent.messageArea.append("Removing Job "+jobNum+"\n");
 		    model.removeRow(rowNums[rowNum]);
 	    }
@@ -869,11 +872,11 @@ private String resChkGpf;
                 for(int i = 0; i< rowNums.length; i++){
 		    jobNum = (Integer)table.getValueAt(rowNums[i], getCol(table, "Job #"));
 		    updateJob(rowNums[i]);
-                    swarmOut.write(jobList.get(jobNum).getCmd()+"\n");
+                    swarmOut.write(((Job)jobList.get(jobNum)).getCmd()+"\n");
 		    // Either use the Job class to make commands, or use this one.
                     //swarmOut.write(getCmd(jobNum)+"\n");
 		    if(table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")){
-			    jobList.get(jobNum).killJob();
+			    ((Job)jobList.get(jobNum)).killJob();
 			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
 //		        File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol(table, "Output Directory")));
 //		        //dir.delete();
@@ -1055,7 +1058,7 @@ private String resChkGpf;
 
             for(int i=currJobNumber; i<total+currJobNumber; i++){
                     //subDirName = base + "dock_" + Integer.toString(i+1);
-                    subDirName = base + "dock_" + Integer.toString(i+1);
+                    subDirName = base + "dock_" + Integer.toString(i);
                     subDir = new File(subDirName);
 
                     subDir.mkdir();
@@ -1161,7 +1164,7 @@ private String resChkGpf;
 
             int job = (Integer)table.getValueAt(row, getCol(table, "Job #"));
 
-            Job tmp = jobList.get(job);
+            Job tmp = (Job)jobList.get(job);
             tmp.update((String)table.getValueAt(row, getCol(table, "Ligand")),
                        (String)table.getValueAt(row, getCol(table, "Output Directory")),
                        (String)table.getValueAt(row, getCol(table, "Receptor")),
@@ -1202,15 +1205,17 @@ private String resChkGpf;
     // Create new job from supplied arguments.
     private void newJob(String lig, String rec, String box, String dir, String app, 
 	           Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles){
-            dir = dir + "dock_"+Integer.toString(currJobNumber+1);
+            dir = dir + "dock_"+Integer.toString(currJobNumber);
 
             messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
 
 	    if(secondary){
-                jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
+                //jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
+                jobList.put(currJobNumber, new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
                 model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
             }else{
-                jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
+                //jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
+                jobList.put(currJobNumber, new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
                 model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, "Not Started", seq, tmplt, cycles});
             }
 
@@ -1233,7 +1238,7 @@ private String resChkGpf;
         int numRows = model.getRowCount();
             for(int i = numRows-1; i>= 0; i--){
                 jobNum = (Integer)table.getValueAt(i, getCol(table, "Job #"));
-                jobList.get(jobNum).killJob();
+                ((Job)jobList.get(jobNum)).killJob();
                 model.removeRow(i);
             }
         //jobTimer.stop();
@@ -1270,7 +1275,7 @@ private String resChkGpf;
         mkSubdirs(1);
         //newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
         newJob(lig, rec, box, base, app, true, swarm, "", "", numJobs, cycles);
-        jobList.get(jobList.size()-1).runJob(false);
+        ((Job)jobList.get(jobList.size()-1)).runJob(false);
         table.setValueAt("Started", model.getRowCount()-1, getCol(table, "Status"));
 
     }
