@@ -959,7 +959,7 @@ private String resChkGpf;
             }
 
 	    //if(subNum > 0)  ++subNum;
-            currJobNumber = subNum;
+            currJobNumber = subNum+1;
     }
 
     private String getCmd(int row){
