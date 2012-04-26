@@ -4,13 +4,42 @@ use Getopt::Std;
 
 getopts('f:n:l:');
 
-#print("OPT F: $opt_f\n");
-#print("OPT N: $opt_n\n");
-
 open $INFILE, $opt_f or die "$!\nFILE $opt_f";
 
-while (<$INFILE>){
-    system($_);
+@allLines = <$INFILE>;
+close $INFILE;
+
+# Decide...
+if($opt_n > 1){
+    multi();
+}else{
+    single();
 }
 
-close $INFILE;
+
+# Multiple processes at once.
+sub multi{
+  while ($cmd = shift @allLines){
+     $pid = fork();
+     if ($pid ==-1){
+         warn($!);
+         last;
+     }
+     if($pid){
+         chomp($cmd);
+         exec($cmd." > /dev/null 2>&1");
+     }
+  }
+}
+
+# Single job at a time, one after the other.
+sub single{
+  foreach(@allLines){
+      chomp($_);
+      system($_." > /dev/null 2>&1");
+      wait();
+   }
+          
+        
+}
+
