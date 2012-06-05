@@ -232,7 +232,7 @@ private void setValid(boolean val) {
 		    for(int j=0; j<max; j++){
 		        log = oDir + "/model_"+tmpFile+"_"+j+".log";
 		        modJobList[(i*max)+j] = cmd +" "+ seqName +"-"+tmpFile +" "+ tmpFile +" "+ j + " "+ oDir + " > "+ log;
-		        modJobList[(i*max)+j] += "; grep ^"+seqName+" model_*.log > "+oDir+"/resLog" ;
+		        modJobList[(i*max)+j] += "; grep ^"+seqName+" model_*.log > "+oDir+"/resLog;" ;
 		    }
 		}
 		return modJobList;
