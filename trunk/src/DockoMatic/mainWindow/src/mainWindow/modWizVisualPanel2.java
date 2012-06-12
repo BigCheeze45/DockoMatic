@@ -303,7 +303,7 @@ public final class modWizVisualPanel2 extends JPanel {
 
 	  for(int i=0; i<tmplts.length; i++){
 	    try{
-		dt.browse(new java.net.URI("http://www.pdb.org/pdb/explore/explore.do?structureId="+tmplts[i]));
+		dt.browse(new java.net.URI("http://www.pdb.org/pdb/explore/explore.do?structureId="+tmplts[i].substring(0, tmplts[i].indexOf(":"))));
 	    }catch(Exception e){System.out.println("CAUGHT EXCEPTION: "+e);}
 
 	  }
