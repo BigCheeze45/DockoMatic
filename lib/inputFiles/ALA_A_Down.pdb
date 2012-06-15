@@ -1,0 +1,13 @@
+HEADER                                              -  X-9                      
+REMARK Alanine Down                                                             
+ATOM      1  CB  ALA     1       0.288   0.456   1.544                       C  
+ATOM      2  HB1 ALA     1      -0.422   0.603   2.366                       H  
+ATOM      3  HB1 ALA     1       1.181   0.043   2.026                       H  
+ATOM      4  HB3 ALA     1      -0.133  -0.358   0.943                       H  
+ATOM      5 BR   ALA     1       0.508   1.665   0.630                      BR  
+CONECT    1    2    3    4    5                                                 
+CONECT    2    1                                                                
+CONECT    3    1                                                                
+CONECT    4    1                                                                
+CONECT    5    1                                                                
+END

@@ -1,0 +1,27 @@
+HEADER                                              -  X-9                      
+REMARK Spartan ES exported M001                                                 
+ATOM      1 BR   HIS     1       1.919   1.804   0.083                      BR  
+ATOM      3  CB  HIS     1       1.427   0.909   1.450                       C  
+ATOM      4  CG  HIS     1       2.437   0.822   2.602                       C  
+ATOM      5  HB2 HIS     1       1.126  -0.130   1.273                       H  
+ATOM      6  HB3 HIS     1       0.545   1.401   1.878                       H  
+ATOM      7  CD2 HIS     1       3.775   0.672   2.560                       C  
+ATOM      8  ND1 HIS     1       2.146   0.873   4.006                       N  
+ATOM      9  HD2 HIS     1       4.415   0.585   1.675                       H  
+ATOM     10  HE2 HIS     1       5.179   0.540   4.072                       H  
+ATOM     11  CE1 HIS     1       3.221   0.765   4.642                       C  
+ATOM     12  NE2 HIS     1       4.208   0.643   3.804                       N  
+ATOM     13  HE1 HIS     1       3.302   0.773   5.735                       H  
+CONECT    1    3                                                                
+CONECT    3    1    4    5    6                                                 
+CONECT    4    3    7    8                                                      
+CONECT    5    3                                                                
+CONECT    6    3                                                                
+CONECT    7    4    9   12                                                      
+CONECT    8    4   11                                                           
+CONECT    9    7                                                                
+CONECT   10   12                                                                
+CONECT   11    8   12   13                                                      
+CONECT   12   10   11    7                                                      
+CONECT   13   11                                                                
+END

@@ -1,0 +1,19 @@
+HEADER                                              -  X-9                      
+REMARK Spartan ES exported M001                                                 
+ATOM      1 BR    ASP     1       1.515   2.837   1.468                      BR  
+ATOM      3  CB   ASP     1       1.043   1.841   2.559                       C  
+ATOM      4  CG   ASP     1       1.606   2.229   3.901                       C  
+ATOM      5  HB2  ASP     1       1.379   0.827   2.311                       H  
+ATOM      6  HB3  ASP     1      -0.052   1.832   2.605                       H  
+ATOM      7  OD1  ASP     1       0.903   2.613   4.821                       O  
+ATOM      8  OD2  ASP     1       2.927   2.135   4.033                       O  
+ATOM      9  HD21 ASP     1       3.180   2.408   4.916                       H  
+CONECT    1    3                                                                
+CONECT    3    1    4    5    6                                                 
+CONECT    4    3    7    8                                                      
+CONECT    5    3                                                                
+CONECT    6    3                                                                
+CONECT    7    4                                                                
+CONECT    8    4    9                                                           
+CONECT    9    8                                                                
+END

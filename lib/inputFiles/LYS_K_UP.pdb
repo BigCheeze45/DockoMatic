@@ -1,0 +1,35 @@
+HEADER                                              -  X-9                      
+REMARK Spartan ES exported M001                                                 
+ATOM      1 BR   LYS     1       1.566   2.424   1.241                      BR  
+ATOM      3  CB  LYS     1       1.236   1.137   2.315                       C  
+ATOM      4  HB2 LYS     1       1.565   0.149   1.974                       H  
+ATOM      5  HB3 LYS     1       0.180   0.980   2.561                       H  
+ATOM      6  CG  LYS     1       1.968   1.386   3.656                       C  
+ATOM      7  HG2 LYS     1       1.610   2.351   4.036                       H  
+ATOM      8  HG3 LYS     1       3.030   1.514   3.416                       H  
+ATOM      9  CD  LYS     1       1.880   0.365   4.830                       C  
+ATOM     10  HD2 LYS     1       0.840   0.230   5.147                       H  
+ATOM     11  CE  LYS     1       2.693   0.843   6.062                       C  
+ATOM     12  HD3 LYS     1       2.269  -0.610   4.517                       H  
+ATOM     13  HE2 LYS     1       2.313   1.817   6.390                       H  
+ATOM     14  HE3 LYS     1       3.750   0.958   5.795                       H  
+ATOM     15  NZ  LYS     1       2.551  -0.116   7.178                       N  
+ATOM     16  HZ2 LYS     1       2.924  -1.021   6.922                       H  
+ATOM     17  HZ3 LYS     1       3.028   0.221   8.003                       H  
+CONECT    1    3                                                                
+CONECT    3    1    4    5    6                                                 
+CONECT    4    3                                                                
+CONECT    5    3                                                                
+CONECT    6    3    7    8    9                                                 
+CONECT    7    6                                                                
+CONECT    8    6                                                                
+CONECT    9    6   10   11   12                                                 
+CONECT   10    9                                                                
+CONECT   11    9   13   14   15                                                 
+CONECT   12    9                                                                
+CONECT   13   11                                                                
+CONECT   14   11                                                                
+CONECT   15   11   16   17                                                      
+CONECT   16   15                                                                
+CONECT   17   15                                                                
+END

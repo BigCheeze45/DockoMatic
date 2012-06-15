@@ -1,0 +1,21 @@
+HEADER
+REMARK Spartan ES exported M001
+ATOM      1  N   UNK     1       3.879   4.712   0.883
+ATOM      2  CA  UNK     1       5.232   5.156   1.186
+ATOM      3  C   UNK     1       5.213   5.763   2.598
+ATOM      4  O   UNK     1       4.187   6.240   3.084
+ATOM      5  H   UNK     1       3.138   5.085   1.472
+ATOM      6  HA  UNK     1       5.873   4.266   1.210
+ATOM      7  I   UNK     1       6.018   6.533  -0.239
+ATOM      8  F   UNK     1       6.433   5.750   3.249
+ATOM      9 CL   UNK     1       3.519   3.470  -0.370
+CONECT    1    2    5    9
+CONECT    2    1    3    6    7
+CONECT    3    2    4    8
+CONECT    4    3
+CONECT    5    1
+CONECT    6    2
+CONECT    7    2
+CONECT    8    3
+CONECT    9    1
+END

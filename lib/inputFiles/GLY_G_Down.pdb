@@ -1,0 +1,7 @@
+HEADER
+REMARK Spartan ES exported M001
+ATOM      1  HA2 GLY     1       0.000   0.000  -0.006
+ATOM      2 BR   GLY     1       0.000   0.000   1.408
+CONECT    1    2
+CONECT    2    1
+END
