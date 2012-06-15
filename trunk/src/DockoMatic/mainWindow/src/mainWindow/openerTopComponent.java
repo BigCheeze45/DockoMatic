@@ -922,7 +922,12 @@ private String resChkGpf;
 	    //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockOmatic.pl"));
 	    String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
             cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
-	    cmd += "lib/scripts/resultCheck.pl";
+	    cmd += "dockomatic/lib/scripts/resultCheck.pl";
+            // Make sure resultCheck.pl is executable, since Netbeans
+	    //  changes permissions when creating distribution... neat.
+	    File tmpfile = new File(cmd);
+	    tmpfile.setExecutable(true);
+
 	    String dir = getDirChoose(lastOutDir, "Select Directory to Analyze");
 	    if(odir.length() < 1){ odir = dir; }
 	    if(dir != null){
@@ -968,7 +973,11 @@ private String resChkGpf;
 
 	String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
         cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
-        cmd += "lib/dockOmatic.pl";
+        cmd += "dockomatic/lib/dockOmatic.pl";
+        // Make sure dockOmatic.pl is executable, since Netbeans
+	//  changes permissions when creating distribution... neat.
+	File tmpfile = new File(cmd);
+	tmpfile.setExecutable(true);
 
         lig = (String)table.getValueAt(row, getCol(table, "Ligand"));
         odir = (String)table.getValueAt(row, getCol(table, "Output Directory"));
