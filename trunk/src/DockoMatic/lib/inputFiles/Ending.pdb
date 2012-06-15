@@ -1,0 +1,7 @@
+HEADER                                              -  X-9                      
+REMARK Spartan ES exported M001                                                 
+ATOM    1  HH  UNK     1       7.136   5.883   3.298                       H  
+ATOM    2  O   UNK     1       6.291   5.449   3.176                       O  
+CONECT    1    2                                                                
+CONECT    2    1                                                                
+END
