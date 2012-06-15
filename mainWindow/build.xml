@@ -5,4 +5,9 @@
 <project name="mainWindow" default="netbeans" basedir=".">
     <description>Builds, tests, and runs the project mainWindow.</description>
     <import file="nbproject/build-impl.xml"/>
+    <echo> Copying lib files to build cluster directory...</echo>
+    <mkdir dir="../build/cluster/lib"/>
+    <copy todir="../build/cluster/lib">
+        <fileset dir="../lib/"></fileset>
+    </copy>
 </project>

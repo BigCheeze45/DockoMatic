@@ -290,7 +290,11 @@ private void setValid(boolean val) {
 	private String[] createAlignJobString(String seqName, String oDir, String[] tmpltList, boolean swarm, int max){
 	        String cmd = Job.class.getResource("Job.class").getPath();
                 cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
-		cmd += "lib/scripts/modeller/align2d.py";
+		cmd += "dockomatic/lib/scripts/modeller/align2d.py";
+                // Make sure model-disulfide.py is executable, since Netbeans
+		//  changes permissions when creating distribution... neat.
+	  	File tmpfile = new File(cmd);
+		tmpfile.setExecutable(true);
 
 		String[] alnJobList = new String[tmpltList.length];
 		String tmpFile, subunit;

@@ -218,9 +218,13 @@ private void setValid(boolean val) {
 	        String cmd = Job.class.getResource("Job.class").getPath();
                 cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
 		if(residues[0].equals("")){
-		    cmd += "lib/scripts/modeller/model-single.py";
+		    cmd += "dockomatic/lib/scripts/modeller/model-single.py";
+                    // Make sure model-single.py is executable, since Netbeans
+		    //  changes permissions when creating distribution... neat.
+	  	    File tmpfile = new File(cmd);
+		    tmpfile.setExecutable(true);
 		} else {
-		    cmd += "lib/scripts/modeller/model-disulfide.py";
+		    cmd += "dockomatic/lib/scripts/modeller/model-disulfide.py";
 		    makeDisScript(residues);
 		}
 
@@ -242,8 +246,8 @@ private void setValid(boolean val) {
 	    String str;
 	    String file = Job.class.getResource("Job.class").getPath();
             file = file.substring(file.indexOf(":")+1, file.indexOf("dockomatic/modules/"));
-	    String newFile = file + "lib/scripts/modeller/model-disulfide.py";
-	    file += "lib/scripts/modeller/model-disulfide_template";
+	    String newFile = file + "dockomatic/lib/scripts/modeller/model-disulfide.py";
+	    file += "dockomatic/lib/scripts/modeller/model-disulfide_template";
 	    File nf = new File(newFile);
 
             try{

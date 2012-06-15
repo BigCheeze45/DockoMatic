@@ -115,17 +115,16 @@ public class Job {
     // conjunction with swarm.
     private void setCmd(){
 	   this.cmd = Job.class.getResource("Job.class").getPath();
-           //this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("build/"));
+	   // Use this one for running DockoMatic OUTSIDE Netbeans.
            this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("dockomatic/modules/"));
+	   ////// Use this one for running DockoMatic INSIDE Netbeans.
            ////this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("build/"));
-           //this.cmd = ClassLoader.getSystemClassLoader().getResource("openerTopComponent.class").getPath();
-           //this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("DockoMatic.jar"));
-           //this.cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
-           //this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("DockoMatic.jar"));
-           this.cmd += "lib/dockOmatic.pl";
-           //this.cmd = ClassLoader.getSystemClassLoader().getResource("MainFrame.class").getPath();
-           //this.cmd = this.cmd.substring(0, this.cmd.lastIndexOf(File.separator));
-           //this.cmd += "dockOmatic.pl";
+           this.cmd += "dockomatic/lib/dockOmatic.pl";
+
+           // Make sure dockOmatic.pl is executable, since Netbeans
+	   //  changes permissions when creating distribution... neat.
+	   File tmpfile = new File(cmd);
+	   tmpfile.setExecutable(true);
 
 	   if(usingVina){ cmd += " -v ";}
 	   if(sequence.length() > 0){ cmd += " -m "+ sequence; }
