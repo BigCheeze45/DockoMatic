@@ -180,6 +180,45 @@ private void setValid(boolean val) {
             seq = seq.replace("\n", "");
             seq = seq.replace("*", "");
 
+            seq = seq.replace("~", "");
+            seq = seq.replace("`", "");
+            seq = seq.replace("!", "");
+            seq = seq.replace("@", "");
+            seq = seq.replace("#", "");
+            seq = seq.replace("$", "");
+            seq = seq.replace("%", "");
+            seq = seq.replace("^", "");
+            seq = seq.replace("&", "");
+            seq = seq.replace("*", "");
+            seq = seq.replace("(", "");
+            seq = seq.replace(")", "");
+            seq = seq.replace("_", "");
+            seq = seq.replace("-", "");
+            seq = seq.replace("+", "");
+            seq = seq.replace("=", "");
+            seq = seq.replace("{", "");
+            seq = seq.replace("}", "");
+            seq = seq.replace("[", "");
+            seq = seq.replace("]", "");
+            seq = seq.replace("|", "");
+            seq = seq.replace("\\", "");
+            seq = seq.replace(":", "");
+            seq = seq.replace(";", "");
+            seq = seq.replace("\"", "");
+            seq = seq.replace("<", "");
+            seq = seq.replace(",", "");
+            seq = seq.replace(">", "");
+            seq = seq.replace(".", "");
+            seq = seq.replace("?", "");
+            seq = seq.replace("/", "");
+            seq = seq.replace(" ", "");
+            seq = seq.replace(" ", "");
+            for (int x=0;x<10; x++) { seq = seq.replace((x + ""), ""); }
+
+            seq = seq.toUpperCase();
+            if(!(seq.contains("ARNDCQEGHILKMFPSTWYVBZX"))) //Error
+                ;
+
 	    return seq;
     }
 
