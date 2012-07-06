@@ -59,7 +59,6 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
     }
 
     public void insertUpdate(DocumentEvent e) {
-        System.out.println("insert");
         change();
     }
 
@@ -68,8 +67,6 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
     }
 
     public void changedUpdate(DocumentEvent e) {
-
-        System.out.println("changed");
         change();
     }
 

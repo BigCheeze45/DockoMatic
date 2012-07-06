@@ -4,11 +4,17 @@
  */
 package mainWindow;
 
+import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Document;
+import javax.swing.text.Highlighter;
+import javax.swing.text.JTextComponent;
 
 public final class modWizVisualPanel1 extends JPanel {
     private DefaultTableModel model;
@@ -289,6 +295,60 @@ public final class modWizVisualPanel1 extends JPanel {
 	//return fullAuto;
 	return false;
     }
+
+     // Highlight the occurrences of the word "public"
+
+
+// Creates highlights around all occurrences of pattern in textComp
+    public void highlight(JTextComponent textComp, String pattern) {
+        // First remove all old highlights
+
+        try {
+            Highlighter hilite = textComp.getHighlighter();
+            Document doc = textComp.getDocument();
+            String text = doc.getText(0, doc.getLength());
+            int pos = 0;
+
+            // Search for pattern
+            while ((pos = text.indexOf(pattern, pos)) >= 0) {
+                // Create highlighter using private painter and apply around pattern
+                hilite.addHighlight(pos, ++pos, myHighlightPainter);
+
+            }
+        } catch (BadLocationException e) {
+        }
+    }
+
+// Removes only our private highlights
+    public void removeHighlights(JTextComponent textComp) {
+        Highlighter hilite = textComp.getHighlighter();
+        Highlighter.Highlight[] hilites = hilite.getHighlights();
+
+        for (int i = 0; i < hilites.length; i++) {
+            if (hilites[i].getPainter() instanceof MyHighlightPainter) {
+                hilite.removeHighlight(hilites[i]);
+            }
+        }
+    }
+// An instance of the private subclass of the default highlight painter
+    Highlighter.HighlightPainter myHighlightPainter = new MyHighlightPainter(Color.red);
+
+// A private subclass of the default highlight painter
+    class MyHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
+
+        public MyHighlightPainter(Color color) {
+            super(color);
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 	private void seqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seqButtonActionPerformed

@@ -4,544 +4,551 @@
  */
 package mainWindow;
 
-import java.util.logging.Logger;
-import org.openide.util.NbBundle;
-import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
-import org.netbeans.api.settings.ConvertAsProperties;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+import org.netbeans.api.settings.ConvertAsProperties;
+import org.openide.util.NbBundle;
+import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//mainWindow//opener//EN",
 autostore = false)
-public final class openerTopComponent extends TopComponent{
+public final class openerTopComponent extends TopComponent {
 
-	//Change the JobList to hash?
-//private ArrayList <Job> jobList = new ArrayList<Job>();
-//private HashMap <int, Job> jobList = new HashMap<int, Job>();
-private HashMap jobList = new HashMap();
-private ArrayList <String> ligList = new ArrayList<String>();
-private ArrayList <String> recList = new ArrayList<String>();
-private ArrayList <String> boxList = new ArrayList<String>();
-private ArrayList <String> appList = new ArrayList<String>();
-private Timer jobTimer;
-private boolean tabFlag = false;
+    
 
-private DefaultTableModel model;
-private JTable table;
-private int currJobNumber = 0;
-private int totalJobs = 0;
-//private int leftOff = 0;
-private boolean ligFromModeller = false;
-private boolean recFromModeller = false;
-private boolean useVina = false;
-private boolean ligLstBool = false;
-private boolean recListBool = false;
-private boolean boxListBool = false;
-private boolean appListBool = false;
+    //Change the JobList to hash?
+    //private ArrayList <Job> jobList = new ArrayList<Job>();
+    //private HashMap <int, Job> jobList = new HashMap<int, Job>();
+    private HashMap jobList = new HashMap();
+    private ArrayList<String> ligList = new ArrayList<String>();
+    private ArrayList<String> recList = new ArrayList<String>();
+    private ArrayList<String> boxList = new ArrayList<String>();
+    private ArrayList<String> appList = new ArrayList<String>();
+    private Timer jobTimer;
+    private boolean tabFlag = false;
+    private DefaultTableModel model;
+    private JTable table;
+    private int currJobNumber = 0;
+    private int totalJobs = 0;
+    //private int leftOff = 0;
+    private boolean ligFromModeller = false;
+    private boolean recFromModeller = false;
+    private boolean useVina = false;
+    private boolean ligLstBool = false;
+    private boolean recListBool = false;
+    private boolean boxListBool = false;
+    private boolean appListBool = false;
+    private File outDir;
+    private File ligFile;
+    private File recFile;
+    private File boxFile;
+    private File appFile;
+    private int exceptionNum = 0;
+    private String lastOutDir = ".";
+    private String lastLigDir = ".";
+    private String lastBoxDir = ".";
+    private String lastRecDir = ".";
+    private String lastAppendDir = ".";
+    private String resChkGpf;
+    private static modWizWizardAction act;// = new modWizWizardAction();
+    private static openerTopComponent instance;
+    private installTest tester;
+    /**
+     * path to the icon used by the component and its open action
+     */
+    //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
+    private static final String PREFERRED_ID = "openerTopComponent";
 
-private File outDir;
-private File ligFile;
-private File recFile;
-private File boxFile;
-private File appFile;
-private int exceptionNum = 0;
-private String lastOutDir = ".";
-private String lastLigDir = ".";
-private String lastBoxDir = ".";
-private String lastRecDir = ".";
-private String lastAppendDir = ".";
-private String resChkGpf;
+    public openerTopComponent() {
 
-        private static modWizWizardAction act;// = new modWizWizardAction();
-	private static openerTopComponent instance;
-	/** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-	private static final String PREFERRED_ID = "openerTopComponent";
+        tester = new installTest();
+        initComponents();
+        setName(NbBundle.getMessage(openerTopComponent.class, "CTL_openerTopComponent"));
+        setToolTipText(NbBundle.getMessage(openerTopComponent.class, "HINT_openerTopComponent"));
+        //jPanel7.setVisible(false);
+        //setAppVis(false);
+        act = new modWizWizardAction();
+        //setIcon(ImageUtilities.loadImage(ICON_PATH, true));
 
-	public openerTopComponent() {
-		initComponents();
-		setName(NbBundle.getMessage(openerTopComponent.class, "CTL_openerTopComponent"));
-		setToolTipText(NbBundle.getMessage(openerTopComponent.class, "HINT_openerTopComponent"));
-		//jPanel7.setVisible(false);
-		//setAppVis(false);
-                act = new modWizWizardAction();
-//        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
-	}
 
-	protected static void setAppVis(boolean bool){
-		appCheckBox.setEnabled(bool);
-		appendField.setEnabled(bool);
-		appendButton.setEnabled(bool);
+    }
 
-	}
+    protected static void setAppVis(boolean bool) {
+        appCheckBox.setEnabled(bool);
+        appendField.setEnabled(bool);
+        appendButton.setEnabled(bool);
 
-	/** This method is called from within the constructor to
-	 * initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is
-	 * always regenerated by the Form Editor.
-	 */
-        // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-        private void initComponents() {
+    }
 
-                jScrollPane1 = new javax.swing.JScrollPane();
-                jPanel1 = new javax.swing.JPanel();
-                jPanel3 = new javax.swing.JPanel();
-                outDirButton = new javax.swing.JButton();
-                outDirField = new javax.swing.JTextField();
-                jPanel4 = new javax.swing.JPanel();
-                LigandButton = new javax.swing.JButton();
-                ligandField = new javax.swing.JTextField();
-                ligandCheckBox = new javax.swing.JCheckBox();
-                ligModCheckBox = new javax.swing.JCheckBox();
-                jPanel5 = new javax.swing.JPanel();
-                receptorButton = new javax.swing.JButton();
-                receptorField = new javax.swing.JTextField();
-                receptorCheckBox = new javax.swing.JCheckBox();
-                recModCheckBox = new javax.swing.JCheckBox();
-                jPanel6 = new javax.swing.JPanel();
-                boxCoordButton = new javax.swing.JButton();
-                boxCoordField = new javax.swing.JTextField();
-                boxCoordCheckBox = new javax.swing.JCheckBox();
-                jPanel7 = new javax.swing.JPanel();
-                appendButton = new javax.swing.JButton();
-                appendField = new javax.swing.JTextField();
-                appCheckBox = new javax.swing.JCheckBox();
-                jPanel8 = new javax.swing.JPanel();
-                newTabChBox = new javax.swing.JCheckBox();
-                vinaCheckBox = new javax.swing.JCheckBox();
-                newJobButton = new javax.swing.JButton();
-                jPanel9 = new javax.swing.JPanel();
-                jLabel2 = new javax.swing.JLabel();
-                swmJobNum = new javax.swing.JTextField();
-                jLabel1 = new javax.swing.JLabel();
-                dockCycles = new javax.swing.JTextField();
-                jPanel2 = new javax.swing.JPanel();
-                jLabel3 = new javax.swing.JLabel();
-                jPanel10 = new javax.swing.JPanel();
-                jLabel4 = new javax.swing.JLabel();
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-                jPanel3.setPreferredSize(new java.awt.Dimension(393, 133));
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        outDirButton = new javax.swing.JButton();
+        outDirField = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        LigandButton = new javax.swing.JButton();
+        ligandField = new javax.swing.JTextField();
+        ligandCheckBox = new javax.swing.JCheckBox();
+        ligModCheckBox = new javax.swing.JCheckBox();
+        jPanel5 = new javax.swing.JPanel();
+        receptorButton = new javax.swing.JButton();
+        receptorField = new javax.swing.JTextField();
+        receptorCheckBox = new javax.swing.JCheckBox();
+        recModCheckBox = new javax.swing.JCheckBox();
+        jPanel6 = new javax.swing.JPanel();
+        boxCoordButton = new javax.swing.JButton();
+        boxCoordField = new javax.swing.JTextField();
+        boxCoordCheckBox = new javax.swing.JCheckBox();
+        jPanel7 = new javax.swing.JPanel();
+        appendButton = new javax.swing.JButton();
+        appendField = new javax.swing.JTextField();
+        appCheckBox = new javax.swing.JCheckBox();
+        jPanel8 = new javax.swing.JPanel();
+        newTabChBox = new javax.swing.JCheckBox();
+        vinaCheckBox = new javax.swing.JCheckBox();
+        newJobButton = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        swmJobNum = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        dockCycles = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
-                org.openide.awt.Mnemonics.setLocalizedText(outDirButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.outDirButton.text")); // NOI18N
-                outDirButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                outDirButtonActionPerformed(evt);
-                        }
-                });
+        jPanel3.setPreferredSize(new java.awt.Dimension(393, 133));
 
-                outDirField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.outDirField.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(outDirButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.outDirButton.text")); // NOI18N
+        outDirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                outDirButtonActionPerformed(evt);
+            }
+        });
 
-                javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-                jPanel3.setLayout(jPanel3Layout);
-                jPanel3Layout.setHorizontalGroup(
-                        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(outDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(outDirField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
-                                .addContainerGap())
-                );
-                jPanel3Layout.setVerticalGroup(
-                        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(outDirButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(outDirField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(87, Short.MAX_VALUE))
-                );
+        outDirField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.outDirField.text")); // NOI18N
 
-                org.openide.awt.Mnemonics.setLocalizedText(LigandButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.LigandButton.text")); // NOI18N
-                LigandButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                LigandButtonActionPerformed(evt);
-                        }
-                });
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(outDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(outDirField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(outDirButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(outDirField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
 
-                ligandField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.ligandField.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(LigandButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.LigandButton.text")); // NOI18N
+        LigandButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LigandButtonActionPerformed(evt);
+            }
+        });
 
-                org.openide.awt.Mnemonics.setLocalizedText(ligandCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.ligandCheckBox.text")); // NOI18N
-                ligandCheckBox.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                ligandCheckBoxActionPerformed(evt);
-                        }
-                });
+        ligandField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.ligandField.text")); // NOI18N
 
-                org.openide.awt.Mnemonics.setLocalizedText(ligModCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.ligModCheckBox.text")); // NOI18N
-                ligModCheckBox.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                ligModCheckBoxActionPerformed(evt);
-                        }
-                });
+        org.openide.awt.Mnemonics.setLocalizedText(ligandCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.ligandCheckBox.text")); // NOI18N
+        ligandCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ligandCheckBoxActionPerformed(evt);
+            }
+        });
 
-                javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-                jPanel4.setLayout(jPanel4Layout);
-                jPanel4Layout.setHorizontalGroup(
-                        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(ligandField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(LigandButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(ligModCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(ligandCheckBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
-                                .addContainerGap())
-                );
-                jPanel4Layout.setVerticalGroup(
-                        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(LigandButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ligandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ligModCheckBox)
-                                .addGap(18, 18, 18)
-                                .addComponent(ligandCheckBox)
-                                .addContainerGap(38, Short.MAX_VALUE))
-                );
+        org.openide.awt.Mnemonics.setLocalizedText(ligModCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.ligModCheckBox.text")); // NOI18N
+        ligModCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ligModCheckBoxActionPerformed(evt);
+            }
+        });
 
-                jPanel5.setPreferredSize(new java.awt.Dimension(393, 133));
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ligandField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(LigandButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(ligModCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(ligandCheckBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(LigandButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ligandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ligModCheckBox)
+                .addGap(18, 18, 18)
+                .addComponent(ligandCheckBox)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
 
-                org.openide.awt.Mnemonics.setLocalizedText(receptorButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.receptorButton.text")); // NOI18N
-                receptorButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                receptorButtonActionPerformed(evt);
-                        }
-                });
+        jPanel5.setPreferredSize(new java.awt.Dimension(393, 133));
 
-                receptorField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.receptorField.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(receptorButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.receptorButton.text")); // NOI18N
+        receptorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                receptorButtonActionPerformed(evt);
+            }
+        });
 
-                org.openide.awt.Mnemonics.setLocalizedText(receptorCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.receptorCheckBox.text")); // NOI18N
-                receptorCheckBox.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                receptorCheckBoxActionPerformed(evt);
-                        }
-                });
+        receptorField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.receptorField.text")); // NOI18N
 
-                org.openide.awt.Mnemonics.setLocalizedText(recModCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.recModCheckBox.text")); // NOI18N
-                recModCheckBox.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                recModCheckBoxActionPerformed(evt);
-                        }
-                });
+        org.openide.awt.Mnemonics.setLocalizedText(receptorCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.receptorCheckBox.text")); // NOI18N
+        receptorCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                receptorCheckBoxActionPerformed(evt);
+            }
+        });
 
-                javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-                jPanel5.setLayout(jPanel5Layout);
-                jPanel5Layout.setHorizontalGroup(
-                        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(receptorButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(receptorField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(recModCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                        .addComponent(receptorCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
-                                .addContainerGap())
-                );
-                jPanel5Layout.setVerticalGroup(
-                        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(receptorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(receptorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                                .addComponent(recModCheckBox)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(receptorCheckBox)
-                                .addGap(6, 6, 6))
-                );
+        org.openide.awt.Mnemonics.setLocalizedText(recModCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.recModCheckBox.text")); // NOI18N
+        recModCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recModCheckBoxActionPerformed(evt);
+            }
+        });
 
-                jPanel6.setPreferredSize(new java.awt.Dimension(393, 133));
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(receptorButton, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(receptorField, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(recModCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(receptorCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(receptorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(receptorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(recModCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(receptorCheckBox)
+                .addGap(6, 6, 6))
+        );
 
-                org.openide.awt.Mnemonics.setLocalizedText(boxCoordButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.boxCoordButton.text")); // NOI18N
-                boxCoordButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                boxCoordButtonActionPerformed(evt);
-                        }
-                });
+        jPanel6.setPreferredSize(new java.awt.Dimension(393, 133));
 
-                boxCoordField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.boxCoordField.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(boxCoordButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.boxCoordButton.text")); // NOI18N
+        boxCoordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxCoordButtonActionPerformed(evt);
+            }
+        });
 
-                org.openide.awt.Mnemonics.setLocalizedText(boxCoordCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.boxCoordCheckBox.text")); // NOI18N
-                boxCoordCheckBox.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                boxCoordCheckBoxActionPerformed(evt);
-                        }
-                });
+        boxCoordField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.boxCoordField.text")); // NOI18N
 
-                javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-                jPanel6.setLayout(jPanel6Layout);
-                jPanel6Layout.setHorizontalGroup(
-                        jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(boxCoordButton, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                        .addComponent(boxCoordField, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                        .addComponent(boxCoordCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
-                                .addContainerGap())
-                );
-                jPanel6Layout.setVerticalGroup(
-                        jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(boxCoordButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(boxCoordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(boxCoordCheckBox)
-                                .addContainerGap(47, Short.MAX_VALUE))
-                );
+        org.openide.awt.Mnemonics.setLocalizedText(boxCoordCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.boxCoordCheckBox.text")); // NOI18N
+        boxCoordCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxCoordCheckBoxActionPerformed(evt);
+            }
+        });
 
-                org.openide.awt.Mnemonics.setLocalizedText(appendButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appendButton.text")); // NOI18N
-                appendButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                appendButtonActionPerformed(evt);
-                        }
-                });
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(boxCoordButton, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addComponent(boxCoordField, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addComponent(boxCoordCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(boxCoordButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxCoordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(boxCoordCheckBox)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
 
-                appendField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appendField.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(appendButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appendButton.text")); // NOI18N
+        appendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appendButtonActionPerformed(evt);
+            }
+        });
 
-                org.openide.awt.Mnemonics.setLocalizedText(appCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appCheckBox.text")); // NOI18N
-                appCheckBox.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                appCheckBoxActionPerformed(evt);
-                        }
-                });
+        appendField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appendField.text")); // NOI18N
 
-                javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-                jPanel7.setLayout(jPanel7Layout);
-                jPanel7Layout.setHorizontalGroup(
-                        jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(appendField, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                        .addComponent(appendButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                        .addComponent(appCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
-                                .addContainerGap())
-                );
-                jPanel7Layout.setVerticalGroup(
-                        jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(appendButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(appendField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(appCheckBox)
-                                .addContainerGap(78, Short.MAX_VALUE))
-                );
+        org.openide.awt.Mnemonics.setLocalizedText(appCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.appCheckBox.text")); // NOI18N
+        appCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appCheckBoxActionPerformed(evt);
+            }
+        });
 
-                jPanel8.setPreferredSize(new java.awt.Dimension(393, 133));
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(appendField, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addComponent(appendButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addComponent(appCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(appendButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(appendField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(appCheckBox)
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
 
-                org.openide.awt.Mnemonics.setLocalizedText(newTabChBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newTabChBox.text")); // NOI18N
-                newTabChBox.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                newTabChBoxActionPerformed(evt);
-                        }
-                });
+        jPanel8.setPreferredSize(new java.awt.Dimension(393, 133));
 
-                org.openide.awt.Mnemonics.setLocalizedText(vinaCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.vinaCheckBox.text")); // NOI18N
-                vinaCheckBox.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                vinaCheckBoxActionPerformed(evt);
-                        }
-                });
+        org.openide.awt.Mnemonics.setLocalizedText(newTabChBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newTabChBox.text")); // NOI18N
+        newTabChBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newTabChBoxActionPerformed(evt);
+            }
+        });
 
-                org.openide.awt.Mnemonics.setLocalizedText(newJobButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newJobButton.text")); // NOI18N
-                newJobButton.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                newJobButtonActionPerformed(evt);
-                        }
-                });
+        org.openide.awt.Mnemonics.setLocalizedText(vinaCheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.vinaCheckBox.text")); // NOI18N
+        vinaCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vinaCheckBoxActionPerformed(evt);
+            }
+        });
 
-                javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-                jPanel8.setLayout(jPanel8Layout);
-                jPanel8Layout.setHorizontalGroup(
-                        jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(newJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                        .addComponent(newTabChBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                        .addComponent(vinaCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
-                                .addContainerGap())
-                );
-                jPanel8Layout.setVerticalGroup(
-                        jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addComponent(newJobButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                                .addComponent(newTabChBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(vinaCheckBox)
-                                .addGap(6, 6, 6))
-                );
+        org.openide.awt.Mnemonics.setLocalizedText(newJobButton, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newJobButton.text")); // NOI18N
+        newJobButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newJobButtonActionPerformed(evt);
+            }
+        });
 
-                jPanel9.setPreferredSize(new java.awt.Dimension(393, 133));
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(newJobButton, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addComponent(newTabChBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                    .addComponent(vinaCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(newJobButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(newTabChBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(vinaCheckBox)
+                .addGap(6, 6, 6))
+        );
 
-                org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel2.text")); // NOI18N
+        jPanel9.setPreferredSize(new java.awt.Dimension(393, 133));
 
-                swmJobNum.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swmJobNum.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel2.text")); // NOI18N
 
-                org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel1.text")); // NOI18N
+        swmJobNum.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swmJobNum.text")); // NOI18N
 
-                dockCycles.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.dockCycles.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel1.text")); // NOI18N
 
-                javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-                jPanel9.setLayout(jPanel9Layout);
-                jPanel9Layout.setHorizontalGroup(
-                        jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel9Layout.createSequentialGroup()
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
-                                                .addGap(8, 8, 8))
-                                        .addGroup(jPanel9Layout.createSequentialGroup()
-                                                .addComponent(swmJobNum, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                                .addContainerGap())
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(dockCycles, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
-                                                .addContainerGap())))
-                );
-                jPanel9Layout.setVerticalGroup(
-                        jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(swmJobNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel1)
-                                .addGap(9, 9, 9)
-                                .addComponent(dockCycles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                );
+        dockCycles.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.dockCycles.text")); // NOI18N
 
-                jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainWindow/DNA.png"))); // NOI18N
-                org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel3.text")); // NOI18N
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                        .addGap(8, 8, 8))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(swmJobNum, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dockCycles, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE))
+                        .addContainerGap())))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(swmJobNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(9, 9, 9)
+                .addComponent(dockCycles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
-                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-                jPanel2.setLayout(jPanel2Layout);
-                jPanel2Layout.setHorizontalGroup(
-                        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, Short.MAX_VALUE)
-                                .addContainerGap())
-                );
-                jPanel2Layout.setVerticalGroup(
-                        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 536, Short.MAX_VALUE))
-                );
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainWindow/DNA.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel3.text")); // NOI18N
 
-                jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainWindow/BSUlogo.gif"))); // NOI18N
-                org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel4.text")); // NOI18N
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 536, Short.MAX_VALUE))
+        );
 
-                javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-                jPanel10.setLayout(jPanel10Layout);
-                jPanel10Layout.setHorizontalGroup(
-                        jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                                .addContainerGap())
-                );
-                jPanel10Layout.setVerticalGroup(
-                        jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
-                );
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainWindow/BSUlogo.gif"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel4.text")); // NOI18N
 
-                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-                jPanel1.setLayout(jPanel1Layout);
-                jPanel1Layout.setHorizontalGroup(
-                        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
-                                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(17, 17, 17)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
-                );
-                jPanel1Layout.setVerticalGroup(
-                        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap())
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(13, 13, 13))))
-                );
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+        );
 
-                jScrollPane1.setViewportView(jPanel1);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13))))
+        );
 
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-                this.setLayout(layout);
-                layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1)
-                                .addContainerGap())
-                );
-                layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-                                .addContainerGap())
-                );
-        }// </editor-fold>//GEN-END:initComponents
+        jScrollPane1.setViewportView(jPanel1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+    }// </editor-fold>//GEN-END:initComponents
 
     // Prompt window to select a directory from the filesystem.
-    private String getDirChoose(String lastDir, String title){
+    private String getDirChoose(String lastDir, String title) {
         String dir = null;
         javax.swing.JFileChooser fc = new javax.swing.JFileChooser(lastDir);
-	fc.setDialogTitle(title);
+        fc.setDialogTitle(title);
         fc.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         int retval = fc.showOpenDialog(this);
         if (retval == fc.APPROVE_OPTION) {
-           dir = fc.getSelectedFile().getPath();
+            dir = fc.getSelectedFile().getPath();
         }
 
         return dir;
@@ -549,13 +556,35 @@ private String resChkGpf;
     }
 
     // Prompt window to select a file from the filesystem.
-    private String getFileChoose(String lastDir, String title){
+    private String getPDBFileChoose(String lastDir, String title) {
         String file = null;
         javax.swing.JFileChooser fc = new javax.swing.JFileChooser(lastDir);
-	fc.setDialogTitle(title);
+        fc.setDialogTitle(title);
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.addChoosableFileFilter(new PDBFilter());
+        fc.setAcceptAllFileFilterUsed(true);
+        fc.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY);
         int retval = fc.showOpenDialog(this);
         if (retval == fc.APPROVE_OPTION) {
-           file = fc.getSelectedFile().getPath();
+            file = fc.getSelectedFile().getPath();
+        }
+
+        return file;
+
+    }
+
+    // Prompt window to select a file from the filesystem.
+    private String getGPFFileChoose(String lastDir, String title) {
+        String file = null;
+        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(lastDir);
+        fc.setDialogTitle(title);
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.addChoosableFileFilter(new GPFFilter());
+        fc.setAcceptAllFileFilterUsed(true);
+        fc.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY);
+        int retval = fc.showOpenDialog(this);
+        if (retval == fc.APPROVE_OPTION) {
+            file = fc.getSelectedFile().getPath();
         }
 
         return file;
@@ -564,139 +593,139 @@ private String resChkGpf;
 
     private void outDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outDirButtonActionPerformed
         String dir = getDirChoose(lastOutDir, "Select Output Directory");
-        if(dir != null){
+        if (dir != null) {
             lastOutDir = dir;
             outDirField.setText(lastOutDir);
         }
     }//GEN-LAST:event_outDirButtonActionPerformed
 
     private void LigandButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LigandButtonActionPerformed
-	//Create Ligand with Modeller
-	if(ligFromModeller){
-	    String ret = act.doWizard("ligand");
-	    ligandField.setText(ret);
-	    return;
-	}
-        String file = getFileChoose(lastLigDir, "Select Ligand File");
-        if(file != null){
+        //Create Ligand with Modeller
+        if (ligFromModeller) {
+            String ret = act.doWizard("ligand");
+            ligandField.setText(ret);
+            return;
+        }
+        String file = getPDBFileChoose(lastLigDir, "Select Ligand File");
+        if (file != null) {
             lastLigDir = file.substring(0, file.lastIndexOf(File.separator));
             ligandField.setText(file);
         }
     }//GEN-LAST:event_LigandButtonActionPerformed
 
     private void receptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receptorButtonActionPerformed
-	//Create Receptor with Modeller
-	if(recFromModeller){
-	    String ret = act.doWizard("receptor");
-	    receptorField.setText(ret);
-	    return;
-	}
-        String file = getFileChoose(lastRecDir, "Select Receptor File");
-        if(file != null){
+        //Create Receptor with Modeller
+        if (recFromModeller) {
+            String ret = act.doWizard("receptor");
+            receptorField.setText(ret);
+            return;
+        }
+        String file = getPDBFileChoose(lastRecDir, "Select Receptor File");
+        if (file != null) {
             lastRecDir = file.substring(0, file.lastIndexOf(File.separator));
             receptorField.setText(file);
         }
     }//GEN-LAST:event_receptorButtonActionPerformed
 
     private void boxCoordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCoordButtonActionPerformed
-        String file = getFileChoose(lastBoxDir, "Select Box Coordinate File");
-        if(file != null){
+        String file = getGPFFileChoose(lastBoxDir, "Select Box Coordinate File");
+        if (file != null) {
             lastBoxDir = file.substring(0, file.lastIndexOf(File.separator));
             boxCoordField.setText(file);
         }
     }//GEN-LAST:event_boxCoordButtonActionPerformed
 
     private void appendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appendButtonActionPerformed
-        String file = getFileChoose(lastAppendDir, "Select Secondary Ligand File");
-        if(file != null){
+        String file = getPDBFileChoose(lastAppendDir, "Select Secondary Ligand File");
+        if (file != null) {
             lastAppendDir = file.substring(0, file.lastIndexOf(File.separator));
             appendField.setText(file);
         }
     }//GEN-LAST:event_appendButtonActionPerformed
 
     private void ligandCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ligandCheckBoxActionPerformed
-            if(ligandCheckBox.isSelected()){
-                    ligLstBool= true;
-            }else{
-                    ligLstBool = false;
-            }
+        if (ligandCheckBox.isSelected()) {
+            ligLstBool = true;
+        } else {
+            ligLstBool = false;
+        }
     }//GEN-LAST:event_ligandCheckBoxActionPerformed
 
     private void receptorCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receptorCheckBoxActionPerformed
-            if(receptorCheckBox.isSelected()){
-                    recListBool= true;
-            }else{
-                    recListBool = false;
-            }
+        if (receptorCheckBox.isSelected()) {
+            recListBool = true;
+        } else {
+            recListBool = false;
+        }
     }//GEN-LAST:event_receptorCheckBoxActionPerformed
 
     private void boxCoordCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCoordCheckBoxActionPerformed
-            if(boxCoordCheckBox.isSelected()){
-                    boxListBool= true;
-            }else{
-                    boxListBool = false;
-            }
+        if (boxCoordCheckBox.isSelected()) {
+            boxListBool = true;
+        } else {
+            boxListBool = false;
+        }
     }//GEN-LAST:event_boxCoordCheckBoxActionPerformed
 
     private void appCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appCheckBoxActionPerformed
-            if(appCheckBox.isSelected()){
-                    appListBool= true;
-            }else{
-                    appListBool = false;
-            }
+        if (appCheckBox.isSelected()) {
+            appListBool = true;
+        } else {
+            appListBool = false;
+        }
     }//GEN-LAST:event_appCheckBoxActionPerformed
 
     private void newJobButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newJobButtonActionPerformed
-	    SwingWorker jobMakeWorker = new SwingWorker<String, Void>(){
+        SwingWorker jobMakeWorker = new SwingWorker<String, Void>() {
 
-                @Override
-		public String doInBackground(){
+            @Override
+            public String doInBackground() {
 
-                    if(outDirField.getText().trim().length() < 1){
-                        messageWindowTopComponent.messageArea.append("No Output Directory Supplied\nUsing Current Directory '.'\n");
-                        outDirField.setText(".");
-                    }
-                    String tmp = ligandField.getText();
-                    if(tmp.length() > 0){
-                        outDir = new File(outDirField.getText().trim());
-                        alignJobNums();
+                if (outDirField.getText().trim().length() < 1) {
+                    messageWindowTopComponent.messageArea.append("No Output Directory Supplied\nUsing Current Directory '.'\n");
+                    outDirField.setText(".");
+                }
+                String tmp = ligandField.getText();
+                if (tmp.length() > 0) {
+                    outDir = new File(outDirField.getText().trim());
+                    alignJobNums();
 
-                        makeJobs();
-                        messageWindowTopComponent.messageArea.append("Highlight and Right-Click Jobs in Output Grid for options.\n");
-                    }else{
-                        messageWindowTopComponent.messageArea.append("Ligand needs to be supplied!\n");
-                    }
-		    return "Done";
-		}
-	    };
+                    makeJobs();
+                    messageWindowTopComponent.messageArea.append("Highlight and Right-Click Jobs in Output Grid for options.\n");
+                } else {
+                    messageWindowTopComponent.messageArea.append("Ligand needs to be supplied!\n");
+                }
+                return "Done";
+            }
+        };
 
-	    jobMakeWorker.execute();
+        jobMakeWorker.execute();
     }//GEN-LAST:event_newJobButtonActionPerformed
 
-    protected static void startSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
-	    instance.StartSelectedJobActionPerformed(e);
+    protected static void startSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
+        instance.StartSelectedJobActionPerformed(e);
 
     }
-    protected static void removeSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
-	    instance.removeSelectedJobActionPerformed(e);
+
+    protected static void removeSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
+        instance.removeSelectedJobActionPerformed(e);
     }
 
-    protected static void pymolView(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
-	    instance.pymolActionPerformed(evtOrig);
+    protected static void pymolView(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
+        instance.pymolActionPerformed(evtOrig);
     }
 
     //protected static void displayMore(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
-	    //instance.displayActionPerformed(evtOrig);
+    //instance.displayActionPerformed(evtOrig);
     //}
-
     protected static void checkRes(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
-	    instance.getResCheckInfo();
-	    instance.avgActionPerformed(evtOrig);
+        instance.getResCheckInfo();
+        instance.avgActionPerformed(evtOrig);
     }
 
-    private void getResCheckInfo(){
-        String file = getFileChoose(lastBoxDir, "Select GPF File for Result Checking");
-        if(file != null){
+    private void getResCheckInfo() {
+        String file = getGPFFileChoose(lastBoxDir, "Select GPF File for Result Checking");
+        if (file != null) {
             lastBoxDir = file.substring(0, file.lastIndexOf(File.separator));
             resChkGpf = file;
         }
@@ -705,462 +734,497 @@ private String resChkGpf;
 
     // Checks the status of jobs and sets them to Done if they are.
     private void checkStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkStatusButtonActionPerformed
-	int max = outputGridTopComponent.outGridTPane.getTabCount();
-	int jobNum;
-	int row=0;
+        int max = outputGridTopComponent.outGridTPane.getTabCount();
+        int jobNum;
+        int row = 0;
 
-	for(int j=0; j<max;j++){
-	   table = outputGridTopComponent.getTabTable(j);
-	   model = (DefaultTableModel)table.getModel();
-           try{
-            for(row = 0; row < model.getRowCount(); row++){
-              //if((Integer)jTable1.getValueAt(row, 0) > 1) continue;      // This should allow us to skip to next directory so we avoid redundant checks.
+        for (int j = 0; j < max; j++) {
+            table = outputGridTopComponent.getTabTable(j);
+            model = (DefaultTableModel) table.getModel();
+            try {
+                for (row = 0; row < model.getRowCount(); row++) {
+                    //if((Integer)jTable1.getValueAt(row, 0) > 1) continue;      // This should allow us to skip to next directory so we avoid redundant checks.
 
-              String rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
-              String dir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
-              String lig = (String) table.getValueAt(row, getCol(table, "Ligand"));
+                    String rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
+                    String dir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
+                    String lig = (String) table.getValueAt(row, getCol(table, "Ligand"));
 
-              // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
-              //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
-              // This line only IF running obconformer, or there will never be Orig_ file.
-              File done = new File(dir+File.separator+"Orig_"+(String)table.getValueAt(row, getCol(table, "Ligand"))+".pdb");
-              if(rec.length() > 0){
-		  if(lig.endsWith(".pdb"))
-			  lig = lig.substring(lig.lastIndexOf("/"), lig.indexOf(".pdb"));
-	          done = new File(dir+File.separator+lig+"_Reference");
-	      }
-
-                    if(done.exists()){
-                            table.setValueAt("Done", row, getCol(table, "Status"));
-                            if(((String)table.getValueAt(row, getCol(table, "Secondary"))).length() > 0){
-                                messageWindowTopComponent.messageArea.append("Starting Secondary Ligand Job\n");
-                                jobNum = (Integer)table.getValueAt(row, getCol(table, "Job #"));
-                                doSecondaryJob(jobNum);
-		            }
+                    // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
+                    //if(files[i].equalsIgnoreCase((String)jTable1.getValueAt(row, 1)+".pdb"))
+                    // This line only IF running obconformer, or there will never be Orig_ file.
+                    File done = new File(dir + File.separator + "Orig_" + (String) table.getValueAt(row, getCol(table, "Ligand")) + ".pdb");
+                    if (rec.length() > 0) {
+                        if (lig.endsWith(".pdb")) {
+                            lig = lig.substring(lig.lastIndexOf("/"), lig.indexOf(".pdb"));
+                        }
+                        done = new File(dir + File.separator + lig + "_Reference");
                     }
-            }
 
-            }catch (java.lang.ArrayIndexOutOfBoundsException e){
-                    messageWindowTopComponent.messageArea.append("INVALID ROW SELECTED FOR CHECKING STATUS row ["+row+"]\n");
+                    if (done.exists()) {
+                        table.setValueAt("Done", row, getCol(table, "Status"));
+                        if (((String) table.getValueAt(row, getCol(table, "Secondary"))).length() > 0) {
+                            messageWindowTopComponent.messageArea.append("Starting Secondary Ligand Job\n");
+                            jobNum = (Integer) table.getValueAt(row, getCol(table, "Job #"));
+                            doSecondaryJob(jobNum);
+                        }
+                    }
+                }
+
+            } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+                messageWindowTopComponent.messageArea.append("INVALID ROW SELECTED FOR CHECKING STATUS row [" + row + "]\n");
             }
         }
     }//GEN-LAST:event_checkStatusButtonActionPerformed
 
     private void newTabChBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newTabChBoxActionPerformed
-       tabFlag = newTabChBox.isSelected();
+        tabFlag = newTabChBox.isSelected();
     }//GEN-LAST:event_newTabChBoxActionPerformed
 
     private void ligModCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ligModCheckBoxActionPerformed
-            if(ligModCheckBox.isSelected()){
-                    ligFromModeller= true;
-            }else{
-                    ligFromModeller = false;
-            }
+        if (ligModCheckBox.isSelected()) {
+            ligFromModeller = true;
+        } else {
+            ligFromModeller = false;
+        }
 
     }//GEN-LAST:event_ligModCheckBoxActionPerformed
 
     private void recModCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recModCheckBoxActionPerformed
-            if(recModCheckBox.isSelected()){
-                    recFromModeller= true;
-            }else{
-                    recFromModeller = false;
-            }
+        if (recModCheckBox.isSelected()) {
+            recFromModeller = true;
+        } else {
+            recFromModeller = false;
+        }
     }//GEN-LAST:event_recModCheckBoxActionPerformed
 
     private void vinaCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vinaCheckBoxActionPerformed
-            if(vinaCheckBox.isSelected()){
-                    useVina= true;
-            }else{
-                    useVina = false;
-            }
+        if (vinaCheckBox.isSelected()) {
+            useVina = true;
+        } else {
+            useVina = false;
+        }
 
     }//GEN-LAST:event_vinaCheckBoxActionPerformed
 
     //private void displayActionPerformed(java.awt.event.MouseEvent evt) {
-        //redisplay();
+    //redisplay();
     //}
-
     private void pymolActionPerformed(java.awt.event.MouseEvent evt) {
-	    table = outputGridTopComponent.getSelectedTable();
-	    model = (DefaultTableModel)table.getModel();
-	    String file;
-	    String dir;
-	    javax.swing.JFileChooser checker;
+        table = outputGridTopComponent.getSelectedTable();
+        model = (DefaultTableModel) table.getModel();
+        String file;
+        String dir;
+        javax.swing.JFileChooser checker;
 
-	    try{
-		    dir = (String) table.getValueAt(table.getSelectedRow(), getCol(table, "Output Directory"));
-		    checker = new javax.swing.JFileChooser(dir);
-	            checker.setDialogTitle("Select PDB File to View");
-	    }catch (java.lang.ArrayIndexOutOfBoundsException e){
-		    checker = new javax.swing.JFileChooser();
-	            checker.setDialogTitle("Select PDB File to View");
-	    }
+        try {
+            dir = (String) table.getValueAt(table.getSelectedRow(), getCol(table, "Output Directory"));
+            checker = new javax.swing.JFileChooser(dir);
+            checker.setDialogTitle("Select PDB File to View");
+        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+            checker = new javax.swing.JFileChooser();
+            checker.setDialogTitle("Select PDB File to View");
+        }
 
-	    try{
+        try {
 
-		    int retval = checker.showOpenDialog(openerTopComponent.this);
-		    if (retval == checker.APPROVE_OPTION) {
-			    file = checker.getSelectedFile().getPath();
-			    Process k = Runtime.getRuntime().exec("pymol "+file);
-		    }
+            int retval = checker.showOpenDialog(openerTopComponent.this);
+            if (retval == checker.APPROVE_OPTION) {
+                file = checker.getSelectedFile().getPath();
+                Process k = Runtime.getRuntime().exec("pymol " + file);
+            }
 
-	    }catch (java.io.IOException e){
-		    messageWindowTopComponent.messageArea.append(e + "\n");
-	    }
-}
+        } catch (java.io.IOException e) {
+            messageWindowTopComponent.messageArea.append(e + "\n");
+        }
+    }
 
     private void removeSelectedJobActionPerformed(java.awt.event.MouseEvent evt) {
-	    table = outputGridTopComponent.getSelectedTable();
-	    model = (DefaultTableModel)table.getModel();
-	    int[] rowNums = table.getSelectedRows();
-	    int rowCount = table.getSelectedRowCount();
-	    int jobNum;
+        table = outputGridTopComponent.getSelectedTable();
+        model = (DefaultTableModel) table.getModel();
+        int[] rowNums = table.getSelectedRows();
+        int rowCount = table.getSelectedRowCount();
+        int jobNum;
 
-	    if(rowCount == 0){
-		    messageWindowTopComponent.messageArea.append("NO ROW SELECTED\n");
-		    return;
-	    }
-	    messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Removal\n");
-	    for(int rowNum=rowCount-1; rowNum >= 0; rowNum--){
-		    jobNum = (Integer)table.getValueAt(rowNums[rowNum], getCol(table, "Job #"));
-		    messageWindowTopComponent.messageArea.append("Killing Job "+jobNum+"\n");
-		    ((Job)jobList.get(jobNum)).killJob();
-		    messageWindowTopComponent.messageArea.append("Removing Job "+jobNum+"\n");
-		    model.removeRow(rowNums[rowNum]);
-	    }
-}
+        if (rowCount == 0) {
+            messageWindowTopComponent.messageArea.append("NO ROW SELECTED\n");
+            return;
+        }
+        messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Removal\n");
+        for (int rowNum = rowCount - 1; rowNum >= 0; rowNum--) {
+            jobNum = (Integer) table.getValueAt(rowNums[rowNum], getCol(table, "Job #"));
+            messageWindowTopComponent.messageArea.append("Killing Job " + jobNum + "\n");
+            ((Job) jobList.get(jobNum)).killJob();
+            messageWindowTopComponent.messageArea.append("Removing Job " + jobNum + "\n");
+            model.removeRow(rowNums[rowNum]);
+        }
+    }
 
-	private int getCol(JTable tbl, String column){
-	    int i=0;
-	    int colCount = tbl.getColumnCount();
-	    String name = new String("");
-	    for(i=0; i<colCount; i++){
-		    name = tbl.getColumnName(i);
-		    if(column.equals(name)) return i;
-	    }
-            return i;
-	}
-
+    private int getCol(JTable tbl, String column) {
+        int i = 0;
+        int colCount = tbl.getColumnCount();
+        String name = new String("");
+        for (i = 0; i < colCount; i++) {
+            name = tbl.getColumnName(i);
+            if (column.equals(name)) {
+                return i;
+            }
+        }
+        return i;
+    }
 
     private void StartSelectedJobActionPerformed(java.awt.event.MouseEvent evt) {
-	SwingWorker jobStartWorker = new SwingWorker<String, Void>(){
-          @Override
-	  public String doInBackground(){
+        SwingWorker jobStartWorker = new SwingWorker<String, Void>() {
 
-	    table = outputGridTopComponent.getSelectedTable();
-	    model = (DefaultTableModel)table.getModel();
+            @Override
+            public String doInBackground() {
+                table = outputGridTopComponent.getSelectedTable();
+                model = (DefaultTableModel) table.getModel();
 
-	    int[] rowNums = table.getSelectedRows();
-	    int rowCount = table.getSelectedRowCount();
-	    int jobNum;
-	    if(rowCount == 0){
-		    messageWindowTopComponent.messageArea.append("NO ROWS SELECTED\n");
-		    return "Done";
-	    }
-	    messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
+                int[] rowNums = table.getSelectedRows();
+                int rowCount = table.getSelectedRowCount();
+                int jobNum;
+                if (rowCount == 0) {
+                    messageWindowTopComponent.messageArea.append("NO ROWS SELECTED\n");
+                    return "Done";
+                }
+                messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
 
-            // *** Bulk submit ***
+                // *** Bulk submit ***
 
-	   //cmd = Job.class.getResource("Job.class").getPath();
-           //cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("dockomatic/modules/"));
-           //cmd += "lib/dockOmatic.pl";
-            try{
-                String base = outDir.getCanonicalPath();
-                String swarmFile = base + "/swarmCmd.txt";
-              //run swarm Jobs.
-                BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
-                for(int i = 0; i< rowNums.length; i++){
-		    jobNum = (Integer)table.getValueAt(rowNums[i], getCol(table, "Job #"));
-		    updateJob(rowNums[i]);
-                    swarmOut.write(((Job)jobList.get(jobNum)).getCmd()+"\n");
-		    // Either use the Job class to make commands, or use this one.
-                    //swarmOut.write(getCmd(jobNum)+"\n");
-		    if(table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")){
-			    ((Job)jobList.get(jobNum)).killJob();
-			    messageWindowTopComponent.messageArea.append("Restarting Job "+jobNum+"\n");
+                //cmd = Job.class.getResource("Job.class").getPath();
+                //cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("dockomatic/modules/"));
+                //cmd += "lib/dockOmatic.pl";
+                try {
+                    String base = outDir.getCanonicalPath();
+                    String swarmFile = base + "/swarmCmd.txt";
+                    //run swarm Jobs.
+                    BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
+                    for (int i = 0; i < rowNums.length; i++) {
+                        jobNum = (Integer) table.getValueAt(rowNums[i], getCol(table, "Job #"));
+                        updateJob(rowNums[i]);
+                        swarmOut.write(((Job) jobList.get(jobNum)).getCmd() + "\n");
+                        // Either use the Job class to make commands, or use this one.
+                        //swarmOut.write(getCmd(jobNum)+"\n");
+                        if (table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")) {
+                            ((Job) jobList.get(jobNum)).killJob();
+                            messageWindowTopComponent.messageArea.append("Restarting Job " + jobNum + "\n");
 //		        File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol(table, "Output Directory")));
 //		        //dir.delete();
 //		        //dir.mkdir();
-		    }else{
-		        messageWindowTopComponent.messageArea.append("  Starting Job "+jobNum+"\n");
-		        table.setValueAt("Started", rowNums[i], getCol(table, "Status"));
-		    }
+                        } else {
+                            messageWindowTopComponent.messageArea.append("  Starting Job " + jobNum + "\n");
+                            table.setValueAt("Started", rowNums[i], getCol(table, "Status"));
+                        }
+                    }
+                    swarmOut.close();
+
+                    Process procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n " + swmJobNum.getText() + " -l walltime=128:00:00", null, outDir);
+                    //System.out.println("USING DOCK CMD: swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00");
+
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
-                swarmOut.close();
 
-                Process procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00", null, outDir);
-		//System.out.println("USING DOCK CMD: swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00");
+                return "Done";
+            }
+        };
 
-            }catch(Exception e){System.out.println(e);}
-
-          return "Done";
-	  }
-	};
-
-	jobStartWorker.execute();
- }
+        jobStartWorker.execute();
+    }
 
     private void avgActionPerformed(java.awt.event.MouseEvent evt) {
-	    Process proc;
-	    table = outputGridTopComponent.getSelectedTable();
-            int row = table.rowAtPoint(evt.getPoint());
-	    //table.setRowSelectionInterval(row, row);
-	    String out = (String)table.getValueAt(row, getCol(table, "Output Directory"));
-	    outDirField.setText(out);
+        Process proc;
+        table = outputGridTopComponent.getSelectedTable();
+        int row = table.rowAtPoint(evt.getPoint());
+        //table.setRowSelectionInterval(row, row);
+        String out = (String) table.getValueAt(row, getCol(table, "Output Directory"));
+        outDirField.setText(out);
 
-	    //if(boxCoordField.getText().trim().length() < 1){
-	    if(resChkGpf.length() < 1){
-		    messageWindowTopComponent.messageArea.append("No GPF Supplied... Can't check results.\n");
-		    return;
-	    }
-	    //String box = boxCoordField.getText().trim();
-	    String box = resChkGpf;
-	    String odir = outDirField.getText().trim();
+        //if(boxCoordField.getText().trim().length() < 1){
+        if (resChkGpf.length() < 1) {
+            messageWindowTopComponent.messageArea.append("No GPF Supplied... Can't check results.\n");
+            return;
+        }
+        //String box = boxCoordField.getText().trim();
+        String box = resChkGpf;
+        String odir = outDirField.getText().trim();
 
-	    //String cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
-	    //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("DockoMatic.jar"));
-	    //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockOmatic.pl"));
-	    String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
-            cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
-	    cmd += "dockomatic/lib/scripts/resultCheck.pl";
-            // Make sure resultCheck.pl is executable, since Netbeans
-	    //  changes permissions when creating distribution... neat.
-	    File tmpfile = new File(cmd);
-	    tmpfile.setExecutable(true);
+        //String cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
+        //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("DockoMatic.jar"));
+        //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockOmatic.pl"));
+        String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
+        cmd = cmd.substring(cmd.indexOf(":") + 1, cmd.indexOf("modules/"));
+        cmd += "lib/scripts/resultCheck.pl";
+        // Make sure resultCheck.pl is executable, since Netbeans
+        //  changes permissions when creating distribution... neat.
+        File tmpfile = new File(cmd);
+        tmpfile.setExecutable(true);
 
-	    String dir = getDirChoose(lastOutDir, "Select Directory to Analyze");
-	    if(odir.length() < 1){ odir = dir; }
-	    if(dir != null){
-		    cmd += " -d "+dir+" -b "+box+" -o "+odir;
-		    messageWindowTopComponent.messageArea.append("Res Check CMD ["+cmd+"]\n");
-		    messageWindowTopComponent.messageArea.append("Results written to ["+odir+"/CheckResultsLog_*"+"]\n");
-		    try{
+        String dir = getDirChoose(lastOutDir, "Select Directory to Analyze");
+        if (odir.length() < 1) {
+            odir = dir;
+        }
+        if (dir != null) {
+            cmd += " -d " + dir + " -b " + box + " -o " + odir;
+            messageWindowTopComponent.messageArea.append("Res Check CMD [" + cmd + "]\n");
+            messageWindowTopComponent.messageArea.append("Results written to [" + odir + "/CheckResultsLog_*" + "]\n");
+            try {
 
-			    proc = Runtime.getRuntime().exec(cmd, null);
-		    }catch(java.io.IOException e){
-			    System.out.println("Caught eX "+e);
-		    }
-	    }
-}
-
-    /*
-     * adjusts job numbers to reflect any subdirectories that may already exist in the
-     * output folder.
-    */
-    private void alignJobNums(){
-            String fContents[] = outDir.list();
-            int subNum = 0;
-            int tmpNum;
-
-            java.util.Arrays.sort(fContents);
-
-            for(String x: fContents){
-                    if(x.contains("dock_")){
-                          tmpNum = Integer.parseInt(x.substring(x.indexOf("_")+1));
-                          if(tmpNum > subNum){
-                                  subNum = tmpNum;
-                          }
-                    }
+                proc = Runtime.getRuntime().exec(cmd, null);
+            } catch (java.io.IOException e) {
+                System.out.println("Caught eX " + e);
             }
-
-	    //if(subNum > 0)  ++subNum;
-            currJobNumber = subNum+1;
+        }
     }
 
-    private String getCmd(int row){
-        String seq, tmplt, lig, odir, rec, bc, appd, cyc;
-	boolean swm;
+    /*
+     * adjusts job numbers to reflect any subdirectories that may already exist
+     * in the output folder.
+     */
+    private void alignJobNums() {
+        String fContents[] = outDir.list();
+        int subNum = 0;
+        int tmpNum;
 
-	String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
-        cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockomatic/modules/"));
+        java.util.Arrays.sort(fContents);
+
+        for (String x : fContents) {
+            if (x.contains("dock_")) {
+                tmpNum = Integer.parseInt(x.substring(x.indexOf("_") + 1));
+                if (tmpNum > subNum) {
+                    subNum = tmpNum;
+                }
+            }
+        }
+
+        //if(subNum > 0)  ++subNum;
+        currJobNumber = subNum + 1;
+    }
+
+    private String getCmd(int row) {
+        String seq, tmplt, lig, odir, rec, bc, appd, cyc;
+        boolean swm;
+
+        String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
+        cmd = cmd.substring(cmd.indexOf(":") + 1, cmd.indexOf("dockomatic/modules/"));
         cmd += "dockomatic/lib/dockOmatic.pl";
         // Make sure dockOmatic.pl is executable, since Netbeans
-	//  changes permissions when creating distribution... neat.
-	File tmpfile = new File(cmd);
-	tmpfile.setExecutable(true);
+        //  changes permissions when creating distribution... neat.
+        File tmpfile = new File(cmd);
+        tmpfile.setExecutable(true);
 
-        lig = (String)table.getValueAt(row, getCol(table, "Ligand"));
-        odir = (String)table.getValueAt(row, getCol(table, "Output Directory"));
-        rec = (String)table.getValueAt(row, getCol(table, "Receptor"));
-        bc = (String)table.getValueAt(row, getCol(table, "Box Coordinate"));
+        lig = (String) table.getValueAt(row, getCol(table, "Ligand"));
+        odir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
+        rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
+        bc = (String) table.getValueAt(row, getCol(table, "Box Coordinate"));
         swm = true;
-        seq = (String)table.getValueAt(row, getCol(table, "Sequence"));
-        tmplt = (String)table.getValueAt(row, getCol(table, "Template"));
-        cyc = (String)table.getValueAt(row, getCol(table, "AutoDock Cycles"));
-        appd = (String)table.getValueAt(row, getCol(table, "Secondary"));
+        seq = (String) table.getValueAt(row, getCol(table, "Sequence"));
+        tmplt = (String) table.getValueAt(row, getCol(table, "Template"));
+        cyc = (String) table.getValueAt(row, getCol(table, "AutoDock Cycles"));
+        appd = (String) table.getValueAt(row, getCol(table, "Secondary"));
 
 
-	if(useVina){ cmd += " -v "; }
-	if(seq.length() > 0){ cmd += " -m "+ seq; }
-        if(tmplt.length() > 0){ cmd += " -t "+ tmplt; }
+        if (useVina) {
+            cmd += " -v ";
+        }
+        if (seq.length() > 0) {
+            cmd += " -m " + seq;
+        }
+        if (tmplt.length() > 0) {
+            cmd += " -t " + tmplt;
+        }
 
-        if(lig.length() > 0){ cmd += " -p "+ lig; }
-        if(odir.length() > 0){ cmd += " -o "+ odir; }
-        if(rec.length() > 0){ cmd += " -r "+ rec; }
-        if(bc.length() > 0){ cmd += " -b "+ bc; }
-        if(appd.length() > 0){ cmd += " -a "+ appd; }
-        if(cyc.length() > 0){ cmd += " -g "+ cyc; }
+        if (lig.length() > 0) {
+            cmd += " -p " + lig;
+        }
+        if (odir.length() > 0) {
+            cmd += " -o " + odir;
+        }
+        if (rec.length() > 0) {
+            cmd += " -r " + rec;
+        }
+        if (bc.length() > 0) {
+            cmd += " -b " + bc;
+        }
+        if (appd.length() > 0) {
+            cmd += " -a " + appd;
+        }
+        if (cyc.length() > 0) {
+            cmd += " -g " + cyc;
+        }
 
-	return cmd;
+        return cmd;
 
     }
 
 
     /*
-     * Walks through arrays of ligands, box Coordinate files, and secondary ligands
-     * to creates jobs for all combinations of each.
-    */
-    private void makeJobs(){
-	    if(totalJobs < 1){
-		    outputGridTopComponent.outGridTPane.removeTabAt(0);
-		    model = (DefaultTableModel)outputGridTopComponent.newTabb();
-	    }else if(tabFlag){
-	            model = (DefaultTableModel)outputGridTopComponent.newTabb();
-	    }else
-		    model = (DefaultTableModel)outputGridTopComponent.getSelectedTab();
+     * Walks through arrays of ligands, box Coordinate files, and secondary
+     * ligands to creates jobs for all combinations of each.
+     */
+    private void makeJobs() {
+        if (totalJobs < 1) {
+            outputGridTopComponent.outGridTPane.removeTabAt(0);
+            model = (DefaultTableModel) outputGridTopComponent.newTabb();
+        } else if (tabFlag) {
+            model = (DefaultTableModel) outputGridTopComponent.newTabb();
+        } else {
+            model = (DefaultTableModel) outputGridTopComponent.getSelectedTab();
+        }
 
-           //createTmpFiles();
-           int count = readTmpFiles();
-           mkSubdirs(count);
-           String base = "";
+        //createTmpFiles();
+        int count = readTmpFiles();
+        mkSubdirs(count);
+        String base = "";
 
-           try{
-               base = outDir.getCanonicalPath();//outDirField.getText().trim();
-           }catch(java.io.IOException e){System.out.println(e); System.exit(0);}
+        try {
+            base = outDir.getCanonicalPath();//outDirField.getText().trim();
+        } catch (java.io.IOException e) {
+            System.out.println(e);
+            System.exit(0);
+        }
 
-           if(base.length() > 0){ base += File.separator;}
+        if (base.length() > 0) {
+            base += File.separator;
+        }
 
-           for(int l=0; l<ligList.size(); l++){
-                   for(int r=0; r<recList.size(); r++){
-                           for(int b=0; b<boxList.size(); b++){
-                                   for(int a=0; a<appList.size(); a++){
-                                           newJob(ligList.get(l), recList.get(r), boxList.get(b), base, appList.get(a),
-						     false, false, "", "", swmJobNum.getText(), dockCycles.getText());
-                                   }
-                           }
-                   }
-           }
+        for (int l = 0; l < ligList.size(); l++) {
+            for (int r = 0; r < recList.size(); r++) {
+                for (int b = 0; b < boxList.size(); b++) {
+                    for (int a = 0; a < appList.size(); a++) {
+                        newJob(ligList.get(l), recList.get(r), boxList.get(b), base, appList.get(a),
+                                false, false, "", "", swmJobNum.getText(), dockCycles.getText());
+                    }
+                }
+            }
+        }
 
-           ligList.clear();
-           recList.clear();
-           boxList.clear();
-           appList.clear();
+        ligList.clear();
+        recList.clear();
+        boxList.clear();
+        appList.clear();
 
-	   //redisplay();
-    // start timer to check all job status.
+        //redisplay();
+        // start timer to check all job status.
         startJobTimer();
     }
 
     /*
-     * Create subdirectories under main output directory.  Each of these subdirectories represents
-     * a job.
-    */
-    private void mkSubdirs(int total){
-            File subDir;// = new File(outDirField.getName().trim());
-            String subDirName;
-            String base = "";
-            try{
-                    base = outDir.getCanonicalPath();
-            }catch(java.io.IOException e){}
+     * Create subdirectories under main output directory. Each of these
+     * subdirectories represents a job.
+     */
+    private void mkSubdirs(int total) {
+        File subDir;// = new File(outDirField.getName().trim());
+        String subDirName;
+        String base = "";
+        try {
+            base = outDir.getCanonicalPath();
+        } catch (java.io.IOException e) {
+        }
 
-            if(base.length() > 0){ base += File.separator;}
+        if (base.length() > 0) {
+            base += File.separator;
+        }
 
-            for(int i=currJobNumber; i<total+currJobNumber; i++){
-                    //subDirName = base + "dock_" + Integer.toString(i+1);
-                    subDirName = base + "dock_" + Integer.toString(i);
-                    subDir = new File(subDirName);
+        for (int i = currJobNumber; i < total + currJobNumber; i++) {
+            //subDirName = base + "dock_" + Integer.toString(i+1);
+            subDirName = base + "dock_" + Integer.toString(i);
+            subDir = new File(subDirName);
 
-                    subDir.mkdir();
-            }
+            subDir.mkdir();
+        }
     }
 
     /*
-     * If using a list, read in data from the list file.  If not using a list, get the info
-     * from the text box in the GUI.
-    */
-    private int readTmpFiles(){
-            BufferedReader in;
-            String line;
-            int ligCount = 0;
-            int recCount = 0;
-            int boxCount = 0;
-            int appCount = 0;
+     * If using a list, read in data from the list file. If not using a list,
+     * get the info from the text box in the GUI.
+     */
+    private int readTmpFiles() {
+        BufferedReader in;
+        String line;
+        int ligCount = 0;
+        int recCount = 0;
+        int boxCount = 0;
+        int appCount = 0;
 
-            try{
-               if(ligLstBool){
-                    ligFile = new File(ligandField.getText().trim());
-                    in = new BufferedReader(new FileReader(ligFile));
+        try {
+            if (ligLstBool) {
+                ligFile = new File(ligandField.getText().trim());
+                in = new BufferedReader(new FileReader(ligFile));
+                line = in.readLine();
+                while (line != null) {
+                    ligList.add(line.trim());
                     line = in.readLine();
-                    while(line != null){
-                        ligList.add(line.trim());
-                        line = in.readLine();
-                        ligCount++;
-                    }
-                    in.close();
-               }else{
-                        ligList.add(ligandField.getText().trim());
-                        ligCount++;
-               }
+                    ligCount++;
+                }
+                in.close();
+            } else {
+                ligList.add(ligandField.getText().trim());
+                ligCount++;
+            }
 
-               if(recListBool){
-                    recFile = new File(receptorField.getText().trim());
-                    in = new BufferedReader(new FileReader(recFile));
+            if (recListBool) {
+                recFile = new File(receptorField.getText().trim());
+                in = new BufferedReader(new FileReader(recFile));
+                line = in.readLine();
+                while (line != null) {
+                    recList.add(line.trim());
                     line = in.readLine();
-                    while(line != null){
-                        recList.add(line.trim());
-                        line = in.readLine();
-                        recCount++;
-                    }
-                    in.close();
-               }else{
-                        recList.add(receptorField.getText().trim());
-                        recCount++;
-               }
+                    recCount++;
+                }
+                in.close();
+            } else {
+                recList.add(receptorField.getText().trim());
+                recCount++;
+            }
 
-               if(boxListBool){
-                    boxFile = new File(boxCoordField.getText().trim());
-                    in = new BufferedReader(new FileReader(boxFile));
+            if (boxListBool) {
+                boxFile = new File(boxCoordField.getText().trim());
+                in = new BufferedReader(new FileReader(boxFile));
+                line = in.readLine();
+                while (line != null) {
+                    boxList.add(line.trim());
                     line = in.readLine();
-                    while(line != null){
-                        boxList.add(line.trim());
-                        line = in.readLine();
-                        boxCount++;
-                    }
-                    in.close();
-               }else{
-                        boxList.add(boxCoordField.getText().trim());
-                        boxCount++;
-               }
+                    boxCount++;
+                }
+                in.close();
+            } else {
+                boxList.add(boxCoordField.getText().trim());
+                boxCount++;
+            }
 
-               if(appListBool){
-                    appFile = new File(appendField.getText().trim());
-                    in = new BufferedReader(new FileReader(appFile));
+            if (appListBool) {
+                appFile = new File(appendField.getText().trim());
+                in = new BufferedReader(new FileReader(appFile));
+                line = in.readLine();
+                while (line != null) {
+                    appList.add(line.trim());
                     line = in.readLine();
-                    while(line != null){
-                        appList.add(line.trim());
-                        line = in.readLine();
-                        appCount++;
-                    }
-                    in.close();
-               }else{
-                        appList.add(appendField.getText().trim());
-                        appCount++;
-               }
+                    appCount++;
+                }
+                in.close();
+            } else {
+                appList.add(appendField.getText().trim());
+                appCount++;
+            }
 
-            }catch(java.io.IOException e){++exceptionNum; messageWindowTopComponent.messageArea.append(e+" "+exceptionNum+"\n");}
+        } catch (java.io.IOException e) {
+            ++exceptionNum;
+            messageWindowTopComponent.messageArea.append(e + " " + exceptionNum + "\n");
+        }
 
-            //removeTmpFiles();
-            return (ligCount * recCount * boxCount * appCount);
+        //removeTmpFiles();
+        return (ligCount * recCount * boxCount * appCount);
     }
 
-
     // Timer to check the status of each job.
-    private void startJobTimer(){
+    private void startJobTimer() {
         int delay = 10000;  // 10 seconds
         java.awt.event.ActionListener jobChecker = new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        checkStatusButtonActionPerformed(evt);
-                }
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkStatusButtonActionPerformed(evt);
+            }
         };
         jobTimer = new Timer(delay, jobChecker);
         jobTimer.start();
@@ -1168,23 +1232,22 @@ private String resChkGpf;
 
     // Updates jobs in job vector to match any changes that may have taken place
     // in the jobs listed in the GUI.
-    private void updateJob(int row){
-	    table = outputGridTopComponent.getSelectedTable();
+    private void updateJob(int row) {
+        table = outputGridTopComponent.getSelectedTable();
 
-            int job = (Integer)table.getValueAt(row, getCol(table, "Job #"));
+        int job = (Integer) table.getValueAt(row, getCol(table, "Job #"));
 
-            Job tmp = (Job)jobList.get(job);
-            tmp.update((String)table.getValueAt(row, getCol(table, "Ligand")),
-                       (String)table.getValueAt(row, getCol(table, "Output Directory")),
-                       (String)table.getValueAt(row, getCol(table, "Receptor")),
-                       (String)table.getValueAt(row, getCol(table, "Box Coordinate")),
-                       true,
-                       (String)table.getValueAt(row, getCol(table, "Sequence")),
-                       (String)table.getValueAt(row, getCol(table, "Template")),
-                       (String)table.getValueAt(row, getCol(table, "AutoDock Cycles")));
+        Job tmp = (Job) jobList.get(job);
+        tmp.update((String) table.getValueAt(row, getCol(table, "Ligand")),
+                (String) table.getValueAt(row, getCol(table, "Output Directory")),
+                (String) table.getValueAt(row, getCol(table, "Receptor")),
+                (String) table.getValueAt(row, getCol(table, "Box Coordinate")),
+                true,
+                (String) table.getValueAt(row, getCol(table, "Sequence")),
+                (String) table.getValueAt(row, getCol(table, "Template")),
+                (String) table.getValueAt(row, getCol(table, "AutoDock Cycles")));
 
     }
-
 
 //    private void redisplay()
 //    {
@@ -1212,44 +1275,44 @@ private String resChkGpf;
 //    }
 //
     // Create new job from supplied arguments.
-    private void newJob(String lig, String rec, String box, String dir, String app, 
-	           Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles){
-            dir = dir + "dock_"+Integer.toString(currJobNumber);
+    private void newJob(String lig, String rec, String box, String dir, String app,
+            Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles) {
+        dir = dir + "dock_" + Integer.toString(currJobNumber);
 
-            messageWindowTopComponent.messageArea.append("Creating New Job ["+currJobNumber+"]\n");
+        messageWindowTopComponent.messageArea.append("Creating New Job [" + currJobNumber + "]\n");
 
-	    if(secondary){
-                //jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
-                jobList.put(currJobNumber, new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
-                model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
-            }else{
-                //jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
-                jobList.put(currJobNumber, new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
-                model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, "Not Started", seq, tmplt, cycles});
-            }
+        if (secondary) {
+            //jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
+            jobList.put(currJobNumber, new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
+            model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
+        } else {
+            //jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
+            jobList.put(currJobNumber, new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
+            model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, "Not Started", seq, tmplt, cycles});
+        }
 
-            boxCoordField.setText("");
-            receptorField.setText("");
-            ligandField.setText("");
-            outDirField.setText("");
-            appendField.setText("");
-            ++currJobNumber;
-            ++totalJobs;
+        boxCoordField.setText("");
+        receptorField.setText("");
+        ligandField.setText("");
+        outDirField.setText("");
+        appendField.setText("");
+        ++currJobNumber;
+        ++totalJobs;
     }
 
     // Removes all jobs from the gui screen and the vector that holds all job objects.
-    private void removeAllJobs(){
-	table = outputGridTopComponent.getSelectedTable();
-	model = (DefaultTableModel)table.getModel();
+    private void removeAllJobs() {
+        table = outputGridTopComponent.getSelectedTable();
+        model = (DefaultTableModel) table.getModel();
         //killAllJobs();
         messageWindowTopComponent.messageArea.append("Removing All Jobs from tab\n");
         int jobNum;
         int numRows = model.getRowCount();
-            for(int i = numRows-1; i>= 0; i--){
-                jobNum = (Integer)table.getValueAt(i, getCol(table, "Job #"));
-                ((Job)jobList.get(jobNum)).killJob();
-                model.removeRow(i);
-            }
+        for (int i = numRows - 1; i >= 0; i--) {
+            jobNum = (Integer) table.getValueAt(i, getCol(table, "Job #"));
+            ((Job) jobList.get(jobNum)).killJob();
+            model.removeRow(i);
+        }
         //jobTimer.stop();
         //currJobNumber = 0;
         //totalJobs = 0;
@@ -1257,14 +1320,14 @@ private String resChkGpf;
     }
 
     // Creates and starts the AutoDock job for the secondary ligand.
-    private void doSecondaryJob(int row){
-        String lig = (String)table.getValueAt(row, getCol(table, "Secondary"));
-        String rec = (String)table.getValueAt(row, getCol(table, "Receptor"));
-        String box = (String)table.getValueAt(row, getCol(table, "Box Coordinate"));
-        String dir = (String)table.getValueAt(row, getCol(table, "Output Directory"));
-        String numJobs = (String)table.getValueAt(row, getCol(table, "Jobs per Node"));
-        String cycles = (String)table.getValueAt(row, getCol(table, "AutoDock Cycles"));
-        String oldLig = ((String)table.getValueAt(row, getCol(table, "Ligand"))).toUpperCase();
+    private void doSecondaryJob(int row) {
+        String lig = (String) table.getValueAt(row, getCol(table, "Secondary"));
+        String rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
+        String box = (String) table.getValueAt(row, getCol(table, "Box Coordinate"));
+        String dir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
+        String numJobs = (String) table.getValueAt(row, getCol(table, "Jobs per Node"));
+        String cycles = (String) table.getValueAt(row, getCol(table, "AutoDock Cycles"));
+        String oldLig = ((String) table.getValueAt(row, getCol(table, "Ligand"))).toUpperCase();
         Boolean swarm = false;
         //if((Boolean)table.getValueAt(row, getCol("Use Swarm"))){ swarm = true; }
         swarm = true;
@@ -1273,144 +1336,149 @@ private String resChkGpf;
 
         outDir = new File(dir.trim());
 
-        try{
+        try {
             base = outDir.getCanonicalPath();
-        }catch(java.io.IOException e){}
+        } catch (java.io.IOException e) {
+        }
 
-        if(base.length() > 0){ base += File.separator;}
+        if (base.length() > 0) {
+            base += File.separator;
+        }
         app = base + oldLig + "_rank_1.pdb";
 
         alignJobNums();
         mkSubdirs(1);
         //newJob(lig, rec, box, base+"dock_"+Integer.toString(currJobNumber), app, true, swarm, "", "");
         newJob(lig, rec, box, base, app, true, swarm, "", "", numJobs, cycles);
-        ((Job)jobList.get(jobList.size()-1)).runJob(false);
-        table.setValueAt("Started", model.getRowCount()-1, getCol(table, "Status"));
+        ((Job) jobList.get(jobList.size() - 1)).runJob(false);
+        table.setValueAt("Started", model.getRowCount() - 1, getCol(table, "Status"));
 
     }
 
     // Creates a String holding names of all .pdb files within a given
     // directory.  The String is used as input to the pymol command.
-    private String getPDBNames(File dir){
+    private String getPDBNames(File dir) {
         String names = "";
         String tmp;
         File[] flist = dir.listFiles();
 
-        for(File file : flist){
-                tmp = file.toString();
-                if(tmp.contains(".pdb"))  names += tmp + " ";
+        for (File file : flist) {
+            tmp = file.toString();
+            if (tmp.contains(".pdb")) {
+                names += tmp + " ";
+            }
         }
 
         return names;
     }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton LigandButton;
+    private static javax.swing.JCheckBox appCheckBox;
+    protected static javax.swing.JButton appendButton;
+    private static javax.swing.JTextField appendField;
+    private javax.swing.JButton boxCoordButton;
+    private javax.swing.JCheckBox boxCoordCheckBox;
+    private javax.swing.JTextField boxCoordField;
+    private javax.swing.JTextField dockCycles;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    protected static javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JCheckBox ligModCheckBox;
+    private javax.swing.JCheckBox ligandCheckBox;
+    private javax.swing.JTextField ligandField;
+    private javax.swing.JButton newJobButton;
+    private javax.swing.JCheckBox newTabChBox;
+    private javax.swing.JButton outDirButton;
+    private javax.swing.JTextField outDirField;
+    private javax.swing.JCheckBox recModCheckBox;
+    private javax.swing.JButton receptorButton;
+    private javax.swing.JCheckBox receptorCheckBox;
+    private javax.swing.JTextField receptorField;
+    private javax.swing.JTextField swmJobNum;
+    private javax.swing.JCheckBox vinaCheckBox;
+    // End of variables declaration//GEN-END:variables
 
+    /**
+     * Gets default instance. Do not use directly: reserved for *.settings files
+     * only, i.e. deserialization routines; otherwise you could get a
+     * non-deserialized instance. To obtain the singleton instance, use {@link #findInstance}.
+     */
+    public static synchronized openerTopComponent getDefault() {
+        if (instance == null) {
+            instance = new openerTopComponent();
+        }
+        return instance;
+    }
 
-        // Variables declaration - do not modify//GEN-BEGIN:variables
-        private javax.swing.JButton LigandButton;
-        private static javax.swing.JCheckBox appCheckBox;
-        protected static javax.swing.JButton appendButton;
-        private static javax.swing.JTextField appendField;
-        private javax.swing.JButton boxCoordButton;
-        private javax.swing.JCheckBox boxCoordCheckBox;
-        private javax.swing.JTextField boxCoordField;
-        private javax.swing.JTextField dockCycles;
-        private javax.swing.JLabel jLabel1;
-        private javax.swing.JLabel jLabel2;
-        private javax.swing.JLabel jLabel3;
-        private javax.swing.JLabel jLabel4;
-        private javax.swing.JPanel jPanel1;
-        private javax.swing.JPanel jPanel10;
-        private javax.swing.JPanel jPanel2;
-        private javax.swing.JPanel jPanel3;
-        private javax.swing.JPanel jPanel4;
-        private javax.swing.JPanel jPanel5;
-        private javax.swing.JPanel jPanel6;
-        protected static javax.swing.JPanel jPanel7;
-        private javax.swing.JPanel jPanel8;
-        private javax.swing.JPanel jPanel9;
-        private javax.swing.JScrollPane jScrollPane1;
-        private javax.swing.JCheckBox ligModCheckBox;
-        private javax.swing.JCheckBox ligandCheckBox;
-        private javax.swing.JTextField ligandField;
-        private javax.swing.JButton newJobButton;
-        private javax.swing.JCheckBox newTabChBox;
-        private javax.swing.JButton outDirButton;
-        private javax.swing.JTextField outDirField;
-        private javax.swing.JCheckBox recModCheckBox;
-        private javax.swing.JButton receptorButton;
-        private javax.swing.JCheckBox receptorCheckBox;
-        private javax.swing.JTextField receptorField;
-        private javax.swing.JTextField swmJobNum;
-        private javax.swing.JCheckBox vinaCheckBox;
-        // End of variables declaration//GEN-END:variables
-	/**
-	 * Gets default instance. Do not use directly: reserved for *.settings files only,
-	 * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
-	 * To obtain the singleton instance, use {@link #findInstance}.
-	 */
-	public static synchronized openerTopComponent getDefault() {
-		if (instance == null) {
-			instance = new openerTopComponent();
-		}
-		return instance;
-	}
+    /**
+     * Obtain the openerTopComponent instance. Never call {@link #getDefault}
+     * directly!
+     */
+    public static synchronized openerTopComponent findInstance() {
+        TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
+        if (win == null) {
+            Logger.getLogger(openerTopComponent.class.getName()).warning(
+                    "Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
+            return getDefault();
+        }
+        if (win instanceof openerTopComponent) {
+            return (openerTopComponent) win;
+        }
+        Logger.getLogger(openerTopComponent.class.getName()).warning(
+                "There seem to be multiple components with the '" + PREFERRED_ID
+                + "' ID. That is a potential source of errors and unexpected behavior.");
+        return getDefault();
+    }
 
-	/**
-	 * Obtain the openerTopComponent instance. Never call {@link #getDefault} directly!
-	 */
-	public static synchronized openerTopComponent findInstance() {
-		TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
-		if (win == null) {
-			Logger.getLogger(openerTopComponent.class.getName()).warning(
-				"Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
-			return getDefault();
-		}
-		if (win instanceof openerTopComponent) {
-			return (openerTopComponent) win;
-		}
-		Logger.getLogger(openerTopComponent.class.getName()).warning(
-			"There seem to be multiple components with the '" + PREFERRED_ID
-			+ "' ID. That is a potential source of errors and unexpected behavior.");
-		return getDefault();
-	}
+    @Override
+    public int getPersistenceType() {
+        return TopComponent.PERSISTENCE_ALWAYS;
+    }
 
-	@Override
-	public int getPersistenceType() {
-		return TopComponent.PERSISTENCE_ALWAYS;
-	}
+    @Override
+    public void componentOpened() {
+        // TODO add custom code on component opening
+    }
 
-	@Override
-	public void componentOpened() {
-		// TODO add custom code on component opening
-	}
+    @Override
+    public void componentClosed() {
+        // TODO add custom code on component closing
+    }
 
-	@Override
-	public void componentClosed() {
-		// TODO add custom code on component closing
-	}
+    void writeProperties(java.util.Properties p) {
+        // better to version settings since initial version as advocated at
+        // http://wiki.apidesign.org/wiki/PropertyFiles
+        p.setProperty("version", "1.0");
+        // TODO store your settings
+    }
 
-	void writeProperties(java.util.Properties p) {
-		// better to version settings since initial version as advocated at
-		// http://wiki.apidesign.org/wiki/PropertyFiles
-		p.setProperty("version", "1.0");
-		// TODO store your settings
-	}
+    Object readProperties(java.util.Properties p) {
+        if (instance == null) {
+            instance = this;
+        }
+        instance.readPropertiesImpl(p);
+        return instance;
+    }
 
-	Object readProperties(java.util.Properties p) {
-		if (instance == null) {
-			instance = this;
-		}
-		instance.readPropertiesImpl(p);
-		return instance;
-	}
+    private void readPropertiesImpl(java.util.Properties p) {
+        String version = p.getProperty("version");
+        // TODO read your settings according to their version
+    }
 
-	private void readPropertiesImpl(java.util.Properties p) {
-		String version = p.getProperty("version");
-		// TODO read your settings according to their version
-	}
-
-	@Override
-	protected String preferredID() {
-		return PREFERRED_ID;
-	}
+    @Override
+    protected String preferredID() {
+        return PREFERRED_ID;
+    }
 }
