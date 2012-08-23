@@ -91,6 +91,7 @@ public class modWizVisualPanel5 extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jTable1.setAutoCreateRowSorter(true);
         killJobButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         genModelMessage = new javax.swing.JLabel();

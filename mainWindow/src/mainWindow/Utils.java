@@ -11,7 +11,8 @@ import javax.swing.ImageIcon;
 public class Utils {
     public final static String pdb = "pdb";
     public final static String gpf = "gpf";
- 
+    public final static String ali = "ali";
+    
     /*
      * Get the extension of a file.
      */

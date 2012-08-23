@@ -233,6 +233,7 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
         File outDir = new File(oDir);
         int job, i;
         int totalCount = jobList.length;
+        String modellerCMD;
         Process procID;
 
         // *** Bulk submit ***

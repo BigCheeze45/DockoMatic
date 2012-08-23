@@ -24,8 +24,6 @@ import org.openide.windows.WindowManager;
 autostore = false)
 public final class openerTopComponent extends TopComponent {
 
-    
-
     //Change the JobList to hash?
     //private ArrayList <Job> jobList = new ArrayList<Job>();
     //private HashMap <int, Job> jobList = new HashMap<int, Job>();
@@ -680,20 +678,23 @@ public final class openerTopComponent extends TopComponent {
 
             @Override
             public String doInBackground() {
+                try {
+                    if (outDirField.getText().trim().length() < 1) {
+                        messageWindowTopComponent.messageArea.append("No Output Directory Supplied\nUsing Current Directory '.'\n");
+                        outDirField.setText(".");
+                    }
+                    String tmp = ligandField.getText();
+                    if (tmp.length() > 0) {
+                        outDir = new File(outDirField.getText().trim());
+                        alignJobNums();
 
-                if (outDirField.getText().trim().length() < 1) {
-                    messageWindowTopComponent.messageArea.append("No Output Directory Supplied\nUsing Current Directory '.'\n");
-                    outDirField.setText(".");
-                }
-                String tmp = ligandField.getText();
-                if (tmp.length() > 0) {
-                    outDir = new File(outDirField.getText().trim());
-                    alignJobNums();
-
-                    makeJobs();
-                    messageWindowTopComponent.messageArea.append("Highlight and Right-Click Jobs in Output Grid for options.\n");
-                } else {
-                    messageWindowTopComponent.messageArea.append("Ligand needs to be supplied!\n");
+                        makeJobs();
+                        messageWindowTopComponent.messageArea.append("Highlight and Right-Click Jobs in Output Grid for options.\n");
+                    } else {
+                        messageWindowTopComponent.messageArea.append("Ligand needs to be supplied!\n");
+                    }
+                } catch (IOException e) {
+                    messageWindowTopComponent.messageArea.append("Incorrect IVS setup: Receptor List and\n Box Coordinate List need to be the same legth\n");
                 }
                 return "Done";
             }
@@ -1062,7 +1063,7 @@ public final class openerTopComponent extends TopComponent {
      * Walks through arrays of ligands, box Coordinate files, and secondary
      * ligands to creates jobs for all combinations of each.
      */
-    private void makeJobs() {
+    private void makeJobs() throws IOException {
         if (totalJobs < 1) {
             outputGridTopComponent.outGridTPane.removeTabAt(0);
             model = (DefaultTableModel) outputGridTopComponent.newTabb();
@@ -1088,14 +1089,18 @@ public final class openerTopComponent extends TopComponent {
             base += File.separator;
         }
 
+        if (recList.size() != boxList.size()) {
+            throw new IOException();
+        }
+
         for (int l = 0; l < ligList.size(); l++) {
             for (int r = 0; r < recList.size(); r++) {
-                for (int b = 0; b < boxList.size(); b++) {
-                    for (int a = 0; a < appList.size(); a++) {
-                        newJob(ligList.get(l), recList.get(r), boxList.get(b), base, appList.get(a),
-                                false, false, "", "", swmJobNum.getText(), dockCycles.getText());
-                    }
+                // for (int b = 0; b < boxList.size(); b++) {
+                for (int a = 0; a < appList.size(); a++) {
+                    newJob(ligList.get(l), recList.get(r), boxList.get(r), base, appList.get(a),
+                            false, false, "", "", swmJobNum.getText(), dockCycles.getText());
                 }
+                // }
             }
         }
 
@@ -1214,7 +1219,13 @@ public final class openerTopComponent extends TopComponent {
         }
 
         //removeTmpFiles();
-        return (ligCount * recCount * boxCount * appCount);
+        if (recList.size() == boxList.size()) {
+            return (ligCount * recCount * appCount);
+        } else {
+            return (ligCount * recCount * boxCount * appCount);
+        }
+        
+        
     }
 
     // Timer to check the status of each job.
