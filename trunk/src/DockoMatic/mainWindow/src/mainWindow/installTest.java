@@ -30,18 +30,17 @@ public class installTest {
         testModeller();
         testPymol();
         //testChecker();
-        //testAutoDoc();
+        //testAutoDock();
     }
 
     private void testSwarm() {
         String line = null;
         try {
-            String swarmCmd = cmd + "swarmFile.txt";
-            Process swarm = Runtime.getRuntime().exec("swarm -f " + swarmCmd);
+            Process swarm = Runtime.getRuntime().exec("swarm");
             BufferedReader in = new BufferedReader(new InputStreamReader(swarm.getErrorStream()));
-            while ((line = in.readLine()) != null) {
-                errorLog += line + "\n";
-            }
+            if ((line = in.readLine()).contains("command not found")) {
+                errorLog += "No swarm\n";
+            } else { errorLog += "Yes swarm\n"; }
 
         } catch (Exception e) {
         }
@@ -51,9 +50,9 @@ public class installTest {
     private void testModeller() {
         String line;
         try {
-            Process modeller = Runtime.getRuntime().exec("mod9.10 -help");
+            Process modeller = Runtime.getRuntime().exec("find ~/ -name modeller");
             BufferedReader in = new BufferedReader(new InputStreamReader(modeller.getErrorStream()));
-            if ((line = in.readLine()).contains("command not found")) {
+            if ((line = in.readLine()) == null) {
                 errorLog += "No modeller\n";
             } else { errorLog += "Yes modeller\n"; }
         } catch (Exception e) {
@@ -75,7 +74,7 @@ public class installTest {
     private void testChecker() {
         String line;
         try {
-            Process checker = Runtime.getRuntime().exec("/home/ncornia/DockoMatic/build/dockomatic/lib/scripts/resultCheck.pl -d /home/ncornia/DockoMatic/mainWindow/test/dock_1 -b /home/ncornia/DockoMatic/mainWindow/manifest.mf -o /home/ncornia/DockoMatic/mainWindow/test/dock_4");
+            Process checker = Runtime.getRuntime().exec("");
             BufferedReader in = new BufferedReader(new InputStreamReader(checker.getErrorStream()));
             while ((line = in.readLine()) != null) {
                 errorLog += line + "\n";
@@ -85,7 +84,7 @@ public class installTest {
         }
     }
 
-    private void testAutoDoc() {
+    private void testAutoDock() {
         String line;
         try {
             Process autoDoc = Runtime.getRuntime().exec("");
@@ -100,5 +99,6 @@ public class installTest {
 
     private void writeErrors() {
         messageWindowTopComponent.messageArea.append(errorLog);
+        messageWindowTopComponent.messageArea.append("IVS test\n");
     }
 }

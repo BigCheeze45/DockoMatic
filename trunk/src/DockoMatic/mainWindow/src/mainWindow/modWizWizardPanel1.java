@@ -169,7 +169,7 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
     private void createSeqFile(String outDir, String seq) {
         String seqName = ((modWizVisualPanel1) getComponent()).getSeqName();
         String outFilePath = outDir + File.separator + seqName;
-        if (!seqName.endsWith("ali")) {
+        if ((new File(outFilePath + ".ali")).exists()) {
             outFilePath += ".ali";
         }
 
@@ -214,8 +214,15 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
     }
 
     private String formatSeq(String seq) {
+        if (seq.contains(".ali")) {
+            ((modWizVisualPanel1) getComponent()).setSeqName(seq.substring(seq.lastIndexOf("/")+1, seq.indexOf(".ali")));
+            seq = getSeq();
+            seq = seq.substring(0,seq.length()-1);
+        }
+               
         seq = seq.replace("\n", "");
         seq = seq.replace(" ", "");
+        seq = seq.replace("\t", "");
         for (int x = 0; x <= 9; x++) {
             seq = seq.replace((x + ""), "");
         }
