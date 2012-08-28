@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -43,6 +44,7 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
      */
     private Component component;
     private boolean isValid;
+    private String errorLog;
 
     public modWizWizardPanel3() {
     }
@@ -160,6 +162,7 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
                 int maxJobs = Integer.parseInt(modJobs);
                 String[] fList = createSeqFiles(oDir, seqName, seq, tmpltDlList);
                 String[] jList = createAlignJobString(seqName, oDir, tmpltDlList, swarm, maxJobs);
+
                 runAlignJobString(oDir, jList, nodeJobs);
                 parseResults(oDir, tmpltDlList.length + getResiduals(fList, oDir));
                 modWizVisualPanel3.genAlmntMessage.setVisible(false);
@@ -220,12 +223,6 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        if (jList.length > 0) {
-            File aLog = new File(file);
-            aLog.delete();
-        }
-
         return ret;
     }
 
@@ -233,7 +230,9 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
         File outDir = new File(oDir);
         int job, i;
         int totalCount = jobList.length;
-        String modellerCMD;
+        String modellerCMD = "";
+        String swarmCMD;
+        String line;
         Process procID;
 
         // *** Bulk submit ***
@@ -244,15 +243,29 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
             swarmDir.mkdir();
             swarmDir.deleteOnExit();
             String swarmFile = swarmDir.getCanonicalPath() + "/swarmAlignCmd";
+            errorLog = "";
 
+            //remove old resLog file
+            String logFile = oDir + "/alLog";
+            File alLog = new File(logFile);
+            alLog.delete();
+            
             //run swarm Jobs.
             BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
             for (i = 0; i < totalCount; i++) {
-                swarmOut.write(jobList[i] + "\n");
+                modellerCMD += jobList[i] + "\n";
                 messageWindowTopComponent.messageArea.append("Starting Align Job " + i + "\n");
             }
+            swarmOut.write(modellerCMD);
             swarmOut.close();
-            procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n " + jobsPerNode + " -l walltime=128:00:00", null, outDir);
+            swarmCMD = "swarm -f " + swarmFile + " -n " + jobsPerNode + " -l walltime=128:00:00";
+            procID = Runtime.getRuntime().exec(swarmCMD, null, outDir);
+            BufferedReader in = new BufferedReader(new InputStreamReader(procID.getErrorStream()));
+            while ((line = in.readLine()) != null) {
+                errorLog += line + "\n";
+            }
+            messageWindowTopComponent.messageArea.setText("");
+            messageWindowTopComponent.messageArea.append(errorLog);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -333,7 +346,6 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
         }
 
         return subunit;
-
     }
 
     private String getPdbTmpltFile(String odir, String pdb) {
@@ -425,6 +437,5 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

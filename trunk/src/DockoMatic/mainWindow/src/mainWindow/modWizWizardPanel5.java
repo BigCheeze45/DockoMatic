@@ -33,8 +33,9 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
      */
     private Component component;
     private String fromWhere;
-    private boolean isValid;   
+    private boolean isValid;
     private static JPopupMenu jpop;// = new JPopupMenu();
+    private String errorLog;
 
     public modWizWizardPanel5(String from) {
         this.fromWhere = from;
@@ -166,10 +167,11 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             protected String doInBackground() {
                 int maxJobs = Integer.parseInt(modJobs);
                 runModellerJobs(oDir, createModellerJobs(seqName, oDir, templtList, swarm, maxJobs, residues), nodeJobs);
+ //               makeLogFile(oDir, seqName, templtList, maxJobs);
                 if (residues[0].equals("")) {
-                    parseResults(oDir, (maxJobs * templtList.length) + getResiduals(oDir), false);
+                    parseResults(oDir, (maxJobs * templtList.length), false);
                 } else {
-                    parseResults(oDir, (maxJobs * templtList.length) + getResiduals(oDir), true);
+                    parseResults(oDir, (maxJobs * templtList.length), true);
                 }
                 modWizVisualPanel5.genModelMessage.setVisible(false);
                 return "DONE";
@@ -178,10 +180,53 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
         getAlWorker.execute();
     }
 
+//    private void makeLogFile(String oDir, String seqName, String[] tmpltList, int max) {
+//        File outDir = new File(oDir);
+//        String CMD;
+//        String line;
+//        Process procID;
+//
+//        try {
+//            errorLog = "";
+//            
+//            int numJobs = tmpltList.length;
+//            //int lines = max+1;
+//            String log;
+//            String cmd = Job.class.getResource("Job.class").getPath();
+//            cmd = cmd.substring(cmd.indexOf(":") + 1, cmd.indexOf("modules/"));
+//            String[] modJobList = new String[numJobs * max];
+//                String tmpFile;
+//                for (int i = 0; i < numJobs; i++) {
+//                    tmpFile = tmpltList[i].substring(tmpltList[i].indexOf("-") + 1, tmpltList[i].indexOf("."));
+//                    // Make a separate command for each model, so we can parallelize.
+//                    for (int j = 0; j < max; j++) {
+//                        log = oDir + "/model_" + tmpFile + "_" + j + ".log";
+//                        modJobList[(i * max) + j] = "grep ^" + seqName + " model_" + tmpFile + "*.log > " + oDir + "/resLog";
+//                    }
+//                }
+//
+//            procID = Runtime.getRuntime().exec(swarmCMD, null, outDir);
+//            BufferedReader in = new BufferedReader(new InputStreamReader(procID.getErrorStream()));
+//            while ((line = in.readLine()) != null) {
+//                errorLog += line + "\n";
+//            }
+//            messageWindowTopComponent.messageArea.setText("");
+//            messageWindowTopComponent.messageArea.append(errorLog);
+//
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//
+//    }
+
     private void runModellerJobs(String oDir, String[] jobList, String jobsPerNode) {
         File outDir = new File(oDir);
         int job, i;
         int totalCount = jobList.length;
+        String modellerCMD = "";
+        String swarmCMD;
+        String line;
         Process procID;
 
         // *** Bulk submit ***
@@ -191,16 +236,30 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             swarmDir.mkdir();
             swarmDir.deleteOnExit();
             String swarmFile = swarmDir.getCanonicalPath() + "/swarmModCmd";
-
+            errorLog = "";
+            
+            //remove old resLog file
+            String logFile = oDir + "/resLog";
+            File resLog = new File(logFile);
+            resLog.delete();        
+            
             //run swarm Jobs.
             BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
             for (i = 0; i < totalCount; i++) {
-                swarmOut.write(jobList[i] + "\n");
+                modellerCMD += jobList[i] + "\n";
                 messageWindowTopComponent.messageArea.append("Starting Modeller Job " + i + "\n");
             }
+            swarmOut.write(modellerCMD);
             swarmOut.close();
 
-            procID = Runtime.getRuntime().exec("swarm -f " + swarmFile + " -n " + jobsPerNode + " -l walltime=128:00:00", null, outDir);
+            swarmCMD = "swarm -f " + swarmFile + " -n " + jobsPerNode + " -l walltime=128:00:00";
+            procID = Runtime.getRuntime().exec(swarmCMD, null, outDir);
+            BufferedReader in = new BufferedReader(new InputStreamReader(procID.getErrorStream()));
+            while ((line = in.readLine()) != null) {
+                errorLog += line + "\n";
+            }
+            messageWindowTopComponent.messageArea.setText("");
+            messageWindowTopComponent.messageArea.append(errorLog);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -236,8 +295,9 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             for (int j = 0; j < max; j++) {
                 log = oDir + "/model_" + tmpFile + "_" + j + ".log";
                 modJobList[(i * max) + j] = cmd + " " + seqName + "-" + tmpFile + " " + tmpFile + " " + j + " " + oDir + " > " + log;
-                modJobList[(i * max) + j] += "; grep ^" + seqName + " model_*.log > " + oDir + "/resLog";
+               // modJobList[(i * max) + j] += "; grep ^" + seqName + " model_" + tmpFile + "*.log > " + oDir + "/resLog";
             }
+            modJobList[((i+1)*max)-1] += "; grep ^" + seqName + " model_" + tmpFile + "*.log >> " + oDir + "/resLog";
         }
         return modJobList;
     }
@@ -284,7 +344,7 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
 
     public static void killJob() {
     }
-    
+
 //    // Create a popup menu
 //    private static void makePopMenu(final java.awt.event.MouseEvent evtOrig) {
 //        JMenuItem optionMenuRamaPlot = new JMenuItem("Ramachandran Plot");
@@ -310,7 +370,6 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
 //        jpop.show(evtOrig.getComponent(), evtOrig.getX(), evtOrig.getY());
 //
 //    }
-
     private boolean isDone(String fname, int max) {
         File file = new File(fname);
         if (!file.exists()) {
@@ -347,12 +406,9 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
 
     private int getResiduals(String oDir) {
         String file = oDir + "/resLog";
-        int ret = countLines(file);
+        int logLines = countLines(file);
 
-        File rLog = new File(file);
-        rLog.delete();
-
-        return ret;
+        return logLines;
     }
 
     private void parseResults(String dir, int max, boolean disulfide) {
@@ -388,6 +444,5 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
