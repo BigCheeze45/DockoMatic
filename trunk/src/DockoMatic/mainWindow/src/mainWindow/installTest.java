@@ -99,6 +99,6 @@ public class installTest {
 
     private void writeErrors() {
         messageWindowTopComponent.messageArea.append(errorLog);
-        messageWindowTopComponent.messageArea.append("IVS test\n");
+        messageWindowTopComponent.messageArea.append("Testing Vina\n");
     }
 }
