@@ -355,7 +355,7 @@ sub createLigand{
         waitpid $obconfPid, 0;
         $obconfPid = 0;
     }else{
-        print "obconformer 5 10 $pdbOut > $conf";
+        print "\nobconformer 5 10 $pdbOut > $conf\n";
         exec("obconformer 5 10 $pdbOut > $conf");
     } 
     #qx(obconformer 5 10 $pdbOut > $conf);
@@ -393,7 +393,7 @@ sub runAlign{
     my $modDir = catfile($sourceDir, 'scripts', 'modeller');
   print "Running Align...\n"; 
 
-    print "$modDir/align2d.py $seq $tmplt $opt_o";
+    print "\n$modDir/align2d.py $seq $tmplt $opt_o\n";
     system("$modDir/align2d.py $seq $tmplt $opt_o");
 
     my $alnSntnl = catfile($opt_o, "AlnSntnl");
@@ -416,10 +416,10 @@ sub runModel{
     my $resLog = catfile($opt_o, 'resLog');
   print "Running model-single...\n"; 
 
-    print "$modDir/align2d.py $seq $tmplt $opt_o";
+    print "\n$single $seq $tmplt $num $opt_o > $logFile\n";
     system("$single $seq $tmplt $num $opt_o > $logFile");
 
-    print "$modDir/align2d.py $seq $tmplt $opt_o";
+    print "\ngrep mySeq $logs | grep pdb > $resLog\n";
     system("grep mySeq $logs | grep pdb > $resLog");
     #open $MODSNTNL, ">$modSntnl" or die "Unable to open [$modSntnl] for writing!";
     #print $MODSNTNL ("Modeller Done\n");
@@ -499,7 +499,7 @@ sub addHydrogens{
         waitpid $treePid, 0;
         $treePid = 0;
     }else{
-        print "babel -p 7 -ipdb $ligName -opdb  $ligName";
+        print "\nbabel -p 7 -ipdb $ligName -opdb  $ligName\n";
         exec("babel -p 7 -ipdb $ligName -opdb  $ligName");
     } 
 
@@ -553,7 +553,7 @@ sub runTreePack{
         waitpid $treePid, 0;
         $treePid = 0;
     }else{
-        print "./SCATD -i $in -o $out";
+        print "\n./SCATD -i $in -o $out\n";
         exec("./SCATD -i $in -o $out");
     } 
 
@@ -940,7 +940,7 @@ sub prepRec {
     my $recFileIn = shift;
     my $pdbqt = $recFileIn."qt";
 
-    print "prepare_receptor4.py -r $recFileIn -o $pdbqt" ;
+    print "\nprepare_receptor4.py -r $recFileIn -o $pdbqt\n" ;
     system("prepare_receptor4.py -r $recFileIn -o $pdbqt" );
 
 }
@@ -952,7 +952,7 @@ sub prepLig {
     my $ligFileIn = shift;
     my $pdbqt = $ligFileIn."qt";
 
-    print "prepare_receptor4.py -r $recFileIn -o $pdbqt" ;
+    print "\nprepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt\n" ;
     system( "prepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt" );
 
 }
@@ -963,7 +963,7 @@ sub prepGPF{
     my $receptor = shift;
     my $gpf = shift;
 
-    print "prepare_gpf4.py -l $pdb -r $receptor -i $opt_b -o $gpf" ;
+    print "\nprepare_gpf4.py -l $pdb -r $receptor -i $opt_b -o $gpf\n" ;
     system( "prepare_gpf4.py -l $pdb -r $receptor -i $opt_b -o $gpf" );
 }
 
@@ -982,7 +982,7 @@ sub prepDPF4 {
     $recFileIn =~ /(\.+)\.pdbqt/;
     $dpfFile .= $1 . ".dpf";
 
-    print "prepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile";
+    print "\nprepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile\n";
     system( "prepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile");
     return $dpfFile;
 }
@@ -1014,7 +1014,7 @@ sub autogridCmd {
         waitpid $gridPid, 0;
         $gridPid = 0;
     }else{
-    print "autogrid4 -p $gpfIn -l $gridLog";
+    print "\nautogrid4 -p $gpfIn -l $gridLog\n";
     exec("autogrid4 -p $gpfIn -l $gridLog");
     } 
    print"autogrid log output written to $gridLog\n\n";
@@ -1034,7 +1034,7 @@ sub autovinaCmd {
         waitpid $dockPid, 0;
         $dockPid = 0;
     }else{
-        print  "vina --config $box --ligand $pdb --receptor $receptor --log $dockLog --out $vinaOut --exhaustiveness 3" ;
+        print  "\nvina --config $box --ligand $pdb --receptor $receptor --log $dockLog --out $vinaOut --exhaustiveness 3\n" ;
         exec( "vina --config $box --ligand $pdb --receptor $receptor --log $dockLog --out $vinaOut --exhaustiveness 3" );
     } 
     print"autodock vina log output written to $dockLog\n\n";
@@ -1056,7 +1056,7 @@ sub autodockCmd {
         waitpid $dockPid, 0;
         $dockPid = 0;
     }else{
-        print "autodock4 -p $dpfIn -l $dockLog" ;
+        print "\nautodock4 -p $dpfIn -l $dockLog\n" ;
         exec( "autodock4 -p $dpfIn -l $dockLog" );
     } 
     print"autodock log output written to $dockLog\n\n";
@@ -1067,12 +1067,12 @@ sub autodockCmd {
 sub parseVina{
     my $out = shift;
 
-    print "vina_split --input $out";
+    print "vina_split --input $out\n";
     exec( "vina_split --input $out");
     my @files = <*ligand*>;
     foreach $file (@files) {
 	$file =~ s{\.[^.]+$}{};    
-	print "babel -ipdbqt $file.pdbqt -opdb $file.pdbqt";
+	print "\nbabel -ipdbqt $file.pdbqt -opdb $file.pdbqt\n";
 	exec ( "babel -ipdbqt $file.pdbqt -opdb $file.pdbqt");
     }
 }
