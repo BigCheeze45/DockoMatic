@@ -116,10 +116,10 @@ public class Job {
     private void setCmd(){
 	   this.cmd = Job.class.getResource("Job.class").getPath();
 	   // Use this one for running DockoMatic OUTSIDE Netbeans.
-           this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("dockomatic/modules/"));
+           this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("modules/"));
 	   ////// Use this one for running DockoMatic INSIDE Netbeans.
            ////this.cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("build/"));
-           this.cmd += "dockomatic/lib/dockOmatic.pl";
+           this.cmd += "lib/dockOmatic.pl";
 
            // Make sure dockOmatic.pl is executable, since Netbeans
 	   //  changes permissions when creating distribution... neat.

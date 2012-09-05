@@ -58,6 +58,7 @@ public final class openerTopComponent extends TopComponent {
     private String lastRecDir = ".";
     private String lastAppendDir = ".";
     private String resChkGpf;
+    private String errorLog = "";
     private static modWizWizardAction act;// = new modWizWizardAction();
     private static openerTopComponent instance;
     private installTest tester;
@@ -719,6 +720,7 @@ public final class openerTopComponent extends TopComponent {
     //protected static void displayMore(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
     //instance.displayActionPerformed(evtOrig);
     //}
+    
     protected static void checkRes(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
         instance.getResCheckInfo();
         instance.avgActionPerformed(evtOrig);
@@ -892,9 +894,6 @@ public final class openerTopComponent extends TopComponent {
 
                 // *** Bulk submit ***
 
-                //cmd = Job.class.getResource("Job.class").getPath();
-                //cmd = this.cmd.substring(this.cmd.indexOf(":")+1, this.cmd.indexOf("dockomatic/modules/"));
-                //cmd += "lib/dockOmatic.pl";
                 try {
                     String base = outDir.getCanonicalPath();
                     String swarmFile = base + "/swarmCmd.txt";
@@ -909,9 +908,6 @@ public final class openerTopComponent extends TopComponent {
                         if (table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")) {
                             ((Job) jobList.get(jobNum)).killJob();
                             messageWindowTopComponent.messageArea.append("Restarting Job " + jobNum + "\n");
-//		        File dir = new File((String)table.getValueAt(rowNums[rowNum], getCol(table, "Output Directory")));
-//		        //dir.delete();
-//		        //dir.mkdir();
                         } else {
                             messageWindowTopComponent.messageArea.append("  Starting Job " + jobNum + "\n");
                             table.setValueAt("Started", rowNums[i], getCol(table, "Status"));
@@ -923,6 +919,8 @@ public final class openerTopComponent extends TopComponent {
                     //System.out.println("USING DOCK CMD: swarm -f " + swarmFile + " -n "+swmJobNum.getText()+" -l walltime=128:00:00");
 
                 } catch (Exception e) {
+                    errorLog = e + "";
+                    messageWindowTopComponent.messageArea.append(errorLog);
                     System.out.println(e);
                 }
 
