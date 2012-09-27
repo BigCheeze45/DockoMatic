@@ -12,6 +12,7 @@ public class Utils {
     public final static String pdb = "pdb";
     public final static String gpf = "gpf";
     public final static String ali = "ali";
+    public final static String txt = "txt";
     
     /*
      * Get the extension of a file.
