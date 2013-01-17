@@ -24,9 +24,6 @@ import org.openide.windows.WindowManager;
 autostore = false)
 public final class openerTopComponent extends TopComponent {
 
-    //Change the JobList to hash?
-    //private ArrayList <Job> jobList = new ArrayList<Job>();
-    //private HashMap <int, Job> jobList = new HashMap<int, Job>();
     private HashMap jobList = new HashMap();
     private ArrayList<String> ligList = new ArrayList<String>();
     private ArrayList<String> recList = new ArrayList<String>();
@@ -38,7 +35,6 @@ public final class openerTopComponent extends TopComponent {
     private JTable table;
     private int currJobNumber = 0;
     private int totalJobs = 0;
-    //private int leftOff = 0;
     private boolean ligFromModeller = false;
     private boolean recFromModeller = false;
     private boolean useVina = false;
@@ -62,24 +58,18 @@ public final class openerTopComponent extends TopComponent {
     private static modWizWizardAction act;// = new modWizWizardAction();
     private static openerTopComponent instance;
     private installTest tester;
+    
     /**
      * path to the icon used by the component and its open action
      */
-    //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
     private static final String PREFERRED_ID = "openerTopComponent";
 
     public openerTopComponent() {
-
         tester = new installTest();
         initComponents();
         setName(NbBundle.getMessage(openerTopComponent.class, "CTL_openerTopComponent"));
         setToolTipText(NbBundle.getMessage(openerTopComponent.class, "HINT_openerTopComponent"));
-        //jPanel7.setVisible(false);
-        //setAppVis(false);
         act = new modWizWizardAction();
-        //setIcon(ImageUtilities.loadImage(ICON_PATH, true));
-
-
     }
 
     protected static void setAppVis(boolean bool) {
@@ -679,9 +669,6 @@ public final class openerTopComponent extends TopComponent {
         instance.pymolActionPerformed(evtOrig);
     }
 
-    //protected static void displayMore(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig){
-    //instance.displayActionPerformed(evtOrig);
-    //}
     protected static void checkRes(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
         instance.getResCheckInfo();
         instance.avgActionPerformed(evtOrig);
@@ -764,6 +751,14 @@ public final class openerTopComponent extends TopComponent {
     private void vinaCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vinaCheckBoxActionPerformed
         if (vinaCheckBox.isSelected()) {
             useVina = true;
+            messageWindowTopComponent.messageArea.append(":::::::::WARNING:::::::::\n"
+                    + "AutoDock Vina has been selected to be "
+                    + "used instead of AutoDock. AutoDock Vina "
+                    + "demands a large number of resources per job, "
+                    + "make sure to specify in the swarm options "
+                    + "that nodes with enough memory (at least 4GB for "
+                    + "each job per node) are selected to be used.\n"
+                    + "::::::::::::::::::::::::::::::::::\n");
         } else {
             useVina = false;
         }
@@ -774,9 +769,7 @@ public final class openerTopComponent extends TopComponent {
         swmCmdOpts.setText("swarm -f swarmCmd.txt -n " + swmJobNum.getText() + " -l walltime=128:00:00");
     }//GEN-LAST:event_swmJobNumKeyReleased
 
-    //private void displayActionPerformed(java.awt.event.MouseEvent evt) {
-    //redisplay();
-    //}
+
     private void pymolActionPerformed(java.awt.event.MouseEvent evt) {
         table = outputGridTopComponent.getSelectedTable();
         model = (DefaultTableModel) table.getModel();
@@ -859,7 +852,7 @@ public final class openerTopComponent extends TopComponent {
                 messageWindowTopComponent.messageArea.append("Selected " + rowCount + " Jobs For Starting\n");
 
                 // *** Bulk submit ***
-
+                
                 try {
                     String base = outDir.getCanonicalPath();
                     String swarmFile = base + "/swarmCmd.txt";
@@ -906,22 +899,16 @@ public final class openerTopComponent extends TopComponent {
         Process proc;
         table = outputGridTopComponent.getSelectedTable();
         int row = table.rowAtPoint(evt.getPoint());
-        //table.setRowSelectionInterval(row, row);
         String out = (String) table.getValueAt(row, getCol(table, "Output Directory"));
         outDirField.setText(out);
 
-        //if(boxCoordField.getText().trim().length() < 1){
         if (resChkGpf.length() < 1) {
             messageWindowTopComponent.messageArea.append("No GPF Supplied... Can't check results.\n");
             return;
         }
-        //String box = boxCoordField.getText().trim();
         String box = resChkGpf;
         String odir = outDirField.getText().trim();
 
-        //String cmd = ClassLoader.getSystemClassLoader().getResource("DNA.png").getPath();
-        //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("DockoMatic.jar"));
-        //cmd = cmd.substring(cmd.indexOf(":")+1, cmd.indexOf("dockOmatic.pl"));
         String cmd = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
         cmd = cmd.substring(cmd.indexOf(":") + 1, cmd.indexOf("modules/"));
         cmd += "lib/scripts/resultCheck.pl";
@@ -1227,31 +1214,6 @@ public final class openerTopComponent extends TopComponent {
 
     }
 
-//    private void redisplay()
-//    {
-//	int stop = leftOff+500;
-//	if( stop > totalJobs) stop = totalJobs;
-//	String lig, dir, rec, box, seq, tmplt, cycles;
-//
-//        for(int i=leftOff; i< stop; i++){
-//		lig = jobList.get(i).getLig();
-//		dir = jobList.get(i).getOut();
-//		rec = jobList.get(i).getRec();
-//		box = jobList.get(i).getBox();
-//		seq = jobList.get(i).getSeq();
-//		tmplt = jobList.get(i).getTplt();
-//		cycles = jobList.get(i).getCycles();
-//
-//                model.addRow(new Object[]{i, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
-//                //model.addRow(new Object[]{i, "a"+i, "b"+i, "c"+i, "d"+i, "e"+i, "f"+i, "g"+i, "h"+i, "i"+i });
-//                //model.addRow(new Object[]{i, lig, "b"+i, "c"+i, "d"+i, "e"+i, "f"+i, "g"+i, "h"+i, "i"+i });
-//
-//
-//	}
-//
-//	leftOff = stop;
-//    }
-//
     // Create new job from supplied arguments.
     private void newJob(String lig, String rec, String box, String dir, String app,
             Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles) {
@@ -1441,7 +1403,6 @@ public final class openerTopComponent extends TopComponent {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
         p.setProperty("version", "1.0");
-        // TODO store your settings
     }
 
     Object readProperties(java.util.Properties p) {
@@ -1454,7 +1415,6 @@ public final class openerTopComponent extends TopComponent {
 
     private void readPropertiesImpl(java.util.Properties p) {
         String version = p.getProperty("version");
-        // TODO read your settings according to their version
     }
 
     @Override
