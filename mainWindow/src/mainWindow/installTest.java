@@ -40,8 +40,7 @@ public class installTest {
             BufferedReader in = new BufferedReader(new InputStreamReader(swarm.getErrorStream()));
             if ((line = in.readLine()).contains("command not found")) {
                 errorLog += "No swarm\n";
-            } else { errorLog += "Yes swarm\n"; }
-
+            }
         } catch (Exception e) {
         }
 
@@ -54,7 +53,7 @@ public class installTest {
             BufferedReader in = new BufferedReader(new InputStreamReader(modeller.getErrorStream()));
             if ((line = in.readLine()) == null) {
                 errorLog += "No modeller\n";
-            } else { errorLog += "Yes modeller\n"; }
+            } 
         } catch (Exception e) {
         }
     }
@@ -66,7 +65,7 @@ public class installTest {
             BufferedReader in = new BufferedReader(new InputStreamReader(pymol.getErrorStream()));
             if ((line = in.readLine()).contains("command not found")) {
                 errorLog += "No pymol\n";
-            } else { errorLog += "Yes pymol\n"; }
+            }
         } catch (Exception e) {
         }
     }
@@ -99,6 +98,5 @@ public class installTest {
 
     private void writeErrors() {
         messageWindowTopComponent.messageArea.append(errorLog);
-        messageWindowTopComponent.messageArea.append("Testing Vina\n");
     }
 }

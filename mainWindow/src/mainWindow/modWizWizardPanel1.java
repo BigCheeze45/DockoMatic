@@ -36,7 +36,7 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
     private Component component;
     private boolean isValid = false;
     private String errorlog;
-    private boolean highlightMe=true;
+    private boolean highlightMe = true;
 
     // Get the visual component for the panel. In this template, the component
     // is kept separate. This can be more efficient: if the wizard is created
@@ -100,11 +100,7 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
         // fireChangeEvent();
         // and uncomment the complicated stuff below.
     }
-//	public final void addChangeListener(ChangeListener l) {
-//	}
-//
-//	public final void removeChangeListener(ChangeListener l) {
-//	}
+    
     private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
 
     public final void addChangeListener(ChangeListener l) {
@@ -193,21 +189,27 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
         if (highlightMe) {
             highlightMe = false;
             SwingUtilities.invokeLater(new Runnable() {
-                public void run() { ((modWizVisualPanel1) getComponent()).seqArea.setText(thisSeq); }
-            });
-        } else { highlightMe = true; }
 
-        int invalidChar = 0;
-        for (int x = 0; x < seq.length(); x++) {
-            if (!(aminoAcids.contains(seq.charAt(x) + ""))) {
-                ((modWizVisualPanel1) getComponent()).highlight(((modWizVisualPanel1) getComponent()).seqArea, seq.charAt(x) + "");
-                invalidChar++;
-            }
+                public void run() {
+                    ((modWizVisualPanel1) getComponent()).seqArea.setText(thisSeq);
+                }
+            });
+        } else {
+            highlightMe = true;
         }
 
-        if (invalidChar > 0) {
-            errorlog = "The sequence contains invalid characters, please revise it. \n";
-            return false;
+        if (!seq.contains(".ali")) {
+            int invalidChar = 0;
+            for (int x = 0; x < seq.length(); x++) {
+                if (!(aminoAcids.contains(seq.charAt(x) + ""))) {
+                    ((modWizVisualPanel1) getComponent()).highlight(((modWizVisualPanel1) getComponent()).seqArea, seq.charAt(x) + "");
+                    invalidChar++;
+                }
+            }
+            if (invalidChar > 0) {
+                errorlog = "The sequence contains invalid characters, please revise it. \n";
+                return false;
+            }
         }
         
         return true;
@@ -215,19 +217,17 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
 
     private String formatSeq(String seq) {
         if (seq.contains(".ali")) {
-            ((modWizVisualPanel1) getComponent()).setSeqName(seq.substring(seq.lastIndexOf("/")+1, seq.indexOf(".ali")));
-            seq = getSeq();
-            seq = seq.substring(0,seq.length()-1);
+            seq = seq.substring(seq.lastIndexOf("/") + 1, seq.length());
+        } else {
+            seq = seq.replace("\n", "");
+            seq = seq.replace(" ", "");
+            seq = seq.replace("\t", "");
+            for (int x = 0; x <= 9; x++) {
+                seq = seq.replace((x + ""), "");
+            }
+            seq = seq.toUpperCase();
         }
-               
-        seq = seq.replace("\n", "");
-        seq = seq.replace(" ", "");
-        seq = seq.replace("\t", "");
-        for (int x = 0; x <= 9; x++) {
-            seq = seq.replace((x + ""), "");
-        }
-        seq = seq.toUpperCase();
-
+        
         return seq;
     }
 
@@ -252,13 +252,13 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
             "'],self.residues['",
             "']))"
         };
-
+        
         String[] diBonds = new String[count];
         for (int i = 0; i < count; i++) {
             tmp = args[i].split("-");
             diBonds[i] = disLine[0] + tmp[0] + disLine[1] + tmp[1] + disLine[2];
         }
-
+        
         return diBonds;
     }
 }
