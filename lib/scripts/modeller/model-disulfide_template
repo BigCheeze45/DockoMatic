@@ -28,7 +28,9 @@ env.io.atom_files_directory = [out, out]
 a = MyModel(env,
             alnfile  = out+'/'+seq+'_pir.ali', # alignment filename
             knowns   = tmpl,              # codes of the templates
-            sequence = seq)              # code of the target
+            sequence = seq,
+            assess_methods=(assess.DOPE, assess.GA341))              # code of the target
+
 a.starting_model= a.ending_model = int(num)  # index of the first model
 #a.starting_model= 1                 # index of the first model
 #a.ending_model  = int(num)                 # index of the last model

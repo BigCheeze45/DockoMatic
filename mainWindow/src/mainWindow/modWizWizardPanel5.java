@@ -465,12 +465,7 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
 
             while ((str = in.readLine()) != null) {
                 String[] vals = str.split("[ ]+");
-
-                if (disulfide) {
-                    model.addRow(new Object[]{vals[0].substring(vals[0].indexOf(":") + 1), dir, vals[1]});
-                } else {
-                    model.addRow(new Object[]{vals[0].substring(vals[0].indexOf(":") + 1), dir, vals[1], vals[2], vals[3]});
-                }
+                model.addRow(new Object[]{vals[0].substring(vals[0].indexOf(":") + 1), dir, vals[1], vals[2], vals[3]});
             }
             in.close();
         } catch (IOException e) {
