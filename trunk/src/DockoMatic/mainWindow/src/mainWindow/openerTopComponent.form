@@ -121,7 +121,7 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -227,7 +227,11 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="ligModCheckBox" alignment="0" min="-2" max="-2" attributes="1"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="useGACheckBox" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="ligModCheckBox" min="-2" max="-2" attributes="1"/>
+                                      </Group>
                                       <Component id="recModCheckBox" alignment="0" min="-2" max="-2" attributes="1"/>
                                   </Group>
                               </Group>
@@ -325,6 +329,7 @@
                               <Component id="ligModCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="LigandButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="ligandField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="useGACheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
@@ -544,6 +549,16 @@
                       <ResourceString bundle="mainWindow/Bundle.properties" key="openerTopComponent.boxCoordField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="useGACheckBox">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="mainWindow/Bundle.properties" key="openerTopComponent.useGACheckBox.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="useGACheckBoxActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
