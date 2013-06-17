@@ -38,6 +38,7 @@ package mainWindow;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -63,11 +64,13 @@ public final class openerTopComponent extends TopComponent {
     private ArrayList<String> appList = new ArrayList<String>();
     private Timer jobTimer;
     private boolean tabFlag = false;
+    private boolean allJobsDone = false;
     private DefaultTableModel model;
     private JTable table;
     private int currJobNumber = 0;
     private int totalJobs = 0;
     private boolean ligFromModeller = false;
+    private boolean useGABool = false;  //tlong
     private boolean recFromModeller = false;
     private boolean useVina = false;
     private boolean ligLstBool = false;
@@ -87,6 +90,7 @@ public final class openerTopComponent extends TopComponent {
     private String lastAppendDir = ".";
     private String resChkGpf;
     private String errorLog = "";
+    private GeneticSearch geneticSrcher; //tlong
     private static modWizWizardAction act;// = new modWizWizardAction();
     private static openerTopComponent instance;
     private installTest tester;
@@ -154,13 +158,14 @@ public final class openerTopComponent extends TopComponent {
         boxCoordCheckBox = new javax.swing.JCheckBox();
         boxCoordButton = new javax.swing.JButton();
         boxCoordField = new javax.swing.JTextField();
+        useGACheckBox = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(825, 595));
 
-        jPanel8.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        jPanel8.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel8.setPreferredSize(new java.awt.Dimension(393, 133));
 
         org.openide.awt.Mnemonics.setLocalizedText(newTabChBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.newTabChBox.text")); // NOI18N
@@ -217,7 +222,7 @@ public final class openerTopComponent extends TopComponent {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -236,7 +241,7 @@ public final class openerTopComponent extends TopComponent {
                 .addContainerGap())
         );
 
-        jPanel9.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        jPanel9.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel9.setPreferredSize(new java.awt.Dimension(393, 133));
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel1.text")); // NOI18N
@@ -337,6 +342,13 @@ public final class openerTopComponent extends TopComponent {
 
         boxCoordField.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.boxCoordField.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(useGACheckBox, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.useGACheckBox.text")); // NOI18N
+        useGACheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                useGACheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -350,7 +362,10 @@ public final class openerTopComponent extends TopComponent {
                             .addComponent(receptorCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ligModCheckBox)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(useGACheckBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ligModCheckBox))
                             .addComponent(recModCheckBox)))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -373,35 +388,35 @@ public final class openerTopComponent extends TopComponent {
                 .addContainerGap())
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(dockCycles)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(vinaCheckBox)
-                .addGap(435, 435, 435))
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jSeparator2)
-                        .addContainerGap())
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(outDirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(dockCycles)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(outDirField)
-                        .addContainerGap())
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jSeparator3)
-                        .addContainerGap())
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jSeparator4)
-                        .addContainerGap())
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jSeparator5)
-                        .addContainerGap())
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jSeparator6)
-                        .addContainerGap())))
+                        .addComponent(vinaCheckBox)
+                        .addGap(435, 435, 435))
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addComponent(jSeparator2)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addComponent(outDirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(outDirField)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addComponent(jSeparator3)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addComponent(jSeparator4)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addComponent(jSeparator5)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addComponent(jSeparator6)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,7 +440,8 @@ public final class openerTopComponent extends TopComponent {
                     .addComponent(ligandCheckBox)
                     .addComponent(ligModCheckBox)
                     .addComponent(LigandButton)
-                    .addComponent(ligandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ligandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(useGACheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -720,6 +736,7 @@ public final class openerTopComponent extends TopComponent {
         int max = outputGridTopComponent.outGridTPane.getTabCount();
         int jobNum;
         int row = 0;
+        allJobsDone = true;  //temporarily set to true, set to false if at least one job is not done
 
         for (int j = 0; j < max; j++) {
             table = outputGridTopComponent.getTabTable(j);
@@ -751,11 +768,21 @@ public final class openerTopComponent extends TopComponent {
                             doSecondaryJob(jobNum);
                         }
                     }
+                    else //done does not exist
+                        allJobsDone = false;
                 }
+
 
             } catch (java.lang.ArrayIndexOutOfBoundsException e) {
                 messageWindowTopComponent.messageArea.append("INVALID ROW SELECTED FOR CHECKING STATUS row [" + row + "]\n");
             }
+        }
+        
+        if(allJobsDone)
+        {
+            System.out.println("All jobs are done, lets start over");
+           // geneticSrcher.updateFitness(getEnergies());
+            //makeJobs();
         }
     }//GEN-LAST:event_checkStatusButtonActionPerformed
 
@@ -800,6 +827,10 @@ public final class openerTopComponent extends TopComponent {
     private void swmJobNumKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_swmJobNumKeyReleased
         swmCmdOpts.setText("swarm -f swarmCmd.txt -n " + swmJobNum.getText() + " -l walltime=128:00:00");
     }//GEN-LAST:event_swmJobNumKeyReleased
+
+    private void useGACheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useGACheckBoxActionPerformed
+        useGABool = useGACheckBox.isSelected();
+    }//GEN-LAST:event_useGACheckBoxActionPerformed
 
 
     private void pymolActionPerformed(java.awt.event.MouseEvent evt) {
@@ -989,6 +1020,74 @@ public final class openerTopComponent extends TopComponent {
         //if(subNum > 0)  ++subNum;
         currJobNumber = subNum + 1;
     }
+    
+    
+    private double[] getEnergies()
+    {
+      double[] results = new double[ligList.size()];
+
+      for( int i = 0; i < ligList.size(); i++)
+        results[i] = getEstBindingEnergy(currJobNumber-ligList.size()+i);  //double check that this works as planned
+
+      return results;
+    }
+
+    private double getEstBindingEnergy(int id)
+    {
+        String outPath = outDirField.getText().trim() + "/dock_" + id;   
+
+        try{
+
+            File outputDirectory = new File(outPath);
+            String[] contents = outputDirectory.list(); //get names of all files in the directory
+            String rank1_File = outPath + "/";
+
+            //go through all files in directory
+            for(int j = 0; j < contents.length; j++)
+            {
+              if(contents[j].matches(".*?rank_1.pdb"))  // Use regular expression to find the one that we want
+              {
+                rank1_File += contents[j]; //create file name
+                break;
+              }
+            } //maybe need to handle case where rank_1 does not exist
+
+            Scanner scan = new Scanner(new File(rank1_File));
+
+            scan.nextLine(); scan.nextLine();   //ignore first two lines
+            String lineOfInterest = scan.nextLine();
+
+            return parseNum(lineOfInterest);
+
+        }catch (FileNotFoundException e){System.out.println("File was not found");}
+
+        return -1;  //problem if this actually happens
+    }
+
+
+    //Line will be of the form: Estimated Free Energy of Binding    =   +2.10 kcal/mol  [=(1)+(2)+(3)-(4)]
+    private double parseNum(String line)
+      {
+        Scanner scan = new Scanner(line);
+        scan.useDelimiter("=");
+        scan.next(); //ignore first token
+
+        String data = scan.next();
+        int lowerIndex = 0;
+        int upperIndex = 0;
+
+        for(int i = 0; i < data.length(); i++)
+        {
+          if(data.charAt(i) == '+' || data.charAt(i) == '-')
+              lowerIndex = i;
+          else if(data.charAt(i) == 'k') //kcal/mol
+          {
+            upperIndex = i; break;
+          }
+        }
+
+        return Double.parseDouble(data.substring(lowerIndex,upperIndex));
+      }
 
     private String getCmd(int row) {
         String seq, tmplt, lig, odir, rec, bc, appd, cyc;
@@ -1059,6 +1158,15 @@ public final class openerTopComponent extends TopComponent {
             model = (DefaultTableModel) outputGridTopComponent.newTabb();
         } else {
             model = (DefaultTableModel) outputGridTopComponent.getSelectedTab();
+        }
+        
+        //tlong
+        //If doing a GA search ... hard-code parameters just for the mean time
+        if(useGABool && geneticSrcher == null)
+        {
+            int[] sites = {5,9,10,11,12,15}; //hardcoded for mini experiment
+            String[] subPools = {"RNDEQHKSTYC","RNDEQHKSTYC","AGILMFWVP","RNDEQHKSTYC", "RNDEQHKSTYC","AGILMFWVP"}; //hard-coded for now
+            geneticSrcher = new GeneticSearch(sites, "NHLEHL",subPools,"/home/rjacob/MIIScreen/MII.pdb",'P');
         }
 
         //createTmpFiles();
@@ -1149,7 +1257,10 @@ public final class openerTopComponent extends TopComponent {
                     ligCount++;
                 }
                 in.close();
-            } else {
+            }else if(useGABool){
+                ligList.addAll(geneticSrcher.generate());
+                ligCount = ligList.size();
+            }else {
                 ligList.add(ligandField.getText().trim());
                 ligCount++;
             }
@@ -1381,6 +1492,7 @@ public final class openerTopComponent extends TopComponent {
     private javax.swing.JTextField receptorField;
     private javax.swing.JTextField swmCmdOpts;
     private javax.swing.JTextField swmJobNum;
+    private javax.swing.JCheckBox useGACheckBox;
     private javax.swing.JCheckBox vinaCheckBox;
     // End of variables declaration//GEN-END:variables
 
