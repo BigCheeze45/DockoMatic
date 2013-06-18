@@ -780,7 +780,7 @@ public final class openerTopComponent extends TopComponent {
         
         if(allJobsDone)
         {
-            System.out.println("All jobs are done, lets start over");
+            System.out.println("All jobs are done");
            // geneticSrcher.updateFitness(getEnergies());
             //makeJobs();
         }
