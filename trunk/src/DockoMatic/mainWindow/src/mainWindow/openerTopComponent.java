@@ -70,6 +70,7 @@ public final class openerTopComponent extends TopComponent {
     private int currJobNumber = 0;
     private int totalJobs = 0;
     private boolean ligFromModeller = false;
+    private boolean mutationsTest = false;  //tlong
     private boolean useGABool = false;  //tlong
     private boolean recFromModeller = false;
     private boolean useVina = false;
@@ -90,7 +91,7 @@ public final class openerTopComponent extends TopComponent {
     private String lastAppendDir = ".";
     private String resChkGpf;
     private String errorLog = "";
-    private GeneticSearch geneticSrcher; //tlong
+    private mutationOptionsTopComponent mutationWindow;
     private static modWizWizardAction act;// = new modWizWizardAction();
     private static openerTopComponent instance;
     private installTest tester;
@@ -619,6 +620,36 @@ public final class openerTopComponent extends TopComponent {
             receptorField.setText(file);
         }
     }//GEN-LAST:event_receptorButtonActionPerformed
+    
+        //tlong added
+//    private void MutationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+//        if(MutationsCheckBox.isSelected())
+//        {
+//            if(ligandField.getText().trim().equals("") || receptorField.getText().trim().equals("") || boxCoordField.getText().trim().equals(""))
+//            {
+//                messageWindowTopComponent.messageArea.append("Please specify a ligand, a receptor, and box coordinates in the appropriate fields above.\n");
+//                MutationsCheckBox.setSelected(false);
+//            }
+//            else
+//            {
+//                mutationWindow = new mutationOptionsTopComponent();
+//                if(mutationWindow.setFullSequence(ligandField.getText().trim()))
+//                {
+//                    mutationsTest = true; //tlong   Open new tab
+//                    mutationWindow.open();
+//                    mutationWindow.requestActive();
+//                }
+//                else
+//                {
+//                    messageWindowTopComponent.messageArea.append("Unable to determine the amino acid sequence from the ligand's pdb file.\n" +
+//                                                                "Please make sure that it contains the necessary SEQRES lines before trying again.\n");
+//                    MutationsCheckBox.setSelected(false);
+//                }
+//            }
+//        }
+//        else
+//            mutationsTest = false;
+//    } 
 
     private void boxCoordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCoordButtonActionPerformed
         String file;
@@ -1159,15 +1190,6 @@ public final class openerTopComponent extends TopComponent {
         } else {
             model = (DefaultTableModel) outputGridTopComponent.getSelectedTab();
         }
-        
-        //tlong
-        //If doing a GA search ... hard-code parameters just for the mean time
-        if(useGABool && geneticSrcher == null)
-        {
-            int[] sites = {5,9,10,11,12,15}; //hardcoded for mini experiment
-            String[] subPools = {"RNDEQHKSTYC","RNDEQHKSTYC","AGILMFWVP","RNDEQHKSTYC", "RNDEQHKSTYC","AGILMFWVP"}; //hard-coded for now
-            geneticSrcher = new GeneticSearch(sites, "NHLEHL",subPools,"/home/rjacob/MIIScreen/MII.pdb",'P');
-        }
 
         //createTmpFiles();
         int count = readTmpFiles();
@@ -1257,8 +1279,8 @@ public final class openerTopComponent extends TopComponent {
                     ligCount++;
                 }
                 in.close();
-            }else if(useGABool){
-                ligList.addAll(geneticSrcher.generate());
+            }else if(mutationsTest){ //tlong use exhaustive list
+                ligList = mutationWindow.generateExhaustiveList(ligandField.getText().trim());
                 ligCount = ligList.size();
             }else {
                 ligList.add(ligandField.getText().trim());
