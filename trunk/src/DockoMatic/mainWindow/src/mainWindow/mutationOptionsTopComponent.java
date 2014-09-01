@@ -87,7 +87,6 @@ preferredID = "mutationOptionsTopComponent")
 public final class mutationOptionsTopComponent extends TopComponent {
 
     private boolean exhaustiveSearch;
-    private GeneticSearch genSearch;
     private int[] sub_sites;
     private String[] sub_Pools;
     private String origSiteAcids;
@@ -738,11 +737,6 @@ public final class mutationOptionsTopComponent extends TopComponent {
     //public void setDockParams(int cyc, File outDir, int currJobNum, String ligFile, String recFile, String boxFile, String swarmCmd)
     public void updateDockParams(int cyc, File outDir, int currJobNum, String ligFile, String recFile, String boxFile, String swarmCmd) {
         //TODO change  :  genSearch.setDockParams(cyc, outDir, currJobNum, ligFile, recFile, boxFile, swarmCmd);
-    }
-
-    public void beginGA() {
-        //messageWindowTopComponent.messageArea.append("Starting Genetic Algorithm\n");
-        genSearch.run();
     }
 
     public boolean isExhaustive() {

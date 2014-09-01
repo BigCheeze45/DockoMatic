@@ -38,12 +38,16 @@ package mainWindow;
 
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.logging.Logger;
+import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-//import org.openide.util.ImageUtilities;
-import org.netbeans.api.settings.ConvertAsProperties;
 
 /**
  * Top component which displays something.
@@ -56,9 +60,16 @@ public final class messageWindowTopComponent extends TopComponent {
 	/** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
 	private static final String PREFERRED_ID = "messageWindowTopComponent";
+        private static BufferedWriter logWriter;
+        private final static String logFile = "tmp.txt"; //TODO
 
 	public messageWindowTopComponent() {
 		initComponents();
+                try{
+                    logWriter = new BufferedWriter(new FileWriter(new File(logFile), true));
+                }catch(IOException ex){
+                    writeToLog(ex.getMessage());
+                }
 		setName(NbBundle.getMessage(messageWindowTopComponent.class, "CTL_messageWindowTopComponent"));
 		setToolTipText(NbBundle.getMessage(messageWindowTopComponent.class, "HINT_messageWindowTopComponent"));
 		jScrollPane1.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener(){
@@ -204,4 +215,29 @@ public final class messageWindowTopComponent extends TopComponent {
 	protected String preferredID() {
 		return PREFERRED_ID;
 	}
+        
+        public static void appendText(String text){
+            messageArea.append(text);
+            writeToLog(text);
+        }
+        
+        public static void clearText(){
+            messageArea.setText("");
+        }
+        
+        public static void writeToLog(String message){
+            Calendar cal = Calendar.getInstance();
+
+            try{
+                if(logWriter != null){
+                    logWriter.write(cal.getTime() + "\t\t"+message + "\n");
+                    logWriter.flush();
+                }else{
+                    System.err.println("Failed to write to log file.\n" + message);
+                }
+            }catch(IOException ex){
+                messageArea.append(ex.getMessage());
+            }
+    }
+
 }

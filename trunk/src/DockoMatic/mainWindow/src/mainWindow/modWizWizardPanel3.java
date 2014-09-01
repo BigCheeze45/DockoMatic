@@ -36,6 +36,7 @@
  */
 package mainWindow;
 
+import utilities.Job;
 import java.awt.Component;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -214,9 +215,8 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
                 ++ret;
             }
             in.close();
-        } catch (Exception e) {
-            //e.printStackTrace();
-            System.out.println("Tried to count lines in nonexistent file: " + file + " ... returning 0.");
+        } catch (IOException e) {
+            System.err.println("Tried to count lines in nonexistent file: " + file + " ... returning 0.");
         }
         return ret;
 
@@ -238,7 +238,7 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
     private int getResiduals(String[] jList, String oDir) {
         int ret = 0;
         String str = "";
-        String file = oDir + "/alLog";
+        String file = oDir + File.separator+"alLog";
         if (countLines(file) == 0) {
             return 0;
         }
@@ -274,11 +274,11 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
             swarmDir.delete();
             swarmDir.mkdir();
             swarmDir.deleteOnExit();
-            String swarmFile = swarmDir.getCanonicalPath() + "/swarmAlignCmd";
+            String swarmFile = swarmDir.getCanonicalPath() + File.separator+"swarmAlignCmd";
             errorLog = "";
 
             //remove old resLog file
-            String logFile = oDir + "/alLog";
+            String logFile = oDir + File.separator+"alLog";
             File alLog = new File(logFile);
             alLog.delete();
             
@@ -286,7 +286,7 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
             BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
             for (i = 0; i < totalCount; i++) {
                 modellerCMD += jobList[i] + "\n";
-                messageWindowTopComponent.messageArea.append("Starting Align Job " + i + "\n");
+                messageWindowTopComponent.appendText("Starting Align Job " + i + "\n");
             }
             swarmOut.write(modellerCMD);
             swarmOut.close();
@@ -297,7 +297,7 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
                 errorLog += line + "\n";
             }
             messageWindowTopComponent.messageArea.setText("");
-            messageWindowTopComponent.messageArea.append(errorLog);
+            messageWindowTopComponent.appendText(errorLog);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -341,8 +341,8 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
 
     private String[] createAlignJobString(String seqName, String oDir, String[] tmpltList, boolean swarm, int max) {
         String cmd = Job.class.getResource("Job.class").getPath();
-        cmd = cmd.substring(cmd.indexOf(":") + 1, cmd.indexOf("modules/"));
-        cmd += "lib/scripts/modeller/align2d.py";
+        cmd = cmd.substring(cmd.indexOf(":") + 1, cmd.indexOf("modules"+File.separator));
+        cmd += "lib"+File.separator+"scripts"+File.separator+"modeller"+File.separator+"align2d.py";
         // Make sure model-disulfide.py is executable, since Netbeans
         //  changes permissions when creating distribution... neat.
         File tmpfile = new File(cmd);
@@ -383,11 +383,11 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
     private String getPdbTmpltFile(String odir, String pdb) {
 
         // If using local template, don't download... Copy to output directory.
-        messageWindowTopComponent.messageArea.append("Downloading Template file\n");
+        messageWindowTopComponent.appendText("Downloading Template file\n");
         pdb = pdb.replaceAll(":", "_");
         if (pdb.endsWith("pdb")) {
             //String tmpPdb = pdb.substring(pdb.lastIndexOf("/")+1, pdb.indexOf(":"));
-            String tmpPdb = pdb.substring(pdb.lastIndexOf("/") + 1, pdb.length());
+            String tmpPdb = pdb.substring(pdb.lastIndexOf(File.separator) + 1, pdb.length());
             //Copy file to odir
             try {
                 InputStream in = new FileInputStream(pdb);
@@ -447,7 +447,7 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
 
     private void parseResults(final String dir, final int max) {
         String str;
-        String logFile = dir + "/alLog";
+        String logFile = dir + File.separator +"alLog";
         DefaultTableModel model = (DefaultTableModel) ((modWizVisualPanel3) getComponent()).getTableModel();
 
         while (!isItDone(logFile, max)) {
@@ -458,7 +458,7 @@ public class modWizWizardPanel3 implements WizardDescriptor.Panel, ListSelection
             }
         }
 
-        messageWindowTopComponent.messageArea.append("Parsing Align Results\n");
+        messageWindowTopComponent.appendText("Parsing Align Results\n");
         try {
             BufferedReader in = new BufferedReader(new FileReader(logFile));
 

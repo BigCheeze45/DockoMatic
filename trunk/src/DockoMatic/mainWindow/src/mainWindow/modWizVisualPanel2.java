@@ -39,6 +39,7 @@ package mainWindow;
 import java.awt.Desktop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -332,7 +333,7 @@ public final class modWizVisualPanel2 extends JPanel {
 	private void browseTmpltButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseTmpltButtonActionPerformed
             DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
 
-            String file = getFileChoose("~/");
+            String file = getFileChoose("~" + File.separator);
             tm.addRow(new Object[]{file});
 
 	}//GEN-LAST:event_browseTmpltButtonActionPerformed
@@ -344,7 +345,7 @@ public final class modWizVisualPanel2 extends JPanel {
             try {
                 dt.browse(new java.net.URI("http://www.pdb.org/pdb/explore/explore.do?structureId=" + tmplts[i].substring(0, tmplts[i].indexOf(":"))));
             } catch (Exception e) {
-                System.out.println("CAUGHT EXCEPTION: " + e);
+                messageWindowTopComponent.appendText("Exception thrown: " + e);
             }
 
         }

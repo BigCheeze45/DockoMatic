@@ -43,21 +43,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
-import org.pdb.webservices.PdbWebService;
-import org.pdb.webservices.PdbWebServiceServiceLocator;
 
 public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListener {
 
@@ -111,7 +106,7 @@ public class modWizWizardPanel1 implements WizardDescriptor.Panel, DocumentListe
             setValid(true);
         } else {
             setValid(false);
-            messageWindowTopComponent.messageArea.append(errorlog);
+            messageWindowTopComponent.appendText(errorlog);
         }
     }
 

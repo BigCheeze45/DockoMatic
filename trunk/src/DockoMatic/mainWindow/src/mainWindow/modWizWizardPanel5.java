@@ -36,6 +36,7 @@
  */
 package mainWindow;
 
+import utilities.Job;
 import java.awt.Component;
 import java.io.*;
 import java.util.HashSet;
@@ -243,7 +244,7 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
 //                errorLog += line + "\n";
 //            }
 //            messageWindowTopComponent.messageArea.setText("");
-//            messageWindowTopComponent.messageArea.append(errorLog);
+//            messageWindowTopComponent.appendText(errorLog);
 //
 //
 //        } catch (Exception e) {
@@ -279,7 +280,7 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
             for (i = 0; i < totalCount; i++) {
                 modellerCMD += jobList[i] + "\n";
-                messageWindowTopComponent.messageArea.append("Starting Modeller Job " + i + "\n");
+                messageWindowTopComponent.appendText("Starting Modeller Job " + i + "\n");
             }
             swarmOut.write(modellerCMD);
             swarmOut.close();
@@ -291,7 +292,7 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
                 errorLog += line + "\n";
             }
             messageWindowTopComponent.messageArea.setText("");
-            messageWindowTopComponent.messageArea.append(errorLog);
+            messageWindowTopComponent.appendText(errorLog);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -459,7 +460,7 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             } catch (InterruptedException ie) {
             }
         }
-        messageWindowTopComponent.messageArea.append("Parsing Modeller Results\n");
+        messageWindowTopComponent.appendText("Parsing Modeller Results\n");
         try {
             BufferedReader in = new BufferedReader(new FileReader(logFile));
 
