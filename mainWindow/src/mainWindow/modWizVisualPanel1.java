@@ -37,6 +37,7 @@
 package mainWindow;
 
 import java.awt.Color;
+import java.io.File;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -47,6 +48,7 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.JTextComponent;
+import utilities.ExtensionFileFilter;
 
 public final class modWizVisualPanel1 extends JPanel {
     private DefaultTableModel model;
@@ -281,7 +283,7 @@ public final class modWizVisualPanel1 extends JPanel {
         javax.swing.JFileChooser fc = new javax.swing.JFileChooser(lastDir);
         fc.setDialogTitle(title);
         fc.setAcceptAllFileFilterUsed(false);
-        fc.addChoosableFileFilter(new ALIFilter());
+        fc.addChoosableFileFilter(new ExtensionFileFilter(ExtensionFileFilter.ali));
         fc.setAcceptAllFileFilterUsed(true);
         fc.setFileSelectionMode(javax.swing.JFileChooser.FILES_ONLY);
         int retval = fc.showOpenDialog(this);
@@ -385,13 +387,13 @@ public final class modWizVisualPanel1 extends JPanel {
     }
 
 	private void seqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seqButtonActionPerformed
-		String file = getALIChoose("./", "Select Sequence File");
+		String file = getALIChoose("."+File.separator, "Select Sequence File");
 		if(file != null)
 			seqArea.setText(file);
 }//GEN-LAST:event_seqButtonActionPerformed
 
 	private void outDirButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outDirButton1ActionPerformed
-		String dir = getDirChoose("./");
+		String dir = getDirChoose("." + File.separator);
 		if(dir != null){
 			//lastOutDir = dir;
 			outDirField1.setText(dir);

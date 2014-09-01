@@ -39,6 +39,7 @@ package mainWindow;
 import java.awt.Component;
 import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -51,8 +52,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
-import org.pdb.webservices.PdbWebService;
-import org.pdb.webservices.PdbWebServiceServiceLocator;
 
 public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelectionListener {
 
@@ -166,8 +165,8 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelection
             BufferedReader in = new BufferedReader(new FileReader(fname));
             while (true) {
 
-                while (!((str = in.readLine()).contains("name")) && in.ready()) {
-                }
+                while (!((str = in.readLine()).contains("name")) && in.ready()) {}
+                
                 if (!in.ready()) {
                     break;
                 }
@@ -193,6 +192,9 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelection
 
                 // The lowest E Value should be first in list, but just in case...
                 tmpLowStr = vals1[1].substring(vals1[1].indexOf("=") + 2); //E Value
+                if(tmpLowStr.charAt(0) == 'e'){
+                    tmpLowStr = "1" + tmpLowStr;  //prepend a one, data was lost in html document
+                }
                 tmpLow1 = Double.parseDouble(tmpLowStr);
                 if ((count = model.getRowCount()) == 0 || tmpLow1 < tmpLow2) {
                     tmpLow2 = tmpLow1;
@@ -223,7 +225,8 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelection
             }
             in.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            messageWindowTopComponent.appendText("Error when parsing BLAST results: " + e.getMessage());
+//            e.printStackTrace();
         }
 
     }
@@ -263,7 +266,7 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelection
             @Override
             protected String doInBackground() {
                 lookupAlgnmnts(seq, oDir);
-                parseResults(oDir + "/MyBlastResults.html");
+                parseResults(oDir + File.separator+"MyBlastResults.html");
                 modWizVisualPanel2.getTempltMessage.setVisible(false);
                 modWizVisualPanel2.moreInfoLabel.setVisible(true);
                 if (auto) {
@@ -275,24 +278,70 @@ public class modWizWizardPanel2 implements WizardDescriptor.Panel, ListSelection
         getAlWorker.execute();
     }
 
+//    private void lookupAlgnmnts(final String seq, final String outDir) {
+//
+//        PdbWebServiceServiceLocator locator = new PdbWebServiceServiceLocator();
+//        try {
+//            String _url = "http://www.pdb.org/pdb/services/pdbws";
+//            URL url = new URL(_url);
+//            PdbWebService p = locator.getpdbws(url);
+//            String output = p.blastPDB(seq, 10, "BLOSUM62", "HTML");
+//            String outName = outDir + File.separator + "MyBlastResults.html";
+//            File outputFile = new File(outName);
+//            PrintStream printer = new PrintStream(outputFile);
+//
+//            printer.print(output);
+//            printer.flush();
+//            printer.close();
+//
+//        } catch (Exception _e) {
+//            _e.printStackTrace();
+//        }
+//    }
+    
     private void lookupAlgnmnts(final String seq, final String outDir) {
 
-        PdbWebServiceServiceLocator locator = new PdbWebServiceServiceLocator();
-        try {
-            String _url = "http://www.pdb.org/pdb/services/pdbws";
-            URL url = new URL(_url);
-            PdbWebService p = locator.getpdbws(url);
-            String output = p.blastPDB(seq, 10, "BLOSUM62", "HTML");
-            String outName = outDir + File.separator + "MyBlastResults.html";
-            File outputFile = new File(outName);
-            PrintStream printer = new PrintStream(outputFile);
+        String SERVICELOCATION="http://www.rcsb.org/pdb/rest/postBLAST";
+         
+        String param1 = "sequence="+seq;
+        String param2 = "eCutOff=10.0";     
+        String param3 = "matrix=BLOSUM62"; 
+        String param4 = "outputFormat=HTML";  // HTML or XML. If not specified, default to plain text 
+         
+         try {
+         // Send the request 
+         URL url = new URL(SERVICELOCATION);
+         URLConnection conn = url.openConnection();
+         conn.setDoOutput(true); 
+         BufferedWriter out = new BufferedWriter( new OutputStreamWriter( conn.getOutputStream()) );
+         
+         // Write parameters 
+         out.write(param1);
+         out.write("&");
+         out.write(param2);
+         out.write("&");
+         out.write(param3);
+         out.write("&");
+         out.write(param4);
+         out.flush();
+         out.close();
+         
+         // write the response to file
+         BufferedReader in = new BufferedReader( new InputStreamReader( conn.getInputStream()) );
+         File outputFile = new File(outDir,"MyBlastResults.html");
+         PrintStream printer = new PrintStream(outputFile);
 
-            printer.print(output);
-            printer.flush();
-            printer.close();
-
-        } catch (Exception _e) {
-            _e.printStackTrace();
-        }
+         String line;
+         while ( (line = in.readLine()) != null ) {
+            printer.println(line);
+         }
+         in.close();
+         printer.flush();
+         printer.close();
+      }
+      catch (Exception ex) {
+         ex.printStackTrace();
+      }
+         
     }
 }

@@ -349,7 +349,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
             table.removeRowSelectionInterval(row, row);
             //table.setValueAt(false, row, getCol("ACTION"));
         }
-        if (e.isPopupTrigger()) {
+        if (e.getButton() == MouseEvent.BUTTON3) {
             //jpop.show(e.getComponent(), e.getX(), e.getY());
             makePopMenu(e);
             return;

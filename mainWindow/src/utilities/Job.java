@@ -35,7 +35,7 @@
  * and open the template in the editor.
  */
 
-package mainWindow;
+package utilities;
 
 import java.io.*;
 
@@ -197,7 +197,7 @@ public class Job {
 
     // Gets swarm ID from path of swarm command file.
     private String getSwarmID(){
-        String dir = this.outDir + "/.swarm";
+        String dir = this.outDir + File.separator+".swarm";
         File swarmDir = new File(dir);
         File[] swmFiles = swarmDir.listFiles();
 
@@ -207,7 +207,7 @@ public class Job {
 
     // Runs job on system exec'ing an instance.
     public void runJob(boolean wait){
-	    System.out.println("STARTTING JOB");
+	    System.out.println("STARTING JOB");
 	    int ret=0;
         setCmd();
 
