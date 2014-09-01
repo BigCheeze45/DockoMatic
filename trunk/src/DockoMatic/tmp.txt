@@ -1,0 +1,6 @@
+Tue Aug 26 10:33:28 MDT 2014		Beginning Genetic Algorithm
+Tue Aug 26 10:54:10 MDT 2014		Setting the Lower Index to the minimum value of 1.
+
+Tue Aug 26 10:54:10 MDT 2014		Setting the maximum Upper Index to 16
+
+Tue Aug 26 10:54:42 MDT 2014		Beginning Genetic Algorithm

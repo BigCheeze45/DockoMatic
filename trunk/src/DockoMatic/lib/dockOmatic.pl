@@ -149,12 +149,6 @@ my $enwRecept;
 my $tmpBox;
 $opt_o = ".";
 
-$mgllocation = `which adt`;
-$len = length($mgllocation);
-$mgllocation = substr $mgllocation, 0, ($len-9);
-$mgllocation = "$mgllocation/MGLToolsPckgs/AutoDockTools/Utilities24";
-
-
 ###  Start Of Code  Get Command Line Arg & call createLigand if applicable  ### 
 
     getopts ('kvho:g:p:r:b:a:m:t:');
@@ -946,8 +940,8 @@ sub prepRec {
     my $recFileIn = shift;
     my $pdbqt = $recFileIn."qt";
 
-    print "\n$mgllocation/prepare_receptor4.py -r $recFileIn -o $pdbqt\n" ;
-    system("$mgllocation/prepare_receptor4.py -r $recFileIn -o $pdbqt" );
+    print "\nprepare_receptor4.py -r $recFileIn -o $pdbqt\n" ;
+    system("prepare_receptor4.py -r $recFileIn -o $pdbqt" );
 
 }
 
@@ -957,8 +951,10 @@ sub prepLig {
 
     my $ligFileIn = shift;
     my $pdbqt = $ligFileIn."qt";
-	print "\n$mgllocation/prepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt\n" ;
-	system( "$mgllocation/prepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt" );
+
+    print "\nprepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt\n" ;
+    system( "prepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt" );
+
 }
 
 # Calls MGLTools script to prepare the gpf file.
@@ -967,8 +963,8 @@ sub prepGPF{
     my $receptor = shift;
     my $gpf = shift;
 
-    print "\n$mgllocation/prepare_gpf4.py -l $pdb -r $receptor -i $opt_b -o $gpf\n" ;
-    system( "$mgllocatio/prepare_gpf4.py -l $pdb -r $receptor -i $opt_b -o $gpf" );
+    print "\nprepare_gpf4.py -l $pdb -r $receptor -i $opt_b -o $gpf\n" ;
+    system( "prepare_gpf4.py -l $pdb -r $receptor -i $opt_b -o $gpf" );
 }
 
 # Calls MGLTools script to prepare the dpf file.
@@ -986,8 +982,8 @@ sub prepDPF4 {
     $recFileIn =~ /(\.+)\.pdbqt/;
     $dpfFile .= $1 . ".dpf";
 
-    print "\n$mgllocation/prepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile\n";
-    system( "$mgllocation/prepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile");
+    print "\nprepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile\n";
+    system( "prepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile");
     return $dpfFile;
 }
 
