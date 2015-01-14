@@ -50,7 +50,7 @@ public final class MappingWizardAction implements ActionListener {
     private String paramTemplate;
     private String swarmCmdOpts;
     private int numNodes;
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         List<WizardDescriptor.Panel<WizardDescriptor>> panels = new ArrayList<WizardDescriptor.Panel<WizardDescriptor>>();
@@ -83,7 +83,7 @@ public final class MappingWizardAction implements ActionListener {
             outputDir = (String) wiz.getProperty(OUTPUT_FOLDER);
             numNodes = (Integer) wiz.getProperty(NUM_SWARM_CMDS);
             
-            swarmCmdOpts = "-n " + numNodes + " " + (String) wiz.getProperty(SWARM_CMD_OPTIONS);
+            swarmCmdOpts = (String) wiz.getProperty(SWARM_CMD_OPTIONS);
             
             String mode = "";
             if((Boolean)wiz.getProperty(USE_SHAPE_DIST)){

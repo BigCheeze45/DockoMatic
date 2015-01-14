@@ -26,21 +26,11 @@ import org.openide.util.Exceptions;
  */
 public class ClusterDaemon {
 
-    /*
-     TODO
-     These need to be put in a configuration file and read in.  Don't want to have to recompile the code in order to change 
-     this stuff.
-     */
-//    private long sleepTime = 120000;  //TODO make at least this line configurable ... maybe next 3 lines as well
-//    private int maxCycles = 20;  //wait at most 8 cycles before giving up progress as lost
-//    private final static double SIM_THRESHOLD = .01;    
-//    private int max_retries = 2;
-//    private int max_write_attempts = 8;
-    final static String SLEEP_TIME = "sleep_time";
-    final static String MAX_WAIT_CYCLES = "max_wait_cycles";
-    final static String MAX_RETRIES = "max_retries";
-    final static String MAX_WRITE_ATTEMPTS = "max_write_attempts";
-    final static String KMEANS_CYCLES = "kMeans_cyles";
+    public final static String SLEEP_TIME = "sleep_time";
+    public final static String MAX_WAIT_CYCLES = "max_wait_cycles";
+    public final static String MAX_RETRIES = "max_retries";
+    public final static String MAX_WRITE_ATTEMPTS = "max_write_attempts";
+    public final static String KMEANS_CYCLES = "kMeans_cyles";
 
     static HashMap<String, String> configurations;
 
@@ -57,10 +47,8 @@ public class ClusterDaemon {
 
     public final static String MAIN_FOLDER = ".project_folder";
 
-    public ClusterDaemon(boolean verbosity,File config_file, File dataFolder, File projectFolder, File outputFolder, int numProcesses, String sim_metric,
+    public ClusterDaemon(boolean verbosity, File dataFolder, File projectFolder, File outputFolder, int numProcesses, String sim_metric,
             int[] numClusters) {
-
-        setup_configurations(config_file);
 
         verbose = verbosity;
         this.dataFolder = dataFolder;
@@ -367,18 +355,12 @@ public class ClusterDaemon {
         return result;
     }
 
-    private void init_configs() {
-        configurations.put(SLEEP_TIME, "120000");
-        configurations.put(MAX_WAIT_CYCLES, "20");
-        configurations.put(MAX_RETRIES, "2");
-        configurations.put(MAX_WRITE_ATTEMPTS, "8");
-        configurations.put(KMEANS_CYCLES, "5");
-    }
-
-    private void setup_configurations(File config_file) {
+    public void setAdvOptions(HashMap<String,String> map) {
         configurations = new HashMap<String, String>();
-        init_configs();
-        configurations.putAll(SimSearchUtilities.getProperties(config_file));
+        
+        if(map != null){
+            configurations.putAll(map);
+        }
     }
     
     static void printMessage(String message, boolean ignoreVerbosity){

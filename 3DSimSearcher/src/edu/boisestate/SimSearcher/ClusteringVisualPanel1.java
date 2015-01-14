@@ -5,17 +5,20 @@
  */
 package edu.boisestate.SimSearcher;
 
+import java.util.HashMap;
 import javax.swing.JPanel;
+import kMeanCluster.ClusterDaemon;
 
 public final class ClusteringVisualPanel1 extends JPanel {
     
-    private String lastDir;
+    private final String lastDir;
 
     /**
      * Creates new form ClusteringVisualPanel1
      */
     public ClusteringVisualPanel1() {
         initComponents();
+        initAdvParams();
         lastDir = System.getProperty("user.home");
         for(String dist_metric : SimSearchUtilities.similarity_metrics){
             distTestComboBox.addItem(dist_metric);
@@ -25,6 +28,31 @@ public final class ClusteringVisualPanel1 extends JPanel {
     @Override
     public String getName() {
         return "Clustering Parameters";
+    }
+    
+    private void initAdvParams(){
+//        swrmCmdOptsTxtField.setText("-n 4 -l walltime=128:00:00");
+        max_retriesTxtField.setText("2");
+        max_wait_cyclesTxtField.setText("20");
+        max_write_attemptsTxtField.setText("5");
+        kmean_cyclesTxtField.setText("5");
+        sleepTimeTxtField.setText("120");
+        setVisibility(false);
+    }
+    
+    private void setVisibility(boolean isVisible){
+        
+        jLabel6.setVisible(isVisible);
+        jLabel8.setVisible(isVisible);
+        jLabel9.setVisible(isVisible);
+        jLabel10.setVisible(isVisible);
+        jLabel11.setVisible(isVisible);
+        
+        max_retriesTxtField.setVisible(isVisible);
+        max_wait_cyclesTxtField.setVisible(isVisible);
+        max_write_attemptsTxtField.setVisible(isVisible);
+        kmean_cyclesTxtField.setVisible(isVisible);
+        sleepTimeTxtField.setVisible(isVisible);
     }
 
     /**
@@ -49,11 +77,18 @@ public final class ClusteringVisualPanel1 extends JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        swrmCmdOptsTxtField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jobsPerNodeTxtField = new javax.swing.JTextField();
         verboseChkBox = new javax.swing.JCheckBox();
+        advOptionsChkBox = new javax.swing.JCheckBox();
+        sleepTimeTxtField = new javax.swing.JTextField();
+        max_wait_cyclesTxtField = new javax.swing.JTextField();
+        max_retriesTxtField = new javax.swing.JTextField();
+        max_write_attemptsTxtField = new javax.swing.JTextField();
+        kmean_cyclesTxtField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         org.openide.awt.Mnemonics.setLocalizedText(mapDirButton, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.mapDirButton.text")); // NOI18N
         mapDirButton.addActionListener(new java.awt.event.ActionListener() {
@@ -97,17 +132,39 @@ public final class ClusteringVisualPanel1 extends JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.jLabel5.text")); // NOI18N
 
-        swrmCmdOptsTxtField.setBackground(new java.awt.Color(255, 255, 255));
-        swrmCmdOptsTxtField.setText(org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.swrmCmdOptsTxtField.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(verboseChkBox, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.verboseChkBox.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.jLabel7.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(advOptionsChkBox, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.advOptionsChkBox.text")); // NOI18N
+        advOptionsChkBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                advOptionsChkBoxActionPerformed(evt);
+            }
+        });
+
+        sleepTimeTxtField.setBackground(new java.awt.Color(255, 255, 255));
+        sleepTimeTxtField.setText(org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.sleepTimeTxtField.text")); // NOI18N
+
+        max_wait_cyclesTxtField.setBackground(new java.awt.Color(254, 254, 254));
+        max_wait_cyclesTxtField.setText(org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.max_wait_cyclesTxtField.text")); // NOI18N
+
+        max_retriesTxtField.setBackground(new java.awt.Color(254, 254, 254));
+        max_retriesTxtField.setText(org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.max_retriesTxtField.text")); // NOI18N
+
+        max_write_attemptsTxtField.setBackground(new java.awt.Color(254, 254, 254));
+        max_write_attemptsTxtField.setText(org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.max_write_attemptsTxtField.text")); // NOI18N
+
+        kmean_cyclesTxtField.setBackground(new java.awt.Color(254, 254, 254));
+        kmean_cyclesTxtField.setText(org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.kmean_cyclesTxtField.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.jLabel6.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel8, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.jLabel8.text")); // NOI18N
 
-        jobsPerNodeTxtField.setBackground(new java.awt.Color(255, 255, 255));
-        jobsPerNodeTxtField.setText(org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.jobsPerNodeTxtField.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel9, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.jLabel9.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(verboseChkBox, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.verboseChkBox.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel10, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.jLabel10.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel11, org.openide.util.NbBundle.getMessage(ClusteringVisualPanel1.class, "ClusteringVisualPanel1.jLabel11.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -115,6 +172,24 @@ public final class ClusteringVisualPanel1 extends JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel4)))
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(clusters_3TxtField)
+                                    .addComponent(clusters_2TxtField)
+                                    .addComponent(clusters_1TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,44 +202,55 @@ public final class ClusteringVisualPanel1 extends JPanel {
                                     .addComponent(mapDirTxtField)
                                     .addComponent(outputDirTxtField)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(76, 76, 76)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(distTestComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
-                                        .addComponent(jLabel2)))
-                                .addGap(108, 108, 108)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(numNodesTxtField)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(verboseChkBox)
-                                .addGap(52, 52, 52))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jobsPerNodeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(swrmCmdOptsTxtField)
+                                        .addGap(37, 37, 37)
+                                        .addComponent(sleepTimeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel6))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(55, 55, 55)
+                                        .addComponent(jLabel8)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(max_wait_cyclesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(86, 86, 86)
+                                        .addComponent(max_retriesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel7)
-                                .addGap(0, 281, Short.MAX_VALUE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(76, 76, 76)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(distTestComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(21, 21, 21)
+                                                    .addComponent(jLabel2))))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(numNodesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(verboseChkBox)
+                                            .addGap(49, 49, 49)
+                                            .addComponent(advOptionsChkBox)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(98, 98, 98)
+                                                .addComponent(jLabel10))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(138, 138, 138)
+                                                .addComponent(max_write_attemptsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(49, 49, 49)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(kmean_cyclesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel11))))
+                                .addGap(0, 256, Short.MAX_VALUE)))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel5)
-                        .addComponent(jLabel4)))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(clusters_3TxtField)
-                    .addComponent(clusters_2TxtField)
-                    .addComponent(clusters_1TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,14 +264,9 @@ public final class ClusteringVisualPanel1 extends JPanel {
                     .addComponent(outputDirTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(outputDirButton))
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(distTestComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(numNodesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(verboseChkBox))
+                .addComponent(distTestComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clusters_1TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,15 +279,32 @@ public final class ClusteringVisualPanel1 extends JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clusters_3TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jobsPerNodeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(swrmCmdOptsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(numNodesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(advOptionsChkBox)
+                    .addComponent(verboseChkBox))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sleepTimeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(max_wait_cyclesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(max_retriesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(max_write_attemptsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kmean_cyclesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(84, 84, 84))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -224,25 +322,36 @@ public final class ClusteringVisualPanel1 extends JPanel {
         }
     }//GEN-LAST:event_outputDirButtonActionPerformed
 
+    private void advOptionsChkBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advOptionsChkBoxActionPerformed
+        this.setVisibility(advOptionsChkBox.isSelected());
+    }//GEN-LAST:event_advOptionsChkBoxActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox advOptionsChkBox;
     private javax.swing.JTextField clusters_1TxtField;
     private javax.swing.JTextField clusters_2TxtField;
     private javax.swing.JTextField clusters_3TxtField;
     private javax.swing.JComboBox distTestComboBox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jobsPerNodeTxtField;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField kmean_cyclesTxtField;
     private javax.swing.JButton mapDirButton;
     private javax.swing.JTextField mapDirTxtField;
+    private javax.swing.JTextField max_retriesTxtField;
+    private javax.swing.JTextField max_wait_cyclesTxtField;
+    private javax.swing.JTextField max_write_attemptsTxtField;
     private javax.swing.JTextField numNodesTxtField;
     private javax.swing.JButton outputDirButton;
     private javax.swing.JTextField outputDirTxtField;
-    private javax.swing.JTextField swrmCmdOptsTxtField;
+    private javax.swing.JTextField sleepTimeTxtField;
     private javax.swing.JCheckBox verboseChkBox;
     // End of variables declaration//GEN-END:variables
 
@@ -262,8 +371,17 @@ public final class ClusteringVisualPanel1 extends JPanel {
         return rval;
     }
     
-    String getJobsPerNode(){
-        return jobsPerNodeTxtField.getText();
+    HashMap<String,String> getAdvOptions(){
+        
+        HashMap<String,String> rval = new HashMap<String,String>();
+             
+        rval.put(ClusterDaemon.MAX_RETRIES,max_retriesTxtField.getText());
+        rval.put(ClusterDaemon.MAX_WAIT_CYCLES, max_wait_cyclesTxtField.getText());
+        rval.put(ClusterDaemon.MAX_WRITE_ATTEMPTS, max_write_attemptsTxtField.getText());
+        rval.put(ClusterDaemon.KMEANS_CYCLES, kmean_cyclesTxtField.getText());
+        rval.put(ClusterDaemon.SLEEP_TIME, sleepTimeTxtField.getText());
+        
+        return rval;
     }
     
     String getOutputDir(){
@@ -277,11 +395,7 @@ public final class ClusteringVisualPanel1 extends JPanel {
     String getDistTest(){
         return (String) distTestComboBox.getSelectedItem();
     }
-    
-    String getSwarmCmdOpts(){
-        return swrmCmdOptsTxtField.getText();
-    }
-    
+       
     String getNumNodes(){
         return numNodesTxtField.getText();
     }

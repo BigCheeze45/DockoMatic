@@ -92,9 +92,10 @@ public class SimSearchUtilities {
     }
     
     public static HashMap<String,String> getProperties(File properties_file){
-        HashMap<String,String> properties = new HashMap<String,String>();
+        HashMap<String,String> properties = null;
 
         if(properties_file.exists()){
+            properties = new HashMap<String,String>();
             BufferedReader reader = null;
             try {
                 reader = new BufferedReader(new FileReader(properties_file));

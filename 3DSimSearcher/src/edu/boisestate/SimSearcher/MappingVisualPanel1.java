@@ -18,6 +18,7 @@ public final class MappingVisualPanel1 extends JPanel {
     public MappingVisualPanel1() {
         initComponents();
         setShpDstParamVisible(false);
+        setAdvSwarmOptionsVisible(false);
         homeDir = System.getProperty("user.home");
     }
     
@@ -47,10 +48,6 @@ public final class MappingVisualPanel1 extends JPanel {
     
     String getNumNodes(){
         return numNodesTxtField.getText();
-    }
-    
-    String getJobsPerNode(){
-        return jobsPerNodeTxtField.getText();
     }
     
     String getSwarmOpts(){
@@ -86,16 +83,15 @@ public final class MappingVisualPanel1 extends JPanel {
         outputDirButton = new javax.swing.JButton();
         usePharmFeaturesChkBox = new javax.swing.JCheckBox();
         useShapeDistChkBox = new javax.swing.JCheckBox();
-        jobsPerNodeTxtField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        advSwarmCmdsLabel = new javax.swing.JLabel();
         swrmCmdOptsTxtField = new javax.swing.JTextField();
         numNodesTxtField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        numNodesLabel = new javax.swing.JLabel();
         numBinsTxtField = new javax.swing.JTextField();
         uppBoundTxtField = new javax.swing.JTextField();
         numBinsLabel = new javax.swing.JLabel();
         uppBoundLabel = new javax.swing.JLabel();
+        advSwarmOptsCheckBox = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(dbDirButton, org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.dbDirButton.text")); // NOI18N
         dbDirButton.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +100,7 @@ public final class MappingVisualPanel1 extends JPanel {
             }
         });
 
+        dbDirTxtField.setEditable(false);
         dbDirTxtField.setText(org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.dbDirTxtField.text")); // NOI18N
 
         outputDirTxtField.setEditable(false);
@@ -130,20 +127,16 @@ public final class MappingVisualPanel1 extends JPanel {
             }
         });
 
-        jobsPerNodeTxtField.setBackground(new java.awt.Color(255, 255, 255));
-        jobsPerNodeTxtField.setText(org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.jobsPerNodeTxtField.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.jLabel1.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.jLabel2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(advSwarmCmdsLabel, org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.advSwarmCmdsLabel.text")); // NOI18N
 
         swrmCmdOptsTxtField.setBackground(new java.awt.Color(255, 255, 255));
         swrmCmdOptsTxtField.setText(org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.swrmCmdOptsTxtField.text")); // NOI18N
+        swrmCmdOptsTxtField.setToolTipText(org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.swrmCmdOptsTxtField.toolTipText")); // NOI18N
 
         numNodesTxtField.setBackground(new java.awt.Color(255, 255, 255));
         numNodesTxtField.setText(org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.numNodesTxtField.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.jLabel3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(numNodesLabel, org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.numNodesLabel.text")); // NOI18N
 
         numBinsTxtField.setBackground(new java.awt.Color(255, 255, 255));
         numBinsTxtField.setText(org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.numBinsTxtField.text")); // NOI18N
@@ -155,6 +148,13 @@ public final class MappingVisualPanel1 extends JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(uppBoundLabel, org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.uppBoundLabel.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(advSwarmOptsCheckBox, org.openide.util.NbBundle.getMessage(MappingVisualPanel1.class, "MappingVisualPanel1.advSwarmOptsCheckBox.text")); // NOI18N
+        advSwarmOptsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                advSwarmOptsCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,8 +165,6 @@ public final class MappingVisualPanel1 extends JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(usePharmFeaturesChkBox)
-                            .addComponent(numNodesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(useShapeDistChkBox)
                                 .addGap(35, 35, 35)
@@ -178,30 +176,27 @@ public final class MappingVisualPanel1 extends JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(uppBoundLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(uppBoundTxtField))))
+                                    .addComponent(uppBoundTxtField)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(numNodesTxtField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(numNodesLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(advSwarmOptsCheckBox)))
                         .addGap(197, 197, 197))
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dbDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(outputDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jobsPerNodeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(swrmCmdOptsTxtField)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(9, 9, 9)
-                                        .addComponent(jLabel2)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(dbDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(outputDirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(outputDirTxtField)
-                                    .addComponent(dbDirTxtField))))
-                        .addContainerGap())))
+                            .addComponent(outputDirTxtField)
+                            .addComponent(dbDirTxtField))
+                        .addContainerGap())
+                    .addComponent(swrmCmdOptsTxtField)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(advSwarmCmdsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,23 +221,22 @@ public final class MappingVisualPanel1 extends JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(usePharmFeaturesChkBox)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(4, 4, 4)
-                .addComponent(numNodesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(numNodesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(numNodesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(advSwarmOptsCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jobsPerNodeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(swrmCmdOptsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addComponent(advSwarmCmdsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(swrmCmdOptsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void dbDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbDirButtonActionPerformed
         String dbFolder = SimSearchUtilities.getDirChoose(homeDir, "Database Directory", SimSearchUtilities.DIRECTORIES, null);
+        
         if(dbFolder != null){
             dbDirTxtField.setText(dbFolder);
         }
@@ -270,15 +264,18 @@ public final class MappingVisualPanel1 extends JPanel {
         setShpDstParamVisible(useShapeDistChkBox.isSelected());
     }//GEN-LAST:event_useShapeDistChkBoxActionPerformed
 
+    private void advSwarmOptsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advSwarmOptsCheckBoxActionPerformed
+        setAdvSwarmOptionsVisible(this.advSwarmOptsCheckBox.isSelected());
+    }//GEN-LAST:event_advSwarmOptsCheckBoxActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel advSwarmCmdsLabel;
+    private javax.swing.JCheckBox advSwarmOptsCheckBox;
     private javax.swing.JButton dbDirButton;
     private javax.swing.JTextField dbDirTxtField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jobsPerNodeTxtField;
     private javax.swing.JLabel numBinsLabel;
     private javax.swing.JTextField numBinsTxtField;
+    private javax.swing.JLabel numNodesLabel;
     private javax.swing.JTextField numNodesTxtField;
     private javax.swing.JButton outputDirButton;
     private javax.swing.JTextField outputDirTxtField;
@@ -288,4 +285,9 @@ public final class MappingVisualPanel1 extends JPanel {
     private javax.swing.JCheckBox usePharmFeaturesChkBox;
     private javax.swing.JCheckBox useShapeDistChkBox;
     // End of variables declaration//GEN-END:variables
+
+    private void setAdvSwarmOptionsVisible(boolean selected) {
+        advSwarmCmdsLabel.setVisible(selected);
+        swrmCmdOptsTxtField.setVisible(selected);
+    }
 }

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.swing.SwingWorker;
 import kMeanCluster.ClusterDaemon;
+import map.Molecule;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -26,7 +27,8 @@ import query.QueryDriver;
         autostore = false
 )
 @TopComponent.Description(
-        preferredID = "mainTopComponent",
+//        preferredID = "mainTopComponent"
+        preferredID = "SimSearchTopComponent",
         //iconBase="SET/PATH/TO/ICON/HERE", 
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
@@ -35,12 +37,13 @@ import query.QueryDriver;
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_mainAction",
-        preferredID = "mainTopComponent"
+        preferredID = "SimSearchTopComponent"
+//        preferredID = "mainTopComponent"
 )
 @Messages({
-    "CTL_mainAction=main",
-    "CTL_mainTopComponent=main Window",
-    "HINT_mainTopComponent=This is a main window"
+    "CTL_mainAction=SimSearcher",
+    "CTL_mainTopComponent=SimSearcher Window",
+    "HINT_mainTopComponent=This is a window for performing molecular similarity searches"
 })
 public final class SimSearchTopComponent extends TopComponent {
     
@@ -70,6 +73,7 @@ public final class SimSearchTopComponent extends TopComponent {
         outputTxtArea.setColumns(20);
         outputTxtArea.setRows(5);
         jScrollPane1.setViewportView(outputTxtArea);
+        outputTxtArea.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(SimSearchTopComponent.class, "SimSearchTopComponent.outputTxtArea.AccessibleContext.accessibleDescription")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(mapButton, org.openide.util.NbBundle.getMessage(SimSearchTopComponent.class, "SimSearchTopComponent.mapButton.text")); // NOI18N
         mapButton.addActionListener(new java.awt.event.ActionListener() {
@@ -99,13 +103,14 @@ public final class SimSearchTopComponent extends TopComponent {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(mapButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(clusterButton)
-                        .addGap(27, 27, 27)
-                        .addComponent(queryButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(queryButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -125,9 +130,9 @@ public final class SimSearchTopComponent extends TopComponent {
     private void mapButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mapButtonActionPerformed
         MappingWizardAction wizard = new MappingWizardAction();
         wizard.actionPerformed(evt);
-        final String workDir = "/home/tlong"; //TODO
+        final String workDir = System.getProperty("user.home"); //TODO, output folder and then delete ???
         if(wizard.wasCancelled()){
-            
+
         }else{
             wizard.generateSwarmCmdFile(workDir, SWARM_CMD_FILE);
             wizard.writeDatabaseSettings();
@@ -136,7 +141,7 @@ public final class SimSearchTopComponent extends TopComponent {
             outputTxtArea.setText("DockoMatic has submitted jobs which will map the molecular database.  You will be notified when "
                     + "the jobs are complete.\nTo verify that the jobs are actually running, use the qstat command "
                     + "and/or periodically check the contents of the output directory.\n");
-            
+
             SwingWorker jobMakeWorker = new SwingWorker<String, Void>() {
 
                 @Override
@@ -146,7 +151,7 @@ public final class SimSearchTopComponent extends TopComponent {
                 }
             };
             jobMakeWorker.execute();
-        }
+        }    
     }//GEN-LAST:event_mapButtonActionPerformed
 
     private void clusterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clusterButtonActionPerformed
@@ -181,7 +186,7 @@ public final class SimSearchTopComponent extends TopComponent {
         }else{
             final QueryDriver queryJoe = wizard.getQueryDriver();
             final String search_folder = wizard.getSearchFolder();
-            final int numMols = wizard.getNumMostSimilar();
+            final Molecule[] molList = wizard.getQueryMols();
             
             outputTxtArea.setText("Beginning Query...\n");
             
@@ -189,9 +194,12 @@ public final class SimSearchTopComponent extends TopComponent {
 
                 @Override
                 public String doInBackground() {
-                    queryJoe.query(new File(search_folder));
-                    String results = queryJoe.getMostSimilar(numMols);
-                    outputTxtArea.append(results);
+                    File srchFolder = new File(search_folder);
+                    for(Molecule mol : molList){
+                        String results = queryJoe.query(srchFolder,mol);
+                        String dotLine = "**************************************";
+                        outputTxtArea.append(dotLine +"\nResults for " + mol.getCID() +"\n\n" +results + "\n" + dotLine+"\n");
+                    }
                     return "Done";
                 }
             };
@@ -203,7 +211,7 @@ public final class SimSearchTopComponent extends TopComponent {
     private javax.swing.JButton clusterButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton mapButton;
-    private javax.swing.JTextArea outputTxtArea;
+    static javax.swing.JTextArea outputTxtArea;
     private javax.swing.JButton queryButton;
     // End of variables declaration//GEN-END:variables
     @Override
@@ -232,7 +240,8 @@ public final class SimSearchTopComponent extends TopComponent {
         String line, errorLog = "";
         
         try{
-            Process procID = Runtime.getRuntime().exec(command, null, dir);
+            Process procID = Runtime.getRuntime().exec(command); // , null, dir);
+            procID.waitFor();
             BufferedReader in = new BufferedReader(new InputStreamReader(procID.getErrorStream()));
             while ((line = in.readLine()) != null) {
                 errorLog += line + "\n";
@@ -240,8 +249,9 @@ public final class SimSearchTopComponent extends TopComponent {
             outputTxtArea.append(errorLog);
         }catch(IOException ex){
             outputTxtArea.append(ex.getLocalizedMessage() + "\n");
+        }catch(InterruptedException ex){
+            outputTxtArea.append(ex.getLocalizedMessage() + "\n");
         }
-        
         outputTxtArea.append("The mapping is complete.");
     }
 }

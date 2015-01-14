@@ -12,7 +12,7 @@ package map;
  */
 public class MappedMolecule {
     
-    private final long ID;
+    private final String ID;
     private double[] histogram;  //normalized histogram
     private Typed_Angle[] typed_Angles;
     
@@ -31,8 +31,8 @@ public class MappedMolecule {
         }
     }
     
-    public MappedMolecule(long cid){
-        ID = cid;
+    public MappedMolecule(String id){
+        ID = id;
     }
     
     public void setHistogram(double[] histogram){
@@ -47,7 +47,7 @@ public class MappedMolecule {
         return histogram;
     }
     
-    public long getID(){
+    public String getID(){
         return ID;
     }
     
