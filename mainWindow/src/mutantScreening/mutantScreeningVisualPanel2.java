@@ -101,6 +101,7 @@ public final class mutantScreeningVisualPanel2 extends JPanel {
         });
 
         mutation_constraintsTxtArea.setEditable(false);
+        mutation_constraintsTxtArea.setBackground(new java.awt.Color(217, 217, 217));
         mutation_constraintsTxtArea.setColumns(20);
         mutation_constraintsTxtArea.setRows(5);
         jScrollPane2.setViewportView(mutation_constraintsTxtArea);
@@ -124,10 +125,10 @@ public final class mutantScreeningVisualPanel2 extends JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(39, 39, 39)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(245, 245, 245)

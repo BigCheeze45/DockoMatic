@@ -376,7 +376,7 @@ public class GAutilities {
     }
 
     private String getDockomaticScriptPath() {
-        String classPath = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
+        String classPath = GAutilities.class.getResource("GAutilities.class").getPath();
         int start = classPath.indexOf(":") + 1;  //ignore file: start
         int end = classPath.indexOf("modules" + File.separator);
         String script_path = classPath.substring(start,end);        
