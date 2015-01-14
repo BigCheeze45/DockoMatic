@@ -4,3 +4,96 @@ Tue Aug 26 10:54:10 MDT 2014		Setting the Lower Index to the minimum value of 1.
 Tue Aug 26 10:54:10 MDT 2014		Setting the maximum Upper Index to 16
 
 Tue Aug 26 10:54:42 MDT 2014		Beginning Genetic Algorithm
+Wed Oct 22 10:38:51 MDT 2014		Creating New Job [1]
+
+Wed Oct 22 10:38:51 MDT 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Oct 22 10:38:55 MDT 2014		Selected 1 Jobs For Starting
+
+Wed Oct 22 10:38:55 MDT 2014		  Starting Job 1
+
+Wed Oct 22 10:55:44 MDT 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+
+Wed Oct 22 10:57:17 MDT 2014		Selected 1 Jobs For Removal
+
+Wed Oct 22 10:57:17 MDT 2014		Killing Job 1
+
+Wed Oct 22 10:57:17 MDT 2014		Removing Job 1
+
+Wed Oct 22 10:57:57 MDT 2014		Creating New Job [2]
+
+Wed Oct 22 10:57:57 MDT 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Oct 22 10:58:02 MDT 2014		Selected 1 Jobs For Starting
+
+Wed Oct 22 10:58:02 MDT 2014		  Starting Job 2
+
+Wed Oct 22 10:58:02 MDT 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+No such file or directory
+FILE /home/tlong/devNULL//home/tlong/devNULL/swarmCmds.txt at /usr/local/bin/swarm line 9.
+
+Wed Oct 22 10:58:40 MDT 2014		Selected 1 Jobs For Starting
+
+Wed Oct 22 10:58:40 MDT 2014		Restarting Job 2
+
+Wed Oct 22 10:58:40 MDT 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+No such file or directory
+FILE /home/tlong/devNULL//home/tlong/devNULL/swarmCmds.txt at /usr/local/bin/swarm line 9.
+No such file or directory
+FILE /home/tlong/devNULL//home/tlong/devNULL/swarmCmds.txt at /usr/local/bin/swarm line 9.
+
+Mon Nov 03 14:24:30 MST 2014		Creating New Job [1]
+
+Mon Nov 03 14:24:30 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Mon Nov 03 14:24:36 MST 2014		Selected 1 Jobs For Starting
+
+Mon Nov 03 14:24:36 MST 2014		  Starting Job 1
+
+Mon Nov 03 15:15:02 MST 2014		Creating New Job [1]
+
+Mon Nov 03 15:15:02 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Mon Nov 03 15:15:09 MST 2014		Selected 1 Jobs For Starting
+
+Mon Nov 03 15:15:09 MST 2014		  Starting Job 1
+

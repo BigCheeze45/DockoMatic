@@ -357,6 +357,7 @@ sub createLigand{
     }else{
         print "\nobconformer 5 10 $pdbOut > $conf\n";
         exec("obconformer 5 10 $pdbOut > $conf");
+	exit();
     } 
     #qx(obconformer 5 10 $pdbOut > $conf);
     rename($pdbOut, $orig);
@@ -501,6 +502,7 @@ sub addHydrogens{
     }else{
         print "\nbabel -p 7 -ipdb $ligName -opdb  $ligName\n";
         exec("babel -p 7 -ipdb $ligName -opdb  $ligName");
+	exit();
     } 
 
     
@@ -555,6 +557,7 @@ sub runTreePack{
     }else{
         print "\n./SCATD -i $in -o $out\n";
         exec("./SCATD -i $in -o $out");
+	exit();
     } 
 
 }
@@ -950,11 +953,9 @@ sub prepRec {
 sub prepLig {
 
     my $ligFileIn = shift;
-    my $pdbqt = $ligFileIn."qt";
-
-    print "\nprepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt\n" ;
-    system( "prepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt" );
-
+    my $pdbqt = "ligand.pdbqt";
+	print "\nprepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt\n" ;
+	system( "prepare_ligand4.py -B 31 -l $ligFileIn -o $pdbqt" );
 }
 
 # Calls MGLTools script to prepare the gpf file.
@@ -982,8 +983,8 @@ sub prepDPF4 {
     $recFileIn =~ /(\.+)\.pdbqt/;
     $dpfFile .= $1 . ".dpf";
 
-    print "\nprepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile\n";
-    system( "prepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l $ligFileIn -r $recFileIn -o $dpfFile");
+    print "\nprepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l ligand.pdbqt -r $recFileIn -o $dpfFile\n";
+    system( "prepare_dpf4.py -p ga_run=$ga -p ga_pop_size=100 -p ga_num_evals=1000000 -l ligand.pdbqt -r $recFileIn -o $dpfFile");
     return $dpfFile;
 }
 
@@ -1016,6 +1017,7 @@ sub autogridCmd {
     }else{
     print "\nautogrid4 -p $gpfIn -l $gridLog\n";
     exec("autogrid4 -p $gpfIn -l $gridLog");
+    exit();
     } 
    print"autogrid log output written to $gridLog\n\n";
 }
@@ -1036,6 +1038,7 @@ sub autovinaCmd {
     }else{
         print  "\nvina --config $box --ligand $pdb --receptor $receptor --log $dockLog --out $vinaOut --exhaustiveness 3\n" ;
         exec( "vina --config $box --ligand $pdb --receptor $receptor --log $dockLog --out $vinaOut --exhaustiveness 3" );
+	exit();
     } 
     print"autodock vina log output written to $dockLog\n\n";
 }
@@ -1058,6 +1061,7 @@ sub autodockCmd {
     }else{
         print "\nautodock4 -p $dpfIn -l $dockLog\n" ;
         exec( "autodock4 -p $dpfIn -l $dockLog" );
+	exit();
     } 
     print"autodock log output written to $dockLog\n\n";
 
