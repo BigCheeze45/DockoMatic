@@ -39,7 +39,6 @@ package mainWindow;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
@@ -63,6 +62,10 @@ autostore = false)
 public final class openerTopComponent extends TopComponent {
     
     public static final int PADDING = 6;
+    private static final String swarm_file = "swarmCmds.txt";
+    private static final String swarm_prefix = "swarm -f ";
+    
+    
     private HashMap jobList = new HashMap();
     private ArrayList<String> ligList = new ArrayList<String>();
     private ArrayList<String> recList = new ArrayList<String>();
@@ -189,18 +192,13 @@ public final class openerTopComponent extends TopComponent {
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel2.text")); // NOI18N
 
         swmJobNum.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swmJobNum.text")); // NOI18N
-        swmJobNum.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                swmJobNumKeyReleased(evt);
+        swmJobNum.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                swmJobNumFocusLost(evt);
             }
         });
 
         swmCmdOpts.setText(org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.swmCmdOpts.text")); // NOI18N
-        swmCmdOpts.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                swmCmdOptsActionPerformed(evt);
-            }
-        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(openerTopComponent.class, "openerTopComponent.jLabel5.text")); // NOI18N
 
@@ -227,13 +225,15 @@ public final class openerTopComponent extends TopComponent {
                     .addComponent(jSeparator1)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(swmJobNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(swmCmdOpts, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(swmJobNum))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(swmCmdOpts, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(426, 426, 426)))))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -596,11 +596,11 @@ public final class openerTopComponent extends TopComponent {
         if (dir != null) {
             lastOutDir = dir;
             outDirField.setText(lastOutDir);
-            String old_cmds = swmCmdOpts.getText();
-            int divideAt = old_cmds.indexOf("-f ") + "-f ".length();
-            String new_cmds = old_cmds.substring(0,divideAt);
-            new_cmds += dir + File.separator + old_cmds.substring(divideAt);
-            swmCmdOpts.setText(new_cmds);
+//            String old_cmds = swmCmdOpts.getText();
+//            int divideAt = old_cmds.indexOf("-f ") + "-f ".length();
+//            String new_cmds = old_cmds.substring(0,divideAt);
+//            new_cmds += dir + File.separator + old_cmds.substring(divideAt);
+//            swmCmdOpts.setText(new_cmds);
         }
     }//GEN-LAST:event_outDirButtonActionPerformed
 
@@ -631,36 +631,7 @@ public final class openerTopComponent extends TopComponent {
             receptorField.setText(file);
         }
     }//GEN-LAST:event_receptorButtonActionPerformed
-    
-        //tlong added
-//    private void MutationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-//        if(MutationsCheckBox.isSelected())
-//        {
-//            if(ligandField.getText().trim().equals("") || receptorField.getText().trim().equals("") || boxCoordField.getText().trim().equals(""))
-//            {
-//                messageWindowTopComponent.messageArea.append("Please specify a ligand, a receptor, and box coordinates in the appropriate fields above.\n");
-//                MutationsCheckBox.setSelected(false);
-//            }
-//            else
-//            {
-//                mutationWindow = new mutationOptionsTopComponent();
-//                if(mutationWindow.setFullSequence(ligandField.getText().trim()))
-//                {
-//                    mutationsTest = true; //tlong   Open new tab
-//                    mutationWindow.open();
-//                    mutationWindow.requestActive();
-//                }
-//                else
-//                {
-//                    messageWindowTopComponent.messageArea.append("Unable to determine the amino acid sequence from the ligand's pdb file.\n" +
-//                                                                "Please make sure that it contains the necessary SEQRES lines before trying again.\n");
-//                    MutationsCheckBox.setSelected(false);
-//                }
-//            }
-//        }
-//        else
-//            mutationsTest = false;
-//    } 
+
 
     private void boxCoordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCoordButtonActionPerformed
         String file;
@@ -780,14 +751,7 @@ public final class openerTopComponent extends TopComponent {
     //tlong
     private void runGeneticAlgorithm(){
         
-        String[] origSeqWithIndex = new String[mutantScreenParameters.getOrigSiteAcids().length()];
-        
-        for(int i =0; i < origSeqWithIndex.length; i++){
-            origSeqWithIndex[i] = mutantScreenParameters.getOrigSiteAcids().charAt(i) + "" + mutantScreenParameters.getSubstitution_sites()[i];
-	}
-        
         //TODO validate these
-        int cycles = Integer.parseInt(dockCycles.getText());  //default to 100 if empty
         File outputDirectory = new File(outDirField.getText().trim());   //use current directory if empty
         String lig_path = ligandField.getText();
         String rec_path = receptorField.getText();
@@ -797,23 +761,71 @@ public final class openerTopComponent extends TopComponent {
         if(lig_path.isEmpty() || rec_path.isEmpty() || box_path.isEmpty()){
             messageWindowTopComponent.appendText("A ligand, receptor, and box coordinates must be entered before proceeding.\n");
         }else{
-            Random rand = new Random();  //TODO allow user to enter a seed (4th wizard screen)
-            int verbosity = 1;           //TODO set this to a desirable value
-            GeneticAlgorithm ga = new GeneticAlgorithm(mutantScreenParameters.getElitism(), mutantScreenParameters.getMutation_rate(),mutantScreenParameters.getCluster_size(),
-                mutantScreenParameters.getSubstitution_sites(),mutantScreenParameters.getConstraint_set(),rand,verbosity);
             
-            ga.createDockEngine(cycles, mutantScreenParameters.getSmooth_num(), outputDirectory, lig_path, rec_path, box_path, swarmCmd, origSeqWithIndex);
-        
-            ga.restoreState();
-            ga.initPopulation(null);
-            int numJobs = ga.cycle(null, mutantScreenParameters.getNum_crossover_cycles(), mutantScreenParameters.getTopX(), mutantScreenParameters.getNum_crossover_points());
-            numJobs += ga.cycle(null, mutantScreenParameters.getNum_mutation_cycles(), mutantScreenParameters.getTopX(), 0);  //run with mutations only
+           /* "Usage: java GeneticAlgorithm <substitution sites> <substitution pools> <residue seq> <elitism> <mutation rate> <dock limit>"
+                    + " <topX> <stagnant rounds> <# Xover points> <autodock cycles> <smoothNum> <output Directory> <ligFile> <recFile> <boxFile> <swarmCmd>" */
+            String subPools = "";
             
-            messageWindowTopComponent.appendText("The genetic algorithm has completed after docking " + numJobs + " mutants across " + ga.getGenerations() + " generations\n");
+            for(String pool : mutantScreenParameters.getConstraint_set()){
+                subPools += pool + ",";
+            }
+                    
+            String GA_params = mutantScreenParameters.getSubstitution_sites() + " " + subPools + " " + mutantScreenParameters.getOrigSiteAcids() + " "
+                    + mutantScreenParameters.getElitism() +" "+ mutantScreenParameters.getMutation_rate() + " " + mutantScreenParameters.getCluster_size() +
+                    " "+ mutantScreenParameters.getTopX() +" "+ mutantScreenParameters.getNum_cycles() +" "+ mutantScreenParameters.getNum_crossover_points() +" "+
+                    mutantScreenParameters.getDockCycles() +" "+ mutantScreenParameters.getSmooth_num() + " "+outDirField.getText()+" "+lig_path+" "+
+                    rec_path +" "+ box_path +" "+ swarmCmd;
             
-            //TODO summarize and show results
+            runSwarm(outputDirectory,GA_params);
         }
     }
+    
+    private void runSwarm(File outputDir, String cmd_args) {
+        
+        //write the swarm cmd txt file
+        BufferedWriter swarmWriter = null;
+        File swarmFile = new File(outputDir, "swarmCmds_GA.txt");
+        
+        try{   
+            swarmWriter = new BufferedWriter(new FileWriter(swarmFile));
+            String class_path = GeneticAlgorithm.getAbsExecPath();
+            String cmd = "java -cp "+ class_path + " " + cmd_args;
+            swarmWriter.write(cmd);  
+        }catch(IOException ex){
+            messageWindowTopComponent.appendText(ex.getLocalizedMessage() + "\n");
+        }finally{
+            if(swarmWriter != null){
+                try{
+                    swarmWriter.close();
+                }catch(IOException ex){
+                    messageWindowTopComponent.appendText(ex.getLocalizedMessage() + "\n");
+                }
+            }
+        }
+
+        //run swarm with the file that was just created
+        String swarmCmd = "swarm -f " + swarmFile.getAbsolutePath() + " -n 1";
+        try {
+
+            Process p = Runtime.getRuntime().exec(swarmCmd);
+            p.waitFor();
+            BufferedReader errReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String line;
+
+            while ((line = errReader.readLine()) != null) {
+                messageWindowTopComponent.appendText(line + "\n");
+            }
+
+            errReader.close();
+
+        } catch (IOException e1) {
+            messageWindowTopComponent.appendText(e1.getLocalizedMessage() + "\n");
+        } catch (InterruptedException ex) {
+            messageWindowTopComponent.appendText(ex.getLocalizedMessage() + "\n");
+        }
+    }
+    
+    
 
     // Checks the status of jobs and sets them to Done if they are.
     private void checkStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkStatusButtonActionPerformed
@@ -863,6 +875,7 @@ public final class openerTopComponent extends TopComponent {
         }
         
         if(allJobsDone) {
+            jobTimer.stop();
             System.out.println("All jobs are done");
         }
     }//GEN-LAST:event_checkStatusButtonActionPerformed
@@ -905,10 +918,6 @@ public final class openerTopComponent extends TopComponent {
 
     }//GEN-LAST:event_vinaCheckBoxActionPerformed
 
-    private void swmJobNumKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_swmJobNumKeyReleased
-        swmCmdOpts.setText("swarm -f swarmCmds.txt -n " + swmJobNum.getText() + " -l walltime=128:00:00");
-    }//GEN-LAST:event_swmJobNumKeyReleased
-
     //tlong TODO uncomment later
     private void MutationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MutationsCheckBoxActionPerformed
         if(MutationsCheckBox.isSelected()){
@@ -937,9 +946,16 @@ public final class openerTopComponent extends TopComponent {
         }
     }//GEN-LAST:event_MutationsCheckBoxActionPerformed
 
-    private void swmCmdOptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swmCmdOptsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_swmCmdOptsActionPerformed
+    private void swmJobNumFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_swmJobNumFocusLost
+        int num = 1;
+        try{
+            int temp = Integer.parseInt(swmJobNum.getText());
+            num = Math.max(num, temp);
+        }catch(NumberFormatException ex){
+            
+        }
+        swmJobNum.setText(num + "");
+    }//GEN-LAST:event_swmJobNumFocusLost
 
 
     private void pymolActionPerformed(java.awt.event.MouseEvent evt) {
@@ -1045,10 +1061,11 @@ public final class openerTopComponent extends TopComponent {
 //                            messageWindowTopComponent.appendText(errorLog);
 //                        }
 //                    }else{
+                    
                         String base = outDir.getCanonicalPath();
-                        String swarmFile = base + File.separator+"swarmCmds.txt";
+                        String swarm_path = base + File.separator + swarm_file;
                         //run swarm Jobs.
-                        BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
+                        BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarm_path));
                         for (int i = 0; i < rowNums.length; i++) {
                             jobNum = (Integer) table.getValueAt(rowNums[i], getCol(table, "Job #"));
     //                        updateJob(rowNums[i]);
@@ -1065,8 +1082,10 @@ public final class openerTopComponent extends TopComponent {
                             }
                         }
                         swarmOut.close();
+                        
+                        String swarmCmd = swarm_prefix + swarm_path + " -n " + swmJobNum.getText() + " " + swmCmdOpts.getText();
                        
-                        Process procID = Runtime.getRuntime().exec(swmCmdOpts.getText(), null, outDir);
+                        Process procID = Runtime.getRuntime().exec(swarmCmd, null, outDir);
                         BufferedReader in = new BufferedReader(new InputStreamReader(procID.getErrorStream()));
                         while ((line = in.readLine()) != null) {
                             errorLog += line + "\n";
@@ -1386,9 +1405,11 @@ public final class openerTopComponent extends TopComponent {
 
     // Timer to check the status of each job.
     private void startJobTimer() {
+        System.out.println("Job Timer Started");
         int delay = 10000;  // 10 seconds
         java.awt.event.ActionListener jobChecker = new java.awt.event.ActionListener() {
 
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkStatusButtonActionPerformed(evt);
             }
@@ -1517,7 +1538,16 @@ public final class openerTopComponent extends TopComponent {
     //tlong
     public ArrayList<String> generateMutantLibrary(String ligPath) {
         ArrayList<String> list = new ArrayList<String>();
-        recurse(0, ligPath, list, mutantScreenParameters.getSubstitution_sites(), mutantScreenParameters.getOrigSiteAcids(), mutantScreenParameters.getConstraint_set());
+        
+        String[] tmp_sites = mutantScreenParameters.getSubstitution_sites().split(",");
+        int[] sites = new int[tmp_sites.length];
+        
+        for(int i =0; i < sites.length; i++){
+            sites[i] = Integer.parseInt(tmp_sites[i]);
+        }
+        
+        
+        recurse(0, ligPath, list, sites, mutantScreenParameters.getOrigSiteAcids(), mutantScreenParameters.getConstraint_set());
         return list;
     }
 

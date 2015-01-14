@@ -14443,3 +14443,312 @@ autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom seria
 
 Mon Sep 01 17:31:27 MDT 2014		You must first specify a ligand, a receptor, and box coordinates in the appropriate fields above.
 
+Wed Nov 12 11:08:51 MST 2014		Creating New Job [2]
+
+Wed Nov 12 11:08:51 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Nov 12 11:08:54 MST 2014		Selected 1 Jobs For Starting
+
+Wed Nov 12 11:08:54 MST 2014		  Starting Job 2
+
+Wed Nov 12 11:15:30 MST 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+
+Wed Nov 12 11:26:07 MST 2014		Creating New Job [3]
+
+Wed Nov 12 11:26:07 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Nov 12 11:26:09 MST 2014		Selected 1 Jobs For Starting
+
+Wed Nov 12 11:26:09 MST 2014		  Starting Job 3
+
+Wed Nov 12 11:26:09 MST 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+No such file or directory
+FILE /home/tlong/devNULL//home/tlong/devNULL/swarmCmds.txt at /usr/local/bin/swarm line 9.
+
+Wed Nov 12 11:27:33 MST 2014		Creating New Job [4]
+
+Wed Nov 12 11:27:33 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Nov 12 11:27:36 MST 2014		Selected 1 Jobs For Starting
+
+Wed Nov 12 11:27:36 MST 2014		  Starting Job 4
+
+Wed Nov 12 11:36:42 MST 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+No such file or directory
+FILE /home/tlong/devNULL//home/tlong/devNULL/swarmCmds.txt at /usr/local/bin/swarm line 9.
+1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+
+Wed Nov 12 14:31:40 MST 2014		Creating New Job [1]
+
+Wed Nov 12 14:31:40 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Nov 12 14:31:43 MST 2014		Selected 1 Jobs For Starting
+
+Wed Nov 12 14:31:43 MST 2014		  Starting Job 1
+
+Wed Nov 12 14:37:35 MST 2014		1 molecule converted
+64 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+
+Mon Dec 01 11:42:47 MST 2014		You must first specify a ligand, a receptor, and box coordinates in the appropriate fields above.
+
+Tue Dec 02 10:08:15 MST 2014		Creating New Job [3]
+
+Tue Dec 02 10:08:15 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Tue Dec 02 10:08:18 MST 2014		Selected 1 Jobs For Starting
+
+Tue Dec 02 10:08:18 MST 2014		  Starting Job 3
+
+Tue Dec 02 10:17:17 MST 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+
+Tue Dec 02 10:18:24 MST 2014		java.io.IOException: Cannot run program "pymol": error=2, No such file or directory
+
+Wed Dec 03 11:58:26 MST 2014		Exception in thread "main" java.lang.NoClassDefFoundError: org/openide/windows/TopComponent
+
+Wed Dec 03 11:58:26 MST 2014			at java.lang.ClassLoader.defineClass1(Native Method)
+
+Wed Dec 03 11:58:26 MST 2014			at java.lang.ClassLoader.defineClass(ClassLoader.java:800)
+
+Wed Dec 03 11:58:26 MST 2014			at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+
+Wed Dec 03 11:58:26 MST 2014			at java.net.URLClassLoader.defineClass(URLClassLoader.java:449)
+
+Wed Dec 03 11:58:26 MST 2014			at java.net.URLClassLoader.access$100(URLClassLoader.java:71)
+
+Wed Dec 03 11:58:26 MST 2014			at java.net.URLClassLoader$1.run(URLClassLoader.java:361)
+
+Wed Dec 03 11:58:26 MST 2014			at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+
+Wed Dec 03 11:58:26 MST 2014			at java.security.AccessController.doPrivileged(Native Method)
+
+Wed Dec 03 11:58:26 MST 2014			at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+
+Wed Dec 03 11:58:26 MST 2014			at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+
+Wed Dec 03 11:58:26 MST 2014			at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+
+Wed Dec 03 11:58:26 MST 2014			at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+
+Wed Dec 03 11:58:26 MST 2014			at mutantScreening.GAutilities.getDockomaticScriptPath(GAutilities.java:379)
+
+Wed Dec 03 11:58:26 MST 2014			at mutantScreening.GAutilities.genCmdFile(GAutilities.java:126)
+
+Wed Dec 03 11:58:26 MST 2014			at mutantScreening.GAutilities.getFitnessScores(GAutilities.java:84)
+
+Wed Dec 03 11:58:26 MST 2014			at mutantScreening.GeneticAlgorithm.initPopulation(GeneticAlgorithm.java:347)
+
+Wed Dec 03 11:58:26 MST 2014			at mutantScreening.GeneticAlgorithm.main(GeneticAlgorithm.java:98)
+
+Wed Dec 03 11:58:26 MST 2014		Caused by: java.lang.ClassNotFoundException: org.openide.windows.TopComponent
+
+Wed Dec 03 11:58:26 MST 2014			at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+
+Wed Dec 03 11:58:26 MST 2014			at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+
+Wed Dec 03 11:58:26 MST 2014			at java.security.AccessController.doPrivileged(Native Method)
+
+Wed Dec 03 11:58:26 MST 2014			at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+
+Wed Dec 03 11:58:26 MST 2014			at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+
+Wed Dec 03 11:58:26 MST 2014			at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+
+Wed Dec 03 11:58:26 MST 2014			at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+
+Wed Dec 03 11:58:26 MST 2014			... 17 more
+
+Wed Dec 03 12:14:26 MST 2014		Creating New Job [1]
+
+Wed Dec 03 12:14:32 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Dec 03 12:14:42 MST 2014		Selected 1 Jobs For Starting
+
+Wed Dec 03 12:14:42 MST 2014		  Starting Job 1
+
+Wed Dec 03 12:17:10 MST 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+
+Wed Dec 03 12:18:38 MST 2014		Selected 1 Jobs For Removal
+
+Wed Dec 03 12:18:38 MST 2014		Killing Job 1
+
+Wed Dec 03 12:18:38 MST 2014		Removing Job 1
+
+Wed Dec 03 12:18:55 MST 2014		No Output Directory Supplied
+Using Current Directory '.'
+
+Wed Dec 03 12:18:55 MST 2014		Creating New Job [1]
+
+Wed Dec 03 12:18:55 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Dec 03 12:18:57 MST 2014		Selected 1 Jobs For Starting
+
+Wed Dec 03 12:18:57 MST 2014		  Starting Job 1
+
+Wed Dec 03 12:19:29 MST 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+
+Wed Dec 03 12:19:54 MST 2014		Selected 1 Jobs For Removal
+
+Wed Dec 03 12:19:54 MST 2014		Killing Job 1
+
+Wed Dec 03 12:19:54 MST 2014		Removing Job 1
+
+Wed Dec 03 12:20:25 MST 2014		Creating New Job [1]
+
+Wed Dec 03 12:20:25 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Dec 03 12:20:28 MST 2014		Selected 1 Jobs For Starting
+
+Wed Dec 03 12:20:28 MST 2014		  Starting Job 1
+
+Wed Dec 03 12:20:28 MST 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+No such file or directory
+FILE /home/tlong/devNULL//home/tlong/devNULL/swarmCmds.txt at /usr/local/bin/swarm line 9.
+
+Wed Dec 03 12:20:54 MST 2014		Selected 1 Jobs For Removal
+
+Wed Dec 03 12:20:54 MST 2014		Killing Job 1
+
+Wed Dec 03 12:20:54 MST 2014		Removing Job 1
+
+Wed Dec 03 12:21:52 MST 2014		Creating New Job [1]
+
+Wed Dec 03 12:21:52 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Wed Dec 03 12:21:56 MST 2014		Selected 1 Jobs For Starting
+
+Wed Dec 03 12:21:56 MST 2014		  Starting Job 1
+
+Wed Dec 03 12:23:20 MST 2014		Selected 1 Jobs For Removal
+
+Wed Dec 03 12:23:20 MST 2014		Killing Job 1
+
+Wed Dec 03 12:23:20 MST 2014		Removing Job 1
+
+Wed Dec 03 12:24:38 MST 2014		1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+autodock4: WARNING: Using autodock4.0 unbound extended model in autodock4.2!
+1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+No such file or directory
+FILE /home/tlong/devNULL//home/tlong/devNULL/swarmCmds.txt at /usr/local/bin/swarm line 9.
+1 molecule converted
+44 audit log messages 
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+
+autodock4: can't find or open parameter file _.dpf
+
+autodock4: Unsuccessful Completion.
+
+No such file or directory at /home/tlong/NetBeansProjects/DockoMatic/build/cluster/lib/dockOmatic.pl line 1093.
+
+Mon Dec 15 12:31:28 MST 2014		Ligand needs to be supplied!
+
+Mon Dec 15 12:31:40 MST 2014		Creating New Job [1]
+
+Mon Dec 15 12:31:40 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Mon Dec 15 12:31:42 MST 2014		Selected 1 Jobs For Starting
+
+Mon Dec 15 12:31:42 MST 2014		  Starting Job 1
+
+Mon Dec 15 12:36:26 MST 2014		Creating New Job [2]
+
+Mon Dec 15 12:36:26 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Mon Dec 15 12:36:34 MST 2014		Selected 1 Jobs For Starting
+
+Mon Dec 15 12:36:34 MST 2014		  Starting Job 2
+
+Mon Dec 15 12:37:10 MST 2014		Creating New Job [3]
+
+Mon Dec 15 12:37:10 MST 2014		Highlight and Right-Click Jobs in Output Grid for options.
+
+Mon Dec 15 12:37:12 MST 2014		Selected 1 Jobs For Starting
+
+Mon Dec 15 12:37:12 MST 2014		  Starting Job 3
+
+Mon Dec 15 12:37:57 MST 2014		
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+
+autogrid4: WARNING:  Found an H-bonding atom with three bonded atoms, atom serial number 4685
+
+
+

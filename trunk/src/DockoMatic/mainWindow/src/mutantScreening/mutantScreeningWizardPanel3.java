@@ -22,7 +22,6 @@ public class mutantScreeningWizardPanel3 implements WizardDescriptor.ValidatingP
     private double slider_fract;
     
     private final double MAX_XOVER_CYCLES_RATIO = .02;  //screen at most this percent before terminating
-    private final int MAX_MUTATE_CYCLES = 6;
     private final double MAX_MUTATE_RATE = .08;
 
     // Get the visual component for the panel. In this template, the component
@@ -88,13 +87,11 @@ public class mutantScreeningWizardPanel3 implements WizardDescriptor.ValidatingP
         double num_to_dock = percent_to_dock * library_size;
         
         int num_crossover_cycles = (int) (num_to_dock / num_processors) + 2;
-        int num_mutation_cycles = Math.max(2,(int)(MAX_MUTATE_CYCLES*slider_fract));
         int num_crossover_points = constraint_set.length / 2;
         double mutation_rate = Math.max(.02, MAX_MUTATE_RATE * slider_fract);
         double elitism = Math.min(.5, ((double)(topX) / num_processors));
         
         wiz.putProperty(mutantScreeningWizardAction.NUM_CROSSOVER_CYCLES, num_crossover_cycles);
-        wiz.putProperty(mutantScreeningWizardAction.NUM_MUTATION_CYCLES, num_mutation_cycles);
         wiz.putProperty(mutantScreeningWizardAction.NUM_CROSSOVER_POINTS, num_crossover_points);
         wiz.putProperty(mutantScreeningWizardAction.MUTATION_RATE, mutation_rate);
         wiz.putProperty(mutantScreeningWizardAction.ELITISM, elitism);

@@ -21,7 +21,7 @@ public final class mutantScreeningVisualPanel1 extends JPanel {
 
     @Override
     public String getName() {
-        return "Mutation Sites";
+        return "Mutable Residues";
     }
 
     /**
@@ -154,7 +154,9 @@ public final class mutantScreeningVisualPanel1 extends JPanel {
         for(int index : selectedIndices){
             toDisplay += mutantScreeningWizardAction.DELIM + peptide_sequence.get(index);
         }
-        selectedAcidsTxtField.setText(toDisplay.substring(mutantScreeningWizardAction.DELIM.length()));
+        if(selectedIndices.length > 0){
+            selectedAcidsTxtField.setText(toDisplay.substring(mutantScreeningWizardAction.DELIM.length()));
+        }
     }//GEN-LAST:event_sequenceListValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

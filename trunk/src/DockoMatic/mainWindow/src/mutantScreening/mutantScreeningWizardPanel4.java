@@ -55,13 +55,12 @@ public class mutantScreeningWizardPanel4 implements WizardDescriptor.ValidatingP
     //TODO string[] will not work, need to fix it
     @Override
     public void readSettings(WizardDescriptor wiz) {
-        param_values = new Object[6];
+        param_values = new Object[5];
         param_values[0] = wiz.getProperty(mutantScreeningWizardAction.NUM_CROSSOVER_CYCLES);
-        param_values[1] = wiz.getProperty(mutantScreeningWizardAction.NUM_MUTATION_CYCLES);
-        param_values[2] = wiz.getProperty(mutantScreeningWizardAction.NUM_CROSSOVER_POINTS);
-        param_values[3] = wiz.getProperty(mutantScreeningWizardAction.MUTATION_RATE);
-        param_values[4] = wiz.getProperty(mutantScreeningWizardAction.ELITISM);
-        param_values[5] = wiz.getProperty(mutantScreeningWizardAction.TOP_POSES);
+        param_values[1] = wiz.getProperty(mutantScreeningWizardAction.NUM_CROSSOVER_POINTS);
+        param_values[2] = wiz.getProperty(mutantScreeningWizardAction.MUTATION_RATE);
+        param_values[3] = wiz.getProperty(mutantScreeningWizardAction.ELITISM);
+        param_values[4] = wiz.getProperty(mutantScreeningWizardAction.TOP_POSES);
         
         getComponent().setParamValues(param_values);
     }
@@ -69,11 +68,10 @@ public class mutantScreeningWizardPanel4 implements WizardDescriptor.ValidatingP
     @Override
     public void storeSettings(WizardDescriptor wiz) {
         wiz.putProperty(mutantScreeningWizardAction.NUM_CROSSOVER_CYCLES, param_values[0]);
-        wiz.putProperty(mutantScreeningWizardAction.NUM_MUTATION_CYCLES, param_values[1]);
-        wiz.putProperty(mutantScreeningWizardAction.NUM_CROSSOVER_POINTS, param_values[2]);
-        wiz.putProperty(mutantScreeningWizardAction.MUTATION_RATE, param_values[3]);
-        wiz.putProperty(mutantScreeningWizardAction.ELITISM, param_values[4]);
-        wiz.putProperty(mutantScreeningWizardAction.TOP_POSES,param_values[5]);
+        wiz.putProperty(mutantScreeningWizardAction.NUM_CROSSOVER_POINTS, param_values[1]);
+        wiz.putProperty(mutantScreeningWizardAction.MUTATION_RATE, param_values[2]);
+        wiz.putProperty(mutantScreeningWizardAction.ELITISM, param_values[3]);
+        wiz.putProperty(mutantScreeningWizardAction.TOP_POSES,param_values[4]);
     }
 
     @Override
@@ -97,21 +95,19 @@ public class mutantScreeningWizardPanel4 implements WizardDescriptor.ValidatingP
         
         try{
             xoverCycles = Math.max(0, Integer.parseInt(field_values[0]));
-            mutateCycles = Math.max(0,Integer.parseInt(field_values[1]));
-            xoverPoints = Math.max(1, Integer.parseInt(field_values[2]));
-            mutation_rate = Math.max(0.0,Double.parseDouble(field_values[3]));
+            xoverPoints = Math.max(1, Integer.parseInt(field_values[1]));
+            mutation_rate = Math.max(0.0,Double.parseDouble(field_values[2]));
             mutation_rate = Math.min(mutation_rate,MAX_MUTATE);   //
-            elitism = Math.max(0,Double.parseDouble(field_values[4]));
+            elitism = Math.max(0,Double.parseDouble(field_values[3]));
             elitism = Math.min(elitism, MAX_ELITISM);
-            smoothNum = Math.max(1,Integer.parseInt(field_values[5]));
+            smoothNum = Math.max(1,Integer.parseInt(field_values[4]));
             
             //if we made it to here then all parameters are valid, save in class variable
             param_values[0] = xoverCycles;
-            param_values[1] = mutateCycles;
-            param_values[2] = xoverPoints;
-            param_values[3] = mutation_rate;
-            param_values[4] = elitism;
-            param_values[5] = smoothNum;
+            param_values[1] = xoverPoints;
+            param_values[2] = mutation_rate;
+            param_values[3] = elitism;
+            param_values[4] = smoothNum;
    
         }catch(NumberFormatException ex){
             rval = "All fields must contain non-negative numeric values";

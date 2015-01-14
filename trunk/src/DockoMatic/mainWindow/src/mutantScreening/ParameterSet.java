@@ -15,8 +15,7 @@ import static mutantScreening.mutantScreeningWizardAction.DELIM;
 public class ParameterSet {
     boolean exhaustiveScreen;
     int topX;
-    int num_crossover_cycles;
-    int num_mutation_cycles;
+    int num_cycles;
     int num_crossover_points;
     int cluster_size;
     int smooth_num;
@@ -24,7 +23,7 @@ public class ParameterSet {
     double elitism;
     double mutation_rate;
     String origSiteAcids;
-    int[] substitution_sites;
+    String substitution_sites;
     String[] constraint_set;
 
     public ParameterSet(){
@@ -35,10 +34,10 @@ public class ParameterSet {
     public void setSitesAndSeq(String acidANDindex){
         String[] tokens = acidANDindex.split(DELIM);
         origSiteAcids = "";
-        substitution_sites = new int[tokens.length];
+        substitution_sites = "";
         for(int i = 0; i < tokens.length; i++){
             origSiteAcids += tokens[i].charAt(0);
-            substitution_sites[i] = Integer.parseInt(tokens[i].substring(1)) - 1;
+            substitution_sites += (Integer.parseInt(tokens[i].substring(1)) - 1) + ",";
         }
     }
 
@@ -59,17 +58,10 @@ public class ParameterSet {
     /**
      * @return the num_crossover_cycles
      */
-    public int getNum_crossover_cycles() {
-        return num_crossover_cycles;
+    public int getNum_cycles() {
+        return num_cycles;
     }
-
-    /**
-     * @return the num_mutation_cycles
-     */
-    public int getNum_mutation_cycles() {
-        return num_mutation_cycles;
-    }
-
+    
     /**
      * @return the num_crossover_points
      */
@@ -122,7 +114,7 @@ public class ParameterSet {
     /**
      * @return the substitution_sites
      */
-    public int[] getSubstitution_sites() {
+    public String getSubstitution_sites() {
         return substitution_sites;
     }
 

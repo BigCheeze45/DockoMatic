@@ -81,11 +81,8 @@ public final class mutantScreeningWizardAction implements ActionListener {
             parameters.setSitesAndSeq((String)wiz.getProperty(MUTABLE_ACIDS));
             parameters.constraint_set = ((String[]) wiz.getProperty(MUTATION_CONSTRAINTS));
             parameters.exhaustiveScreen = (Boolean)wiz.getProperty(EXHAUSTIVE_DOCKING);
-            if(parameters.isExhaustiveScreen()){
-                //do nothing, call generateExhaustiveList from openerTopComponent
-            }else{
+            if(! parameters.isExhaustiveScreen()){
                 setGAparameters(wiz);
-//                Setup GA, call screening_wizard.runGA() from OpenerTopComponent
             }
             rval = parameters;
         }
@@ -96,16 +93,11 @@ public final class mutantScreeningWizardAction implements ActionListener {
         
         parameters.topX = (Integer) wiz.getProperty(mutantScreeningWizardAction.TOPX);
         parameters.cluster_size = (Integer) wiz.getProperty(mutantScreeningWizardAction.CLUSTER_SIZE);
-        parameters.num_crossover_cycles = (Integer) wiz.getProperty(mutantScreeningWizardAction.NUM_CROSSOVER_CYCLES);
-        parameters.num_mutation_cycles = (Integer) wiz.getProperty(mutantScreeningWizardAction.NUM_MUTATION_CYCLES);
+        parameters.num_cycles = (Integer) wiz.getProperty(mutantScreeningWizardAction.NUM_CROSSOVER_CYCLES);
         parameters.num_crossover_points = (Integer) wiz.getProperty(mutantScreeningWizardAction.NUM_CROSSOVER_POINTS);
         parameters.mutation_rate = (Double) wiz.getProperty(mutantScreeningWizardAction.MUTATION_RATE);
         parameters.elitism = (Double) wiz.getProperty(mutantScreeningWizardAction.ELITISM);
         parameters.smooth_num = (Integer) wiz.getProperty(mutantScreeningWizardAction.TOP_POSES);
-        
-    }
-    
-    public void runGA(){
         
     }
 

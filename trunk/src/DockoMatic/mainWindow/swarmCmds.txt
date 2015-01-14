@@ -1,0 +1,1 @@
+/home/tlong/NetBeansProjects/DockoMatic/build/cluster/lib/dockOmatic.pl -p /home/tlong/MII.pdb:E11A -o /home/tlong/NetBeansProjects/DockoMatic/mainWindow/dock_000001 -r /home/tlong/A3B2_2br8.pdb -b /home/tlong/A3B2_2br8.gpf -g 10
