@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Molecule {
 
-    private final long CID;
+    private final String ID;
     private double[] histogram;  //normalized histogram
     private ArrayList<Typed_Angle> typed_Angles;
     private final ArrayList<Atom> atoms;
@@ -19,8 +19,8 @@ public class Molecule {
      * @param CID the identification number for the molecule
      * @param complete whether this molecule will
      */
-    public Molecule(long CID) {
-        this.CID = CID;
+    public Molecule(String ID) {
+        this.ID = ID;
         atoms = new ArrayList<Atom>();
     }
 
@@ -32,8 +32,8 @@ public class Molecule {
         return atoms.size();
     }
 
-    public long getCID() {
-        return CID;
+    public String getCID() {
+        return ID;
     }
 
     public Atom getAtom(int index) {
@@ -54,7 +54,7 @@ public class Molecule {
     
     @Override
     public String toString() {
-        return "CID: " + CID;
+        return "CID: " + ID;
     }
 
     public double[] getHistogram() {
@@ -212,7 +212,7 @@ public class Molecule {
 
         //normalize histogram
         if (measurements.isEmpty()) {
-            System.err.println("WARNING: Molecule " + CID + " is thought to have no measurements.");
+            System.err.println("WARNING: Molecule " + ID + " is thought to have no measurements.");
         } else {
             for (int i = 0; i < histogram.length; i++) {
                 this.histogram[i] = ((double) curr_histogram[i]) / measurements.size();

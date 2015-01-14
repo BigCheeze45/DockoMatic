@@ -61,7 +61,7 @@ public class MappingWizardPanel1 implements WizardDescriptor.ValidatingPanel<Wiz
         wiz.putProperty(MappingWizardAction.DATABASE_FOLDER, getComponent().getDatabaseDir());
         wiz.putProperty(MappingWizardAction.OUTPUT_FOLDER, getComponent().getOutputDir());
         wiz.putProperty(MappingWizardAction.NUM_SWARM_CMDS, Integer.parseInt(getComponent().getNumNodes()));
-        wiz.putProperty(MappingWizardAction.SWARM_CMD_OPTIONS, swmCmdOptions);
+        wiz.putProperty(MappingWizardAction.SWARM_CMD_OPTIONS, getComponent().getSwarmOpts());
         wiz.putProperty(MappingWizardAction.USE_SHAPE_DIST, getComponent().getUseShapeDist());
         wiz.putProperty(MappingWizardAction.NUM_BINS, Integer.parseInt(getComponent().getNumBins()));
         wiz.putProperty(MappingWizardAction.UPPER_BOUND, Integer.parseInt(getComponent().getUpperBoundMeasure()));
@@ -87,10 +87,8 @@ public class MappingWizardPanel1 implements WizardDescriptor.ValidatingPanel<Wiz
         
         try{
             Integer tmp = Integer.parseInt(component.getNumNodes());
-            Integer jobsPerNode = Integer.parseInt(component.getJobsPerNode());
-            swmCmdOptions = " -n " + jobsPerNode + " " + component.getSwarmOpts();
         }catch(NumberFormatException ex){
-            message += "# Nodes and Swarm Jobs Per Node must be positive integers!\n";
+            message += "# Processes must be positive integers!\n";
         }
         
         if(component.getUseShapeDist()){

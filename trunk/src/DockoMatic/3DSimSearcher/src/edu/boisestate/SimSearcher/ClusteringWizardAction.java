@@ -32,13 +32,12 @@ public final class ClusteringWizardAction implements ActionListener {
     private boolean wasCancelled;
     final static String OUTPUT_DIR = "var1";
     final static String MAPPED_DIR = "var2";
-    final static String SWARM_OPTS = "var3";
     final static String CLUSTER_SIZES = "var4";
     final static String NUM_SWARM_CMDS = "var5";
     final static String DISTRIBUTION_TEST = "var6";
-    final static String VERBOSE = "var7";
+    final static String ADV_OPTIONS = "var7";
+    final static String VERBOSE = "var8";
     private ClusterDaemon daemon;
-    private final String config_path = "/home/tlong/ClusteredDB/.config";  //TODO
     private int numBins;
     private String properties;
     static final String CLUSTER_PROPS = ".cluster_properties";
@@ -68,9 +67,10 @@ public final class ClusteringWizardAction implements ActionListener {
         wiz.setTitle("Clustering Wizard");
         wasCancelled = true;
         if (DialogDisplayer.getDefault().notify(wiz) == WizardDescriptor.FINISH_OPTION) {
-            File config_file = new File(config_path);
+            
             File indexedFolder = new File((String)wiz.getProperty(MAPPED_DIR));
             output_path = (String)wiz.getProperty(OUTPUT_DIR);
+            String similarity_metric = (String)wiz.getProperty(DISTRIBUTION_TEST);
             File outputFolder = new File(output_path);
             int numProcesses = (Integer) wiz.getProperty(NUM_SWARM_CMDS);
             HashMap<String,String> mappedDB_properties = SimSearchUtilities.getProperties(new File(indexedFolder,MappingWizardAction.MAPPED_SETTINGS));
@@ -97,16 +97,17 @@ public final class ClusteringWizardAction implements ActionListener {
                 }
                 
                 if(good2go){
-                    daemon = new ClusterDaemon(verbose, config_file, indexedFolder, mainFolder, outputFolder, numProcesses, (String)wiz.getProperty(DISTRIBUTION_TEST), numClusters);
+                    daemon = new ClusterDaemon(verbose, indexedFolder, mainFolder, outputFolder, numProcesses, similarity_metric, numClusters);
+                    daemon.setAdvOptions((HashMap<String,String>) wiz.getProperty(ADV_OPTIONS) );
                     properties = "MappedDatabase" + SimSearchUtilities.CONFIG_DELIM + indexedFolder + "\n"
-                            + "Similarity_Metric" + SimSearchUtilities.CONFIG_DELIM + wiz.getProperty(DISTRIBUTION_TEST) +"\n"
+                            + "Similarity_Metric" + SimSearchUtilities.CONFIG_DELIM + similarity_metric +"\n"
                             + "num_bins" + SimSearchUtilities.CONFIG_DELIM + mappedDB_properties.get(MappingWizardAction.NUM_BINS_LABEL) + "\n"
                             + "max_measurement" + SimSearchUtilities.CONFIG_DELIM + mappedDB_properties.get(MappingWizardAction.MAX_MEASURE_LABEL) + "\n";
                     
                     wasCancelled = false;
                 }  
             }else{
-                
+                System.err.println("Error: The mapped database states that there are no bins in a histogram.");
             }
         }
     }

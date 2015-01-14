@@ -193,8 +193,8 @@ public class ClusterWorker {
                     if(current_molecule != null){  //just finished parsing a molecule, add it to the list
                         list.add(current_molecule);
                     }
-                    long cid = Long.parseLong(line.substring(MappedMolecule.ID_TAG.length()));
-                    current_molecule = new MappedMolecule(cid);
+                    String id = line.substring(MappedMolecule.ID_TAG.length());
+                    current_molecule = new MappedMolecule(id);
                 }else if(line.contains(MappedMolecule.HISTOGRAM_TAG)){  //more complicated to handle NaN issues
                     double[] histogram = safeHistogramParse(line.substring(MappedMolecule.HISTOGRAM_TAG.length()).trim());
                     if(histogram != null){

@@ -70,25 +70,29 @@ public class Mapper {
         }
 
         BufferedReader bread = null;
+        boolean parsingMolecule = true;
         
         try{
             bread = new BufferedReader(new FileReader(new File(sdfPath)));
 
             String line;
             while ((line = bread.readLine()) != null) {
-                if (line.contains(SDF_DELIM)) {
-                    line = bread.readLine();
-                    if(line == null){
+                if(parsingMolecule){
+                    if(line == null || line.isEmpty()){
                         break;
                     }else{
-                        Long cid = Long.parseLong(line);
+                        String id = line.trim();
                         for (int i = 0; i < NUM_SKIP_LINES; i++) {
                             bread.readLine();
                         }
-                        Molecule mol = parseMolecule(bread,cid);
+                        Molecule mol = parseMolecule(bread,id);
                         moleculeList.add(mol);
+                        parsingMolecule = false;
                     }
+                }else if(line.contains(SDF_DELIM)) {
+                    parsingMolecule = true;
                 }
+                
                 if (moleculeList.size() >= max2write) {  //prevent memory issues ... I hope
                     cal = Calendar.getInstance();
                     System.out.println("Wrote " + moleculeList.size() + " molecules from file " + sdfPath + " at " + cal.getTime());
@@ -118,11 +122,11 @@ public class Mapper {
     wrap this method and call it only after encountering the delimiter.  Pass it the next line and the 
     BufferedReader.
     */
-    public static Molecule parseMolecule(BufferedReader bread, long cid) throws IOException{
+    public static Molecule parseMolecule(BufferedReader bread, String id) throws IOException{
         
         String line = bread.readLine();
         
-        Molecule molecule = new Molecule(cid);
+        Molecule molecule = new Molecule(id);
         int numAtomLines;
         int numConnectLines;
 

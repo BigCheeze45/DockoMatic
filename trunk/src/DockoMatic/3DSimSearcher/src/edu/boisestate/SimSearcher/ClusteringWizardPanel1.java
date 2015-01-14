@@ -59,11 +59,11 @@ public class ClusteringWizardPanel1 implements WizardDescriptor.ValidatingPanel<
     public void storeSettings(WizardDescriptor wiz) {
         wiz.putProperty(ClusteringWizardAction.OUTPUT_DIR,getComponent().getOutputDir());
         wiz.putProperty(ClusteringWizardAction.MAPPED_DIR,getComponent().getMapDir());
-        wiz.putProperty(ClusteringWizardAction.SWARM_OPTS,swmCmdOptions);
         wiz.putProperty(ClusteringWizardAction.CLUSTER_SIZES,clusterSizes);
         wiz.putProperty(ClusteringWizardAction.NUM_SWARM_CMDS,Integer.parseInt(getComponent().getNumNodes()));
         wiz.putProperty(ClusteringWizardAction.DISTRIBUTION_TEST,getComponent().getDistTest());
         wiz.putProperty(ClusteringWizardAction.VERBOSE,getComponent().getVerbosity());
+        wiz.putProperty(ClusteringWizardAction.ADV_OPTIONS,getComponent().getAdvOptions());
     }
 
     @Override
@@ -97,9 +97,7 @@ public class ClusteringWizardPanel1 implements WizardDescriptor.ValidatingPanel<
                     break;  //there can't be subclusters without a parent cluster
                 }
             }
-            tmp = Integer.parseInt(component.getNumNodes());
-            Integer jobsPerNode = Integer.parseInt(component.getJobsPerNode());
-            swmCmdOptions = " -n " + jobsPerNode + " " + component.getSwarmCmdOpts();
+
         }catch(NumberFormatException ex){
             message += "# Nodes, # clusters at each level, and Swarm Jobs Per Node must be positive integers.";
         }
