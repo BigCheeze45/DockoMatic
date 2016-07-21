@@ -125,6 +125,9 @@ public final class messageWindowTopComponent extends TopComponent {
                 .addContainerGap())
         );
 
+        jLabel1.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(messageWindowTopComponent.class, "messageWindowTopComponent.jLabel1.AccessibleContext.accessibleName")); // NOI18N
+        jLabel1.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(messageWindowTopComponent.class, "messageWindowTopComponent.jLabel1.AccessibleContext.accessibleDescription")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
