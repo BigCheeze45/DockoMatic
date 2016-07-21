@@ -42,7 +42,7 @@ import query.QueryDriver;
 )
 @Messages({
     "CTL_mainAction=SimSearcher",
-    "CTL_mainTopComponent=SimSearcher Window",
+    "CTL_mainTopComponent=SimSearcher window",
     "HINT_mainTopComponent=This is a window for performing molecular similarity searches"
 })
 public final class SimSearchTopComponent extends TopComponent {

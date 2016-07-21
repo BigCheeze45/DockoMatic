@@ -99,12 +99,11 @@ public class ClusteringWizardPanel1 implements WizardDescriptor.ValidatingPanel<
             }
 
         }catch(NumberFormatException ex){
-            message += "# Nodes, # clusters at each level, and Swarm Jobs Per Node must be positive integers.";
+            message += "# Nodes, # clusters at each level, and Swarm jobs per node must be positive integers.";
         }
         
         if(!message.isEmpty()){
             throw new WizardValidationException(null,message,null);
         }
     }
-
 }
