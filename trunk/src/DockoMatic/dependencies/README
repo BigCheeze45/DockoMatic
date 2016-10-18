@@ -1,0 +1,9 @@
+INSTALLATION:
+DockoMatic can be installed by simply running install.sh as root. In order to do that the script will first
+need to be made executable as follow:
+	chmod +x install.sh
+
+Once that's complete, you can then run the installer as follow:
+	sudo ./install.sh <license key>
+
+Where license key refers to the MODELLER license key that can be acquire through their website: https://salilab.org/modeller/registration.html.

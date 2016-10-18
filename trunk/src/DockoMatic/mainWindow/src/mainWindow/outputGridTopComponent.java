@@ -54,7 +54,6 @@ import javax.swing.table.TableModel;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-//import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 
 /**
@@ -79,17 +78,9 @@ public final class outputGridTopComponent extends TopComponent implements TableM
         initComponents();
         setName(NbBundle.getMessage(outputGridTopComponent.class, "CTL_outputGridTopComponent"));
         setToolTipText(NbBundle.getMessage(outputGridTopComponent.class, "HINT_outputGridTopComponent"));
-//        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
         putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_KEEP_PREFERRED_SIZE_WHEN_SLIDED_IN, Boolean.TRUE);
         jTable1.setColumnSelectionAllowed(true);
-        //JTableHeader head = jTable1.getTableHeader();
-        //head.addMouseListener(new java.awt.event.MouseAdapter() {
-        //      public void mousePressed(java.awt.event.MouseEvent evt) {
-        //                headerMousePressed(evt);
-        //        }
-        //});
-
     }
 
     protected static void closeTabb(final MouseEvent evtOrig) {
@@ -99,7 +90,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
     protected static TableModel newTabb() {
         tabCount = outGridTPane.getTabCount();
 
-        outGridTPane.addTab("tab " + tabCount, new JScrollPane(new JTable()));
+        outGridTPane.addTab("Tab " + tabCount, new JScrollPane(new JTable()));
         //outGridTPane.setTabComponentAt(tabCount, new JButton("x"));
         JButton tmpBut = new JButton("x");
         JPanel pan = new JPanel();
@@ -123,8 +114,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
         tmpTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    //"Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Use Swarm", "Status", "Sequence", "Template", "ACTION"
-                    "Job #", "Ligand", "Output Directory", "Receptor", "Box Coordinate", "Secondary", "Status", "Sequence", "Template", "AutoDock Cycles"
+                    "Job #", "Ligand", "Output directory", "Receptor", "Box coordinate", "Secondary", "Status", "Sequence", "Template", "AutoDock cycles"
                 }) {
 
             Class[] types = new Class[]{
@@ -165,21 +155,15 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
         return tmpTable.getModel();
     }
-
-    //void insertRowsctionPerformed(ActionEvent e) {
-    //  int row = MyWidgetTable.getSelectedRow();
-    //  controller.doInsertPagesAction(row);
-    //}
+    
     @Override
     public void tableChanged(TableModelEvent e) {
         TableModel tmpTable = (TableModel) e.getSource();
         int row = e.getFirstRow();
-        if (((String) tmpTable.getValueAt(row, 7)).equals("Started"))// &&
-        //((String)tmpTable.getValueAt(row, 5)).length() > 0)
+        if (((String) tmpTable.getValueAt(row, 7)).equals("Started"))
         {
-            System.out.println("LISTENER SHOULD START SECONDARY NOW IF DONE");
+            messageWindowTopComponent.appendText("LISTENER SHOULD START SECONDARY NOW IF DONE");
         }
-        //openerTopComponent.doSecondary(row);
     }
 
     protected static JTable getTabTable(int i) {
@@ -199,17 +183,13 @@ public final class outputGridTopComponent extends TopComponent implements TableM
         JMenuItem optionMenuStart = new JMenuItem("Start");
         JMenuItem optionMenuDelete = new JMenuItem("Delete");
         JMenuItem optionMenuRC = new JMenuItem("Analyze");
-        JMenuItem optionMenuPymol = new JMenuItem("View in Pymol");
-        //JMenuItem optionDisplayMore = new JMenuItem( "Display More Jobs" );
-
+        JMenuItem optionMenuPymol = new JMenuItem("View in PyMOL");
 
         jpop = new JPopupMenu("Options");
         jpop.add(optionMenuStart);
         jpop.add(optionMenuDelete);
         jpop.add(optionMenuRC);
         jpop.add(optionMenuPymol);
-        //jpop.add( optionDisplayMore );
-
 
         optionMenuStart.addMouseListener(new MouseAdapter() {
 
@@ -235,15 +215,7 @@ public final class outputGridTopComponent extends TopComponent implements TableM
                 openerTopComponent.pymolView(e, evtOrig);
             }
         });
-
-//		optionDisplayMore.addMouseListener(new MouseAdapter(){
-//			public void mousePressed(MouseEvent e){
-//			    openerTopComponent.displayMore(e, evtOrig);
-//			}
-//		});
-
         jpop.show(evtOrig.getComponent(), evtOrig.getX(), evtOrig.getY());
-
     }
 
     private static void selectAllInclude() {
@@ -251,25 +223,18 @@ public final class outputGridTopComponent extends TopComponent implements TableM
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         int job;
-
-        //for(int i = 0; i< model.getRowCount(); i++){
-
+        
         if (includeToggle) {
-            //table.setValueAt(false, i, getCol("ACTION"));
-            //table.removeRowSelectionInterval(i, i);
             table.clearSelection();
         } else {
-            //table.setValueAt(true, i, getCol("ACTION"));
-            //table.addRowSelectionInterval(i, i);
             table.selectAll();
         }
-        //}
+        
         if (includeToggle) {
             includeToggle = false;
         } else {
             includeToggle = true;
         }
-
     }
 
     private static int getCol(String column) {
@@ -304,7 +269,6 @@ public final class outputGridTopComponent extends TopComponent implements TableM
         } else {
             swarmToggle = true;
         }
-
     }
 
     private static void headerMousePressed(java.awt.event.MouseEvent e) {
@@ -313,27 +277,10 @@ public final class outputGridTopComponent extends TopComponent implements TableM
         JTableHeader header = table.getTableHeader();
         int column = header.columnAtPoint(e.getPoint());
         String colName = table.getColumnName(column);
-        //JPanel panel;
-        JButton button;
-
-        //if(column == 10)
-        //if(colName.equals("ACTION"))
+                
         if (colName.equals("Job #")) {
             selectAllInclude();
         }
-        //else if(column == 5){
-//            else if(colName.equals("Secondary")){
-//                //panel = openerTopComponent.jPanel7;
-//                button = openerTopComponent.appendButton;
-//                if(button.isEnabled()){// panel.setVisible(false);
-//		    openerTopComponent.setAppVis(false);
-//		} else{
-//		//	    panel.setVisible(true);
-//		    openerTopComponent.setAppVis(true);
-//		    }
-//	    //} else if (column == 6)
-//	    } else if (colName.equals("Use Swarm"))
-//                selectAllSwarm();
     }
 
     private static void TabbMousePressed(java.awt.event.MouseEvent e) {
@@ -344,17 +291,13 @@ public final class outputGridTopComponent extends TopComponent implements TableM
         int row = table.rowAtPoint(e.getPoint());
         if (table.isRowSelected(row)) {
             table.addRowSelectionInterval(row, row);
-            //table.setValueAt(true, row, getCol("ACTION"));
         } else {
             table.removeRowSelectionInterval(row, row);
-            //table.setValueAt(false, row, getCol("ACTION"));
         }
         if (e.getButton() == MouseEvent.BUTTON3) {
-            //jpop.show(e.getComponent(), e.getX(), e.getY());
             makePopMenu(e);
             return;
         }
-
     }
 
     /**

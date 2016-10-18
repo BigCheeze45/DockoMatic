@@ -15,11 +15,11 @@ public class GeneticAlgorithm {
     private double mutation_rate;   	  //the mutation rate
     private Random randNumGenerator;		//a random number generator
 
-    private HashSet<String> tested_genotypes;	  //store all of the genotype that have been tested  
+    private HashSet<String> tested_genotypes;	  //store all of the genotype that have been tested
 
     private int population_limit;		  //The maximum number of Organisms to allow in a generation
     private int elite_carryover;          //the top elite_carryover organisms will be placed in the next population
-    private int dockomatic_limit;		/*	The maximum number of jobs, for each generation, to submit 
+    private int dockomatic_limit;		/*	The maximum number of jobs, for each generation, to submit
      to Dockomatic for fitness evaluation */
 
     private int generations;
@@ -35,31 +35,31 @@ public class GeneticAlgorithm {
     private ArrayList<Organism> population;   	//the population of organisms
     private ArrayList<Organism> new_organisms; 	//to hold the next generations organisms
     private ArrayList<Organism> best_organisms; //to hold the best organisms from the last round, allows elitism * pop_limit < topX
-    
+
     // Parse input values.  This allows us to run the script on the cluster without keeping the GUI or remote terminal open
     public static void main(String[] args) {
-        
+
         if(args.length < 16){
             System.err.println("Usage: java GeneticAlgorithm <substitution sites> <substitution pools> <residue seq> <elitism> <mutation rate> <dock limit>"
                     + " <topX> <stagnant rounds> <# Xover points> <autodock cycles> <smoothNum> <output Directory> <ligFile> <recFile> <boxFile> <swarmCmd>");
             System.exit(1);
         }
-        
+
         final String delim = ",";
         int arg_count = 0;
-        
+
         //Parse substitution sites
         String[] temp = args[arg_count++].split(delim);
         int[] sites = new int[temp.length];
-        
+
         for(int i = 0; i < temp.length; i++){
             sites[i] = Integer.parseInt(temp[i]);
         }
-        
+
         //Parse substitution pools
         String[] subPools = args[arg_count++].split(delim);
         String origSeq = args[arg_count++];
-        
+
         String[] origSeqWithIndex = new String[origSeq.length()];
 
         for(int i =0; i < origSeq.length(); i++){
@@ -72,12 +72,12 @@ public class GeneticAlgorithm {
         int dock_limit = Integer.parseInt(args[arg_count++]);
         Random rand = new Random();
         GeneticAlgorithm genAlg = new GeneticAlgorithm(elitism, mutation_rate, dock_limit, sites, subPools, rand, 1);
-        
+
         //set GA parameters which pertain to the cycles
         int topX = Integer.parseInt(args[arg_count++]);
         int initSpan = Integer.parseInt(args[arg_count++]);
         int numCrossoverPoints = Integer.parseInt(args[arg_count++]);
-        
+
         //set Docking Engines Parameters
         int autoDock_cycles = Integer.parseInt(args[arg_count++]);
         int smoothNumber = Integer.parseInt(args[arg_count++]);
@@ -86,7 +86,7 @@ public class GeneticAlgorithm {
         String recFile = args[arg_count++];
         String boxFile = args[arg_count++];
         String swarmCmd = "";
-        
+
         for(int i = arg_count; i < args.length; i++){
             swarmCmd += args[i] + " ";
         }
@@ -101,7 +101,7 @@ public class GeneticAlgorithm {
 
         System.out.println("\nDockoMatic's GA completed after " + genAlg.getGenerations() +" generations and " + numJobs +" AutoDock jobs.");
     }
-    
+
     public static String getAbsExecPath() {
         String rval = GeneticAlgorithm.class.getResource("GeneticAlgorithm.class").getPath();
         rval = rval.substring(rval.indexOf(":") + 1, rval.indexOf(".jar") + ".jar".length());
@@ -112,7 +112,7 @@ public class GeneticAlgorithm {
     public GeneticAlgorithm(double elitism_factor, double mutation_rate, int dockomatic_limit, int[] sites, String[] substitution_pools, Random rand, int debug) {
 
         if (sites.length != substitution_pools.length) {
-            System.err.println("There must a substitution pool for every mutation site.  Aborting Genetic Algorithm ... ");
+            System.err.println("There must a substitution pool for every mutation site. Aborting Genetic Algorithm...");
             System.exit(1);
         }
 
@@ -162,7 +162,6 @@ public class GeneticAlgorithm {
 
             attempts++;
         }
-
     }
 
     private Organism generateRandom(Random rand) {
@@ -202,7 +201,6 @@ public class GeneticAlgorithm {
 
             attempts++;
         }
-
     }
 
     //estimate how many organisms will be added to the population from mutation and random generation
@@ -238,7 +236,6 @@ public class GeneticAlgorithm {
 
             org.setFitness(fitness);
         }
-
     }
 
     public double calculateTotalScore() {
@@ -253,7 +250,7 @@ public class GeneticAlgorithm {
     //TODO double check for soundness of approach
     private double[] generateCrossoverCMF() {
 
-		//first step : get the total fitness of all organisms in the population.  Only count those with negative energies 
+	//first step : get the total fitness of all organisms in the population.  Only count those with negative energies
         double totalFitness = 0.0;
         double temp;
 
@@ -266,7 +263,8 @@ public class GeneticAlgorithm {
 
         //we now know that the first index organisms have a negative energy
         if (index < 1) {
-            System.err.println("All energies are positive values.  Assumptions are wrong, please fix GeneticAlgorithm.generateCrossoverPMF()");
+            System.err.println("All energies are positive values."
+                    + " Assumptions are wrong, please fix GeneticAlgorithm.generateCrossoverPMF()");
             System.exit(1);
         }
 
@@ -277,7 +275,6 @@ public class GeneticAlgorithm {
         for (int i = 1; i < index; i++) {
             cmf[i] = cmf[i - 1] + (population.get(i).getFitness() / totalFitness);
         }
-
         return cmf;
     }
 
@@ -315,14 +312,14 @@ public class GeneticAlgorithm {
         String mutantGenotype;
 
         for (int i = 0; i < upToNum; i++) {
-            mutantGenotype = population.get(i).mutate(randNumGenerator, mutation_rate, substitution_pools);
+            mutantGenotype = population.get(i).mutate(
+                    randNumGenerator, mutation_rate, substitution_pools);
 
             if (!tested_genotypes.contains(mutantGenotype)) {
                 population.add(new Organism(mutantGenotype));
                 tested_genotypes.add(mutantGenotype);
             }
         }
-
     }
 
     public String populationToString() {
@@ -446,5 +443,4 @@ public class GeneticAlgorithm {
         }
         return newOrganisms;
     }
-
 }

@@ -257,7 +257,7 @@ public class GAutilities {
                 }
                 //TODO remove the following line
                 toLog("There are " + jobsLeft.size() + " jobs left.");
-
+                messageWindowTopComponent.appendText("There are " + jobsLeft.size() + " left.");
             }
 
             if (jobsLeft.size() > 0) {
@@ -302,7 +302,6 @@ public class GAutilities {
         }
 
         return rval;
-
     }
 
     private double parseEnergy(String fileName) {
@@ -371,7 +370,6 @@ public class GAutilities {
         for (int i = 0; i < numBest; i++) {
             result += genealogy.get(i).toString() + "\n";
         }
-
         return result;
     }
 
