@@ -282,7 +282,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="vinaCheckBox" min="-2" max="-2" attributes="1"/>
-                                  <EmptySpace min="435" max="32767" attributes="0"/>
+                                  <EmptySpace min="435" pref="438" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -323,11 +323,13 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="ligandCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="ligModCheckBox" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="LigandButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="ligandField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="ligandCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LigandButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ligandField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>

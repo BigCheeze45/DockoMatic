@@ -193,14 +193,13 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             final boolean swarm, final String nodeJobs, final String modJobs, final String[] residues) {
         modWizVisualPanel5.genModelMessage.setVisible(true);
 
-
         SwingWorker getAlWorker = new SwingWorker<String, Void>() {
 
             @Override
             protected String doInBackground() {
                 int maxJobs = Integer.parseInt(modJobs);
                 runModellerJobs(oDir, createModellerJobs(seqName, oDir, templtList, swarm, maxJobs, residues), nodeJobs);
- //               makeLogFile(oDir, seqName, templtList, maxJobs);
+                //               makeLogFile(oDir, seqName, templtList, maxJobs);
                 if (residues[0].equals("")) {
                     parseResults(oDir, (maxJobs * templtList.length), false);
                 } else {
@@ -252,7 +251,6 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
 //        }
 //
 //    }
-
     private void runModellerJobs(String oDir, String[] jobList, String jobsPerNode) {
         File outDir = new File(oDir);
         int job, i;
@@ -270,12 +268,12 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             swarmDir.deleteOnExit();
             String swarmFile = swarmDir.getCanonicalPath() + "/swarmModCmd";
             errorLog = "";
-            
+
             //remove old resLog file
             String logFile = oDir + "/resLog";
             File resLog = new File(logFile);
-            resLog.delete();        
-            
+            resLog.delete();
+
             //run swarm Jobs.
             BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarmFile));
             for (i = 0; i < totalCount; i++) {
@@ -328,9 +326,9 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             for (int j = 0; j < max; j++) {
                 log = oDir + "/model_" + tmpFile + "_" + j + ".log";
                 modJobList[(i * max) + j] = cmd + " " + seqName + "-" + tmpFile + " " + tmpFile + " " + j + " " + oDir + " > " + log;
-               // modJobList[(i * max) + j] += "; grep ^" + seqName + " model_" + tmpFile + "*.log > " + oDir + "/resLog";
+                // modJobList[(i * max) + j] += "; grep ^" + seqName + " model_" + tmpFile + "*.log > " + oDir + "/resLog";
             }
-            modJobList[((i+1)*max)-1] += "; grep ^" + seqName + " model_" + tmpFile + "*.log >> " + oDir + "/resLog";
+            modJobList[((i + 1) * max) - 1] += "; grep ^" + seqName + " model_" + tmpFile + "*.log >> " + oDir + "/resLog";
         }
         return modJobList;
     }
@@ -371,7 +369,6 @@ public class modWizWizardPanel5 implements WizardDescriptor.Panel, ListSelection
             System.out.println("Tried to create " + newFile + " but ran into problems...");
             e.printStackTrace();
         }
-
 
     }
 

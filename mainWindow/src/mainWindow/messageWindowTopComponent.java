@@ -1,34 +1,34 @@
-//# Program: "DockoMatic"
-//# Project: "DNA Safeguard"
-//# Filename: "messageWindowTopComponent.java"
-//#
-//# Dr. Tim Andersen
-//# Department of Computer Science
-//# College of Engineering
-//# Boise State University
-//#
-//# Original Author(s): "Casey Bullock"
-//#                     "Nic Cornia"
-//#
-//# Last Modified
-//#   Date: "November 14, 2012"
-//#
-//#
-//#  This file is part of DockoMatic.
-//#
-//#  DockoMatic is free software: you can redistribute it and/or modify
-//#  it under the terms of the GNU Lesser General Public License as published by
-//#  the Free Software Foundation, either version 3 of the License, or
-//#  (at your option) any later version.
-//#
-//#  DockoMatic is distributed in the hope that it will be useful,
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//#  GNU Lesser General Public License for more details.
-//#
-//#  You should have received a copy of the GNU Lesser General Public License
-//#  along with DockoMatic.  If not, see <http://www.gnu.org/licenses/>.
-//#
+/**
+ * Program: "DockoMatic"
+ * Project: "DNA Safeguard"
+ * Filename: "messageWindowTopComponent.java"
+ * Dr. Tim Andersen
+ * Department of Computer Science
+ * College of Engineering
+ * Boise State University
+ * #
+ * Original Author(s): "Casey Bullock"
+ * #                     "Nic Cornia"
+ * #
+ * Last Modified
+ * Date: "November 14, 2012"
+ * #
+ * #
+ * This file is part of DockoMatic.
+ * #
+ * DockoMatic is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * #
+ * DockoMatic is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * #
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with DockoMatic.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /*
  * To change this template, choose Tools | Templates
@@ -39,8 +39,6 @@ package mainWindow;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.logging.Logger;
@@ -53,39 +51,33 @@ import org.openide.windows.WindowManager;
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//mainWindow//messageWindow//EN",
-autostore = false)
+        autostore = false)
 public final class messageWindowTopComponent extends TopComponent {
 
-	private static messageWindowTopComponent instance;
-	/** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
-	private static final String PREFERRED_ID = "messageWindowTopComponent";
-        private static BufferedWriter logWriter;
-        private final static String logFile = "tmp.txt"; //TODO
+    private static messageWindowTopComponent instance;
+    /**
+     * path to the icon used by the component and its open action
+     */
+    private static final String PREFERRED_ID = "messageWindowTopComponent";
+    private static BufferedWriter logWriter;
+    private final static String LOG_FILE = "tmp.txt"; //TODO
 
-	public messageWindowTopComponent() {
-		initComponents();
-                try{
-                    logWriter = new BufferedWriter(new FileWriter(new File(logFile), true));
-                }catch(IOException ex){
-                    writeToLog(ex.getMessage());
-                }
-		setName(NbBundle.getMessage(messageWindowTopComponent.class, "CTL_messageWindowTopComponent"));
-		setToolTipText(NbBundle.getMessage(messageWindowTopComponent.class, "HINT_messageWindowTopComponent"));
-		jScrollPane1.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener(){
-			public void adjustmentValueChanged(AdjustmentEvent e){
-				messageArea.setCaretPosition(messageArea.getDocument().getLength());
-			}
-		});
-//        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
+    public messageWindowTopComponent() {
+        initComponents();
+        setName(NbBundle.getMessage(messageWindowTopComponent.class, "CTL_messageWindowTopComponent"));
+        setToolTipText(NbBundle.getMessage(messageWindowTopComponent.class, "HINT_messageWindowTopComponent"));
+        jScrollPane1.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                messageArea.setCaretPosition(messageArea.getDocument().getLength());
+            }
+        });
+    }
 
-	}
-
-	/** This method is called from within the constructor to
-	 * initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is
-	 * always regenerated by the Form Editor.
-	 */
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -93,6 +85,8 @@ public final class messageWindowTopComponent extends TopComponent {
         jScrollPane1 = new javax.swing.JScrollPane();
         messageArea = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+
+        setPreferredSize(new java.awt.Dimension(450, 351));
 
         messageArea.setColumns(20);
         messageArea.setEditable(false);
@@ -151,96 +145,95 @@ public final class messageWindowTopComponent extends TopComponent {
     protected static javax.swing.JTextArea messageArea;
     // End of variables declaration//GEN-END:variables
 	/**
-	 * Gets default instance. Do not use directly: reserved for *.settings files only,
-	 * i.e. deserialization routines; otherwise you could get a non-deserialized instance.
-	 * To obtain the singleton instance, use {@link #findInstance}.
-	 */
-	public static synchronized messageWindowTopComponent getDefault() {
-		if (instance == null) {
-			instance = new messageWindowTopComponent();
-		}
-		return instance;
-	}
-
-	/**
-	 * Obtain the messageWindowTopComponent instance. Never call {@link #getDefault} directly!
-	 */
-	public static synchronized messageWindowTopComponent findInstance() {
-		TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
-		if (win == null) {
-			Logger.getLogger(messageWindowTopComponent.class.getName()).warning(
-				"Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
-			return getDefault();
-		}
-		if (win instanceof messageWindowTopComponent) {
-			return (messageWindowTopComponent) win;
-		}
-		Logger.getLogger(messageWindowTopComponent.class.getName()).warning(
-			"There seem to be multiple components with the '" + PREFERRED_ID
-			+ "' ID. That is a potential source of errors and unexpected behavior.");
-		return getDefault();
-	}
-
-	@Override
-	public int getPersistenceType() {
-		return TopComponent.PERSISTENCE_ALWAYS;
-	}
-
-	@Override
-	public void componentOpened() {
-		// TODO add custom code on component opening
-	}
-
-	@Override
-	public void componentClosed() {
-		// TODO add custom code on component closing
-	}
-
-	void writeProperties(java.util.Properties p) {
-		// better to version settings since initial version as advocated at
-		// http://wiki.apidesign.org/wiki/PropertyFiles
-		p.setProperty("version", "1.0");
-	}
-
-	Object readProperties(java.util.Properties p) {
-		if (instance == null) {
-			instance = this;
-		}
-		instance.readPropertiesImpl(p);
-		return instance;
-	}
-
-	private void readPropertiesImpl(java.util.Properties p) {
-		String version = p.getProperty("version");
-	}
-
-	@Override
-	protected String preferredID() {
-		return PREFERRED_ID;
-	}
-        
-        public static void appendText(String text){
-            messageArea.append(text);
-            writeToLog(text);
+     * Gets default instance. Do not use directly: reserved for *.settings files
+     * only, i.e. deserialization routines; otherwise you could get a
+     * non-deserialized instance. To obtain the singleton instance, use
+     * {@link #findInstance}.
+     */
+    public static synchronized messageWindowTopComponent getDefault() {
+        if (instance == null) {
+            instance = new messageWindowTopComponent();
         }
-        
-        public static void clearText(){
-            messageArea.setText("");
-        }
-        
-        public static void writeToLog(String message){
-            Calendar cal = Calendar.getInstance();
-
-            try{
-                if(logWriter != null){
-                    logWriter.write(cal.getTime() + "\t\t"+message + "\n");
-                    logWriter.flush();
-                }else{
-                    System.err.println("Failed to write to log file.\n" + message);
-                }
-            }catch(IOException ex){
-                messageArea.append(ex.getMessage());
-            }
+        return instance;
     }
 
+    /**
+     * Obtain the messageWindowTopComponent instance. Never call
+     * {@link #getDefault} directly!
+     */
+    public static synchronized messageWindowTopComponent findInstance() {
+        TopComponent win = WindowManager.getDefault().findTopComponent(PREFERRED_ID);
+        if (win == null) {
+            Logger.getLogger(messageWindowTopComponent.class.getName()).warning(
+                    "Cannot find " + PREFERRED_ID + " component. It will not be located properly in the window system.");
+            return getDefault();
+        }
+        if (win instanceof messageWindowTopComponent) {
+            return (messageWindowTopComponent) win;
+        }
+        Logger.getLogger(messageWindowTopComponent.class.getName()).warning(
+                "There seem to be multiple components with the '" + PREFERRED_ID
+                + "' ID. That is a potential source of errors and unexpected behavior.");
+        return getDefault();
+    }
+
+    @Override
+    public int getPersistenceType() {
+        return TopComponent.PERSISTENCE_ALWAYS;
+    }
+
+    @Override
+    public void componentOpened() {
+        // TODO add custom code on component opening
+    }
+
+    @Override
+    public void componentClosed() {
+        // TODO add custom code on component closing
+    }
+
+    void writeProperties(java.util.Properties p) {
+        // better to version settings since initial version as advocated at
+        // http://wiki.apidesign.org/wiki/PropertyFiles
+        p.setProperty("version", "1.0");
+    }
+
+    Object readProperties(java.util.Properties p) {
+        if (instance == null) {
+            instance = this;
+        }
+        instance.readPropertiesImpl(p);
+        return instance;
+    }
+
+    private void readPropertiesImpl(java.util.Properties p) {
+        String version = p.getProperty("version");
+    }
+
+    @Override
+    protected String preferredID() {
+        return PREFERRED_ID;
+    }
+
+    public static void appendText(String text) {
+        messageArea.append(text);
+    }
+
+    public static void clearText() {
+        messageArea.setText("");
+    }
+
+    public static void writeToLog(String message) {
+        Calendar cal = Calendar.getInstance();
+        try {
+            if (logWriter != null) {
+                logWriter.write(cal.getTime() + "\t\t" + message + "\n");
+                logWriter.flush();
+            } else {
+                System.err.println("Failed to write to log file.\n" + message);
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to write to log file.\n" + message);
+        }
+    }
 }

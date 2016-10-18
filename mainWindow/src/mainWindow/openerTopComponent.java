@@ -16,7 +16,7 @@
 //#
 //#  This file is part of DockoMatic.
 //#
-//#  DockoMatic is free software: you can redistribute it and/or modify
+//#  DockoMatic is free so  ftware: you can redistribute it and/or modify
 //#  it under the terms of the GNU Lesser General Public License as published by
 //#  the Free Software Foundation, either version 3 of the License, or
 //#  (at your option) any later version.
@@ -58,14 +58,14 @@ import utilities.Job;
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//mainWindow//opener//EN",
-autostore = false)
+        autostore = false)
 public final class openerTopComponent extends TopComponent {
-    
+
     public static final int PADDING = 6;
-    private static final String swarm_file = "swarmCmds.txt";
-    private static final String swarm_prefix = "swarm -f ";
-    
-    
+    private static final String SWARM_FILE = "swarmCmds.txt";
+    private static final String SWARM_PREFIX = "swarm -f ";
+    public static boolean CHOOSEN_DIR = false;
+
     private HashMap jobList = new HashMap();
     private ArrayList<String> ligList = new ArrayList<String>();
     private ArrayList<String> recList = new ArrayList<String>();
@@ -102,7 +102,7 @@ public final class openerTopComponent extends TopComponent {
     private ParameterSet mutantScreenParameters; //tlong
     private static modWizWizardAction act;// = new modWizWizardAction();
     private static openerTopComponent instance;
-    
+
     /**
      * path to the icon used by the component and its open action
      */
@@ -119,7 +119,6 @@ public final class openerTopComponent extends TopComponent {
         appCheckBox.setEnabled(bool);
         appendField.setEnabled(bool);
         appendButton.setEnabled(bool);
-
     }
 
     /**
@@ -404,7 +403,7 @@ public final class openerTopComponent extends TopComponent {
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(vinaCheckBox)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(435, 438, Short.MAX_VALUE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2)
@@ -436,11 +435,12 @@ public final class openerTopComponent extends TopComponent {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ligandCheckBox)
-                    .addComponent(ligModCheckBox)
-                    .addComponent(LigandButton)
-                    .addComponent(ligandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ligModCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ligandCheckBox)
+                        .addComponent(LigandButton)
+                        .addComponent(ligandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -545,9 +545,7 @@ public final class openerTopComponent extends TopComponent {
         if (retval == fc.APPROVE_OPTION) {
             dir = fc.getSelectedFile().getPath();
         }
-
         return dir;
-
     }
 
     // Prompt window to select a file from the filesystem.
@@ -558,19 +556,24 @@ public final class openerTopComponent extends TopComponent {
         fc.setAcceptAllFileFilterUsed(false);
 
         if (type.equals("lpdb") && !ligLstBool) {
-            fc.addChoosableFileFilter(new ExtensionFileFilter(ExtensionFileFilter.pdb));
+            fc.addChoosableFileFilter(
+                    new ExtensionFileFilter(ExtensionFileFilter.pdb));
         }
         if (type.equals("apdb") && !appListBool) {
-            fc.addChoosableFileFilter(new ExtensionFileFilter(ExtensionFileFilter.pdb));
+            fc.addChoosableFileFilter(
+                    new ExtensionFileFilter(ExtensionFileFilter.pdb));
         }
         if (type.equals("rpdb") && !recListBool) {
-            fc.addChoosableFileFilter(new ExtensionFileFilter(ExtensionFileFilter.pdb));
+            fc.addChoosableFileFilter(
+                    new ExtensionFileFilter(ExtensionFileFilter.pdb));
         }
         if (type.equals("gpf") && !boxListBool) {
-            fc.addChoosableFileFilter(new ExtensionFileFilter(ExtensionFileFilter.gpf));
+            fc.addChoosableFileFilter(
+                    new ExtensionFileFilter(ExtensionFileFilter.gpf));
         }
         if (type.equals("txt") && !boxListBool) {
-            fc.addChoosableFileFilter(new ExtensionFileFilter(ExtensionFileFilter.txt));
+            fc.addChoosableFileFilter(
+                    new ExtensionFileFilter(ExtensionFileFilter.txt));
         }
 
         fc.setAcceptAllFileFilterUsed(true);
@@ -584,15 +587,10 @@ public final class openerTopComponent extends TopComponent {
     }
 
     private void outDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outDirButtonActionPerformed
-        String dir = getDirChoose(lastOutDir, "Select Output Directory");
+        String dir = getDirChoose(lastOutDir, "Select output directory");
         if (dir != null) {
             lastOutDir = dir;
             outDirField.setText(lastOutDir);
-//            String old_cmds = swmCmdOpts.getText();
-//            int divideAt = old_cmds.indexOf("-f ") + "-f ".length();
-//            String new_cmds = old_cmds.substring(0,divideAt);
-//            new_cmds += dir + File.separator + old_cmds.substring(divideAt);
-//            swmCmdOpts.setText(new_cmds);
         }
     }//GEN-LAST:event_outDirButtonActionPerformed
 
@@ -603,7 +601,7 @@ public final class openerTopComponent extends TopComponent {
             ligandField.setText(ret);
             return;
         }
-        String file = getFileChoose(lastLigDir, "Select Ligand File", "lpdb");
+        String file = getFileChoose(lastLigDir, "Select ligand file", "lpdb");
         if (file != null) {
             lastLigDir = file.substring(0, file.lastIndexOf(File.separator));
             ligandField.setText(file);
@@ -617,20 +615,21 @@ public final class openerTopComponent extends TopComponent {
             receptorField.setText(ret);
             return;
         }
-        String file = getFileChoose(lastRecDir, "Select Receptor File", "rpdb");
+        String file = getFileChoose(lastRecDir, "Select receptor file", "rpdb");
         if (file != null) {
             lastRecDir = file.substring(0, file.lastIndexOf(File.separator));
             receptorField.setText(file);
         }
     }//GEN-LAST:event_receptorButtonActionPerformed
 
-
     private void boxCoordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCoordButtonActionPerformed
         String file;
         if (useVina) {
-            file = getFileChoose(lastBoxDir, "Select AutoDock Vina Config File", "txt");
+            file = getFileChoose(
+                    lastBoxDir, "Select AutoDock Vina config file", "txt");
         } else {
-            file = getFileChoose(lastBoxDir, "Select AutoDock Box Coordinate File", "gpf");
+            file = getFileChoose(
+                    lastBoxDir, "Select AutoDock box coordinate file", "gpf");
         }
 
         if (file != null) {
@@ -640,7 +639,8 @@ public final class openerTopComponent extends TopComponent {
     }//GEN-LAST:event_boxCoordButtonActionPerformed
 
     private void appendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appendButtonActionPerformed
-        String file = getFileChoose(lastAppendDir, "Select Secondary Ligand File", "apdb");
+        String file = getFileChoose(
+                lastAppendDir, "Select secondary ligand file", "apdb");
         if (file != null) {
             lastAppendDir = file.substring(0, file.lastIndexOf(File.separator));
             appendField.setText(file);
@@ -684,12 +684,13 @@ public final class openerTopComponent extends TopComponent {
 
             @Override
             public String doInBackground() {
-                if(mutationScreening && !mutantScreenParameters.isExhaustiveScreen()){  //run GA if true
+                if (mutationScreening && !mutantScreenParameters.isExhaustiveScreen()) { //run GA if true
                     runGeneticAlgorithm();
-                }else{
+                } else {
                     try {
                         if (outDirField.getText().trim().length() < 1) {
-                            messageWindowTopComponent.appendText("No Output Directory Supplied\nUsing Current Directory '.'\n");
+                            messageWindowTopComponent.appendText(
+                                    "No output directory provided. Using current directory '.'\n");
                             outDirField.setText(".");
                         }
                         String tmp = ligandField.getText();
@@ -698,12 +699,14 @@ public final class openerTopComponent extends TopComponent {
                             alignJobNums();
 
                             makeJobs();
-                            messageWindowTopComponent.appendText("Highlight and Right-Click Jobs in Output Grid for options.\n");
+                            messageWindowTopComponent.appendText(
+                                    "Select and right click jobs in the Output window for options.\n");
                         } else {
                             messageWindowTopComponent.appendText("Ligand needs to be supplied!\n");
                         }
                     } catch (IOException e) {
-                        messageWindowTopComponent.appendText("Incorrect IVS setup: Receptor List and\n Box Coordinate List need to be the same legth\n");
+                        messageWindowTopComponent.appendText(
+                                "Incorrect IVS setup: receptor list and\n Box Coordinate List need to be the same legth\n");
                     }
                 }
                 return "Done";
@@ -715,7 +718,6 @@ public final class openerTopComponent extends TopComponent {
 
     protected static void startSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
         instance.StartSelectedJobActionPerformed(e);
-
     }
 
     protected static void removeSelected(java.awt.event.MouseEvent e, java.awt.event.MouseEvent evtOrig) {
@@ -732,64 +734,59 @@ public final class openerTopComponent extends TopComponent {
     }
 
     private void getResCheckInfo() {
-        String file = getFileChoose(lastBoxDir, "Select GPF File for Result Checking", "gpf");
+        String file = getFileChoose(lastBoxDir, "Select GPF file for result checking", "gpf");
         if (file != null) {
             lastBoxDir = file.substring(0, file.lastIndexOf(File.separator));
             resChkGpf = file;
         }
-
     }
-    
+
     //tlong
-    private void runGeneticAlgorithm(){
-        
+    private void runGeneticAlgorithm() {
+
         //TODO validate these
         File outputDirectory = new File(outDirField.getText().trim());   //use current directory if empty
         String lig_path = ligandField.getText();
         String rec_path = receptorField.getText();
         String box_path = boxCoordField.getText();
         String swarmCmd = swmCmdOpts.getText();
-        
-        if(lig_path.isEmpty() || rec_path.isEmpty() || box_path.isEmpty()){
+
+        if (lig_path.isEmpty() || rec_path.isEmpty() || box_path.isEmpty()) {
             messageWindowTopComponent.appendText("A ligand, receptor, and box coordinates must be entered before proceeding.\n");
-        }else{
-            
-           /* "Usage: java GeneticAlgorithm <substitution sites> <substitution pools> <residue seq> <elitism> <mutation rate> <dock limit>"
-                    + " <topX> <stagnant rounds> <# Xover points> <autodock cycles> <smoothNum> <output Directory> <ligFile> <recFile> <boxFile> <swarmCmd>" */
+        } else {
             String subPools = "";
-            
-            for(String pool : mutantScreenParameters.getConstraint_set()){
+
+            for (String pool : mutantScreenParameters.getConstraint_set()) {
                 subPools += pool + ",";
             }
-                    
+
             String GA_params = mutantScreenParameters.getSubstitution_sites() + " " + subPools + " " + mutantScreenParameters.getOrigSiteAcids() + " "
-                    + mutantScreenParameters.getElitism() +" "+ mutantScreenParameters.getMutation_rate() + " " + mutantScreenParameters.getCluster_size() +
-                    " "+ mutantScreenParameters.getTopX() +" "+ mutantScreenParameters.getNum_cycles() +" "+ mutantScreenParameters.getNum_crossover_points() +" "+
-                    mutantScreenParameters.getDockCycles() +" "+ mutantScreenParameters.getSmooth_num() + " "+outDirField.getText()+" "+lig_path+" "+
-                    rec_path +" "+ box_path +" "+ swarmCmd;
-            
-            runSwarm(outputDirectory,GA_params);
+                    + mutantScreenParameters.getElitism() + " " + mutantScreenParameters.getMutation_rate() + " " + mutantScreenParameters.getCluster_size()
+                    + " " + mutantScreenParameters.getTopX() + " " + mutantScreenParameters.getNum_cycles() + " " + mutantScreenParameters.getNum_crossover_points() + " "
+                    + mutantScreenParameters.getDockCycles() + " " + mutantScreenParameters.getSmooth_num() + " " + outDirField.getText() + " " + lig_path + " "
+                    + rec_path + " " + box_path + " " + swarmCmd;
+
+            runSwarm(outputDirectory, GA_params);
         }
     }
-    
+
     private void runSwarm(File outputDir, String cmd_args) {
-        
         //write the swarm cmd txt file
         BufferedWriter swarmWriter = null;
         File swarmFile = new File(outputDir, "swarmCmds_GA.txt");
-        
-        try{   
+
+        try {
             swarmWriter = new BufferedWriter(new FileWriter(swarmFile));
             String class_path = GeneticAlgorithm.getAbsExecPath();
-            String cmd = "java -cp "+ class_path + " " + cmd_args;
-            swarmWriter.write(cmd);  
-        }catch(IOException ex){
+            String cmd = "java -cp " + class_path + " " + cmd_args;
+            swarmWriter.write(cmd);
+        } catch (IOException ex) {
             messageWindowTopComponent.appendText(ex.getLocalizedMessage() + "\n");
-        }finally{
-            if(swarmWriter != null){
-                try{
+        } finally {
+            if (swarmWriter != null) {
+                try {
                     swarmWriter.close();
-                }catch(IOException ex){
+                } catch (IOException ex) {
                     messageWindowTopComponent.appendText(ex.getLocalizedMessage() + "\n");
                 }
             }
@@ -816,8 +813,6 @@ public final class openerTopComponent extends TopComponent {
             messageWindowTopComponent.appendText(ex.getLocalizedMessage() + "\n");
         }
     }
-    
-    
 
     // Checks the status of jobs and sets them to Done if they are.
     private void checkStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkStatusButtonActionPerformed
@@ -834,7 +829,7 @@ public final class openerTopComponent extends TopComponent {
                     //if((Integer)jTable1.getValueAt(row, 0) > 1) continue;      // This should allow us to skip to next directory so we avoid redundant checks.
 
                     String rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
-                    String dir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
+                    String dir = (String) table.getValueAt(row, getCol(table, "Output directory"));
                     String lig = (String) table.getValueAt(row, getCol(table, "Ligand"));
 
                     // This line only IF NOT running obconformer, or else false positive could occur while obconformer is running.
@@ -851,24 +846,24 @@ public final class openerTopComponent extends TopComponent {
                     if (done.exists()) {
                         table.setValueAt("Done", row, getCol(table, "Status"));
                         if (((String) table.getValueAt(row, getCol(table, "Secondary"))).length() > 0) {
-                            messageWindowTopComponent.appendText("Starting Secondary Ligand Job\n");
+                            messageWindowTopComponent.appendText("Starting secondary ligand Job\n");
                             jobNum = (Integer) table.getValueAt(row, getCol(table, "Job #"));
                             doSecondaryJob(jobNum);
                         }
-                    }
-                    else //done does not exist
+                    } else //done does not exist
+                    {
                         allJobsDone = false;
+                    }
                 }
-
 
             } catch (java.lang.ArrayIndexOutOfBoundsException e) {
                 messageWindowTopComponent.appendText("INVALID ROW SELECTED FOR CHECKING STATUS row [" + row + "]\n");
             }
         }
-        
-        if(allJobsDone) {
+
+        if (allJobsDone) {
             jobTimer.stop();
-            System.out.println("All jobs are done");
+            messageWindowTopComponent.appendText("All jobs are done. Check output directory\n");
         }
     }//GEN-LAST:event_checkStatusButtonActionPerformed
 
@@ -882,7 +877,6 @@ public final class openerTopComponent extends TopComponent {
         } else {
             ligFromModeller = false;
         }
-
     }//GEN-LAST:event_ligModCheckBoxActionPerformed
 
     private void recModCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recModCheckBoxActionPerformed
@@ -896,59 +890,58 @@ public final class openerTopComponent extends TopComponent {
     private void vinaCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vinaCheckBoxActionPerformed
         if (vinaCheckBox.isSelected()) {
             useVina = true;
-            messageWindowTopComponent.appendText(":::::::::WARNING:::::::::\n"
-                    + "AutoDock Vina has been selected to be "
-                    + "used instead of AutoDock. AutoDock Vina "
+            messageWindowTopComponent.appendText(
+                    "#  #  #  # WARNING #  #  #  # WARNING #  #  #  # WARNING #  #  #  # WARNING #  #  #  # WARNING #  #  #  #\n"
+                    + "AutoDock Vina has been selected. "
+                    + "AutoDock Vina "
                     + "demands a large number of resources per job, "
                     + "make sure to specify in the swarm options "
                     + "that nodes with enough memory (at least 4GB for "
                     + "each job per node) are selected to be used.\n"
-                    + "::::::::::::::::::::::::::::::::::\n");
+                    + "#  #  #  # WARNING #  #  #  # WARNING #  #  #  # WARNING #  #  #  # WARNING #  #  #  # WARNING #  #  #  #\n");
         } else {
             useVina = false;
         }
-
     }//GEN-LAST:event_vinaCheckBoxActionPerformed
 
     //tlong TODO uncomment later
     private void MutationsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MutationsCheckBoxActionPerformed
-        if(MutationsCheckBox.isSelected()){
-            if(ligandField.getText().trim().equals("") || receptorField.getText().trim().equals("") || boxCoordField.getText().trim().equals("")){
+        if (MutationsCheckBox.isSelected()) {
+            if (ligandField.getText().trim().equals("") || receptorField.getText().trim().equals("") || boxCoordField.getText().trim().equals("")) {
                 messageWindowTopComponent.appendText("You must first specify a ligand, a receptor, and box coordinates in the appropriate fields above.\n");
                 MutationsCheckBox.setSelected(false);
-            }else{
+            } else {
                 ArrayList<String> seqList = mutantScreeningWizardAction.getFullSequence(ligandField.getText().trim());
-                if(seqList.isEmpty()){  //couldn't parse the data file
-                    messageWindowTopComponent.appendText("Unable to determine the amino acid sequence from the ligand's pdb file.\n" +
-                                                         "Please make sure that it contains the mandatory SEQRES lines and try again.\n");
+                if (seqList.isEmpty()) {  //couldn't parse the data file
+                    messageWindowTopComponent.appendText("Unable to determine the amino acid sequence from the ligand's pdb file.\n"
+                            + "Please make sure that it contains the mandatory SEQRES lines and try again.\n");
                     MutationsCheckBox.setSelected(false);
-                }else{
+                } else {
                     mutationScreening = true;
                     mutantScreeningWizardAction mutant_screen_wizard = new mutantScreeningWizardAction();
                     mutantScreenParameters = mutant_screen_wizard.initialize(seqList);
-                    
-                    if(mutantScreenParameters  == null){  //cancel button was selected
+
+                    if (mutantScreenParameters == null) {  //cancel button was selected
                         MutationsCheckBox.setSelected(false);
                         mutationScreening = false;
                     }
                 }
             }
-        }else{
+        } else {
             mutationScreening = false;
         }
     }//GEN-LAST:event_MutationsCheckBoxActionPerformed
 
     private void swmJobNumFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_swmJobNumFocusLost
         int num = 1;
-        try{
+        try {
             int temp = Integer.parseInt(swmJobNum.getText());
             num = Math.max(num, temp);
-        }catch(NumberFormatException ex){
-            
+        } catch (NumberFormatException ex) {
+
         }
         swmJobNum.setText(num + "");
     }//GEN-LAST:event_swmJobNumFocusLost
-
 
     private void pymolActionPerformed(java.awt.event.MouseEvent evt) {
         table = outputGridTopComponent.getSelectedTable();
@@ -967,7 +960,6 @@ public final class openerTopComponent extends TopComponent {
         }
 
         try {
-
             int retval = checker.showOpenDialog(openerTopComponent.this);
             if (retval == checker.APPROVE_OPTION) {
                 file = checker.getSelectedFile().getPath();
@@ -990,12 +982,12 @@ public final class openerTopComponent extends TopComponent {
             messageWindowTopComponent.appendText("NO ROW SELECTED\n");
             return;
         }
-        messageWindowTopComponent.appendText("Selected " + rowCount + " Jobs For Removal\n");
+        messageWindowTopComponent.appendText("Selected " + rowCount + " jobs for removal\n");
         for (int rowNum = rowCount - 1; rowNum >= 0; rowNum--) {
             jobNum = (Integer) table.getValueAt(rowNums[rowNum], getCol(table, "Job #"));
-            messageWindowTopComponent.appendText("Killing Job " + jobNum + "\n");
+            messageWindowTopComponent.appendText("Killing job " + jobNum + "\n");
             ((Job) jobList.get(jobNum)).killJob();
-            messageWindowTopComponent.appendText("Removing Job " + jobNum + "\n");
+            messageWindowTopComponent.appendText("Removing job " + jobNum + "\n");
             model.removeRow(rowNums[rowNum]);
         }
     }
@@ -1029,7 +1021,12 @@ public final class openerTopComponent extends TopComponent {
                     messageWindowTopComponent.appendText("NO ROWS SELECTED\n");
                     return "Done";
                 }
-                messageWindowTopComponent.appendText("Selected " + rowCount + " Jobs For Starting\n");
+                
+                if (rowCount > 1) {
+                 messageWindowTopComponent.appendText("Selected " + rowCount + " jobs for starting\n");   
+                }
+                else
+                    messageWindowTopComponent.appendText("Selected " + rowCount + " job for starting\n");
 
                 // *** Bulk submit *** //
                 String[] jobCmds = new String[rowNums.length];
@@ -1039,59 +1036,41 @@ public final class openerTopComponent extends TopComponent {
                     updateJob(rowNums[i]);
                     jobCmds[i] = ((Job) jobList.get(jobNum)).getCmd();
                 }
-                
-                try{
-                    //following does not work because env.PATH is not correct, whereas it is for perl script
-//                    if(swmCmdOpts.getText().isEmpty()){  //run locally
-//                        for(String cmd : jobCmds){
-//                            Process procID = Runtime.getRuntime().exec(cmd, null, outDir);
-//                            BufferedReader in = new BufferedReader(new InputStreamReader(procID.getErrorStream()));
-//                            while ((line = in.readLine()) != null) {
-//                                errorLog += line + "\n";
-//                            }
-//                            messageWindowTopComponent.messageArea.setText("");
-//                            messageWindowTopComponent.appendText(errorLog);
-//                        }
-//                    }else{
-                    
-                        String base = outDir.getCanonicalPath();
-                        String swarm_path = base + File.separator + swarm_file;
-                        //run swarm Jobs.
-                        BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarm_path));
-                        for (int i = 0; i < rowNums.length; i++) {
-                            jobNum = (Integer) table.getValueAt(rowNums[i], getCol(table, "Job #"));
-    //                        updateJob(rowNums[i]);
-    //                        swarmOut.write(((Job) jobList.get(jobNum)).getCmd() + "\n");
-                            swarmOut.write(jobCmds[i] + "\n");
-                            // Either use the Job class to make commands, or use this one.
-                            //swarmOut.write(getCmd(jobNum)+"\n");
-                            if (table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")) {
-                                ((Job) jobList.get(jobNum)).killJob();
-                                messageWindowTopComponent.appendText("Restarting Job " + jobNum + "\n");
-                            } else {
-                                messageWindowTopComponent.appendText("  Starting Job " + jobNum + "\n");
-                                table.setValueAt("Started", rowNums[i], getCol(table, "Status"));
-                            }
-                        }
-                        swarmOut.close();
+
+                try {
+                    String base = outDir.getCanonicalPath();
+                    String swarm_path = base + File.separator + SWARM_FILE;
+                    //run swarm Jobs.
+                    BufferedWriter swarmOut = new BufferedWriter(new FileWriter(swarm_path));
+                    for (int i = 0; i < rowNums.length; i++) {
+                        jobNum = (Integer) table.getValueAt(rowNums[i], getCol(table, "Job #"));
+                        swarmOut.write(jobCmds[i] + "\n");
                         
-                        String swarmCmd = swarm_prefix + swarm_path + " -n " + swmJobNum.getText() + " " + swmCmdOpts.getText();
-                       
-                        Process procID = Runtime.getRuntime().exec(swarmCmd, null, outDir);
-                        BufferedReader in = new BufferedReader(new InputStreamReader(procID.getErrorStream()));
-                        while ((line = in.readLine()) != null) {
-                            errorLog += line + "\n";
+                        if (table.getValueAt(rowNums[i], getCol(table, "Status")).equals("Started")) {
+                            ((Job) jobList.get(jobNum)).killJob();
+                            messageWindowTopComponent.appendText("Restarting job " + jobNum + "\n");
+                        } else {
+                            messageWindowTopComponent.appendText("Starting job " + jobNum + "\n");
+                            table.setValueAt("Started", rowNums[i], getCol(table, "Status"));
                         }
-                        messageWindowTopComponent.messageArea.setText("");
-                        messageWindowTopComponent.appendText(errorLog);
-//                    }
-                
+                    }
+                    swarmOut.close();
+
+                    String swarmCmd = SWARM_PREFIX + swarm_path + " -n " + swmJobNum.getText() + " " + swmCmdOpts.getText();
+
+                    Process procID = Runtime.getRuntime().exec(swarmCmd, null, outDir);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(procID.getErrorStream()));
+                    while ((line = in.readLine()) != null) {
+                        errorLog += line + "\n";
+                    }
+                    messageWindowTopComponent.messageArea.setText("");
+                    messageWindowTopComponent.appendText(errorLog);
+
                 } catch (IOException e) {
                     errorLog = e + "";
                     messageWindowTopComponent.appendText(errorLog);
                     System.out.println(e);
                 }
-                
                 return "Done";
             }
         };
@@ -1103,11 +1082,11 @@ public final class openerTopComponent extends TopComponent {
         Process proc;
         table = outputGridTopComponent.getSelectedTable();
         int row = table.rowAtPoint(evt.getPoint());
-        String out = (String) table.getValueAt(row, getCol(table, "Output Directory"));
+        String out = (String) table.getValueAt(row, getCol(table, "Output directory"));
         outDirField.setText(out);
 
         if (resChkGpf.length() < 1) {
-            messageWindowTopComponent.appendText("No GPF Supplied... Can't check results.\n");
+            messageWindowTopComponent.appendText("No GPF supplied...Unable to check results.\n");
             return;
         }
         String box = resChkGpf;
@@ -1121,19 +1100,19 @@ public final class openerTopComponent extends TopComponent {
         File tmpfile = new File(cmd);
         tmpfile.setExecutable(true);
 
-        String dir = getDirChoose(lastOutDir, "Select Directory to Analyze");
+        String dir = getDirChoose(lastOutDir, "Select directory to analyze");
         if (odir.length() < 1) {
             odir = dir;
         }
         if (dir != null) {
             cmd += " -d " + dir + " -b " + box + " -o " + odir;
-            messageWindowTopComponent.appendText("Res Check CMD [" + cmd + "]\n");
+            messageWindowTopComponent.appendText("Res check CMD [" + cmd + "]\n");
             messageWindowTopComponent.appendText("Results written to [" + odir + "/CheckResultsLog_*" + "]\n");
             try {
 
                 proc = Runtime.getRuntime().exec(cmd, null);
             } catch (java.io.IOException e) {
-                System.out.println("Caught eX " + e);
+                messageWindowTopComponent.appendText("Exception caught: \n" + e);
             }
         }
     }
@@ -1157,8 +1136,6 @@ public final class openerTopComponent extends TopComponent {
                 }
             }
         }
-
-        //if(subNum > 0)  ++subNum;
         currJobNumber = subNum + 1;
     }
 
@@ -1172,14 +1149,13 @@ public final class openerTopComponent extends TopComponent {
         tmpfile.setExecutable(true);
 
         lig = (String) table.getValueAt(row, getCol(table, "Ligand"));
-        odir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
+        odir = (String) table.getValueAt(row, getCol(table, "Output directory"));
         rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
-        bc = (String) table.getValueAt(row, getCol(table, "Box Coordinate"));
+        bc = (String) table.getValueAt(row, getCol(table, "Box coordinate"));
         seq = (String) table.getValueAt(row, getCol(table, "Sequence"));
         tmplt = (String) table.getValueAt(row, getCol(table, "Template"));
-        cyc = (String) table.getValueAt(row, getCol(table, "AutoDock Cycles"));
+        cyc = (String) table.getValueAt(row, getCol(table, "AutoDock cycles"));
         appd = (String) table.getValueAt(row, getCol(table, "Secondary"));
-
 
         if (useVina) {
             cmd += " -v ";
@@ -1211,14 +1187,13 @@ public final class openerTopComponent extends TopComponent {
         }
 
         return cmd;
-
     }
-    
+
     private String getDockomaticScriptPath() {
         String classPath = openerTopComponent.class.getResource("openerTopComponent.class").getPath();
         int start = classPath.indexOf(":") + 1;  //ignore file: start
         int end = classPath.indexOf("modules" + File.separator);
-        String script_path = classPath.substring(start,end);        
+        String script_path = classPath.substring(start, end);
         script_path += "lib" + File.separator + "dockOmatic.pl";
 
         return script_path;
@@ -1261,12 +1236,10 @@ public final class openerTopComponent extends TopComponent {
 
         for (int l = 0; l < ligList.size(); l++) {
             for (int r = 0; r < recList.size(); r++) {
-                // for (int b = 0; b < boxList.size(); b++) {
                 for (int a = 0; a < appList.size(); a++) {
                     newJob(ligList.get(l), recList.get(r), boxList.get(r), base, appList.get(a),
                             false, false, "", "", swmJobNum.getText(), dockCycles.getText());
                 }
-                // }
             }
         }
 
@@ -1274,8 +1247,6 @@ public final class openerTopComponent extends TopComponent {
         recList.clear();
         boxList.clear();
         appList.clear();
-
-        //redisplay();
         // start timer to check all job status.
         startJobTimer();
     }
@@ -1298,7 +1269,7 @@ public final class openerTopComponent extends TopComponent {
         }
 
         for (int i = currJobNumber; i < total + currJobNumber; i++) {
-            subDirName = base + "dock_" + String.format("%0"+PADDING+"d",i);
+            subDirName = base + "dock_" + String.format("%0" + PADDING + "d", i);
             subDir = new File(subDirName);
             subDir.mkdir();
         }
@@ -1327,10 +1298,10 @@ public final class openerTopComponent extends TopComponent {
                     ligCount++;
                 }
                 in.close();
-            }else if(mutationScreening){ //tlong
+            } else if (mutationScreening) { //tlong
                 ligList = generateMutantLibrary(ligandField.getText().trim());
                 ligCount = ligList.size();
-            }else {
+            } else {
                 ligList.add(ligandField.getText().trim());
                 ligCount++;
             }
@@ -1391,13 +1362,11 @@ public final class openerTopComponent extends TopComponent {
         } else {
             return (ligCount * recCount * boxCount * appCount);
         }
-
-
     }
 
     // Timer to check the status of each job.
     private void startJobTimer() {
-        System.out.println("Job Timer Started");
+        System.out.println("Job timer started");
         int delay = 10000;  // 10 seconds
         java.awt.event.ActionListener jobChecker = new java.awt.event.ActionListener() {
 
@@ -1419,31 +1388,30 @@ public final class openerTopComponent extends TopComponent {
 
         Job tmp = (Job) jobList.get(job);
         tmp.update((String) table.getValueAt(row, getCol(table, "Ligand")),
-                (String) table.getValueAt(row, getCol(table, "Output Directory")),
+                (String) table.getValueAt(row, getCol(table, "Output directory")),
                 (String) table.getValueAt(row, getCol(table, "Receptor")),
-                (String) table.getValueAt(row, getCol(table, "Box Coordinate")),
+                (String) table.getValueAt(row, getCol(table, "Box coordinate")),
                 true,
                 (String) table.getValueAt(row, getCol(table, "Sequence")),
                 (String) table.getValueAt(row, getCol(table, "Template")),
-                (String) table.getValueAt(row, getCol(table, "AutoDock Cycles")));
-
+                (String) table.getValueAt(row, getCol(table, "AutoDock cycles")));
     }
 
     // Create new job from supplied arguments.
     private void newJob(String lig, String rec, String box, String dir, String app,
             Boolean secondary, Boolean swarm, String seq, String tmplt, String nodeJobs, String cycles) {
-        dir = dir + "dock_" + String.format("%0"+PADDING+"d", currJobNumber);
+        dir = dir + "dock_" + String.format("%0" + PADDING + "d", currJobNumber);
 
-        messageWindowTopComponent.appendText("Creating New Job [" + currJobNumber + "]\n");
+        messageWindowTopComponent.appendText("Creating new job [" + currJobNumber + "]\n");
 
         if (secondary) {
             //jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
             jobList.put(currJobNumber, new Job(currJobNumber, lig, rec, box, dir, true, app, seq, tmplt, cycles, useVina));
-            model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", "Not Started", seq, tmplt, cycles});
+            model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, "", "Not started", seq, tmplt, cycles});
         } else {
             //jobList.add(new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
             jobList.put(currJobNumber, new Job(currJobNumber, lig, rec, box, dir, true, "", seq, tmplt, cycles, useVina));
-            model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, "Not Started", seq, tmplt, cycles});
+            model.addRow(new Object[]{currJobNumber, lig, dir, rec, box, app, "Not started", seq, tmplt, cycles});
         }
 
         boxCoordField.setText("");
@@ -1460,7 +1428,7 @@ public final class openerTopComponent extends TopComponent {
         table = outputGridTopComponent.getSelectedTable();
         model = (DefaultTableModel) table.getModel();
         //killAllJobs();
-        messageWindowTopComponent.appendText("Removing All Jobs from tab\n");
+        messageWindowTopComponent.appendText("Removing all jobs from tab\n");
         int jobNum;
         int numRows = model.getRowCount();
         for (int i = numRows - 1; i >= 0; i--) {
@@ -1468,20 +1436,16 @@ public final class openerTopComponent extends TopComponent {
             ((Job) jobList.get(jobNum)).killJob();
             model.removeRow(i);
         }
-        //jobTimer.stop();
-        //currJobNumber = 0;
-        //totalJobs = 0;
-
     }
 
     // Creates and starts the AutoDock job for the secondary ligand.
     private void doSecondaryJob(int row) {
         String lig = (String) table.getValueAt(row, getCol(table, "Secondary"));
         String rec = (String) table.getValueAt(row, getCol(table, "Receptor"));
-        String box = (String) table.getValueAt(row, getCol(table, "Box Coordinate"));
-        String dir = (String) table.getValueAt(row, getCol(table, "Output Directory"));
-        String numJobs = (String) table.getValueAt(row, getCol(table, "Jobs per Node"));
-        String cycles = (String) table.getValueAt(row, getCol(table, "AutoDock Cycles"));
+        String box = (String) table.getValueAt(row, getCol(table, "Box coordinate"));
+        String dir = (String) table.getValueAt(row, getCol(table, "Output directory"));
+        String numJobs = (String) table.getValueAt(row, getCol(table, "Jobs per node"));
+        String cycles = (String) table.getValueAt(row, getCol(table, "AutoDock cycles"));
         String oldLig = ((String) table.getValueAt(row, getCol(table, "Ligand"))).toUpperCase();
         Boolean swarm = false;
         //if((Boolean)table.getValueAt(row, getCol("Use Swarm"))){ swarm = true; }
@@ -1507,7 +1471,6 @@ public final class openerTopComponent extends TopComponent {
         newJob(lig, rec, box, base, app, true, swarm, "", "", numJobs, cycles);
         ((Job) jobList.get(jobList.size() - 1)).runJob(false);
         table.setValueAt("Started", model.getRowCount() - 1, getCol(table, "Status"));
-
     }
 
     // Creates a String holding names of all .pdb files within a given
@@ -1523,43 +1486,39 @@ public final class openerTopComponent extends TopComponent {
                 names += tmp + " ";
             }
         }
-
         return names;
     }
-    
+
     //tlong
     public ArrayList<String> generateMutantLibrary(String ligPath) {
         ArrayList<String> list = new ArrayList<String>();
-        
+
         String[] tmp_sites = mutantScreenParameters.getSubstitution_sites().split(",");
         int[] sites = new int[tmp_sites.length];
-        
-        for(int i =0; i < sites.length; i++){
+
+        for (int i = 0; i < sites.length; i++) {
             sites[i] = Integer.parseInt(tmp_sites[i]);
         }
-        
-        
+
         recurse(0, ligPath, list, sites, mutantScreenParameters.getOrigSiteAcids(), mutantScreenParameters.getConstraint_set());
         return list;
     }
 
     //recursive method to generate all possible mutations given fixed sites and pools
-    private void recurse(int index, String runTotal, ArrayList<String> list,int[] sub_sites, String origSiteAcids, String[] constraint_set) {
-        if (index == sub_sites.length){ //end of the line, add it to the list
+    private void recurse(int index, String runTotal, ArrayList<String> list, int[] sub_sites, String origSiteAcids, String[] constraint_set) {
+        if (index == sub_sites.length) { //end of the line, add it to the list
             list.add(runTotal);
         } else {
-            for (int num = 0; num < constraint_set[index].length(); num++){ //for each acid in the set
-                if (constraint_set[index].charAt(num) == origSiteAcids.charAt(index)){ //no mutation at this spot, continue on
-                    recurse(index + 1, runTotal, list,sub_sites,origSiteAcids,constraint_set);
+            for (int num = 0; num < constraint_set[index].length(); num++) { //for each acid in the set
+                if (constraint_set[index].charAt(num) == origSiteAcids.charAt(index)) { //no mutation at this spot, continue on
+                    recurse(index + 1, runTotal, list, sub_sites, origSiteAcids, constraint_set);
                 } else {
-                    recurse(index + 1, runTotal + ":" + origSiteAcids.charAt(index) + sub_sites[index] + constraint_set[index].charAt(num), list,sub_sites,origSiteAcids,constraint_set);
+                    recurse(index + 1, runTotal + ":" + origSiteAcids.charAt(index) + sub_sites[index] + constraint_set[index].charAt(num), list, sub_sites, origSiteAcids, constraint_set);
                 }
             }
         }
     }
-    
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LigandButton;
     private javax.swing.JCheckBox MutationsCheckBox;
@@ -1605,7 +1564,8 @@ public final class openerTopComponent extends TopComponent {
     /**
      * Gets default instance. Do not use directly: reserved for *.settings files
      * only, i.e. deserialization routines; otherwise you could get a
-     * non-deserialized instance. To obtain the singleton instance, use {@link #findInstance}.
+     * non-deserialized instance. To obtain the singleton instance, use
+     * {@link #findInstance}.
      */
     public static synchronized openerTopComponent getDefault() {
         if (instance == null) {

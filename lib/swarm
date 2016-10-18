@@ -67,8 +67,5 @@ sub single{
       }
       wait();
       $mod=1;
-   }
-          
-        
+   }       
 }
-
